@@ -193,14 +193,9 @@ namespace GebatCAD.Classes
 				DataRow ret;
 				if (!rowReturned)
 				{
-					DataTable datatable = Last ();
-					ret = datatable.NewRow();
-					rowReturned = true;
+					First ();
 				}
-				else
-				{
-					ret = voidRow;
-				}
+				ret = voidRow;
 				return ret;
 			}
 		}
@@ -262,6 +257,7 @@ namespace GebatCAD.Classes
 					}
 				}
 
+				connect();
 				DataTable dTable = ExecuteQuery(query);
 				rowReturned = true;
 				voidRow = dTable.NewRow();
@@ -281,6 +277,37 @@ namespace GebatCAD.Classes
 			finally
 			{
 				disconnect();
+			}
+		}
+
+		/// <summary>
+		/// Devuelve una tabla con el primer registro, en caso de estar vacia devuelve null.
+		/// </summary>
+		public virtual DataTable First()
+		{
+			try
+			{
+				string query = "SELECT * FROM "+this.tablename+" limit 1";
+				DataTable dTable = ExecuteQuery(query);
+				rowReturned = true;
+				voidRow = dTable.NewRow();
+
+				if (dTable.Rows.Count == 1)
+				{
+					return dTable;
+				}
+				else
+				{
+					return null;
+				}
+			}
+			catch(Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				disconnect ();
 			}
 		}
 
