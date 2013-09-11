@@ -46,11 +46,15 @@
   <ItemGroup>
     <Folder Include="Classes\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="SqlInit\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SqlManager\SqlManager.csproj">
       <Project>{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}</Project>
       <Name>SqlManager</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SqlInit\Init.sql" />
   </ItemGroup>
 </Project>
