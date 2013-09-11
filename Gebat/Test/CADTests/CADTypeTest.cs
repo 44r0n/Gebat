@@ -34,7 +34,7 @@ using MySql.Data.MySqlClient;
 namespace Test
 {
 	[TestFixture()]
-	public class CADFoodTest
+	public class CADTypeTest
 	{
 		private DataTable tableFormat
 		{
@@ -43,7 +43,6 @@ namespace Test
 				DataTable expected = new DataTable();
 				expected.Columns.Add("Id", typeof(int));
 				expected.Columns.Add("Name", typeof(string));
-				expected.Columns.Add("Quantity", typeof(int));
 				return expected;
 			}
 		}
@@ -107,8 +106,8 @@ namespace Test
 		[Test]
 		public void TestSelectOne ()
 		{
-			string expected = "Patates";
-			ACAD food = new CADFood();
+			string expected = "Kg";
+			ACAD food = new CADType();
 			List<object> ids = new List<object>();
 			ids.Add((int)1);
 			DataRow actual = food.Select(ids);
@@ -119,7 +118,7 @@ namespace Test
 		public void TestCount()
 		{
 			int expected = 3;
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			int actual = food.Count();
 			Assert.AreEqual(expected, actual);
 		}
@@ -129,7 +128,7 @@ namespace Test
 		public void TestCountConnFail()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 
 			food.Count();
 		}
@@ -139,7 +138,7 @@ namespace Test
 		public void TestLastConnFail()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 
 			food.Last();
 		}
@@ -148,7 +147,7 @@ namespace Test
 		public void TestLast()
 		{
 			int expected = 4;
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			int actual = food.Last();
 			Assert.AreEqual(expected, actual);
 		}
@@ -156,29 +155,25 @@ namespace Test
 		[Test]
 		public void SelectAll()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataTable actual = food.SelectAll();
 			DataTable expected = this.tableFormat;
 			DataRow row = expected.NewRow();
 			row["Id"] = 1;
-			row["Name"] = "Patates";
-			row["Quantity"] = 2;
+			row["Name"] = "Kg";
 			expected.Rows.Add(row);
 			DataRow row2 = expected.NewRow();
 			row2["Id"] = 2;
-			row2["Name"] = "Tomates";
-			row2["Quantity"] = 3;
+			row2["Name"] = "Litros";
 			expected.Rows.Add(row2);
 			DataRow row3 = expected.NewRow();
 			row3["Id"] = 4;
-			row3["Name"] = "Pomes";
-			row3["Quantity"] = 4;
+			row3["Name"] = "Paquetes";
 			expected.Rows.Add(row3);
 			for (int i = 0; i < expected.Rows.Count; i++)
 			{
 				Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
 				Assert.AreEqual(expected.Rows[i]["Name"], actual.Rows[i]["Name"]);
-				Assert.AreEqual(expected.Rows[i]["Quantity"], actual.Rows[i]["Quantity"]);
 			}
 		}
 
@@ -189,7 +184,7 @@ namespace Test
 		public void SelectAllFailConn()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 
 			food.SelectAll();
 		}
@@ -197,26 +192,24 @@ namespace Test
 		[Test]
 		public void Select()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			List<object> ids = new List<object>();
 			ids.Add(1);
 			DataRow actual = food.Select(ids);
 			DataTable table = tableFormat;
 			DataRow expected = table.NewRow();
 			expected["Id"] = 1;
-			expected["Name"] = "Patates";
-			expected["Quantity"] = 2;
+			expected["Name"] = "Kg";
 
 			Assert.AreEqual(expected["Id"], actual["Id"]);
 			Assert.AreEqual(expected["Name"], actual["Name"]);
-			Assert.AreEqual(expected["Quantity"], actual["Quantity"]);
 		}
 
 		[Test]
 		[ExpectedException(typeof(NullReferenceException))]
 		public void SelectVoidList()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			food.Select(null);
 		}
 
@@ -227,7 +220,7 @@ namespace Test
 			List<object> ids = new List<object>();
 			ids.Add("hola");
 			ids.Add(3);
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			food.Select(ids);
 		}
 
@@ -237,7 +230,7 @@ namespace Test
 		{
 			setFailConn();
 
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			List<object> ids = new List<object>();
 			ids.Add(2);
 			food.Select(ids);
@@ -247,20 +240,18 @@ namespace Test
 		[Test]
 		public void SelectWhere()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataTable expected = tableFormat;
 			DataRow row = expected.NewRow();
 			row["Id"] = 1;
-			row["Name"] = "Patates";
-			row["Quantity"] = 2;
+			row["Name"] = "Kg";
 			expected.Rows.Add(row);
-			DataTable actual = food.SelectWhere("Name = 'Patates'");
+			DataTable actual = food.SelectWhere("Name = 'Kg'");
 
 			for (int i = 0; i < expected.Rows.Count; i++)
 			{
 				Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
 				Assert.AreEqual(expected.Rows[i]["Name"], actual.Rows[i]["Name"]);
-				Assert.AreEqual(expected.Rows[i]["Quantity"], actual.Rows[i]["Quantity"]);
 			}
 		}
 
@@ -268,15 +259,15 @@ namespace Test
 		[ExpectedException(typeof(InvalidStartRecordException))]
 		public void SelectWhereInvalidStart()
 		{
-			ACAD food = new CADFood();
-			food.SelectWhere("Name = 'Patates'", -3);
+			ACAD food = new CADType();
+			food.SelectWhere("Name = 'Kg'", -3);
 		}
 
 		[Test]
 		[ExpectedException(typeof(MySqlException))]
 		public void SelectWjereInvalidStatement()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			food.SelectWhere("Name = ; ");
 		}
 
@@ -286,17 +277,16 @@ namespace Test
 		{
 			setFailConn();
 
-			ACAD food = new CADFood();
-			food.SelectWhere("Name = 'Patates'");
+			ACAD food = new CADType();
+			food.SelectWhere("Name = 'Kg'");
 		}
 
 		[Test]
 		public void Insert()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataRow ins = food.GetVoidRow;
-			ins["Name"] = "Peres";
-			ins["Quantity"] = 4;
+			ins["Name"] = "Cajas";
 			int actual = food.Insert(ins);
 			int expected = 5;
 			Assert.AreEqual(expected, actual);
@@ -306,19 +296,8 @@ namespace Test
 		[ExpectedException(typeof(NullReferenceException))]
 		public void InsertNullRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataRow ins = null;
-			food.Insert(ins);
-		}
-
-		[Test]
-		[ExpectedException(typeof(ArgumentException))]
-		public void InsertWrongRow()
-		{
-			ACAD food = new CADFood();
-			DataRow ins = food.GetVoidRow;
-			ins["Name"] = 4;
-			ins["Quantity"] = "hola";
 			food.Insert(ins);
 		}
 
@@ -327,10 +306,9 @@ namespace Test
 		public void InsertFailCOnn()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataRow ins = food.GetVoidRow;
-			ins["Name"] = "Peres";
-			ins["Quantity"] = 4;
+			ins["Name"] = "Cajas";
 			food.Insert(ins);
 		}
 
@@ -338,11 +316,10 @@ namespace Test
 		[Test]
 		public void Update()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataRow mod = food.GetVoidRow;
 			mod["Id"] = 1;
-			mod["Name"] = "Peres";
-			mod["Quantity"] = 4;
+			mod["Name"] = "Cajas";
 			food.Update(mod);
 		}
 
@@ -350,21 +327,9 @@ namespace Test
 		[ExpectedException(typeof(NullReferenceException))]
 		public void UpdateNullRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataRow mod = null;
 			food.Update(mod);
-		}
-
-		[Test]
-		[ExpectedException(typeof(ArgumentException))]
-		public void UpdateWrongRow()
-		{
-			ACAD food = new CADFood();
-			DataRow ins = food.GetVoidRow;
-			ins["Id"] = 1;
-			ins["Name"] = 4;
-			ins["Quantity"] = "hola";
-			food.Update(ins);
 		}
 
 		[Test]
@@ -372,22 +337,20 @@ namespace Test
 		public void UpdateFailConn()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataRow ins = food.GetVoidRow;
 			ins["Id"] = 1;
-			ins["Name"] = "Peres";
-			ins["Quantity"] = 4;
+			ins["Name"] = "Cajas";
 			food.Update(ins);
 		}
 
 		[Test]
 		public void Delete()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataRow del = food.GetVoidRow;
 			del["Id"] = 1;
-			del["Name"] = "Patates";
-			del["Quantity"] = 2;
+			del["Name"] = "Kg";
 			food.Delete(del);
 		}
 
@@ -395,18 +358,17 @@ namespace Test
 		[ExpectedException(typeof(NullReferenceException))]
 		public void DeleteNullRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			food.Delete(null);
 		}
 
 		[Test]
-		[ExpectedException(typeof(ArgumentException))]
+		[ExpectedException(typeof(MySqlException))]
 		public void DeleteWrongRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataRow del = food.GetVoidRow;
-			del["Name"] = 4;
-			del["Quantity"] = "hola";
+			del["Name"] = new ENType("taca");
 			food.Delete(del);
 		}
 
@@ -415,11 +377,10 @@ namespace Test
 		public void DeleteFailConn()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADType();
 			DataRow del = food.GetVoidRow;
 			del["Id"] = 1;
-			del["Name"] = "Patates";
-			del["Quantity"] = 2;
+			del["Name"] = "cajas";
 			food.Delete(del);
 		}
 	}

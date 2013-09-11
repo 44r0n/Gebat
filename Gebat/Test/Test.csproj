@@ -44,6 +44,8 @@
     <Compile Include="CADTests\Stubs\StubIsql.cs" />
     <Compile Include="CADTests\CADFoodTest.cs" />
     <Compile Include="ENTests\ENFoodTest.cs" />
+    <Compile Include="CADTests\CADTypeTest.cs" />
+    <Compile Include="ENTests\ENTypeTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

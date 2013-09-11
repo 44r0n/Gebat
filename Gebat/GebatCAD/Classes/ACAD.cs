@@ -446,7 +446,7 @@ namespace GebatCAD.Classes
 		{
 			try
 			{
-				if (delRow == null)
+				if (delRow == null || delRow["Id"] == null)
 				{
 					throw new NullReferenceException("Cannot delete a null row");
 				}

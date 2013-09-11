@@ -82,6 +82,10 @@ namespace GebatEN.Classes
 		/// <param name="name">Nombre del tipo.</param>
 		public ENType(string name)
 		{
+			if (name == null)
+			{
+				throw new NullReferenceException("The name cannot be null");
+			}
 			cad = new CADType ();
 			this.name = name;
 		}
@@ -109,7 +113,7 @@ namespace GebatEN.Classes
 			DataTable tabla = cad.SelectAll();
 			foreach (DataRow rows in tabla.Rows)
 			{
-				ENFood nueva = new ENType();
+				ENType nueva = new ENType();
 				nueva.FromRow(rows);
 				ret.Add((ENType)nueva);
 			}
