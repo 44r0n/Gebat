@@ -34,7 +34,7 @@ using MySql.Data.MySqlClient;
 namespace Test
 {
 	[TestFixture()]
-	public class Food
+	public class CADFoodTest
 	{
 		private DataTable tableFormat
 		{
@@ -48,7 +48,7 @@ namespace Test
 			}
 		}
 
-		private string scriptfilename = "CADTests/PreparacionTest.sql";
+		private string scriptfilename = "PreparacionTest.sql";
 
 		private ISql fooCon
 		{

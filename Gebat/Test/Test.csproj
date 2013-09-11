@@ -42,7 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CADTests\Stubs\StubIsql.cs" />
-    <Compile Include="CADTests\Food.cs" />
+    <Compile Include="CADTests\CADFoodTest.cs" />
+    <Compile Include="ENTests\ENFoodTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -65,9 +66,9 @@
     <Folder Include="CADTests\Stubs\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CADTests\PreparacionTest.sql">
+    <None Include="App.config" />
+    <None Include="PreparacionTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="App.config" />
   </ItemGroup>
 </Project>
