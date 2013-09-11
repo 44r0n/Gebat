@@ -383,7 +383,7 @@ namespace GebatCAD.Classes
 				addRow.ItemArray = newRow.ItemArray;
 				dTable.Rows.Add(addRow);
 
-				DbCommandBuilder builder = sql.Builder(adapter);
+				sql.Builder(adapter);
 				adapter.Update(dSet, tablename);
 
 				return this.Last();
@@ -424,7 +424,7 @@ namespace GebatCAD.Classes
 				dTable.Rows[0].ItemArray = newRow.ItemArray;
 				dTable.Rows[0].EndEdit();
 
-				DbCommandBuilder builder = sql.Builder(adapter);
+				sql.Builder(adapter);
 
 				adapter.Update(dSet, tablename);
 			}
@@ -462,7 +462,7 @@ namespace GebatCAD.Classes
 
 				dTable.Rows[0].Delete();
 
-				DbCommandBuilder builder = sql.Builder(adapter);
+				sql.Builder(adapter);
 				adapter.Update(dSet, tablename);
 			}
 			catch (Exception ex)

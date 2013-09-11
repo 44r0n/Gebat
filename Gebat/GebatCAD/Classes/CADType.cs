@@ -1,5 +1,5 @@
 //
-//  CADFood.cs
+//  CADType.cs
 //
 //  Author:
 //       Aarón Sánchez Navarro <aaron.sn.1988@gmail.com>
@@ -22,15 +22,14 @@ using System;
 
 namespace GebatCAD.Classes
 {
-	public class CADFood : ACAD
+	public class CADType : ACAD
 	{
-		public CADFood()
-			: base()
+		public CADType ()
+			:base()
 		{
-			this.tablename = "Food";
-			this.idFormat.Add("Id");
+			this.tablename = "Type";
+			this.idFormat.Add ("Id");
 		}
 	}
 }
-
 

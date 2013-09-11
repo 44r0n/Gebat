@@ -41,6 +41,7 @@
     <Compile Include="Exceptions\NullTableNameException.cs" />
     <Compile Include="Classes\ACAD.cs" />
     <Compile Include="Classes\CADFood.cs" />
+    <Compile Include="Classes\CADType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
