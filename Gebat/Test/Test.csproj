@@ -41,8 +41,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CADTests\Test.cs" />
     <Compile Include="CADTests\Stubs\StubIsql.cs" />
+    <Compile Include="CADTests\Food.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

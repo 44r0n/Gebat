@@ -34,7 +34,7 @@ using MySql.Data.MySqlClient;
 namespace Test
 {
 	[TestFixture()]
-	public class Test
+	public class Food
 	{
 		private DataTable tableFormat
 		{
