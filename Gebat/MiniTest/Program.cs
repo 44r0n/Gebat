@@ -30,10 +30,13 @@ namespace MiniTest
 		{
 			Console.WriteLine ("Escribe la contraseña de la base de datos.");
 			ACAD.Password = Console.ReadLine ();
-			ENFood food = new ENFood ("Patates", 2);
+			/*ENFood food = new ENFood ("Patates", 2);
 			Console.WriteLine ("Antes de guardar " + food.Id [0]);
 			food.Save ();
-			Console.WriteLine ("Despues de guardar " + food.Id [0]);
+			Console.WriteLine ("Despues de guardar " + food.Id [0]);*/
+			ACAD food = new CADFood ();
+			Console.WriteLine ("Hay " + food.Count ());
+
 		}
 	}
 }

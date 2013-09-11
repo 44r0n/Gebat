@@ -46,10 +46,10 @@ namespace SqlManager
 				case "System.Data.SqlClient":
 					conn = new SqlConnection (sqlConnectionString);
 					return conn;
-					case "MySql.Data.MySqlClient":
+				case "MySql.Data.MySqlClient":
 					conn = new MySqlConnection (sqlConnectionString);
 					return conn;
-					default:
+				default:
 					throw new NotSupportedException ("The provider "+provider+" is not supported in this library.");
 			}
 		}
@@ -62,10 +62,10 @@ namespace SqlManager
 				case "System.Data.SqlClient":
 					command = new SqlCommand (sqlQuery, (SqlConnection)connection);
 					return command;
-					case "MySql.Data.MySqlClient":
+				case "MySql.Data.MySqlClient":
 					command = new MySqlCommand (sqlQuery, (MySqlConnection)connection);
 					return command;
-					default:
+				default:
 					throw new NotSupportedException ("The provider "+provider+" is not supported in this library.");
 			}
 		}
@@ -77,10 +77,10 @@ namespace SqlManager
 				case "System.Data.SqlClient":
 					SqlDataAdapter sqladapter = new SqlDataAdapter (sqlQuery, (SqlConnection) connection);
 					return sqladapter;
-					case "MySql.Data.MySqlClient":
+				case "MySql.Data.MySqlClient":
 					MySqlDataAdapter mysqladapter = new MySqlDataAdapter (sqlQuery, (MySqlConnection) connection);
 					return mysqladapter;
-					default:
+				default:
 					throw new NotSupportedException ("The provider "+provider+" is not supported in this library.");
 			}
 		}
@@ -91,9 +91,9 @@ namespace SqlManager
 			{
 				case "System.Data.SqlClient":
 					return new SqlCommandBuilder ((SqlDataAdapter)adapter);
-					case "MySql.Data.MySqlClient":
+				case "MySql.Data.MySqlClient":
 					return new MySqlCommandBuilder ((MySqlDataAdapter)adapter);
-					default:
+				default:
 					throw new NotSupportedException ("The provider "+provider+" is not supported in this library.");
 			}
 		}

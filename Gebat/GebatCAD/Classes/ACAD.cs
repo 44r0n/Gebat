@@ -91,7 +91,7 @@ namespace GebatCAD.Classes
 		{
 			connect();
 			DbCommand command = sql.Command (query, conn);
-			int ret = (int)command.ExecuteScalar();
+			int ret = Convert.ToInt32(command.ExecuteScalar());
 			disconnect();
 			return ret;
 		}
@@ -140,7 +140,7 @@ namespace GebatCAD.Classes
 		{
 			set 
 			{
-				password += "Password=" + value;
+				password = "Password=" + value;
 			}
 		}
 

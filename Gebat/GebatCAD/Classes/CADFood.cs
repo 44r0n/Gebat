@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,7 +30,7 @@ namespace GebatCAD.Classes
 		public CADFood()
 			: base()
 		{
-			this.tablename = "GEBAT.Food";
+			this.tablename = "Food";
 			this.idFormat.Add("Id");
 		}
 
