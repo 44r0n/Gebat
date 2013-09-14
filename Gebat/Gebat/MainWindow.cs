@@ -20,17 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using Gtk;
+using GebatCAD.Classes;
 
 public partial class MainWindow: Gtk.Window
 {	
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
+		this.Maximize ();
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
 		Application.Quit ();
 		a.RetVal = true;
+	}
+	protected void exit (object sender, EventArgs e)
+	{
+		Application.Quit ();
+	}
+
+
+	protected void Quantities (object sender, EventArgs e)
+	{
+		Gebat.Cantidades cant = new Gebat.Cantidades ();
+		cant.Modal = true;
+		cant.Show ();
 	}
 }

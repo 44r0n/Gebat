@@ -144,6 +144,31 @@ namespace GebatCAD.Classes
 			}
 		}
 
+		static public bool AttemptConnection()
+		{
+			try
+			{
+				string trysqlConnectionString = ConfigurationManager.ConnectionStrings["GebatDataConnectionString"].ConnectionString;
+				string trysqlprovider = ConfigurationManager.ConnectionStrings ["GebatDataConnectionString"].ProviderName;
+				ISql tryisql = FactorySql.Create(trysqlprovider);
+
+				if (password != string.Empty) 
+				{
+					trysqlConnectionString += password;
+				}
+
+				DbConnection tryconn = tryisql.Connection (trysqlConnectionString);
+				tryconn.Open();
+				tryconn.Close();
+
+				return true;
+			}
+			catch(Exception ex)
+			{
+				return false;
+			}
+		}
+
 		/// <summary>
 		/// Cuenta el numero de registros en la tabla.
 		/// </summary>

@@ -1,5 +1,5 @@
 //
-//  Program.cs
+//  Passwd.cs
 //
 //  Author:
 //       Aarón Sánchez Navarro <aaron.sn.1988@gmail.com>
@@ -19,18 +19,46 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using GebatCAD.Classes;
 using Gtk;
 
 namespace Gebat
 {
-	class MainClass
+	public partial class Passwd : Gtk.Window
 	{
-		public static void Main (string[] args)
+		public Passwd () : 
+				base(Gtk.WindowType.Toplevel)
 		{
-			Application.Init ();
-			Passwd win = new Passwd ();
+			this.Build ();
+
+		}
+
+		protected void connect (object sender, EventArgs e)
+		{
+			ACAD.Password = entry6.Text;
+			if (ACAD.AttemptConnection())
+			{
+				button3.Sensitive = true;
+				label8.Text = "Conexión establecida.";
+			} 
+			else
+			{
+				button3.Sensitive = false;
+				label8.Text = "No se pudo establecer la conexión.";
+			}
+		}
+
+		protected void exit (object sender, EventArgs e)
+		{
+			Application.Quit ();
+		}
+
+		protected void accept (object sender, EventArgs e)
+		{
+			MainWindow win = new MainWindow ();
 			win.Show ();
-			Application.Run ();
+			this.Destroy ();
 		}
 	}
 }
+
