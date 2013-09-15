@@ -90,7 +90,7 @@ namespace GebatEN.Classes
 			this.name = name;
 		}
 
-		public override AEN Read (System.Collections.Generic.List<int> id)
+		public override AEN Read (List<int> id)
 		{
 			ENType ret = new ENType();
 			List<object> param = new List<object>();

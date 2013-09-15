@@ -33,6 +33,7 @@ namespace GebatEN.Classes
 
 		private string name;
 		private int quantity;
+		private ENType type;
 
 		#endregion
 
@@ -58,6 +59,10 @@ namespace GebatEN.Classes
 				ret["Id"] = this.id[0];
 				ret["Name"] = this.name;
 				ret["Quantity"] = this.quantity;
+				if (type != null)
+				{
+					ret ["QuantityType"] = type.Id[0];
+				}
 				return ret;
 			}
 		}
@@ -69,6 +74,12 @@ namespace GebatEN.Classes
 				this.id[0] = (int)row["Id"];
 				this.name = (string)row["Name"];
 				this.quantity = (int)row["Quantity"];
+				if (row ["QuantityType"] != null)
+				{
+					List<int> ids = new List<int> ();
+					ids.Add ((int)row ["QuantityType"]);
+					type = (ENType)new ENType ("").Read (ids);
+				}
 			}
 			else
 			{
@@ -109,6 +120,18 @@ namespace GebatEN.Classes
 			}
 		}
 
+		public ENType MyType
+		{
+			get
+			{
+				return type;
+			}
+			set
+			{
+				type = value;
+			}
+		}
+
 		#endregion
 
 		#region//Public Methods
@@ -128,6 +151,7 @@ namespace GebatEN.Classes
 			cad = new CADFood();
 			this.name = name;
 			this.quantity = quantity;
+			this.type = null;
 		}
 
 		/// <summary>
