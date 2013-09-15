@@ -56,7 +56,7 @@ namespace Gebat
 
 			filter = new TreeModelFilter (quantityStore, null);
 			filter.VisibleFunc = new TreeModelFilterVisibleFunc (FilterTree);
-			treeviewquantities.Model = filter;
+			//treeviewquantities.Model = quantityStore;
 
 			ShowTree ();
 		}
@@ -73,9 +73,17 @@ namespace Gebat
 			tipos = new ENType ("").ReadAll ();
 			foreach (AEN tipo in tipos)
 			{
-				ENType untipo = (ENType)tipo;
-				quantityStore.AppendValues (untipo);
+				try
+				{
+					ENType untipo = (ENType)tipo;
+					quantityStore.AppendValues (untipo);
+				}
+				catch(Exception ex)
+				{
+					string msg = ex.Message;
+				}
 			}
+			treeviewquantities.Model = quantityStore;
 			ShowTree ();
 		}
 
@@ -112,6 +120,7 @@ namespace Gebat
 			typeSelected.Delete ();
 			typeSelected = null;
 			buttonDelete.Sensitive = false;
+			entrySearch.Text = "";
 			FillTree ();
 		}
 
@@ -124,7 +133,7 @@ namespace Gebat
 				return true;
 			}
 
-			if (tipo.Name.IndexOf (entryType.Text) > -1)
+			if (tipo.Name.IndexOf (entrySearch.Text) > -1)
 			{
 				return true;
 			} 
@@ -136,6 +145,7 @@ namespace Gebat
 
 		protected void searchType (object sender, EventArgs e)
 		{
+			treeviewquantities.Model = filter;
 			filter.Refilter ();
 			ShowTree ();
 		}
