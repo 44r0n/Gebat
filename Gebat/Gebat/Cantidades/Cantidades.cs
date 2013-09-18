@@ -52,39 +52,22 @@ namespace Gebat
 
 			treeviewquantities.AppendColumn (quantity);
 
-			quantity.SetCellDataFunc(quantityNameCell, new TreeCellDataFunc(RenderTypeName));
+			quantity.SetCellDataFunc (quantityNameCell, new TreeCellDataFunc (RenderTypeName));
 
 			filter = new TreeModelFilter (quantityStore, null);
 			filter.VisibleFunc = new TreeModelFilterVisibleFunc (FilterTree);
-			//treeviewquantities.Model = quantityStore;
-
-			ShowTree ();
-		}
-
-		private void ShowTree()
-		{
-			this.ShowAll ();
 		}
 
 		private void FillTree()
 		{
 			quantityStore.Clear ();
-			List<AEN> tipos = new List<AEN> ();
-			tipos = new ENType ("").ReadAll ();
+			List<AEN> tipos = new ENType ("").ReadAll ();
 			foreach (AEN tipo in tipos)
 			{
-				try
-				{
-					ENType untipo = (ENType)tipo;
-					quantityStore.AppendValues (untipo);
-				}
-				catch(Exception ex)
-				{
-					string msg = ex.Message;
-				}
+				ENType untipo = (ENType)tipo;
+				quantityStore.AppendValues (untipo);
 			}
 			treeviewquantities.Model = quantityStore;
-			ShowTree ();
 		}
 
 		protected void InsQuant (object sender, EventArgs e)
@@ -147,7 +130,7 @@ namespace Gebat
 		{
 			treeviewquantities.Model = filter;
 			filter.Refilter ();
-			ShowTree ();
+			//ShowTree ();
 		}
 	}
 }

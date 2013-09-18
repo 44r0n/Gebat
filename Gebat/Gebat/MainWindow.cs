@@ -47,4 +47,10 @@ public partial class MainWindow: Gtk.Window
 		cant.Modal = true;
 		cant.Show ();
 	}
+	protected void Food (object sender, EventArgs e)
+	{
+		Gebat.FoodManager food = new Gebat.FoodManager ();
+		food.Modal = true;
+		food.Show ();
+	}
 }

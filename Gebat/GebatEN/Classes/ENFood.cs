@@ -74,7 +74,7 @@ namespace GebatEN.Classes
 				this.id[0] = (int)row["Id"];
 				this.name = (string)row["Name"];
 				this.quantity = (int)row["Quantity"];
-				if (row ["QuantityType"] != null)
+				if (row ["QuantityType"] != DBNull.Value)
 				{
 					List<int> ids = new List<int> ();
 					ids.Add ((int)row ["QuantityType"]);
@@ -141,7 +141,7 @@ namespace GebatEN.Classes
 		/// </summary>
 		/// <param name="name">Nombre del alimento.</param>
 		/// <param name="quantity">Cantidad del alimento.</param>
-		public ENFood(string name, int quantity = 0)
+		public ENFood(string name, int quantity = 0, ENType type = null)
 			: base()
 		{
 			if (name == null)
@@ -151,7 +151,7 @@ namespace GebatEN.Classes
 			cad = new CADFood();
 			this.name = name;
 			this.quantity = quantity;
-			this.type = null;
+			this.type = type;
 		}
 
 		/// <summary>
