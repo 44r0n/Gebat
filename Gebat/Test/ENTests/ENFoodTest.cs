@@ -92,6 +92,16 @@ namespace Test
 			ENFood food = (ENFood)new ENFood("").Read(ids);
 			food.Delete();
 		}
+
+		[Test]
+		public void Read()
+		{
+			List<int> ids = new List<int> ();
+			ids.Add (4);
+			ENFood food = (ENFood)new ENFood ("").Read (ids);
+			string expected = "Kg";
+			Assert.AreEqual (expected, food.MyType.Name);
+		}
 	}
 }
 

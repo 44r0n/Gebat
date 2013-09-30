@@ -1,4 +1,6 @@
+DROP TABLE IF EXISTS Food;
 DROP TABLE IF EXISTS Type;
+
 CREATE TABLE IF NOT EXISTS Type
 (
 	Id int Primary Key AUTO_INCREMENT,
@@ -6,12 +8,13 @@ CREATE TABLE IF NOT EXISTS Type
 );
 
 
-DROP TABLE IF EXISTS Food;
 CREATE TABLE IF NOT EXISTS Food
 (
 	Id int Primary Key AUTO_INCREMENT,
 	Name varchar(20) not null,
-	Quantity int not null
+	Quantity int not null,
+	QuantityType int,
+	CONSTRAINT fk_Food_Type FOREIGN KEY (QuantityType) REFERENCES Type (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
 INSERT INTO Type (Name) VALUES
@@ -36,16 +39,18 @@ INSERT INTO Type (Name) VALUES
 
 DELETE FROM Type WHERE Id = 3;
 
-INSERT INTO Food (Name,Quantity) VALUES
+INSERT INTO Food (Name,Quantity,QuantityType) VALUES
 (
 	'Patates',
-	2
+	2,
+	1
 );
 
-INSERT INTO Food (Name,Quantity) VALUES
+INSERT INTO Food (Name,Quantity,QuantityType) VALUES
 (
 	'Tomates',
-	3
+	3,
+	1
 );
 
 INSERT INTO Food (Name,Quantity) VALUES
@@ -54,10 +59,11 @@ INSERT INTO Food (Name,Quantity) VALUES
 	0
 );
 
-INSERT INTO Food (Name,Quantity) VALUES
+INSERT INTO Food (Name,Quantity,QuantityType) VALUES
 (
 	'Pomes',
-	4
+	4,
+	1
 );
 
 DELETE FROM Food WHERE Id = 3;

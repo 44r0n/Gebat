@@ -44,6 +44,7 @@ namespace Test
 				expected.Columns.Add("Id", typeof(int));
 				expected.Columns.Add("Name", typeof(string));
 				expected.Columns.Add("Quantity", typeof(int));
+				expected.Columns.Add ("QuantityType", typeof(int));
 				return expected;
 			}
 		}
