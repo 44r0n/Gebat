@@ -24,8 +24,8 @@ namespace GebatCAD.Classes
 {
 	public class CADFood : ACAD
 	{
-		public CADFood()
-			: base()
+		public CADFood(string connStringName)
+			: base(connStringName)
 		{
 			this.tablename = "Food";
 			this.idFormat.Add("Id");

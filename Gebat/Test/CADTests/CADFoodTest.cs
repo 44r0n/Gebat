@@ -109,7 +109,7 @@ namespace Test
 		public void TestSelectOne ()
 		{
 			string expected = "Patates";
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			List<object> ids = new List<object>();
 			ids.Add((int)1);
 			DataRow actual = food.Select(ids);
@@ -120,7 +120,7 @@ namespace Test
 		public void TestCount()
 		{
 			int expected = 3;
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			int actual = food.Count();
 			Assert.AreEqual(expected, actual);
 		}
@@ -130,7 +130,7 @@ namespace Test
 		public void TestCountConnFail()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 
 			food.Count();
 		}
@@ -140,7 +140,7 @@ namespace Test
 		public void TestLastConnFail()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 
 			food.Last();
 		}
@@ -148,16 +148,21 @@ namespace Test
 		[Test]
 		public void TestLast()
 		{
-			int expected = 4;
-			ACAD food = new CADFood();
-			int actual = food.Last();
-			Assert.AreEqual(expected, actual);
+			ACAD food = new CADFood("GebatDataConnectionString");
+			DataRow actual = food.Last();
+			DataRow expected = food.GetVoidRow;
+			expected ["Id"] = 4;
+			expected ["Name"] = "Pomes";
+			expected ["Quantity"] = 4;
+			Assert.AreEqual(expected["Id"], actual["Id"]);
+			Assert.AreEqual(expected["Name"], actual["Name"]);
+			Assert.AreEqual(expected["Quantity"], actual["Quantity"]);
 		}
 
 		[Test]
 		public void SelectAll()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataTable actual = food.SelectAll();
 			DataTable expected = this.tableFormat;
 			DataRow row = expected.NewRow();
@@ -190,7 +195,7 @@ namespace Test
 		public void SelectAllFailConn()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 
 			food.SelectAll();
 		}
@@ -198,7 +203,7 @@ namespace Test
 		[Test]
 		public void Select()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			List<object> ids = new List<object>();
 			ids.Add(1);
 			DataRow actual = food.Select(ids);
@@ -217,7 +222,7 @@ namespace Test
 		[ExpectedException(typeof(NullReferenceException))]
 		public void SelectVoidList()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			food.Select(null);
 		}
 
@@ -228,7 +233,7 @@ namespace Test
 			List<object> ids = new List<object>();
 			ids.Add("hola");
 			ids.Add(3);
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			food.Select(ids);
 		}
 
@@ -238,7 +243,7 @@ namespace Test
 		{
 			setFailConn();
 
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			List<object> ids = new List<object>();
 			ids.Add(2);
 			food.Select(ids);
@@ -248,7 +253,7 @@ namespace Test
 		[Test]
 		public void SelectWhere()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataTable expected = tableFormat;
 			DataRow row = expected.NewRow();
 			row["Id"] = 1;
@@ -269,7 +274,7 @@ namespace Test
 		[ExpectedException(typeof(InvalidStartRecordException))]
 		public void SelectWhereInvalidStart()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			food.SelectWhere("Name = 'Patates'", -3);
 		}
 
@@ -277,7 +282,7 @@ namespace Test
 		[ExpectedException(typeof(MySqlException))]
 		public void SelectWjereInvalidStatement()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			food.SelectWhere("Name = ; ");
 		}
 
@@ -287,27 +292,32 @@ namespace Test
 		{
 			setFailConn();
 
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			food.SelectWhere("Name = 'Patates'");
 		}
 
 		[Test]
 		public void Insert()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow ins = food.GetVoidRow;
 			ins["Name"] = "Peres";
 			ins["Quantity"] = 4;
-			int actual = food.Insert(ins);
-			int expected = 5;
-			Assert.AreEqual(expected, actual);
+			DataRow expected = food.GetVoidRow;
+			expected ["Id"] = 5;
+			expected ["Name"] = "Peres";
+			expected ["Quantity"] = 4;
+			DataRow actual = food.Insert(ins);
+			Assert.AreEqual(expected["Id"], actual["Id"]);
+			Assert.AreEqual(expected["Name"], actual["Name"]);
+			Assert.AreEqual(expected["Quantity"], actual["Quantity"]);
 		}
 
 		[Test]
 		[ExpectedException(typeof(NullReferenceException))]
 		public void InsertNullRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow ins = null;
 			food.Insert(ins);
 		}
@@ -316,7 +326,7 @@ namespace Test
 		[ExpectedException(typeof(ArgumentException))]
 		public void InsertWrongRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow ins = food.GetVoidRow;
 			ins["Name"] = 4;
 			ins["Quantity"] = "hola";
@@ -328,7 +338,7 @@ namespace Test
 		public void InsertFailCOnn()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow ins = food.GetVoidRow;
 			ins["Name"] = "Peres";
 			ins["Quantity"] = 4;
@@ -339,7 +349,7 @@ namespace Test
 		[Test]
 		public void Update()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow mod = food.GetVoidRow;
 			mod["Id"] = 1;
 			mod["Name"] = "Peres";
@@ -351,7 +361,7 @@ namespace Test
 		[ExpectedException(typeof(NullReferenceException))]
 		public void UpdateNullRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow mod = null;
 			food.Update(mod);
 		}
@@ -360,7 +370,7 @@ namespace Test
 		[ExpectedException(typeof(ArgumentException))]
 		public void UpdateWrongRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow ins = food.GetVoidRow;
 			ins["Id"] = 1;
 			ins["Name"] = 4;
@@ -373,7 +383,7 @@ namespace Test
 		public void UpdateFailConn()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow ins = food.GetVoidRow;
 			ins["Id"] = 1;
 			ins["Name"] = "Peres";
@@ -384,7 +394,7 @@ namespace Test
 		[Test]
 		public void Delete()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow del = food.GetVoidRow;
 			del["Id"] = 1;
 			del["Name"] = "Patates";
@@ -396,7 +406,7 @@ namespace Test
 		[ExpectedException(typeof(NullReferenceException))]
 		public void DeleteNullRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			food.Delete(null);
 		}
 
@@ -404,7 +414,7 @@ namespace Test
 		[ExpectedException(typeof(ArgumentException))]
 		public void DeleteWrongRow()
 		{
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow del = food.GetVoidRow;
 			del["Name"] = 4;
 			del["Quantity"] = "hola";
@@ -416,7 +426,7 @@ namespace Test
 		public void DeleteFailConn()
 		{
 			setFailConn();
-			ACAD food = new CADFood();
+			ACAD food = new CADFood("GebatDataConnectionString");
 			DataRow del = food.GetVoidRow;
 			del["Id"] = 1;
 			del["Name"] = "Patates";

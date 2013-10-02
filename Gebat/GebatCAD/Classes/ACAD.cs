@@ -32,13 +32,14 @@ namespace GebatCAD.Classes
 	{
 		static protected string password = string.Empty;
 		protected string tablename;
-		protected bool rowReturned;
-		protected DataRow voidRow;
-		protected string sqlConnectionString;
-		protected string sqlprovider;
-		protected ISql sql = null;
+		private bool rowReturned;
+		private DataRow voidRow;
+		private string sqlConnectionString;
+		private string sqlprovider;
+		private ISql sql = null;
 		protected List<string> idFormat;
-		protected DbConnection conn = null;
+		private DbConnection conn = null;
+		static private DbConnection uniqueconn = null;
 		private bool passEstablished;
 
 
@@ -89,10 +90,16 @@ namespace GebatCAD.Classes
 		/// <returns>Valor entero devuelto por el Scalar.</returns>
 		protected int ExecuteScalar(string query)
 		{
-			connect();
+			if (uniqueconn == null)
+			{
+				connect ();
+			}
 			DbCommand command = sql.Command (query, conn);
 			int ret = Convert.ToInt32(command.ExecuteScalar());
-			disconnect();
+			if (uniqueconn == null)
+			{
+				disconnect ();
+			}
 			return ret;
 		}
 
@@ -103,16 +110,27 @@ namespace GebatCAD.Classes
 		/// <returns>DataTable con los resultados.</returns>
 		protected DataTable ExecuteQuery(string query)
 		{
-			connect();
+			DbDataAdapter adapter;
+			if (uniqueconn == null)
+			{
+				connect ();
 
-			DbDataAdapter adapter = sql.Adapter (query,conn);
+				adapter = sql.Adapter (query, conn);
+			} 
+			else
+			{
+				adapter = sql.Adapter (query, uniqueconn);
+			}
 
 			DataSet dSet = new DataSet();
 			adapter.Fill(dSet, this.tablename);
 			DataTable dTable = dSet.Tables[this.tablename];
 			rowReturned = true;
 			voidRow = dTable.NewRow();
-			disconnect();
+			if (uniqueconn == null)
+			{
+				disconnect ();
+			}
 			return dTable;
 		}
 
@@ -122,10 +140,13 @@ namespace GebatCAD.Classes
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public ACAD()
+		/// <param name="connStringName">Nombre de la connectionString que está definida en el archivo de configuración de la aplicación.</param>
+		public ACAD(string connStringName)
 		{
-			sqlConnectionString = ConfigurationManager.ConnectionStrings["GebatDataConnectionString"].ConnectionString;
-			sqlprovider = ConfigurationManager.ConnectionStrings ["GebatDataConnectionString"].ProviderName;
+			//sqlConnectionString = ConfigurationManager.ConnectionStrings["GebatDataConnectionString"].ConnectionString;
+			//sqlprovider = ConfigurationManager.ConnectionStrings ["GebatDataConnectionString"].ProviderName;
+			sqlConnectionString = ConfigurationManager.ConnectionStrings[connStringName].ConnectionString;
+			sqlprovider = ConfigurationManager.ConnectionStrings [connStringName].ProviderName;
 			rowReturned = false;
 			idFormat = new List<string>();
 			tablename = null;
@@ -144,12 +165,12 @@ namespace GebatCAD.Classes
 			}
 		}
 
-		static public bool AttemptConnection()
+		static public bool AttemptConnection(string connStringName)
 		{
 			try
 			{
-				string trysqlConnectionString = ConfigurationManager.ConnectionStrings["GebatDataConnectionString"].ConnectionString;
-				string trysqlprovider = ConfigurationManager.ConnectionStrings ["GebatDataConnectionString"].ProviderName;
+				string trysqlConnectionString = ConfigurationManager.ConnectionStrings[connStringName].ConnectionString;
+				string trysqlprovider = ConfigurationManager.ConnectionStrings [connStringName].ProviderName;
 				ISql tryisql = FactorySql.Create(trysqlprovider);
 
 				if (password != string.Empty) 
@@ -170,9 +191,43 @@ namespace GebatCAD.Classes
 		}
 
 		/// <summary>
+		/// Conecta a la base de datos mediante una única conexión.
+		/// </summary>
+		/// <param name="connStringName">Nombre de la connectionString que está definida en el archivo de configuración de la aplicación.</param>
+		static public void Connect(string connStringName)
+		{
+			if (uniqueconn != null)
+			{
+				string sqlConnString = ConfigurationManager.ConnectionStrings [connStringName].ConnectionString;
+				string sqlProvider = ConfigurationManager.ConnectionStrings [connStringName].ProviderName;
+				ISql consql = FactorySql.Create (sqlProvider);
+
+				if (password != string.Empty)
+				{
+					sqlConnString += password;
+				}
+
+				uniqueconn = consql.Connection (sqlConnString);
+				uniqueconn.Open ();
+			}
+		}
+
+		/// <summary>
+		/// Desconecta la conexión única.
+		/// </summary>
+		static public void Disconnect()
+		{
+			if (uniqueconn != null)
+			{
+				uniqueconn.Close ();
+				uniqueconn = null;
+			}
+		}
+
+		/// <summary>
 		/// Cuenta el numero de registros en la tabla.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>Número de registros en la tabla.</returns>
 		public virtual int Count()
 		{
 			string sql = "SELECT COUNT(*) FROM " + this.tablename;
@@ -183,10 +238,29 @@ namespace GebatCAD.Classes
 		/// Devuelve el último Id insertado en la base de datos. El campo en la base de datos debe llamarse Id.
 		/// </summary>
 		/// <returns></returns>
-		public virtual int Last()
+		public virtual DataRow Last()
 		{
-			string sql = "SELECT MAX(Id) FROM " + this.tablename;
-			return ExecuteScalar(sql);
+			string sql = "SELECT * FROM " + this.tablename + " Order by ";
+			if (this.idFormat.Count == 1)
+			{
+				sql += this.idFormat [0];
+			} 
+			else
+			{
+				for (int i = 0; i < idFormat.Count; i++)
+				{
+					if (i == idFormat.Count - 1)
+					{
+						sql += this.idFormat [i];
+					} 
+					else
+					{
+						sql += this.idFormat [i] + ", ";
+					}
+				}
+			}
+			sql += " desc limit 1";
+			return ExecuteQuery(sql).Rows[0];
 		}
 
 		/// <summary>
@@ -235,8 +309,18 @@ namespace GebatCAD.Classes
 		{
 			try
 			{
-				connect();
-				DbDataAdapter adapter = sql.Adapter("SELECT * FROM " + tablename,conn);
+				string query = "SELECT * FROM " + tablename;
+				DbDataAdapter adapter;
+				if (uniqueconn == null)
+				{
+					connect ();
+
+					adapter = sql.Adapter (query, conn);
+				} 
+				else
+				{
+					adapter = sql.Adapter (query, uniqueconn);
+				}
 				DataTable datatable = new DataTable();
 				DataSet dataset = new DataSet();
 
@@ -255,7 +339,10 @@ namespace GebatCAD.Classes
 			}
 			finally
 			{
-				disconnect();
+				if (uniqueconn == null)
+				{
+					disconnect ();
+				}
 			}
 		}
 
@@ -282,7 +369,7 @@ namespace GebatCAD.Classes
 					}
 				}
 
-				connect();
+				//connect();
 				DataTable dTable = ExecuteQuery(query);
 				rowReturned = true;
 				voidRow = dTable.NewRow();
@@ -301,7 +388,10 @@ namespace GebatCAD.Classes
 			}
 			finally
 			{
-				disconnect();
+				if (uniqueconn == null)
+				{
+					disconnect ();
+				}
 			}
 		}
 
@@ -332,7 +422,10 @@ namespace GebatCAD.Classes
 			}
 			finally
 			{
-				disconnect ();
+				if (uniqueconn == null)
+				{
+					disconnect ();
+				}
 			}
 		}
 
@@ -352,8 +445,19 @@ namespace GebatCAD.Classes
 					throw new InvalidStartRecordException("Start record cannot be negative");
 				}
 
+				string query = "SELECT * FROM " + this.TableName + " WHERE " + whereStatement;
+				DbDataAdapter adapter;
+
+				if(uniqueconn == null)
+				{
 				connect();
-				DbDataAdapter adapter = sql.Adapter("SELECT * FROM " + this.TableName + " WHERE " + whereStatement, conn);
+				adapter = sql.Adapter(query, conn);
+				}
+				else
+				{
+					adapter = sql.Adapter(query,uniqueconn);
+				}
+
 				DataTable dt = new DataTable();
 				DataSet ds = new DataSet();
 
@@ -378,7 +482,10 @@ namespace GebatCAD.Classes
 			}
 			finally
 			{
-				disconnect();
+				if (uniqueconn == null)
+				{
+					disconnect ();
+				}
 			}
 		}
 
@@ -386,7 +493,8 @@ namespace GebatCAD.Classes
 		/// Inserta la fila pasada por parámetro en la base de datos. La tabla en la que se insertará dependará del campo TableName.
 		/// </summary>
 		/// <param name="newRow">Fila nueva que se insertará en la base de datos.</param>
-		public virtual int Insert(DataRow newRow)
+		/// <returns>La fila insertada, con los id's inicializados de la base de datos.</returns>
+		public virtual DataRow Insert(DataRow newRow)
 		{
 			try
 			{
@@ -395,8 +503,18 @@ namespace GebatCAD.Classes
 					throw new NullReferenceException("Cannot insert a null row");
 				}
 
-				connect();
-				DbDataAdapter adapter = sql.Adapter("SELECT * FROM " + this.TableName, conn);
+				string query = "SELECT * FROM " + this.TableName;
+				DbDataAdapter adapter;
+
+				if(uniqueconn == null)
+				{
+					connect();
+					adapter = sql.Adapter(query, conn);
+				}
+				else
+				{
+					adapter = sql.Adapter(query,uniqueconn);
+				}
 
 				DataSet dSet = new DataSet();
 				adapter.Fill(dSet, this.TableName);
@@ -419,7 +537,10 @@ namespace GebatCAD.Classes
 			}
 			finally
 			{
-				disconnect();
+				if (uniqueconn == null)
+				{
+					disconnect ();
+				}
 			}
 		}
 
@@ -437,8 +558,17 @@ namespace GebatCAD.Classes
 				}
 
 				string query = rowToQuery(newRow);
-				connect();
-				DbDataAdapter adapter = sql.Adapter(query, conn);
+				DbDataAdapter adapter;
+
+				if(uniqueconn == null)
+				{
+					connect();
+					adapter = sql.Adapter(query, conn);
+				}
+				else
+				{	
+					adapter = sql.Adapter(query,uniqueconn);
+				}
 
 				DataSet dSet = new DataSet();
 				adapter.Fill(dSet, this.TableName);
@@ -459,7 +589,10 @@ namespace GebatCAD.Classes
 			}
 			finally
 			{
-				disconnect();
+				if (uniqueconn == null)
+				{
+					disconnect ();
+				}
 			}
 		}
 
@@ -477,8 +610,17 @@ namespace GebatCAD.Classes
 				}
 
 				string query = rowToQuery(delRow);
-				connect();
-				DbDataAdapter adapter = sql.Adapter(query, conn);
+				DbDataAdapter adapter;
+
+				if(uniqueconn == null)
+				{
+					connect();
+					adapter = sql.Adapter(query, conn);
+				}
+				else
+				{
+					adapter = sql.Adapter(query,uniqueconn);
+				}
 
 				DataSet dSet = new DataSet();
 				adapter.Fill(dSet, this.TableName);
@@ -496,7 +638,10 @@ namespace GebatCAD.Classes
 			}
 			finally
 			{
-				disconnect();
+				if (uniqueconn == null)
+				{
+					disconnect ();
+				}
 			}
 		}
 

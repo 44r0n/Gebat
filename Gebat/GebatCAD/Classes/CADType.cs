@@ -24,8 +24,8 @@ namespace GebatCAD.Classes
 {
 	public class CADType : ACAD
 	{
-		public CADType ()
-			:base()
+		public CADType (string connStringName)
+			:base(connStringName)
 		{
 			this.tablename = "Type";
 			this.idFormat.Add ("Id");

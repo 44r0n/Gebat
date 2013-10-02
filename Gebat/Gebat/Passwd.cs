@@ -36,7 +36,7 @@ namespace Gebat
 		protected void connect (object sender, EventArgs e)
 		{
 			ACAD.Password = entry6.Text;
-			if (ACAD.AttemptConnection())
+			if (ACAD.AttemptConnection("GebatDataConnectionString"))
 			{
 				button3.Sensitive = true;
 				label8.Text = "Conexión establecida.";

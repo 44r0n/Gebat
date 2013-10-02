@@ -34,7 +34,7 @@ namespace MiniTest
 			Console.WriteLine ("Antes de guardar " + food.Id [0]);
 			food.Save ();
 			Console.WriteLine ("Despues de guardar " + food.Id [0]);*/
-			ACAD food = new CADFood ();
+			ACAD food = new CADFood ("GebatDataConnectionString");
 			Console.WriteLine ("Hay " + food.Count ());
 
 		}

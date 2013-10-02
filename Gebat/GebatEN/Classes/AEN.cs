@@ -30,8 +30,8 @@ namespace GebatEN.Classes
 {
 	public abstract class AEN
 	{
-		protected List<int> id;
-
+		protected bool saved;
+		protected List<object> id = null;
 		protected ACAD cad;
 
 		#region//Protected Methods
@@ -57,7 +57,7 @@ namespace GebatEN.Classes
 		/// <summary>
 		/// Obtiene el identificador del objeto en la base de datos.
 		/// </summary>
-		public List<int> Id
+		public List<object> Id
 		{
 			get
 			{
@@ -71,8 +71,7 @@ namespace GebatEN.Classes
 		public AEN()
 		{
 			cad = null;
-			id = new List<int>();
-			id.Add(0);
+			saved = false;
 		}
 
 		/// <summary>
@@ -84,9 +83,10 @@ namespace GebatEN.Classes
 			{
 				throw new NullReferenceException("The cad cannot be null");
 			}
-			if (id[0] == 0)
+			if (!saved)
 			{
-				this.id[0] = cad.Insert(ToRow);
+				 this.FromRow(cad.Insert(ToRow));
+				this.saved = true;
 			}
 			else
 			{
@@ -104,9 +104,10 @@ namespace GebatEN.Classes
 				throw new NullReferenceException("Cannot delete, the cad object is null");
 			}
 
-			if (id[0] != 0)
+			if (saved)
 			{
 				cad.Delete(ToRow);
+				saved = false;
 			}
 		}
 

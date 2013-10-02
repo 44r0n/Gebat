@@ -32,7 +32,7 @@ namespace GebatEN.Classes
 		private ENType ()
 			:base()
 		{
-			cad = new CADType ();
+			cad = new CADType ("GebatDataConnectionString");
 			name = "";
 		}
 
@@ -41,7 +41,10 @@ namespace GebatEN.Classes
 			get
 			{
 				DataRow ret = cad.GetVoidRow;
-				ret ["Id"] = this.id [0];
+				if (this.id != null)
+				{
+					ret ["Id"] = this.id [0];
+				}
 				ret ["Name"] = this.name;
 				return ret;
 			}
@@ -51,8 +54,10 @@ namespace GebatEN.Classes
 		{
 			if (row != null)
 			{
-				this.id[0] = (int)row["Id"];
+				this.id = new List<object> ();
+				this.id.Add((int)row["Id"]);
 				this.name = (string)row["Name"];
+				this.saved = true;
 			}
 			else
 			{
@@ -86,7 +91,7 @@ namespace GebatEN.Classes
 			{
 				throw new NullReferenceException("The name cannot be null");
 			}
-			cad = new CADType ();
+			cad = new CADType ("GebatDataConnectionString");
 			this.name = name;
 		}
 

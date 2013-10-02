@@ -42,7 +42,7 @@ namespace GebatEN.Classes
 		private ENFood()
 			: base()
 		{
-			cad = new CADFood();
+			cad = new CADFood("GebatDataConnectionString");
 			name = "";
 			quantity = 0;
 		}
@@ -56,12 +56,15 @@ namespace GebatEN.Classes
 			get 
 			{
 				DataRow ret = cad.GetVoidRow;
-				ret["Id"] = this.id[0];
+				if (this.id != null)
+				{
+					ret ["Id"] = (int)this.id [0];
+				}
 				ret["Name"] = this.name;
 				ret["Quantity"] = this.quantity;
 				if (type != null)
 				{
-					ret ["QuantityType"] = type.Id[0];
+					ret ["QuantityType"] = (int)type.Id[0];
 				}
 				return ret;
 			}
@@ -71,7 +74,8 @@ namespace GebatEN.Classes
 		{
 			if (row != null)
 			{
-				this.id[0] = (int)row["Id"];
+				this.id = new List<object> ();
+				this.id.Add((int)row["Id"]);
 				this.name = (string)row["Name"];
 				this.quantity = (int)row["Quantity"];
 				if (row ["QuantityType"] != DBNull.Value)
@@ -80,6 +84,7 @@ namespace GebatEN.Classes
 					ids.Add ((int)row ["QuantityType"]);
 					type = (ENType)new ENType ("").Read (ids);
 				}
+				this.saved = true;
 			}
 			else
 			{
@@ -148,7 +153,7 @@ namespace GebatEN.Classes
 			{
 				throw new NullReferenceException("The name cannot be null");
 			}
-			cad = new CADFood();
+			cad = new CADFood("GebatDataConnectionString");
 			this.name = name;
 			this.quantity = quantity;
 			this.type = type;
