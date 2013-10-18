@@ -53,10 +53,6 @@
       <Project>{F9CF59BE-07EC-41E9-90B6-11A03F2F6E10}</Project>
       <Name>GebatCAD</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GebatEN\GebatEN.csproj">
-      <Project>{017DA2FB-2F1F-4037-A234-F2AC68267DEC}</Project>
-      <Name>GebatEN</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SqlManager\SqlManager.csproj">
       <Project>{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}</Project>
       <Name>SqlManager</Name>
