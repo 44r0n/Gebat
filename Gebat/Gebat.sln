@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlManager", "SqlManager\SqlManager.csproj", "{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSqlManager", "TestSqlManager\TestSqlManager.csproj", "{0EB785EF-488B-4FA4-ADEE-5BC2459D01A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0EB785EF-488B-4FA4-ADEE-5BC2459D01A2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0EB785EF-488B-4FA4-ADEE-5BC2459D01A2}.Debug|x86.Build.0 = Debug|Any CPU
+		{0EB785EF-488B-4FA4-ADEE-5BC2459D01A2}.Release|x86.ActiveCfg = Release|Any CPU
+		{0EB785EF-488B-4FA4-ADEE-5BC2459D01A2}.Release|x86.Build.0 = Release|Any CPU
+		{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}.Debug|x86.Build.0 = Debug|Any CPU
+		{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}.Release|x86.ActiveCfg = Release|Any CPU
+		{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SqlManager\SqlManager.csproj
+	EndGlobalSection
+EndGlobal

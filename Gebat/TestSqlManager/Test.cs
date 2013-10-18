@@ -1,5 +1,5 @@
 //
-//  MyClass.cs
+//  Test.cs
 //
 //  Author:
 //       Aarón Sánchez Navarro <aaron.sn.1988@gmail.com>
@@ -18,13 +18,16 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+using NUnit.Framework;
 using System;
 
-namespace GebatEN
+namespace TestSqlManager
 {
-	public class MyClass
+	[TestFixture()]
+	public class Test
 	{
-		public MyClass ()
+		[Test()]
+		public void TestCase ()
 		{
 		}
 	}
