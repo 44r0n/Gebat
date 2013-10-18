@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{017DA2FB-2F1F-4037-A234-F2AC68267DEC}</ProjectGuid>
+    <ProjectGuid>{0398FF5B-F329-4E54-91CA-4157F318991A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>GebatEN</RootNamespace>
-    <AssemblyName>GebatEN</AssemblyName>
+    <RootNamespace>TestEN</RootNamespace>
+    <AssemblyName>TestEN</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,23 +30,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="nunit.framework">
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\AEN.cs" />
-    <Compile Include="Classes\ENFood.cs" />
-    <Compile Include="Classes\ENType.cs" />
+    <Compile Include="Test.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Classes\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GebatCAD\GebatCAD.csproj">
-      <Project>{F9CF59BE-07EC-41E9-90B6-11A03F2F6E10}</Project>
-      <Name>GebatCAD</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
