@@ -165,6 +165,11 @@ namespace GebatCAD.Classes
 			}
 		}
 
+        /// <summary>
+        /// Intenta establecer una única conexión a la base de datos.
+        /// </summary>
+        /// <param name="connStringName">Nombre de la conexión en el archibo App.conf</param>
+        /// <returns>True si ha conseguido establecer una conexión con la base de datos, false en caso contrario.</returns>
 		static public bool AttemptConnection(string connStringName)
 		{
 			try
