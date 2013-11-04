@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using GebatCAD.Classes;
 
 namespace GebatWin
 {
@@ -38,6 +32,22 @@ namespace GebatWin
         private void maskedTextBoxPassword_TextChanged(object sender, EventArgs e)
         {
             enableConnect();
+        }
+
+        private void buttonConnect_Click(object sender, EventArgs e)
+        {
+            ACAD.Password = maskedTextBoxPassword.Text;
+            if (ACAD.AttemptConnection("GebatDataConnectionString"))
+            {
+                Principal prin = new Principal();
+                prin.Show();
+                prin.BringToFront();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Imposible conectar.", "Aviso", MessageBoxButtons.OK);
+            }
         }
     }
 }

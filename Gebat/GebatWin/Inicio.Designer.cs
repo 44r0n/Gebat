@@ -63,6 +63,7 @@
             this.buttonConnect.TabIndex = 3;
             this.buttonConnect.Text = "Conectar";
             this.buttonConnect.UseVisualStyleBackColor = true;
+            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
             // textBoxUser
             // 
