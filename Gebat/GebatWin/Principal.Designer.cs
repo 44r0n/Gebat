@@ -76,6 +76,7 @@
             this.cantidadesToolStripMenuItem.Name = "cantidadesToolStripMenuItem";
             this.cantidadesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cantidadesToolStripMenuItem.Text = "Cantidades";
+            this.cantidadesToolStripMenuItem.Click += new System.EventHandler(this.cantidadesToolStripMenuItem_Click);
             // 
             // Principal
             // 

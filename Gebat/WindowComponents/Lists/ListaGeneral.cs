@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GebatEN.Classes;
 
@@ -56,7 +53,7 @@ namespace GebatWindowComponents.Lists
         {
             get
             {
-                return colection[SelectedIndices[0]];
+                return colection[Convert.ToInt32(SelectedItems[0].Text)];
             }
         }
 

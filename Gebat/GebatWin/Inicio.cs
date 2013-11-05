@@ -39,7 +39,7 @@ namespace GebatWin
             ACAD.Password = maskedTextBoxPassword.Text;
             if (ACAD.AttemptConnection("GebatDataConnectionString"))
             {
-                Principal prin = new Principal();
+                Principal prin = new Principal(maskedTextBoxPassword.Text);
                 prin.Show();
                 prin.BringToFront();
                 this.Hide();

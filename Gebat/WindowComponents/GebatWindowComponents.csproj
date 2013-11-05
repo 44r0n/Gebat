@@ -7,7 +7,7 @@
     <ProjectGuid>{5410EC23-112F-4D26-895E-8C7DCD70DA1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindowComponents</RootNamespace>
+    <RootNamespace>GebatWindowComponents</RootNamespace>
     <AssemblyName>WindowComponents</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lists\ListaGeneral.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaTypes.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

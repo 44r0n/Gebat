@@ -104,6 +104,10 @@
       <Project>{017da2fb-2f1f-4037-a234-f2ac68267dec}</Project>
       <Name>GebatEN</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowComponents\GebatWindowComponents.csproj">
+      <Project>{5410ec23-112f-4d26-895e-8c7dcd70da1b}</Project>
+      <Name>GebatWindowComponents</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
