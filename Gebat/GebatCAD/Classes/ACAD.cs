@@ -201,7 +201,7 @@ namespace GebatCAD.Classes
 		/// <param name="connStringName">Nombre de la connectionString que está definida en el archivo de configuración de la aplicación.</param>
 		static public void Connect(string connStringName)
 		{
-			if (uniqueconn != null)
+			if (uniqueconn == null)
 			{
 				string sqlConnString = ConfigurationManager.ConnectionStrings [connStringName].ConnectionString;
 				string sqlProvider = ConfigurationManager.ConnectionStrings [connStringName].ProviderName;
