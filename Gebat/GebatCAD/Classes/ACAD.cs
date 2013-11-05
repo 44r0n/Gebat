@@ -331,7 +331,7 @@ namespace GebatCAD.Classes
 				} 
 				else
 				{
-					adapter = sql.Adapter (query, uniqueconn);
+					adapter = ssql.Adapter (query, uniqueconn);
 				}
 				DataTable datatable = new DataTable();
 				DataSet dataset = new DataSet();
@@ -467,7 +467,7 @@ namespace GebatCAD.Classes
 				}
 				else
 				{
-					adapter = sql.Adapter(query,uniqueconn);
+					adapter = ssql.Adapter(query,uniqueconn);
 				}
 
 				DataTable dt = new DataTable();
@@ -525,7 +525,7 @@ namespace GebatCAD.Classes
 				}
 				else
 				{
-					adapter = sql.Adapter(query,uniqueconn);
+					adapter = ssql.Adapter(query,uniqueconn);
 				}
 
 				DataSet dSet = new DataSet();
@@ -538,7 +538,14 @@ namespace GebatCAD.Classes
 				addRow.ItemArray = newRow.ItemArray;
 				dTable.Rows.Add(addRow);
 
-				sql.Builder(adapter);
+                if (uniqueconn == null)
+                {
+                    sql.Builder(adapter);
+                }
+                else
+                {
+                    ssql.Builder(adapter);
+                }
 				adapter.Update(dSet, tablename);
 
 				return this.Last();
@@ -579,7 +586,7 @@ namespace GebatCAD.Classes
 				}
 				else
 				{	
-					adapter = sql.Adapter(query,uniqueconn);
+					adapter = ssql.Adapter(query,uniqueconn);
 				}
 
 				DataSet dSet = new DataSet();
@@ -591,7 +598,14 @@ namespace GebatCAD.Classes
 				dTable.Rows[0].ItemArray = newRow.ItemArray;
 				dTable.Rows[0].EndEdit();
 
-				sql.Builder(adapter);
+                if (uniqueconn == null)
+                {
+                    sql.Builder(adapter);
+                }
+                else
+                {
+                    ssql.Builder(adapter);
+                }
 
 				adapter.Update(dSet, tablename);
 			}
@@ -631,7 +645,7 @@ namespace GebatCAD.Classes
 				}
 				else
 				{
-					adapter = sql.Adapter(query,uniqueconn);
+					adapter = ssql.Adapter(query,uniqueconn);
 				}
 
 				DataSet dSet = new DataSet();
@@ -641,7 +655,14 @@ namespace GebatCAD.Classes
 
 				dTable.Rows[0].Delete();
 
-				sql.Builder(adapter);
+                if (uniqueconn == null)
+                {
+                    sql.Builder(adapter);
+                }
+                else
+                {
+                    ssql.Builder(adapter);
+                }
 				adapter.Update(dSet, tablename);
 			}
 			catch (Exception ex)
