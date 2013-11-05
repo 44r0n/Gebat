@@ -40,6 +40,7 @@ namespace GebatCAD.Classes
 		protected List<string> idFormat;
 		private DbConnection conn = null;
 		static private DbConnection uniqueconn = null;
+        static private ISql ssql = null;
 		private bool passEstablished;
 
 
@@ -90,11 +91,17 @@ namespace GebatCAD.Classes
 		/// <returns>Valor entero devuelto por el Scalar.</returns>
 		protected int ExecuteScalar(string query)
 		{
-			if (uniqueconn == null)
-			{
-				connect ();
-			}
-			DbCommand command = sql.Command (query, conn);
+            DbCommand command;
+            if (uniqueconn == null)
+            {
+                connect();
+                command = sql.Command(query, conn);
+            }
+            else
+            {
+                command = ssql.Command(query, uniqueconn);
+            }
+			
 			int ret = Convert.ToInt32(command.ExecuteScalar());
 			if (uniqueconn == null)
 			{
@@ -119,7 +126,7 @@ namespace GebatCAD.Classes
 			} 
 			else
 			{
-				adapter = sql.Adapter (query, uniqueconn);
+				adapter = ssql.Adapter (query, uniqueconn);
 			}
 
 			DataSet dSet = new DataSet();
@@ -205,14 +212,14 @@ namespace GebatCAD.Classes
 			{
 				string sqlConnString = ConfigurationManager.ConnectionStrings [connStringName].ConnectionString;
 				string sqlProvider = ConfigurationManager.ConnectionStrings [connStringName].ProviderName;
-				ISql consql = FactorySql.Create (sqlProvider);
+				ssql = FactorySql.Create (sqlProvider);
 
 				if (password != string.Empty)
 				{
 					sqlConnString += password;
 				}
 
-				uniqueconn = consql.Connection (sqlConnString);
+				uniqueconn = ssql.Connection (sqlConnString);
 				uniqueconn.Open ();
 			}
 		}
