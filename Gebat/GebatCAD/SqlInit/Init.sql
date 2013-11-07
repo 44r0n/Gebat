@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS EntryFood
 (
 	Id int Primary Key AUTO_INCREMENT,
 	FoodType int,
-	Quantity int,
+	QuantityIn int,
 	CONSTRAINT fk_EntryFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
@@ -29,6 +29,12 @@ CREATE TABLE IF NOT EXISTS OutgoingFood
 (
 	Id int Primary Key AUTO_INCREMENT,
 	FoodType int,
-	Quantity int,
+	QuantityOut int,
 	CONSTRAINT fk_OutgoingFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
-)
+);
+
+CREATE OR REPLACE VIEW TotalFood as select (entrada.Quantity - salida.Quantity) as Total, entrada.FoodType FROM entrada inner join salida on (entrada.FoodType = salida.FoodType);
+
+CREATE OR REPLACE VIEW Entrada as select sum(QuantityIn) as Quantity, FoodType from entryfood group by FoodType;
+
+CREATE OR REPLACE VIEW Salida as select sum(QuantityOut) as Quantity, FoodType from outgoingfood group by FoodType;
