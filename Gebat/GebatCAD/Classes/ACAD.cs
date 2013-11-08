@@ -40,6 +40,7 @@ namespace GebatCAD.Classes
 		protected List<string> idFormat;
 		private DbConnection conn = null;
 		static private DbConnection uniqueconn = null;
+        static private ISql ssql = null;
 		private bool passEstablished;
 
 
@@ -90,11 +91,17 @@ namespace GebatCAD.Classes
 		/// <returns>Valor entero devuelto por el Scalar.</returns>
 		protected int ExecuteScalar(string query)
 		{
-			if (uniqueconn == null)
-			{
-				connect ();
-			}
-			DbCommand command = sql.Command (query, conn);
+            DbCommand command;
+            if (uniqueconn == null)
+            {
+                connect();
+                command = sql.Command(query, conn);
+            }
+            else
+            {
+                command = ssql.Command(query, uniqueconn);
+            }
+			
 			int ret = Convert.ToInt32(command.ExecuteScalar());
 			if (uniqueconn == null)
 			{
@@ -119,7 +126,7 @@ namespace GebatCAD.Classes
 			} 
 			else
 			{
-				adapter = sql.Adapter (query, uniqueconn);
+				adapter = ssql.Adapter (query, uniqueconn);
 			}
 
 			DataSet dSet = new DataSet();
@@ -165,6 +172,11 @@ namespace GebatCAD.Classes
 			}
 		}
 
+        /// <summary>
+        /// Intenta establecer una única conexión a la base de datos.
+        /// </summary>
+        /// <param name="connStringName">Nombre de la conexión en el archibo App.conf</param>
+        /// <returns>True si ha conseguido establecer una conexión con la base de datos, false en caso contrario.</returns>
 		static public bool AttemptConnection(string connStringName)
 		{
 			try
@@ -196,18 +208,18 @@ namespace GebatCAD.Classes
 		/// <param name="connStringName">Nombre de la connectionString que está definida en el archivo de configuración de la aplicación.</param>
 		static public void Connect(string connStringName)
 		{
-			if (uniqueconn != null)
+			if (uniqueconn == null)
 			{
 				string sqlConnString = ConfigurationManager.ConnectionStrings [connStringName].ConnectionString;
 				string sqlProvider = ConfigurationManager.ConnectionStrings [connStringName].ProviderName;
-				ISql consql = FactorySql.Create (sqlProvider);
+				ssql = FactorySql.Create (sqlProvider);
 
 				if (password != string.Empty)
 				{
 					sqlConnString += password;
 				}
 
-				uniqueconn = consql.Connection (sqlConnString);
+				uniqueconn = ssql.Connection (sqlConnString);
 				uniqueconn.Open ();
 			}
 		}
@@ -319,7 +331,7 @@ namespace GebatCAD.Classes
 				} 
 				else
 				{
-					adapter = sql.Adapter (query, uniqueconn);
+					adapter = ssql.Adapter (query, uniqueconn);
 				}
 				DataTable datatable = new DataTable();
 				DataSet dataset = new DataSet();
@@ -455,7 +467,7 @@ namespace GebatCAD.Classes
 				}
 				else
 				{
-					adapter = sql.Adapter(query,uniqueconn);
+					adapter = ssql.Adapter(query,uniqueconn);
 				}
 
 				DataTable dt = new DataTable();
@@ -513,7 +525,7 @@ namespace GebatCAD.Classes
 				}
 				else
 				{
-					adapter = sql.Adapter(query,uniqueconn);
+					adapter = ssql.Adapter(query,uniqueconn);
 				}
 
 				DataSet dSet = new DataSet();
@@ -526,7 +538,14 @@ namespace GebatCAD.Classes
 				addRow.ItemArray = newRow.ItemArray;
 				dTable.Rows.Add(addRow);
 
-				sql.Builder(adapter);
+                if (uniqueconn == null)
+                {
+                    sql.Builder(adapter);
+                }
+                else
+                {
+                    ssql.Builder(adapter);
+                }
 				adapter.Update(dSet, tablename);
 
 				return this.Last();
@@ -567,7 +586,7 @@ namespace GebatCAD.Classes
 				}
 				else
 				{	
-					adapter = sql.Adapter(query,uniqueconn);
+					adapter = ssql.Adapter(query,uniqueconn);
 				}
 
 				DataSet dSet = new DataSet();
@@ -579,7 +598,14 @@ namespace GebatCAD.Classes
 				dTable.Rows[0].ItemArray = newRow.ItemArray;
 				dTable.Rows[0].EndEdit();
 
-				sql.Builder(adapter);
+                if (uniqueconn == null)
+                {
+                    sql.Builder(adapter);
+                }
+                else
+                {
+                    ssql.Builder(adapter);
+                }
 
 				adapter.Update(dSet, tablename);
 			}
@@ -619,7 +645,7 @@ namespace GebatCAD.Classes
 				}
 				else
 				{
-					adapter = sql.Adapter(query,uniqueconn);
+					adapter = ssql.Adapter(query,uniqueconn);
 				}
 
 				DataSet dSet = new DataSet();
@@ -629,7 +655,14 @@ namespace GebatCAD.Classes
 
 				dTable.Rows[0].Delete();
 
-				sql.Builder(adapter);
+                if (uniqueconn == null)
+                {
+                    sql.Builder(adapter);
+                }
+                else
+                {
+                    ssql.Builder(adapter);
+                }
 				adapter.Update(dSet, tablename);
 			}
 			catch (Exception ex)

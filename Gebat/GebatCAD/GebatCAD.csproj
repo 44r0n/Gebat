@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,6 +35,13 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\VIEWEntrada.cs" />
+    <Compile Include="Classes\CADEntryFood.cs" />
+    <Compile Include="Classes\CADOutgoingFood.cs" />
+    <Compile Include="Classes\CADPersonas.cs" />
+    <Compile Include="Classes\CADTBC.cs" />
+    <Compile Include="Classes\VIEWSalida.cs" />
+    <Compile Include="Classes\VIEWTotalFood.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\InvalidNumberIdException.cs" />
     <Compile Include="Exceptions\InvalidStartRecordException.cs" />
@@ -44,11 +51,7 @@
     <Compile Include="Classes\CADType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Classes\" />
-    <Folder Include="Exceptions\" />
-    <Folder Include="SqlInit\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SqlManager\SqlManager.csproj">
       <Project>{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}</Project>

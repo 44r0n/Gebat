@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7A36E1CE-94E4-48B2-96A3-6F40808FA8C0}</ProjectGuid>
+    <ProjectGuid>{255B1C33-B906-400C-A27F-2146662D1A3A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Test</RootNamespace>
-    <AssemblyName>Test</AssemblyName>
+    <RootNamespace>CADTest</RootNamespace>
+    <AssemblyName>CADTest</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,40 +33,9 @@
     <Reference Include="nunit.framework">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Xml" />
-    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CADTests\Stubs\StubIsql.cs" />
-    <Compile Include="CADTests\CADFoodTest.cs" />
-    <Compile Include="ENTests\ENFoodTest.cs" />
-    <Compile Include="CADTests\CADTypeTest.cs" />
-    <Compile Include="ENTests\ENTypeTest.cs" />
+    <Compile Include="Test.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\GebatCAD\GebatCAD.csproj">
-      <Project>{F9CF59BE-07EC-41E9-90B6-11A03F2F6E10}</Project>
-      <Name>GebatCAD</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SqlManager\SqlManager.csproj">
-      <Project>{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}</Project>
-      <Name>SqlManager</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CADTests\" />
-    <Folder Include="ENTests\" />
-    <Folder Include="CADTests\Stubs\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="PreparacionTest.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>
