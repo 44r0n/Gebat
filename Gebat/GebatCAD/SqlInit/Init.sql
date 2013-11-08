@@ -55,10 +55,8 @@ CREATE TABLE IF NOT EXISTS TBC
   CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-
-
-CREATE OR REPLACE VIEW TotalFood as select (entrada.Quantity - salida.Quantity) as Total, entrada.FoodType FROM entrada inner join salida on (entrada.FoodType = salida.FoodType);
-
 CREATE OR REPLACE VIEW Entrada as select sum(QuantityIn) as Quantity, FoodType from entryfood group by FoodType;
 
 CREATE OR REPLACE VIEW Salida as select sum(QuantityOut) as Quantity, FoodType from outgoingfood group by FoodType;
+
+CREATE OR REPLACE VIEW TotalFood as select (entrada.Quantity - salida.Quantity) as Total, entrada.FoodType as FoodType FROM entrada inner join salida on (entrada.FoodType = salida.FoodType);
