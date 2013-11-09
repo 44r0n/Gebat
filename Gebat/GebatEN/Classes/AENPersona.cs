@@ -5,7 +5,7 @@ using GebatCAD.Classes;
 
 namespace GebatEN.Classes
 {
-    abstract class AENPersona : AEN
+    public abstract class AENPersona : AEN
     {
         #region//Atributes
         private CADPersonas personas;
@@ -102,6 +102,8 @@ namespace GebatEN.Classes
 
         #endregion
 
+        #region//Public Methods
+
         public AENPersona(string DNI, string Nombre, string Apellidos)
             :base()
         {
@@ -111,5 +113,11 @@ namespace GebatEN.Classes
             this.nombre = Nombre;
             this.apellidos = Apellidos;
         }
+
+        public AENPersona()
+        {
+        }
+
+        #endregion
     }
 }
