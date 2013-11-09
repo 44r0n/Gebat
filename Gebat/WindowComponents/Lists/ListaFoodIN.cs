@@ -15,6 +15,8 @@ namespace GebatWindowComponents.Lists
             foreach (AEN it in colection)
             {
                 ENFoodIN entrada = (ENFoodIN)it;
+                ListViewItem item = new ListViewItem(i.ToString(), 0);
+                //item.SubItems.Add(((ENFood)new ENFood("").Read(entrada.Id[0])).Name);
             }
         }
 
