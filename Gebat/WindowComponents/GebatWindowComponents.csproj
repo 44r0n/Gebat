@@ -40,7 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Combos\ComboBoxGeneral.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Combos\ComboFood.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Combos\ComboType.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaFood.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Lists\ListaFoodIN.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaFoodOut.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Lists\ListaGeneral.cs">

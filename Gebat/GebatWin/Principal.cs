@@ -37,5 +37,12 @@ namespace GebatWin
             Forms.Cantidades cants = new Forms.Cantidades();
             cants.ShowDialog();
         }
+
+        private void comidaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.Comida comida = new Forms.Comida();
+            comida.MdiParent = this;
+            comida.Show();
+        }
     }
 }

@@ -50,6 +50,12 @@
     <Compile Include="Forms\Cantidades.Designer.cs">
       <DependentUpon>Cantidades.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Comida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Comida.Designer.cs">
+      <DependentUpon>Comida.cs</DependentUpon>
+    </Compile>
     <Compile Include="Inicio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Cantidades.resx">
       <DependentUpon>Cantidades.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Comida.resx">
+      <DependentUpon>Comida.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>

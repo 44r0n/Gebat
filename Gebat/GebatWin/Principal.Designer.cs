@@ -33,6 +33,8 @@
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cantidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gestionarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comidaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,7 +42,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
-            this.editarToolStripMenuItem});
+            this.editarToolStripMenuItem,
+            this.gestionarToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(565, 24);
@@ -78,6 +81,21 @@
             this.cantidadesToolStripMenuItem.Text = "Cantidades";
             this.cantidadesToolStripMenuItem.Click += new System.EventHandler(this.cantidadesToolStripMenuItem_Click);
             // 
+            // gestionarToolStripMenuItem
+            // 
+            this.gestionarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.comidaToolStripMenuItem});
+            this.gestionarToolStripMenuItem.Name = "gestionarToolStripMenuItem";
+            this.gestionarToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.gestionarToolStripMenuItem.Text = "Gestionar";
+            // 
+            // comidaToolStripMenuItem
+            // 
+            this.comidaToolStripMenuItem.Name = "comidaToolStripMenuItem";
+            this.comidaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.comidaToolStripMenuItem.Text = "Comida";
+            this.comidaToolStripMenuItem.Click += new System.EventHandler(this.comidaToolStripMenuItem_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -104,5 +122,7 @@
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cantidadesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gestionarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem comidaToolStripMenuItem;
     }
 }

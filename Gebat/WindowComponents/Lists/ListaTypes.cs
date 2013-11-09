@@ -27,6 +27,8 @@ namespace GebatWindowComponents.Lists
 
         #endregion
 
+        #region//Public Methods
+
         /// <summary>
         /// Constructor que inicializa los nombres de las columnas.
         /// </summary>
@@ -58,5 +60,7 @@ namespace GebatWindowComponents.Lists
                 i++;
             }
         }
+
+        #endregion
     }
 }

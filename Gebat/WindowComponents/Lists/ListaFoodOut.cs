@@ -4,7 +4,7 @@ using GebatEN.Classes;
 
 namespace GebatWindowComponents.Lists
 {
-    public class ListaFoodIN : ListaGeneral
+    public class ListaFoodOut :ListaGeneral
     {
         #region//Protected Methods
 
@@ -17,11 +17,11 @@ namespace GebatWindowComponents.Lists
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENFoodIN entrada = (ENFoodIN)it;
+                ENFoodOut salida = (ENFoodOut)it;
                 ListViewItem item = new ListViewItem(i.ToString(), 0);
-                item.SubItems.Add(entrada.Nombre);
-                item.SubItems.Add(entrada.Fecha.ToShortDateString());
-                item.SubItems.Add(entrada.Quantity.ToString());
+                item.SubItems.Add(salida.Nombre);
+                item.SubItems.Add(salida.Fecha.ToShortDateString());
+                item.SubItems.Add(salida.Quantity.ToString());
                 Items.Add(item);
                 i++;
             }
@@ -34,7 +34,7 @@ namespace GebatWindowComponents.Lists
         /// <summary>
         /// Constructor que inicializa los nombres de las columnas.
         /// </summary>
-        public ListaFoodIN()
+        public ListaFoodOut()
             : base()
         {
             List<string> lista = new List<string>();
@@ -52,15 +52,15 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach(AEN it in colection)
             {
-                ENFoodIN entrada = (ENFoodIN)it;
-                if (entrada.Nombre.Contains(filtro))
+                ENFoodOut salida = (ENFoodOut)it;
+                if(salida.Nombre.Contains(filtro))
                 {
-                    ListViewItem item = new ListViewItem(i.ToString(), 0);
-                    item.SubItems.Add(entrada.Nombre);
-                    item.SubItems.Add(entrada.Fecha.ToShortDateString());
-                    item.SubItems.Add(entrada.Quantity.ToString());
+                    ListViewItem item = new ListViewItem(i.ToString(),0);
+                    item.SubItems.Add(salida.Nombre);
+                    item.SubItems.Add(salida.Fecha.ToShortDateString());
+                    item.SubItems.Add(salida.Quantity.ToString());
                     Items.Add(item);
                 }
                 i++;

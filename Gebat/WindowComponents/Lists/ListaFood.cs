@@ -4,12 +4,12 @@ using GebatEN.Classes;
 
 namespace GebatWindowComponents.Lists
 {
-    public class ListaFoodIN : ListaGeneral
+    public class ListaFood : ListaGeneral
     {
         #region//Protected Methods
 
         /// <summary>
-        /// Muestra todos los elementos en la lista.
+        /// Muestra todos los elementos de la lista.
         /// </summary>
         protected override void MostrarElementos()
         {
@@ -17,11 +17,10 @@ namespace GebatWindowComponents.Lists
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENFoodIN entrada = (ENFoodIN)it;
+                ENFood comida = (ENFood)it;
                 ListViewItem item = new ListViewItem(i.ToString(), 0);
-                item.SubItems.Add(entrada.Nombre);
-                item.SubItems.Add(entrada.Fecha.ToShortDateString());
-                item.SubItems.Add(entrada.Quantity.ToString());
+                item.SubItems.Add(comida.Name);
+                item.SubItems.Add(comida.Quantity.ToString() + comida.MyType.Name);
                 Items.Add(item);
                 i++;
             }
@@ -32,35 +31,29 @@ namespace GebatWindowComponents.Lists
         #region//Public Methods
 
         /// <summary>
-        /// Constructor que inicializa los nombres de las columnas.
+        /// Constructor que inicializa lso nombres de las columnas.
         /// </summary>
-        public ListaFoodIN()
+        public ListaFood()
             : base()
         {
             List<string> lista = new List<string>();
             lista.Add("Nombre");
-            lista.Add("Fecha");
             lista.Add("Cantidad");
             Init(lista);
         }
 
-        /// <summary>
-        /// Filtra la vista con la string especificada.
-        /// </summary>
-        /// <param name="filtro">Cadena a buscar.</param>
         public void Filter(string filtro)
         {
             Items.Clear();
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENFoodIN entrada = (ENFoodIN)it;
-                if (entrada.Nombre.Contains(filtro))
+                ENFood comida = (ENFood)it;
+                if (comida.Name.Contains(filtro))
                 {
                     ListViewItem item = new ListViewItem(i.ToString(), 0);
-                    item.SubItems.Add(entrada.Nombre);
-                    item.SubItems.Add(entrada.Fecha.ToShortDateString());
-                    item.SubItems.Add(entrada.Quantity.ToString());
+                    item.SubItems.Add(comida.Name);
+                    item.SubItems.Add(comida.Quantity.ToString() + comida.MyType.Name);
                     Items.Add(item);
                 }
                 i++;

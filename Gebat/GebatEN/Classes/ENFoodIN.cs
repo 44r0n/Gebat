@@ -32,7 +32,7 @@ namespace GebatEN.Classes
                 }
                 ret["QuantityIn"] = this.quantity;
                 ret["FoodType"] = this.type;
-                
+                ret["Fecha"] = this.fecha.ToShortDateString();
                 return ret;
             }
         }
@@ -137,7 +137,7 @@ namespace GebatEN.Classes
         public ENFoodIN()
             : base()
         {
-            cad = new CADEntryFood("GebatDataConectionString");
+            cad = new CADEntryFood("GebatDataConnectionString");
         }
 
         /// <summary>
