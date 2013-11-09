@@ -20,8 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using GebatCAD.Classes;
 
@@ -32,8 +30,9 @@ namespace GebatEN.Classes
 		#region//Atributes
 
 		private string name;
-		private int quantity;
 		private ENType type;
+        private int quantity;
+        
 
 		#endregion
 
@@ -44,13 +43,34 @@ namespace GebatEN.Classes
 		{
 			cad = new CADFood("GebatDataConnectionString");
 			name = "";
-			quantity = 0;
 		}
+
+        /// <summary>
+        /// Carga la cantidad de comida que hay en la base de datos.
+        /// </summary>
+        private void LoadQuantity()
+        {
+            VIEWTotalFood totalFood = new VIEWTotalFood("GebatDataConnectionString");
+            List<object> param = new List<object>();
+            param.Add((object)this.id[0]);
+            DataRow row = totalFood.Select(param);
+            if (row != null)
+            {
+                this.quantity = (int)row["Total"];
+            }
+            else
+            {
+                this.quantity = 0;
+            }
+        }
 
 		#endregion
 
 		#region//Protected Methods
 
+        /// <summary>
+        /// Obtiene el objeto actual en tipo DataRow de forma que corresponde en la base de datos.
+        /// </summary>
 		protected override DataRow ToRow
 		{
 			get 
@@ -61,7 +81,7 @@ namespace GebatEN.Classes
 					ret ["Id"] = (int)this.id [0];
 				}
 				ret["Name"] = this.name;
-				ret["Quantity"] = this.quantity;
+				
 				if (type != null)
 				{
 					ret ["QuantityType"] = (int)type.Id[0];
@@ -70,6 +90,10 @@ namespace GebatEN.Classes
 			}
 		}
 
+        /// <summary>
+        /// Asigna al objeto actual los datos contenientes en el DataRow.
+        /// </summary>
+        /// <param name="row">Fila con los datos.</param>
 		protected override void FromRow(DataRow row)
 		{
 			if (row != null)
@@ -77,7 +101,6 @@ namespace GebatEN.Classes
 				this.id = new List<object> ();
 				this.id.Add((int)row["Id"]);
 				this.name = (string)row["Name"];
-				this.quantity = (int)row["Quantity"];
 				if (row ["QuantityType"] != DBNull.Value)
 				{
 					List<int> ids = new List<int> ();
@@ -107,24 +130,20 @@ namespace GebatEN.Classes
 			}
 		}
 
-		/// <summary>
-		/// Obtiene y establece la cantidad del alimento.
-		/// </summary>
-		public int Quantity
-		{
-			get
-			{
-				return quantity;
-			}
-			set
-			{
-				if (value >= 0)
-				{
-					quantity = value;
-				}
-			}
-		}
+        /// <summary>
+        /// Obtiene la cantidad de alimento.
+        /// </summary>
+        public int Quantity
+        {
+            get
+            {
+                return quantity;
+            }
+        }
 
+        /// <summary>
+        /// Obtiene y establece el tipo de cantidad del alimento.
+        /// </summary>
 		public ENType MyType
 		{
 			get
@@ -146,7 +165,7 @@ namespace GebatEN.Classes
 		/// </summary>
 		/// <param name="name">Nombre del alimento.</param>
 		/// <param name="quantity">Cantidad del alimento.</param>
-		public ENFood(string name, int quantity = 0, ENType type = null)
+		public ENFood(string name, ENType type = null)
 			: base()
 		{
 			if (name == null)
@@ -155,7 +174,6 @@ namespace GebatEN.Classes
 			}
 			cad = new CADFood("GebatDataConnectionString");
 			this.name = name;
-			this.quantity = quantity;
 			this.type = type;
 		}
 
@@ -172,7 +190,8 @@ namespace GebatEN.Classes
 			DataRow row = cad.Select(param);
 			if (row != null)
 			{
-				ret.FromRow(cad.Select(param));
+				ret.FromRow(row);
+                this.LoadQuantity();
 			}
 			else
 			{
@@ -193,10 +212,35 @@ namespace GebatEN.Classes
 			{
 				ENFood nueva = new ENFood();
 				nueva.FromRow(rows);
+                nueva.LoadQuantity();
 				ret.Add((ENFood)nueva);
 			}
 			return ret;
 		}
+
+        /// <summary>
+        /// Añade una entrada de comida en la base de datos.
+        /// </summary>
+        /// <param name="quantity">Cantidad de comida a insertar.</param>
+        /// <param name="date">Fecha en la que se introduce.</param>
+        public void Add(int quantity, DateTime date)
+        {
+            ENFoodIN fin = new ENFoodIN(date, quantity, (int)this.id[0]);
+            fin.Save();
+            this.quantity += quantity;
+        }
+
+        /// <summary>
+        /// Añade una salida de comida en la base de datos.
+        /// </summary>
+        /// <param name="quantity">Cantidad de comida a salir.</param>
+        /// <param name="date">Fecha en la que sale.</param>
+        public void Remove(int quantity, DateTime date)
+        {
+            ENFoodOut fout = new ENFoodOut(date, quantity, (int)this.id[0]);
+            fout.Save();
+            this.quantity -= quantity;
+        }
 
 		#endregion
 	}

@@ -61,4 +61,85 @@ CREATE OR REPLACE VIEW Salida as select sum(QuantityOut) as Quantity, FoodType f
 
 CREATE OR REPLACE VIEW TotalFood as select (entrada.Quantity - salida.Quantity) as Total, entrada.FoodType as FoodType FROM entrada inner join salida on (entrada.FoodType = salida.FoodType);
 
-CREATE OR REPLACE VIEW TBCPeople as select Personas.DNI, Nombre, Apellidos, Ejecutoria, Juzgado, FInicio, FFin from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+INSERT INTO Type (Name) VALUES
+(
+        'Kg'
+);
+
+INSERT INTO Type (Name) VALUES
+(
+        'Litros'
+);
+
+INSERT INTO Type (Name) VALUES
+(
+        'Borrar'
+);
+
+INSERT INTO Type (Name) VALUES
+(
+        'Paquetes'
+);
+
+DELETE FROM Type WHERE Id = 3;
+
+INSERT INTO Food (Name,QuantityType) VALUES
+(
+        'Patates',
+        1
+);
+
+INSERT INTO Food (Name,QuantityType) VALUES
+(
+        'Tomates',
+        1
+);
+
+INSERT INTO Food (Name) VALUES
+(
+        'Pa borrar'
+);
+
+INSERT INTO Food (Name,QuantityType) VALUES
+(
+        'Pomes',
+        1
+);
+
+DELETE FROM Food WHERE Id = 3;
+
+INSERT INTO EntryFood(FoodType,QuantityIn) VALUES
+(
+	1,
+	1
+);
+
+INSERT INTO EntryFood(FoodType,QuantityIn) VALUES
+(
+	1,
+	2
+);
+
+INSERT INTO EntryFood(FoodType,QuantityIn) VALUES
+(
+	4,
+	4
+);
+
+INSERT INTO OutgoingFood(FoodType,QuantityOut) VALUES
+(
+	1,
+	1
+);
+
+INSERT INTO OutgoingFood(FoodType,QuantityOut) VALUES
+(
+	1,
+	1
+);
+
+INSERT INTO OutgoingFood(FoodType,QuantityOut) VALUES
+(
+	4,
+	2
+);

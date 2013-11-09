@@ -55,7 +55,7 @@ namespace GebatEN.Classes
 		#region//Public Methods
 
 		/// <summary>
-		/// Obtiene el identificador del objeto en la base de datos.
+		/// Obtiene el identificador del objeto en la base de datos. Null si no está en la base de datos.
 		/// </summary>
 		public List<object> Id
 		{
@@ -85,7 +85,7 @@ namespace GebatEN.Classes
 			}
 			if (!saved)
 			{
-				 this.FromRow(cad.Insert(ToRow));
+				this.FromRow(cad.Insert(ToRow));
 				this.saved = true;
 			}
 			else
