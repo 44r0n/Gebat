@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GebatEN.Classes
 {
-    class ENFoodIN :AEN
+    public class ENFoodIN :AEN
     {
         #region//Private atributes
 
