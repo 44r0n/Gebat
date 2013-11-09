@@ -26,17 +26,30 @@ using System.Collections.Generic;
 namespace GebatEN.Classes
 {
 	public class ENType : AEN
-	{
-		private string name;
+    {
+        #region//Atributes
 
-		private ENType ()
+        private string name;
+
+        #endregion
+
+        #region//Private Methods
+
+        private ENType ()
 			:base()
 		{
 			cad = new CADType ("GebatDataConnectionString");
 			name = "";
 		}
 
-		protected override DataRow ToRow
+        #endregion
+
+        #region//Protected Methods
+
+        /// <summary>
+        /// Obtiene el objeto actual en tipo DataRow de forma que corresponde en la base de datos.
+        /// </summary>
+        protected override DataRow ToRow
 		{
 			get
 			{
@@ -50,6 +63,10 @@ namespace GebatEN.Classes
 			}
 		}
 
+        /// <summary>
+        /// Asigna al objeto actual los datos contenientes en el DataRow.
+        /// </summary>
+        /// <param name="row">Fila con los datos.</param>
 		protected override void FromRow (DataRow row)
 		{
 			if (row != null)
@@ -65,7 +82,9 @@ namespace GebatEN.Classes
 			}
 		}
 
-		/// <summary>
+        #endregion
+
+        /// <summary>
 		/// Obtiene y establece el nombre del tipo.
 		/// </summary>
 		/// <value>Nombre del tipo.</value>
@@ -95,6 +114,11 @@ namespace GebatEN.Classes
 			this.name = name;
 		}
 
+        /// <summary>
+        /// Busca en la base de datos el tipo de alimento por el id.
+        /// </summary>
+        /// <param name="id">Identificador por el que se buscará el tipo de alimento.</param>
+        /// <returns>Tipo de alimento en formatoAEN</returns>
 		public override AEN Read (List<int> id)
 		{
 			ENType ret = new ENType();
@@ -112,6 +136,10 @@ namespace GebatEN.Classes
 			return ret;
 		}
 
+        /// <summary>
+        /// Obtiene todos los tipos de alimentos de la base de datos.
+        /// </summary>
+        /// <returns>Listo de los tipos de alimentos en formato AEN.</returns>
 		public override List<AEN> ReadAll()
 		{
 			List<AEN> ret = new List<AEN>();
