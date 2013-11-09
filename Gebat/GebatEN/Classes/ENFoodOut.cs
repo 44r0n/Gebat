@@ -12,6 +12,7 @@ namespace GebatEN.Classes
         private int quantity;
         private DateTime fecha;
         private int type;
+        private string nombre = null;
 
         #endregion
 
@@ -90,6 +91,22 @@ namespace GebatEN.Classes
             get
             {
                 return this.type;
+            }
+        }
+
+        public string Nombre
+        {
+            get
+            {
+                if (this.nombre == null)
+                {
+                    CADFood food = new CADFood("GebatDataConnectionString");
+                    List<object> param = new List<object>();
+                    param.Add(this.type);
+                    DataRow fila = food.Select(param);
+                    this.nombre = (string)fila["Name"];
+                }
+                return this.nombre;
             }
         }
 
