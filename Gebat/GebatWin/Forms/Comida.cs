@@ -21,18 +21,12 @@ namespace GebatWin.Forms
         private void Comida_Load(object sender, EventArgs e)
         {
             comboFood.Enabled = false;
-            comboType.Refrescar(new ENType("").ReadAll());
-            listaFoodIN.Refrescar(new ENFoodIN().ReadAll());
-            comboFoodSalida.Refrescar(new ENFood("").ReadAll());
-            comboFood.Refrescar(new ENFood("").ReadAll());
-            listaFoodOut.Refrescar(new ENFoodOut().ReadAll());
-            listaFood.Refrescar(new ENFood("").ReadAll());
+            LoadComponents();
             this.WindowState = FormWindowState.Maximized;
         }
 
         private void LoadComponents()
-        {
-            comboFood.Enabled = false;
+        {            
             comboType.Refrescar(new ENType("").ReadAll());
             listaFoodIN.Refrescar(new ENFoodIN().ReadAll());
             comboFoodSalida.Refrescar(new ENFood("").ReadAll());
@@ -49,6 +43,7 @@ namespace GebatWin.Forms
             {
                 textBoxNuevo.Enabled = true;
                 comboFood.Enabled = false;
+                comboType.Enabled = true;
             }
             else
             {
@@ -56,6 +51,7 @@ namespace GebatWin.Forms
                 {
                     textBoxNuevo.Enabled = false;
                     comboFood.Enabled = true;
+                    comboType.Enabled = false;
                 }
             }
         }
@@ -66,6 +62,7 @@ namespace GebatWin.Forms
             {
                 comboFood.Enabled = true;
                 textBoxNuevo.Enabled = false;
+                comboType.Enabled = false;
             }
             else
             {
@@ -73,6 +70,7 @@ namespace GebatWin.Forms
                 {
                     comboFood.Enabled = false;
                     textBoxNuevo.Enabled = true;
+                    comboType.Enabled = true;
                 }
             }
         }
@@ -99,6 +97,15 @@ namespace GebatWin.Forms
                 selected.Add((int)numericUpDown.Value, dateTimePicker.Value);
                 LoadComponents();
             }
+            comboFood.SelectedIndex = -1;
+            comboFood.Text = "";
+            radioButtonNuevo.Checked = true;
+            radioButtonExistente.Checked = false;
+            textBoxNuevo.Text = "";
+            numericUpDown.Value = 0;
+            comboType.SelectedIndex = -1;
+            comboType.Text = "";
+            dateTimePicker.Value = DateTime.Today;
         }
 
         private void comboFoodSalida_SelectedIndexChanged(object sender, EventArgs e)
@@ -118,6 +125,9 @@ namespace GebatWin.Forms
             ENFood salida = (ENFood)comboFoodSalida.Selected;
             salida.Remove((int)numericUpDownSalida.Value, dateTimePickerSalida.Value);
             LoadComponents();
+            comboFoodSalida.SelectedIndex = -1;
+            comboFoodSalida.Text = "";
+            numericUpDownSalida.Value = 0;
         }
     }
 }
