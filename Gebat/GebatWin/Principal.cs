@@ -44,5 +44,12 @@ namespace GebatWin
             comida.MdiParent = this;
             comida.Show();
         }
+
+        private void tBCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.TBC tbc = new Forms.TBC();
+            tbc.MdiParent = this;
+            tbc.Show();
+        }
     }
 }

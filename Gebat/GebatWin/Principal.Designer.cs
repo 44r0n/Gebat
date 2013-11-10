@@ -35,6 +35,7 @@
             this.cantidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comidaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tBCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,14 +78,15 @@
             // cantidadesToolStripMenuItem
             // 
             this.cantidadesToolStripMenuItem.Name = "cantidadesToolStripMenuItem";
-            this.cantidadesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cantidadesToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.cantidadesToolStripMenuItem.Text = "Cantidades";
             this.cantidadesToolStripMenuItem.Click += new System.EventHandler(this.cantidadesToolStripMenuItem_Click);
             // 
             // gestionarToolStripMenuItem
             // 
             this.gestionarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.comidaToolStripMenuItem});
+            this.comidaToolStripMenuItem,
+            this.tBCToolStripMenuItem});
             this.gestionarToolStripMenuItem.Name = "gestionarToolStripMenuItem";
             this.gestionarToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.gestionarToolStripMenuItem.Text = "Gestionar";
@@ -95,6 +97,13 @@
             this.comidaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.comidaToolStripMenuItem.Text = "Comida";
             this.comidaToolStripMenuItem.Click += new System.EventHandler(this.comidaToolStripMenuItem_Click);
+            // 
+            // tBCToolStripMenuItem
+            // 
+            this.tBCToolStripMenuItem.Name = "tBCToolStripMenuItem";
+            this.tBCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tBCToolStripMenuItem.Text = "TBC";
+            this.tBCToolStripMenuItem.Click += new System.EventHandler(this.tBCToolStripMenuItem_Click);
             // 
             // Principal
             // 
@@ -124,5 +133,6 @@
         private System.Windows.Forms.ToolStripMenuItem cantidadesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gestionarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem comidaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tBCToolStripMenuItem;
     }
 }
