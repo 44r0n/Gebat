@@ -32,9 +32,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.listaTypes1 = new GebatWindowComponents.Lists.ListaTypes();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.buttonAceptar = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.textBoxNombreTipo = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonAceptar = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -86,15 +86,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nueva cantidad";
             // 
-            // buttonAceptar
+            // textBoxNombreTipo
             // 
-            this.buttonAceptar.Location = new System.Drawing.Point(50, 111);
-            this.buttonAceptar.Name = "buttonAceptar";
-            this.buttonAceptar.Size = new System.Drawing.Size(75, 23);
-            this.buttonAceptar.TabIndex = 2;
-            this.buttonAceptar.Text = "Aceptar";
-            this.buttonAceptar.UseVisualStyleBackColor = true;
-            this.buttonAceptar.Click += new System.EventHandler(this.buttonAceptar_Click);
+            this.textBoxNombreTipo.Location = new System.Drawing.Point(62, 54);
+            this.textBoxNombreTipo.Name = "textBoxNombreTipo";
+            this.textBoxNombreTipo.Size = new System.Drawing.Size(100, 20);
+            this.textBoxNombreTipo.TabIndex = 1;
             // 
             // label2
             // 
@@ -105,12 +102,15 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Nombre: ";
             // 
-            // textBoxNombreTipo
+            // buttonAceptar
             // 
-            this.textBoxNombreTipo.Location = new System.Drawing.Point(62, 54);
-            this.textBoxNombreTipo.Name = "textBoxNombreTipo";
-            this.textBoxNombreTipo.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNombreTipo.TabIndex = 1;
+            this.buttonAceptar.Location = new System.Drawing.Point(50, 111);
+            this.buttonAceptar.Name = "buttonAceptar";
+            this.buttonAceptar.Size = new System.Drawing.Size(75, 23);
+            this.buttonAceptar.TabIndex = 2;
+            this.buttonAceptar.Text = "Aceptar";
+            this.buttonAceptar.UseVisualStyleBackColor = true;
+            this.buttonAceptar.Click += new System.EventHandler(this.buttonAceptar_Click);
             // 
             // buttonDelete
             // 
@@ -132,6 +132,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.listaTypes1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Cantidades";
             this.Text = "Gebat-Cantidades";
             this.Load += new System.EventHandler(this.Cantidades_Load);

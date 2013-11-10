@@ -24,6 +24,8 @@ namespace GebatWin.Forms
             comboType.Refrescar(new ENType("").ReadAll());
             listaFoodIN.Refrescar(new ENFoodIN().ReadAll());
             comboFood.Refrescar(new ENFood("").ReadAll());
+            listaFood.Refrescar(new ENFood("").ReadAll());
+            this.WindowState = FormWindowState.Maximized;
         }
 
         #region//Control Radio
