@@ -58,7 +58,7 @@ namespace GebatEN.Classes
             DataRow row = entrada.Select(param);
             if (row != null)
             {
-                entry = (int)row["Quantity"];
+                entry = Convert.ToInt32(row["Quantity"]);
             }
             return entry;
         }
@@ -72,7 +72,7 @@ namespace GebatEN.Classes
             DataRow row = vsalida.Select(param);
             if (row != null)
             {
-                salida = (int)row["Quantity"];
+                salida = Convert.ToInt32(row["Quantity"]);
             }
             return salida;
         }
