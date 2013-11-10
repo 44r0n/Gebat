@@ -26,6 +26,7 @@ namespace GebatWindowComponents.Lists
                 item.SubItems.Add(tbc.Ejecutoria);
                 item.SubItems.Add(tbc.FInicio.ToShortDateString());
                 item.SubItems.Add(tbc.FFin.ToShortDateString());
+                Items.Add(item);
                 i++;
             }
         }
