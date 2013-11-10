@@ -20,7 +20,7 @@ namespace GebatWindowComponents.Lists
                 ENFood comida = (ENFood)it;
                 ListViewItem item = new ListViewItem(i.ToString(), 0);
                 item.SubItems.Add(comida.Name);
-                item.SubItems.Add(comida.Quantity.ToString() + comida.MyType.Name);
+                item.SubItems.Add(comida.Quantity.ToString() + " " + comida.MyType.Name);
                 Items.Add(item);
                 i++;
             }

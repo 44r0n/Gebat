@@ -23,9 +23,22 @@ namespace GebatWin.Forms
             comboFood.Enabled = false;
             comboType.Refrescar(new ENType("").ReadAll());
             listaFoodIN.Refrescar(new ENFoodIN().ReadAll());
+            comboFoodSalida.Refrescar(new ENFood("").ReadAll());
             comboFood.Refrescar(new ENFood("").ReadAll());
+            listaFoodOut.Refrescar(new ENFoodOut().ReadAll());
             listaFood.Refrescar(new ENFood("").ReadAll());
             this.WindowState = FormWindowState.Maximized;
+        }
+
+        private void LoadComponents()
+        {
+            comboFood.Enabled = false;
+            comboType.Refrescar(new ENType("").ReadAll());
+            listaFoodIN.Refrescar(new ENFoodIN().ReadAll());
+            comboFoodSalida.Refrescar(new ENFood("").ReadAll());
+            comboFood.Refrescar(new ENFood("").ReadAll());
+            listaFoodOut.Refrescar(new ENFoodOut().ReadAll());
+            listaFood.Refrescar(new ENFood("").ReadAll());
         }
 
         #region//Control Radio
@@ -72,18 +85,39 @@ namespace GebatWin.Forms
             {
                 ENFood newfood = new ENFood(textBoxNuevo.Text, (ENType)comboType.Selected);
                 newfood.Save();
-                ENFoodIN foodin = new ENFoodIN(dateTimePicker.Value, (int)numericUpDown.Value, (int)newfood.MyType.Id[0]);
-                foodin.Save();
+                /*ENFoodIN foodin = new ENFoodIN(dateTimePicker.Value, (int)numericUpDown.Value, (int)newfood.MyType.Id[0]);
+                foodin.Save();*/
+                newfood.Add((int)numericUpDown.Value, dateTimePicker.Value);
                 comboFood.Add(newfood);
-                listaFoodIN.Add(foodin);
+                LoadComponents();
             }
             if (radioButtonExistente.Checked)
             {
                 ENFood selected = (ENFood)comboFood.Selected;
-                ENFoodIN foodin = new ENFoodIN(dateTimePicker.Value, (int)numericUpDown.Value, (int)selected.MyType.Id[0]);
-                foodin.Save();
-                listaFoodIN.Add(foodin);
+                /*ENFoodIN foodin = new ENFoodIN(dateTimePicker.Value, (int)numericUpDown.Value, (int)selected.MyType.Id[0]);
+                foodin.Save();*/
+                selected.Add((int)numericUpDown.Value, dateTimePicker.Value);
+                LoadComponents();
             }
+        }
+
+        private void comboFoodSalida_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            numericUpDownSalida.Maximum = ((ENFood)comboFoodSalida.Selected).Quantity;
+        }
+
+        private void textBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            listaFood.Filter(textBoxSearch.Text);
+            listaFoodIN.Filter(textBoxSearch.Text);
+            listaFoodOut.Filter(textBoxSearch.Text);
+        }
+
+        private void buttonSalida_Click(object sender, EventArgs e)
+        {
+            ENFood salida = (ENFood)comboFoodSalida.Selected;
+            salida.Remove((int)numericUpDownSalida.Value, dateTimePickerSalida.Value);
+            LoadComponents();
         }
     }
 }

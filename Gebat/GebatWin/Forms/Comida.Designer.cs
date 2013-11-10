@@ -43,13 +43,23 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.listaFood = new GebatWindowComponents.Lists.ListaFood();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.listaFood = new GebatWindowComponents.Lists.ListaFood();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonSalida = new System.Windows.Forms.Button();
+            this.listaFoodOut = new GebatWindowComponents.Lists.ListaFoodOut();
+            this.dateTimePickerSalida = new System.Windows.Forms.DateTimePicker();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numericUpDownSalida = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboFoodSalida = new GebatWindowComponents.Combos.ComboFood();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSalida)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -202,7 +212,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.textBoxSearch);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.listaFood);
             this.groupBox2.Location = new System.Drawing.Point(415, 12);
@@ -212,16 +222,22 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Comida total";
             // 
-            // groupBox3
+            // textBoxSearch
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Location = new System.Drawing.Point(830, 12);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 343);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Salida comida";
+            this.textBoxSearch.Location = new System.Drawing.Point(58, 17);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(100, 20);
+            this.textBoxSearch.TabIndex = 2;
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 22);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(46, 13);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Buscar: ";
             // 
             // listaFood
             // 
@@ -238,21 +254,98 @@
             this.listaFood.UseCompatibleStateImageBehavior = false;
             this.listaFood.View = System.Windows.Forms.View.Details;
             // 
-            // label5
+            // groupBox3
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 13);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Buscar: ";
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.buttonSalida);
+            this.groupBox3.Controls.Add(this.listaFoodOut);
+            this.groupBox3.Controls.Add(this.dateTimePickerSalida);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.numericUpDownSalida);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.comboFoodSalida);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(736, 12);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(294, 343);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Salida comida";
             // 
-            // textBox1
+            // buttonSalida
             // 
-            this.textBox1.Location = new System.Drawing.Point(58, 17);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 2;
+            this.buttonSalida.Location = new System.Drawing.Point(67, 119);
+            this.buttonSalida.Name = "buttonSalida";
+            this.buttonSalida.Size = new System.Drawing.Size(75, 23);
+            this.buttonSalida.TabIndex = 7;
+            this.buttonSalida.Text = "Aceptar";
+            this.buttonSalida.UseVisualStyleBackColor = true;
+            this.buttonSalida.Click += new System.EventHandler(this.buttonSalida_Click);
+            // 
+            // listaFoodOut
+            // 
+            this.listaFoodOut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listaFoodOut.FullRowSelect = true;
+            this.listaFoodOut.GridLines = true;
+            this.listaFoodOut.Location = new System.Drawing.Point(6, 148);
+            this.listaFoodOut.MultiSelect = false;
+            this.listaFoodOut.Name = "listaFoodOut";
+            this.listaFoodOut.Size = new System.Drawing.Size(282, 187);
+            this.listaFoodOut.TabIndex = 6;
+            this.listaFoodOut.UseCompatibleStateImageBehavior = false;
+            this.listaFoodOut.View = System.Windows.Forms.View.Details;
+            // 
+            // dateTimePickerSalida
+            // 
+            this.dateTimePickerSalida.Location = new System.Drawing.Point(67, 93);
+            this.dateTimePickerSalida.Name = "dateTimePickerSalida";
+            this.dateTimePickerSalida.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerSalida.TabIndex = 5;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 99);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(43, 13);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "Fecha: ";
+            // 
+            // numericUpDownSalida
+            // 
+            this.numericUpDownSalida.Location = new System.Drawing.Point(67, 67);
+            this.numericUpDownSalida.Name = "numericUpDownSalida";
+            this.numericUpDownSalida.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownSalida.TabIndex = 3;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 69);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Cantidad: ";
+            // 
+            // comboFoodSalida
+            // 
+            this.comboFoodSalida.FormattingEnabled = true;
+            this.comboFoodSalida.Location = new System.Drawing.Point(67, 40);
+            this.comboFoodSalida.Name = "comboFoodSalida";
+            this.comboFoodSalida.Size = new System.Drawing.Size(121, 21);
+            this.comboFoodSalida.TabIndex = 1;
+            this.comboFoodSalida.SelectedIndexChanged += new System.EventHandler(this.comboFoodSalida_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 43);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Nombre: ";
             // 
             // Comida
             // 
@@ -271,6 +364,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSalida)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -293,8 +389,16 @@
         private GebatWindowComponents.Combos.ComboFood comboFood;
         private GebatWindowComponents.Lists.ListaFoodIN listaFoodIN;
         private System.Windows.Forms.Button buttonInsert;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Label label5;
         private GebatWindowComponents.Lists.ListaFood listaFood;
+        private GebatWindowComponents.Lists.ListaFoodOut listaFoodOut;
+        private System.Windows.Forms.DateTimePicker dateTimePickerSalida;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown numericUpDownSalida;
+        private System.Windows.Forms.Label label7;
+        private GebatWindowComponents.Combos.ComboFood comboFoodSalida;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button buttonSalida;
     }
 }
