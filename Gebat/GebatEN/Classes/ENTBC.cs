@@ -16,14 +16,6 @@ namespace GebatEN.Classes
 
         #endregion
 
-        #region//Private Methods
-
-        private ENTBC()
-        {
-        }
-
-        #endregion
-
         #region//Protected Methods
 
         /// <summary>
@@ -144,6 +136,15 @@ namespace GebatEN.Classes
             this.juzgado = Juzgado;
             this.finicio = Finicio;
             this.ffin = Ffin;
+        }
+
+        /// <summary>
+        /// Constructor por defecto.
+        /// </summary>
+        public ENTBC()
+            : base()
+        {
+            cad = new CADTBC("GebatDataConnectionString");
         }
 
         /// <summary>
