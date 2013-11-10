@@ -66,7 +66,14 @@ namespace GebatEN.Classes
             }
             set
             {
-                this.id[0] = value;
+                if (this.id.Count == 0)
+                {
+                    this.id.Add(value);
+                }
+                else
+                {
+                    this.id[0] = value;
+                }
             }
         }
 
