@@ -33,7 +33,7 @@ namespace GebatEN.Classes
 
                 ret["QuantityOut"] = this.quantity;
                 ret["FoodType"] = this.type;
-
+                ret["Fecha"] = this.fecha;
                 return ret;
             }
         }
