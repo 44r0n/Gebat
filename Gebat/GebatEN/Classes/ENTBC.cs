@@ -26,10 +26,7 @@ namespace GebatEN.Classes
             get
             {
                 DataRow ret = cad.GetVoidRow;
-                DataRow persona = base.ToRow;
-                ret["DNI"] = persona["DNI"];
-                ret["Nombre"] = persona["Nombre"];
-                ret["Apellidos"] = ret["Apellidos"];
+                ret["DNI"] = this.id[0];
                 ret["Ejecutoria"] = this.id[1];
                 ret["Juzgado"] = this.juzgado;
                 ret["FInicio"] = this.finicio;
