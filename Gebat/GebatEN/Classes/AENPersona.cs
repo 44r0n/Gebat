@@ -104,6 +104,12 @@ namespace GebatEN.Classes
 
         #region//Public Methods
 
+        /// <summary>
+        /// Constructor con parámetros de Persona.
+        /// </summary>
+        /// <param name="DNI">DNI de la persona.</param>
+        /// <param name="Nombre">Nombre de la persona.</param>
+        /// <param name="Apellidos">Apellidos de la persona.</param>
         public AENPersona(string DNI, string Nombre, string Apellidos)
             :base()
         {
@@ -114,6 +120,9 @@ namespace GebatEN.Classes
             this.apellidos = Apellidos;
         }
 
+        /// <summary>
+        /// Constructor por defecto. No asigna ningún dato.
+        /// </summary>
         public AENPersona()
         {
         }
