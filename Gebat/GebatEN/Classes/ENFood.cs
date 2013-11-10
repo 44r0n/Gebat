@@ -46,11 +46,43 @@ namespace GebatEN.Classes
 		}
 
         /// <summary>
+        /// Carga la comida entrante del alimento.
+        /// </summary>
+        /// <returns>Cantidad entrante.</returns>
+        private int LoadEntrada()
+        {
+            int entry = 0;
+            VIEWEntrada entrada = new VIEWEntrada("GebatDataConnectionString");
+            List<object> param = new List<object>();
+            param.Add(this.id[0]);
+            DataRow row = entrada.Select(param);
+            if (row != null)
+            {
+                entry = (int)row["Quantity"];
+            }
+            return entry;
+        }
+
+        private int LoadSalida()
+        {
+            int salida = 0;
+            VIEWSalida vsalida = new VIEWSalida("GebatDataConnectionString");
+            List<object> param = new List<object>();
+            param.Add(this.id[0]);
+            DataRow row = vsalida.Select(param);
+            if (row != null)
+            {
+                salida = (int)row["Quantity"];
+            }
+            return salida;
+        }
+
+        /// <summary>
         /// Carga la cantidad de comida que hay en la base de datos.
         /// </summary>
         private void LoadQuantity()
         {
-            VIEWTotalFood totalFood = new VIEWTotalFood("GebatDataConnectionString");
+            /*VIEWTotalFood totalFood = new VIEWTotalFood("GebatDataConnectionString");
             List<object> param = new List<object>();
             param.Add((object)this.id[0]);
             DataRow row = totalFood.Select(param);
@@ -61,7 +93,11 @@ namespace GebatEN.Classes
             else
             {
                 this.quantity = 0;
-            }
+            }*/
+            this.quantity = LoadEntrada() - LoadSalida();
+            
+            
+
         }
 
 		#endregion
@@ -174,6 +210,7 @@ namespace GebatEN.Classes
 			}
 			cad = new CADFood("GebatDataConnectionString");
 			this.name = name;
+            this.quantity = 0;
 			this.type = type;
 		}
 
@@ -191,7 +228,7 @@ namespace GebatEN.Classes
 			if (row != null)
 			{
 				ret.FromRow(row);
-                this.LoadQuantity();
+                ret.LoadQuantity();
 			}
 			else
 			{
