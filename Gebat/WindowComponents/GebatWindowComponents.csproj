@@ -61,6 +61,9 @@
     <Compile Include="Lists\ListaGeneral.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Lists\ListaTBC.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Lists\ListaTypes.cs">
       <SubType>Component</SubType>
     </Compile>
