@@ -46,6 +46,7 @@ namespace GebatEN.Classes
             this.juzgado = (string)row["Juzgado"];
             this.finicio = (DateTime)row["FInicio"];
             this.ffin = (DateTime)row["FFin"];
+            this.saved = true;
         }
 
         #endregion
@@ -219,7 +220,7 @@ namespace GebatEN.Classes
         public override void Delete()
         {
             CADPersonas per = new CADPersonas("GebatDataConnectionString");
-            if (base.saved)
+            if (this.saved)
             {
                 cad.Delete(this.ToRow);
                 per.Delete(base.ToRow);

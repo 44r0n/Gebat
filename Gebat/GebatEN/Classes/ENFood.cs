@@ -82,22 +82,7 @@ namespace GebatEN.Classes
         /// </summary>
         private void LoadQuantity()
         {
-            /*VIEWTotalFood totalFood = new VIEWTotalFood("GebatDataConnectionString");
-            List<object> param = new List<object>();
-            param.Add((object)this.id[0]);
-            DataRow row = totalFood.Select(param);
-            if (row != null)
-            {
-                this.quantity = (int)row["Total"];
-            }
-            else
-            {
-                this.quantity = 0;
-            }*/
             this.quantity = LoadEntrada() - LoadSalida();
-            
-            
-
         }
 
 		#endregion
