@@ -45,6 +45,7 @@ namespace GebatCAD.Classes
 
 
 		#region //Private Methods
+
 		private void connect()
 		{
 			if (sql == null) 
@@ -81,6 +82,7 @@ namespace GebatCAD.Classes
 			}
 			return query;
 		}
+
 		#endregion
 
 		#region//Protected Methods
@@ -630,7 +632,7 @@ namespace GebatCAD.Classes
 		{
 			try
 			{
-				if (delRow == null || delRow["Id"] == null)
+				if (delRow == null)
 				{
 					throw new NullReferenceException("Cannot delete a null row");
 				}
