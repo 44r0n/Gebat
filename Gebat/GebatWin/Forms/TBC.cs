@@ -30,5 +30,23 @@ namespace GebatWin.Forms
             dateTimePickerInicio.Value = DateTime.Today;
             textBoxDNI.Focus();
         }
+
+        private void textBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            listaTBC.Filter(textBoxSearch.Text);
+        }
+
+        private void listaTBC_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            buttonDelete.Enabled = true;
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            AEN tbc = listaTBC.Selected;
+            tbc.Delete();
+            listaTBC.Refrescar(new ENTBC().ReadAll());
+            buttonDelete.Enabled = false;
+        }
     }
 }

@@ -52,6 +52,29 @@ namespace GebatWindowComponents.Lists
             Init(lista);
         }
 
+        public void Filter(string filtro)
+        {
+            Items.Clear();
+            int i = 0;
+            foreach (AEN it in colection)
+            {
+                ENTBC tbc = (ENTBC)it;
+                if (tbc.DNI.Contains(filtro))
+                {
+                    ListViewItem item = new ListViewItem(i.ToString(), 0);
+                    item.SubItems.Add(tbc.DNI);
+                    item.SubItems.Add(tbc.Nombre);
+                    item.SubItems.Add(tbc.Apellidos);
+                    item.SubItems.Add(tbc.Juzgado);
+                    item.SubItems.Add(tbc.Ejecutoria);
+                    item.SubItems.Add(tbc.FInicio.ToShortDateString());
+                    item.SubItems.Add(tbc.FFin.ToShortDateString());
+                    Items.Add(item);
+                }
+                i++;
+            }
+        }
+
         #endregion
     }
 }

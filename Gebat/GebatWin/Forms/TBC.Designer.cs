@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listaTBC = new GebatWindowComponents.Lists.ListaTBC();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonInsert = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
@@ -45,22 +44,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxDNI = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.listaTBC = new GebatWindowComponents.Lists.ListaTBC();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // listaTBC
-            // 
-            this.listaTBC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listaTBC.FullRowSelect = true;
-            this.listaTBC.GridLines = true;
-            this.listaTBC.Location = new System.Drawing.Point(413, 12);
-            this.listaTBC.MultiSelect = false;
-            this.listaTBC.Name = "listaTBC";
-            this.listaTBC.Size = new System.Drawing.Size(437, 289);
-            this.listaTBC.TabIndex = 0;
-            this.listaTBC.UseCompatibleStateImageBehavior = false;
-            this.listaTBC.View = System.Windows.Forms.View.Details;
             // 
             // groupBox1
             // 
@@ -208,11 +197,57 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "DNI: ";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(599, 13);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(46, 13);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Buscar: ";
+            // 
+            // textBoxSearch
+            // 
+            this.textBoxSearch.Location = new System.Drawing.Point(651, 10);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(100, 20);
+            this.textBoxSearch.TabIndex = 3;
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Enabled = false;
+            this.buttonDelete.Location = new System.Drawing.Point(651, 348);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(75, 23);
+            this.buttonDelete.TabIndex = 4;
+            this.buttonDelete.Text = "Eliminar";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // listaTBC
+            // 
+            this.listaTBC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listaTBC.FullRowSelect = true;
+            this.listaTBC.GridLines = true;
+            this.listaTBC.Location = new System.Drawing.Point(413, 53);
+            this.listaTBC.MultiSelect = false;
+            this.listaTBC.Name = "listaTBC";
+            this.listaTBC.Size = new System.Drawing.Size(437, 289);
+            this.listaTBC.TabIndex = 0;
+            this.listaTBC.UseCompatibleStateImageBehavior = false;
+            this.listaTBC.View = System.Windows.Forms.View.Details;
+            this.listaTBC.SelectedIndexChanged += new System.EventHandler(this.listaTBC_SelectedIndexChanged);
+            // 
             // TBC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 410);
+            this.Controls.Add(this.buttonDelete);
+            this.Controls.Add(this.textBoxSearch);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listaTBC);
             this.Name = "TBC";
@@ -221,6 +256,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -243,5 +279,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxDNI;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.Button buttonDelete;
     }
 }
