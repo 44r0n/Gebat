@@ -24,6 +24,10 @@ namespace GebatEN.Classes
         {
             get 
             {
+                if (personas == null)
+                {
+                    personas = new CADPersonas("GebatDataConnectionString");
+                }
                 DataRow ret = personas.GetVoidRow;
                 ret["DNI"] = (string)this.id[0];
                 ret["Nombre"] = this.nombre;
@@ -132,6 +136,8 @@ namespace GebatEN.Classes
         /// </summary>
         public AENPersona()
         {
+            personas = new CADPersonas("GebatDataConnectionString");
+            this.id = new List<object>();
         }
 
         #endregion
