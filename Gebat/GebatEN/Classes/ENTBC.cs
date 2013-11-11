@@ -43,6 +43,7 @@ namespace GebatEN.Classes
         {
             base.FromRow(row);
             this.id.Add((object)row["Ejecutoria"]);
+            this.juzgado = (string)row["Juzgado"];
             this.finicio = (DateTime)row["FInicio"];
             this.ffin = (DateTime)row["FFin"];
         }
