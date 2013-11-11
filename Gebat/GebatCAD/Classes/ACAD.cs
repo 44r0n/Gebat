@@ -74,7 +74,7 @@ namespace GebatCAD.Classes
 			string query = "SELECT * FROM " + this.TableName + " WHERE ";
 			for (int i = 0; i < idFormat.Count; i++)
 			{
-				query += idFormat[i] + " = " + row[idFormat[i]] + " ";
+				query += idFormat[i] + " = '" + row[idFormat[i]] + "' ";
 				if (i != idFormat.Count - 1)
 				{
 					query += "AND ";
