@@ -48,11 +48,14 @@
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.listaTBC = new GebatWindowComponents.Lists.ListaTBC();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.buttonInsert);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
@@ -70,14 +73,14 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(290, 288);
+            this.groupBox1.Size = new System.Drawing.Size(290, 358);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nuevo TBC";
             // 
             // buttonInsert
             // 
-            this.buttonInsert.Location = new System.Drawing.Point(84, 229);
+            this.buttonInsert.Location = new System.Drawing.Point(84, 272);
             this.buttonInsert.Name = "buttonInsert";
             this.buttonInsert.Size = new System.Drawing.Size(75, 23);
             this.buttonInsert.TabIndex = 14;
@@ -88,7 +91,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 208);
+            this.label7.Location = new System.Drawing.Point(7, 251);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(60, 13);
             this.label7.TabIndex = 13;
@@ -105,7 +108,7 @@
             // 
             // dateTimePickerFin
             // 
-            this.dateTimePickerFin.Location = new System.Drawing.Point(84, 202);
+            this.dateTimePickerFin.Location = new System.Drawing.Point(84, 245);
             this.dateTimePickerFin.Name = "dateTimePickerFin";
             this.dateTimePickerFin.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerFin.TabIndex = 11;
@@ -240,6 +243,13 @@
             this.listaTBC.View = System.Windows.Forms.View.Details;
             this.listaTBC.SelectedIndexChanged += new System.EventHandler(this.listaTBC_SelectedIndexChanged);
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(84, 202);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 15;
+            // 
             // TBC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,6 +265,7 @@
             this.Load += new System.EventHandler(this.TBC_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -282,5 +293,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
