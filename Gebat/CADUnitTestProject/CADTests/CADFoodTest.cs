@@ -26,7 +26,7 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private string scriptFileName = "InitTest.sql";
+        private string scriptFileName = "FoodTest.sql";
 
         private string connectionString = "GebatDataConnectionString";
 
@@ -66,8 +66,7 @@ namespace CADUnitTestProject.CADTests
 
         private void ResetConn()
         {
-            FactorySql factory = new FactorySql();
-            factory.ResetManager();
+            FactorySql.ResetManager();
         }
 
         public void SetPasswd()

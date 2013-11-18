@@ -75,6 +75,14 @@
       <Name>SqlManager</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="FoodTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TypeTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

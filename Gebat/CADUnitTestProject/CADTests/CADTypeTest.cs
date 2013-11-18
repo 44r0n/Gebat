@@ -27,7 +27,9 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private string scriptFileName = "InitTest.sql";
+        private string specificScript = "TypeTest.sql";
+
+        //static private string scriptFileName = "InitTest.sql";
 
         private string connectionString = "GebatDataConnectionString";
 
@@ -48,13 +50,13 @@ namespace CADUnitTestProject.CADTests
             factory.SetManager(conn);
         }
 
-        private void InitBD()
+        private void InitBD(string fileScript)
         {
             string connString = ConfigurationManager.ConnectionStrings[connectionString].ConnectionString;
             connString += "Password=root";
             string provider = ConfigurationManager.ConnectionStrings[connectionString].ProviderName;
             ISql manager = FactorySql.Create(provider);
-            FileInfo file = new FileInfo(scriptFileName);
+            FileInfo file = new FileInfo(fileScript);
             StreamReader lector = file.OpenText();
             string script = lector.ReadToEnd();
             lector.Close();
@@ -65,23 +67,34 @@ namespace CADUnitTestProject.CADTests
             conn.Close();
         }
 
+        //[TestInitialize()]
         private void ResetConn()
         {
-            FactorySql factory = new FactorySql();
-            factory.ResetManager();
+            FactorySql.ResetManager();
         }
 
+        //[TestInitialize()]
         public void SetPasswd() 
         {
             ACAD.Password = "root";
         }
 
+        /*[TestCleanup()]
+        public void RestoreBd()
+        {
+            if (change)
+            {
+                InitBD(specificScript);
+                change = false;
+            }
+        }*/
+
         [TestInitialize()]
-         public void InnitTest()
+        public void InnitTest()
         {
             ResetConn();
-            SetPasswd();
-            InitBD();
+            SetPasswd();    
+            InitBD(specificScript);
         }
 
         [TestMethod]
