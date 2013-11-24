@@ -54,9 +54,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CADTests\ACADTest.cs" />
     <Compile Include="CADTests\CADTypeTest.cs" />
     <Compile Include="CADTests\Stubs\StubIsql.cs" />
     <Compile Include="CADTests\CADFoodTest.cs" />
+    <Compile Include="CADTests\CADEntryFoodTest.cs" />
+    <Compile Include="CADTests\CADOutgoingFoodTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +79,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EntryFoodTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="FoodTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OutgoingFoodTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TypeTest.sql">

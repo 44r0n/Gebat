@@ -28,39 +28,6 @@ CREATE TABLE IF NOT EXISTS EntryFood
 	CONSTRAINT fk_EntryFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
-CREATE TABLE IF NOT EXISTS OutgoingFood
-(
-	Id int Primary Key AUTO_INCREMENT,
-	FoodType int,
-	QuantityOut int,
-	Fecha date,
-	CONSTRAINT fk_OutgoingFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
-);
-
-CREATE TABLE IF NOT EXISTS Personas 
-(
-  DNI CHAR(9) Primary Key,
-  Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL
-);
-
-CREATE TABLE IF NOT EXISTS TBC 
-(
-  DNI CHAR(9) NOT NULL,
-  Ejecutoria VARCHAR(10) NOT NULL,
-  Juzgado VARCHAR(45) NULL,
-  FInicio DATE NULL,
-  FFin DATE NULL,
-  PRIMARY KEY (DNI, Ejecutoria),
-  CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
-
-CREATE OR REPLACE VIEW Entrada as select sum(QuantityIn) as Quantity, FoodType from entryfood group by FoodType;
-
-CREATE OR REPLACE VIEW Salida as select sum(QuantityOut) as Quantity, FoodType from outgoingfood group by FoodType;
-
-CREATE OR REPLACE VIEW TotalFood as select (entrada.Quantity - salida.Quantity) as Total, entrada.FoodType as FoodType FROM entrada inner join salida on (entrada.FoodType = salida.FoodType);
-
 INSERT INTO Type (Name) VALUES
 (
         'Kg'
@@ -134,25 +101,4 @@ INSERT INTO EntryFood(FoodType, QuantityIn, Fecha) VALUES
 	1,
 	3,
 	'2012/11/23'
-);
-
-INSERT INTO OutgoingFood(FoodType,QuantityOut, Fecha) VALUES
-(
-	1,
-	1,
-	'2012/11/24'
-);
-
-INSERT INTO OutgoingFood(FoodType,QuantityOut,Fecha) VALUES
-(
-	1,
-	1,
-	'2012/11/24'
-);
-
-INSERT INTO OutgoingFood(FoodType,QuantityOut, Fecha) VALUES
-(
-	4,
-	2,
-	'2012/11/25'
 );

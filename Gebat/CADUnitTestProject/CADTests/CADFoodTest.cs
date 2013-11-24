@@ -13,9 +13,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CADUnitTestProject.CADTests
 {
     [TestClass]
-    public class CADFoodTest
+    public class CADFoodTest : ACADTest
     {
-        private DataTable tableFormat
+        protected override DataTable tableFormat
         {
             get
             {
@@ -26,52 +26,12 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private string scriptFileName = "FoodTest.sql";
-
-        private string connectionString = "GebatDataConnectionString";
-
-        private ISql fooCon
+        protected override string specificScript
         {
-            get
+            get 
             {
-                StubIsql ret = new StubIsql();
-                ret.Conn = "Server=tacas;Database=test;Uid=root;";
-                return ret;
+                return "FoodTest.sql";
             }
-        }
-
-        private void setFailConn()
-        {
-            ISql conn = fooCon;
-            FactorySql factory = new FactorySql();
-            factory.SetManager(conn);
-        }
-
-        private void InitBD()
-        {
-            string connString = ConfigurationManager.ConnectionStrings[connectionString].ConnectionString;
-            connString += "Password=root";
-            string provider = ConfigurationManager.ConnectionStrings[connectionString].ProviderName;
-            ISql manager = FactorySql.Create(provider);
-            FileInfo file = new FileInfo(scriptFileName);
-            StreamReader lector = file.OpenText();
-            string script = lector.ReadToEnd();
-            lector.Close();
-            DbConnection conn = manager.Connection(connString);
-            conn.Open();
-            DbCommand comando = manager.Command(script, conn);
-            comando.ExecuteNonQuery();
-            conn.Close();
-        }
-
-        private void ResetConn()
-        {
-            FactorySql.ResetManager();
-        }
-
-        public void SetPasswd()
-        {
-            ACAD.Password = "root";
         }
 
         [TestInitialize()]
@@ -79,14 +39,14 @@ namespace CADUnitTestProject.CADTests
         {
             ResetConn();
             SetPasswd();
-            InitBD();
+            InitBD(specificScript);
         }
 
         [TestMethod]
         public void TestSelectOne()
         {
             string expected = "Patates";
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             List<object> ids = new List<object>();
             ids.Add((int)1);
             DataRow actual = food.Select(ids);
@@ -97,7 +57,7 @@ namespace CADUnitTestProject.CADTests
         public void TestCount()
         {
             int expected = 3;
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             int actual = food.Count();
             Assert.AreEqual(expected, actual);
         }
@@ -107,7 +67,7 @@ namespace CADUnitTestProject.CADTests
         public void TestCountConnFail()
         {
             setFailConn();
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
 
             food.Count();
         }
@@ -117,7 +77,7 @@ namespace CADUnitTestProject.CADTests
         public void TestLastConnFail()
         {
             setFailConn();
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
 
             food.Last();
         }
@@ -125,7 +85,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void TestLast()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow actual = food.Last();
             DataRow expected = food.GetVoidRow;
             expected["Id"] = 4;
@@ -137,7 +97,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectAll()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataTable actual = food.SelectAll();
             DataTable expected = this.tableFormat;
             DataRow row = expected.NewRow();
@@ -164,7 +124,7 @@ namespace CADUnitTestProject.CADTests
         public void SelectAllFailConn()
         {
             setFailConn();
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
 
             food.SelectAll();
         }
@@ -172,7 +132,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Select()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             List<object> ids = new List<object>();
             ids.Add(1);
             DataRow actual = food.Select(ids);
@@ -189,7 +149,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(NullReferenceException))]
         public void SelectVoidList()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             food.Select(null);
         }
 
@@ -200,7 +160,7 @@ namespace CADUnitTestProject.CADTests
             List<object> ids = new List<object>();
             ids.Add("hola");
             ids.Add(3);
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             food.Select(ids);
         }
 
@@ -210,7 +170,7 @@ namespace CADUnitTestProject.CADTests
         {
             setFailConn();
 
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             List<object> ids = new List<object>();
             ids.Add(2);
             food.Select(ids);
@@ -220,7 +180,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectWhere()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
             row["Id"] = 1;
@@ -239,7 +199,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(InvalidStartRecordException))]
         public void SelectWhereInvalidStart()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             food.SelectWhere("Name = 'Patates'", -3);
         }
 
@@ -247,7 +207,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(MySqlException))]
         public void SelectWjereInvalidStatement()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             food.SelectWhere("Name = ; ");
         }
 
@@ -257,14 +217,14 @@ namespace CADUnitTestProject.CADTests
         {
             setFailConn();
 
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             food.SelectWhere("Name = 'Patates'");
         }
 
         [TestMethod]
         public void Insert()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow ins = food.GetVoidRow;
             ins["Name"] = "Peres";
             DataRow expected = food.GetVoidRow;
@@ -279,7 +239,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(NullReferenceException))]
         public void InsertNullRow()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow ins = null;
             food.Insert(ins);
         }
@@ -288,7 +248,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(ArgumentException))]
         public void InsertWrongRow()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow ins = food.GetVoidRow;
             ins["Name"] = 4;
             ins["Quantity"] = "hola";
@@ -300,7 +260,7 @@ namespace CADUnitTestProject.CADTests
         public void InsertFailConn()
         {
             setFailConn();
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow ins = food.GetVoidRow;
             ins["Name"] = "Peres";
             ins["Quantity"] = 4;
@@ -310,7 +270,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Update()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow mod = food.GetVoidRow;
             mod["Id"] = 1;
             mod["Name"] = "Peres";
@@ -321,7 +281,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(NullReferenceException))]
         public void UpdateNullRow()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow mod = null;
             food.Update(mod);
         }
@@ -330,7 +290,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(ArgumentException))]
         public void UpdateWrongRow()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow ins = food.GetVoidRow;
             ins["Id"] = 1;
             ins["Name"] = 4;
@@ -343,7 +303,7 @@ namespace CADUnitTestProject.CADTests
         public void UpdateFailConn()
         {
             setFailConn();
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow ins = food.GetVoidRow;
             ins["Id"] = 1;
             ins["Name"] = "Peres";
@@ -354,7 +314,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Delete()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow del = food.GetVoidRow;
             del["Id"] = 1;
             del["Name"] = "Patates";
@@ -365,7 +325,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(NullReferenceException))]
         public void DeleteNullRow()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             food.Delete(null);
         }
 
@@ -373,7 +333,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(ArgumentException))]
         public void DeleteWrongRow()
         {
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow del = food.GetVoidRow;
             del["Name"] = 4;
             del["Quantity"] = "hola";
@@ -385,7 +345,7 @@ namespace CADUnitTestProject.CADTests
         public void DeleteFailConn()
         {
             setFailConn();
-            ACAD food = new CADFood("GebatDataConnectionString");
+            ACAD food = new CADFood(connectionString);
             DataRow del = food.GetVoidRow;
             del["Id"] = 1;
             del["Name"] = "Patates";
