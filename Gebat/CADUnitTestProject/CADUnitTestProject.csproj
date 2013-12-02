@@ -66,7 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="InitTest.sql">
+    <None Include="Scripts\InitTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -81,22 +81,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EntryFoodTest.sql">
+    <Content Include="Scripts\EntryFoodTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="FoodTest.sql">
+    <Content Include="Scripts\FoodTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="OutgoingFoodTest.sql">
+    <Content Include="Scripts\OutgoingFoodTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="PersonasTest.sql">
+    <Content Include="Scripts\PersonasTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TBCTest.sql">
+    <Content Include="Scripts\TBCTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TypeTest.sql">
+    <Content Include="Scripts\TypeTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
