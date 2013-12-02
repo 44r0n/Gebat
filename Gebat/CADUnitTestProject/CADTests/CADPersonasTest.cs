@@ -31,7 +31,7 @@ namespace CADUnitTestProject.CADTests
         {
             get 
             {
-                return "PersonasTest.sql";
+                return "Scripts/PersonasTest.sql";
             }
         }
 

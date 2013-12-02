@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS TBC;
 DROP TABLE IF EXISTS Personas;
+DROP TABLE IF EXISTS Almacen;
 DROP TABLE IF EXISTS OutgoingFood;
 DROP TABLE IF EXISTS EntryFood;
 DROP TABLE IF EXISTS Food;
@@ -16,6 +17,7 @@ CREATE TABLE IF NOT EXISTS Food
 	Id int Primary Key AUTO_INCREMENT,
 	Name varchar(20) not null,
 	QuantityType int,
+	Quantity int DEFAULT 0,
 	CONSTRAINT fk_Food_Type FOREIGN KEY (QuantityType) REFERENCES Type (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
@@ -36,6 +38,42 @@ CREATE TABLE IF NOT EXISTS OutgoingFood
 	Fecha date,
 	CONSTRAINT fk_OutgoingFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
+
+DELIMITER |
+CREATE TRIGGER addfood AFTER INSERT ON EntryFood
+FOR EACH ROW 
+BEGIN
+	UPDATE Food SET Quantity = Quantity + NEW.QuantityIn WHERE (Id = NEW.FoodType);
+END
+|
+DELIMITER ;
+
+DELIMITER |
+CREATE TRIGGER subfood AFTER INSERT ON OutGoingFood
+FOR EACH ROW 
+BEGIN
+	UPDATE Food SET Quantity = Quantity - NEW.QuantityOut WHERE (Id = NEW.FoodType);
+END
+|
+DELIMITER ;
+
+DELIMITER |
+CREATE TRIGGER subfoodin BEFORE DELETE ON EntryFood
+FOR EACH ROW 
+BEGIN
+	UPDATE Food SET Quantity = Quantity - OLD.QuantityIN WHERE Id = OLD.FoodType;
+END
+|
+DELIMITER ;
+
+DELIMITER |
+CREATE TRIGGER addfoodout BEFORE DELETE ON OutGoingFood
+FOR EACH ROW 
+BEGIN
+	UPDATE Food SET Quantity = Quantity + OLD.QuantityOut WHERE Id = OLD.FoodType;
+END
+|
+DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS Personas 
 (

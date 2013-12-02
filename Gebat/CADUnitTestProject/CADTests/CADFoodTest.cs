@@ -22,6 +22,8 @@ namespace CADUnitTestProject.CADTests
                 DataTable expected = new DataTable();
                 expected.Columns.Add("Id", typeof(int));
                 expected.Columns.Add("Name", typeof(string));
+                expected.Columns.Add("QuantityType", typeof(int));
+                expected.Columns.Add("Quantity", typeof(int));
                 return expected;
             }
         }
@@ -30,7 +32,7 @@ namespace CADUnitTestProject.CADTests
         {
             get 
             {
-                return "FoodTest.sql";
+                return "Scripts/FoodTest.sql";
             }
         }
 
@@ -90,8 +92,10 @@ namespace CADUnitTestProject.CADTests
             DataRow expected = food.GetVoidRow;
             expected["Id"] = 4;
             expected["Name"] = "Pomes";
+            expected["QuantityType"] = 1;
             Assert.AreEqual(expected["Id"], actual["Id"]);
             Assert.AreEqual(expected["Name"], actual["Name"]);
+            Assert.AreEqual(expected["QuantityType"], actual["QuantityType"]);
         }
 
         [TestMethod]
@@ -116,6 +120,7 @@ namespace CADUnitTestProject.CADTests
             {
                 Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
                 Assert.AreEqual(expected.Rows[i]["Name"], actual.Rows[i]["Name"]);
+                Assert.AreEqual(expected.Rows[i]["QuantityType"], actual.Rows[i]["QuantityType"]);
             }
         }
 
@@ -140,9 +145,11 @@ namespace CADUnitTestProject.CADTests
             DataRow expected = table.NewRow();
             expected["Id"] = 1;
             expected["Name"] = "Patates";
+            expected["QuantityType"] = 1;
 
             Assert.AreEqual(expected["Id"], actual["Id"]);
             Assert.AreEqual(expected["Name"], actual["Name"]);
+            Assert.AreEqual(expected["QuantityTyè"], actual["QuantityType"]);
         }
 
         [TestMethod]
@@ -185,6 +192,7 @@ namespace CADUnitTestProject.CADTests
             DataRow row = expected.NewRow();
             row["Id"] = 1;
             row["Name"] = "Patates";
+            row["QuantityType"] = 1;
             expected.Rows.Add(row);
             DataTable actual = food.SelectWhere("Name = 'Patates'");
 
@@ -192,6 +200,7 @@ namespace CADUnitTestProject.CADTests
             {
                 Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
                 Assert.AreEqual(expected.Rows[i]["Name"], actual.Rows[i]["Name"]);
+                Assert.AreEqual(expected.Rows[i]["QuantityType"], actual.Rows[i]["QuantityType"]);
             }
         }
 

@@ -33,7 +33,7 @@ namespace CADUnitTestProject.CADTests
         {
             get 
             {
-                return "TBCTest.sql";
+                return "Scripts/TBCTest.sql";
             }
         }
 

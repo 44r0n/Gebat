@@ -32,7 +32,7 @@ namespace CADUnitTestProject.CADTests
         {
             get 
             {
-                return "EntryFoodTest.sql";
+                return "Scripts/EntryFoodTest.sql";
             }
         }
 
