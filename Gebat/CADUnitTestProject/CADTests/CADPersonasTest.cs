@@ -20,6 +20,7 @@ namespace CADUnitTestProject.CADTests
             get 
             {
                 DataTable expected = new DataTable();
+                expected.Columns.Add("Id", typeof(int));
                 expected.Columns.Add("DNI", typeof(string));
                 expected.Columns.Add("Nombre", typeof(string));
                 expected.Columns.Add("Apellidos", typeof(string));
@@ -252,6 +253,7 @@ namespace CADUnitTestProject.CADTests
         {
             ACAD persona = new CADPersonas(connectionString);
             DataRow mod = tableFormat.NewRow();
+            mod["Id"] = 2;
             mod["DNI"] = "23456789B";
             mod["Nombre"] = "María";
             mod["Apellidos"] = "Entrepinares";
@@ -273,6 +275,7 @@ namespace CADUnitTestProject.CADTests
             setFailConn();
             ACAD persona = new CADPersonas(connectionString);
             DataRow mod = tableFormat.NewRow();
+            mod["Id"] = 1;
             mod["DNI"] = "123456789A";
             mod["Nombre"] = "Manolo";
             mod["Apellidos"] = "Solo";
@@ -284,6 +287,7 @@ namespace CADUnitTestProject.CADTests
         {
             ACAD persona = new CADPersonas(connectionString);
             DataRow del = tableFormat.NewRow();
+            del["Id"] = 1;
             del["DNI"] = "12345678A";
             del["Nombre"] = "Pepe";
             del["Apellidos"] = "Olivares";
@@ -304,7 +308,7 @@ namespace CADUnitTestProject.CADTests
         {
             ACAD persona = new CADPersonas(connectionString);
             DataRow del = tableFormat.NewRow();
-            del["Nombre"] = 2345;
+            del["Nombre"] = "tacata";
             persona.Delete(del);
         }
 
@@ -315,6 +319,7 @@ namespace CADUnitTestProject.CADTests
             setFailConn();
             ACAD persona = new CADPersonas(connectionString);
             DataRow del = tableFormat.NewRow();
+            del["Id"] = 1;
             del["DNI"] = "123456789A";
             del["Nombre"] = "Pepe";
             del["Apellidos"] = "Olivares";

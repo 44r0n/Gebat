@@ -20,6 +20,7 @@ namespace CADUnitTestProject.CADTests
             get 
             {
                 DataTable expected = new DataTable();
+                expected.Columns.Add("Id", typeof(int));
                 expected.Columns.Add("DNI", typeof(string));
                 expected.Columns.Add("Ejecutoria", typeof(string));
                 expected.Columns.Add("Juzgado", typeof(string));
@@ -156,6 +157,7 @@ namespace CADUnitTestProject.CADTests
         {
             List<object> ids = new List<object>();
             ids.Add("taca");
+            ids.Add(3);
             ACAD tbc = new CADTBC(connectionString);
             tbc.Select(ids);
         }
@@ -167,8 +169,7 @@ namespace CADUnitTestProject.CADTests
             setFailConn();
             ACAD tbc = new CADTBC(connectionString);
             List<object> ids = new List<object>();
-            ids.Add("12345678A");
-            ids.Add("23/2013");
+            ids.Add(1);
             tbc.Select(ids);
         }
 
@@ -265,6 +266,7 @@ namespace CADUnitTestProject.CADTests
         {
             ACAD tbc = new CADTBC(connectionString);
             DataRow mod = tableFormat.NewRow();
+            mod["Id"] = 1;
             mod["DNI"] = "12345678A";
             mod["Ejecutoria"] = "23/2013";
             mod["Juzgado"] = "Murcia";
@@ -288,6 +290,7 @@ namespace CADUnitTestProject.CADTests
             setFailConn();
             ACAD tbc = new CADTBC(connectionString);
             DataRow mod = tableFormat.NewRow();
+            mod["Id"] = 1;
             mod["DNI"] = "123456789A";
             mod["Ejecutoria"] = "23/2013";
             mod["Juzgado"] = "Murcia";
@@ -301,6 +304,7 @@ namespace CADUnitTestProject.CADTests
         {
             ACAD tbc = new CADTBC(connectionString);
             DataRow del = tableFormat.NewRow();
+            del["Id"] = 1;
             del["DNI"] = "12345678A";
             del["Ejecutoria"] = "23/2013";
             del["Juzgado"] = "Alicante";
@@ -323,7 +327,7 @@ namespace CADUnitTestProject.CADTests
         {
             ACAD tbc = new CADTBC(connectionString);
             DataRow del = tableFormat.NewRow();
-            del["DNI"] = 365365;
+            del["DNI"] = "365365";
             tbc.Delete(del);
         }
 
@@ -334,6 +338,7 @@ namespace CADUnitTestProject.CADTests
             setFailConn();
             ACAD tbc = new CADTBC(connectionString);
             DataRow del = tableFormat.NewRow();
+            del["Id"] = 1;
             del["DNI"] = "12345678A";
             del["Ejecutoria"] = "23/2013";
             del["Juzgado"] = "Alicante";

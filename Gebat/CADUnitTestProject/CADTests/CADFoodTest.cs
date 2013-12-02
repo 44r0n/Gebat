@@ -107,14 +107,17 @@ namespace CADUnitTestProject.CADTests
             DataRow row = expected.NewRow();
             row["Id"] = 1;
             row["Name"] = "Patates";
+            row["QuantityType"] = 1;
             expected.Rows.Add(row);
             DataRow row2 = expected.NewRow();
             row2["Id"] = 2;
             row2["Name"] = "Tomates";
+            row2["QuantityType"] = 1;
             expected.Rows.Add(row2);
             DataRow row3 = expected.NewRow();
             row3["Id"] = 4;
             row3["Name"] = "Pomes";
+            row3["QuantityType"] = 1;
             expected.Rows.Add(row3);
             for (int i = 0; i < expected.Rows.Count; i++)
             {
@@ -149,7 +152,7 @@ namespace CADUnitTestProject.CADTests
 
             Assert.AreEqual(expected["Id"], actual["Id"]);
             Assert.AreEqual(expected["Name"], actual["Name"]);
-            Assert.AreEqual(expected["QuantityTyè"], actual["QuantityType"]);
+            Assert.AreEqual(expected["QuantityType"], actual["QuantityType"]);
         }
 
         [TestMethod]
