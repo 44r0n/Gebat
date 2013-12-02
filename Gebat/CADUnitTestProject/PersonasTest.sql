@@ -7,7 +7,8 @@ DROP TABLE IF EXISTS Type;
 
 CREATE TABLE IF NOT EXISTS Personas 
 (
-  DNI CHAR(9) Primary Key,
+  Id int Primary Key AUTO_INCREMENT,
+  DNI CHAR(9) Unique,
   Nombre VARCHAR(15) NULL,
   Apellidos VARCHAR(45) NULL
 );

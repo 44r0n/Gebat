@@ -8,7 +8,7 @@ namespace GebatCAD.Classes
             : base(connStringName)
         {
             this.tablename = "Personas";
-            this.idFormat.Add("DNI");
+            this.idFormat.Add("Id");
         }
     }
 }

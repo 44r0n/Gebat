@@ -61,6 +61,7 @@
     <Compile Include="CADTests\CADEntryFoodTest.cs" />
     <Compile Include="CADTests\CADOutgoingFoodTest.cs" />
     <Compile Include="CADTests\CADPersonasTest.cs" />
+    <Compile Include="CADTests\CADTBCTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +91,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="PersonasTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TBCTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TypeTest.sql">

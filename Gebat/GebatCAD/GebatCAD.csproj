@@ -35,6 +35,7 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AVIEW.cs" />
     <Compile Include="Classes\VIEWEntrada.cs" />
     <Compile Include="Classes\CADEntryFood.cs" />
     <Compile Include="Classes\CADOutgoingFood.cs" />

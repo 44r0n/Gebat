@@ -47,12 +47,12 @@ namespace CADUnitTestProject.CADTests
         public void TestSelectOne()
         {
             DataRow expected = tableFormat.NewRow();
-            expected["DNI"] = "12345678B";
+            expected["DNI"] = "12345678A";
             expected["Nombre"] = "Pepe";
             expected["Apellidos"] = "Olivares";
             ACAD persona = new CADPersonas(connectionString);
             List<object> ids = new List<object>();
-            ids.Add((string)"12345678A");
+            ids.Add(1);
             DataRow actual = persona.Select(ids);
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
             Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
@@ -192,7 +192,7 @@ namespace CADUnitTestProject.CADTests
 
         [TestMethod]
         [ExpectedException(typeof(MySqlException))]
-        public void SelectWHereInvalidStatement()
+        public void SelectWhereInvalidStatement()
         {
             ACAD persona = new CADPersonas(connectionString);
             persona.SelectWhere(";");
@@ -275,7 +275,7 @@ namespace CADUnitTestProject.CADTests
             DataRow mod = tableFormat.NewRow();
             mod["DNI"] = "123456789A";
             mod["Nombre"] = "Manolo";
-            mod["Apelldos"] = "Solo";
+            mod["Apellidos"] = "Solo";
             persona.Update(mod);
         }
 
