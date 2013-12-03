@@ -206,7 +206,7 @@ namespace CADUnitTestProject.CADTests
 
         [TestMethod]
         [ExpectedException(typeof(MySqlException))]
-        public void SelectWHereInvalidStatement()
+        public void SelectWhereInvalidStatement()
         {
             ACAD tbc = new CADTBC(connectionString);
             tbc.SelectWhere("Juz'[");

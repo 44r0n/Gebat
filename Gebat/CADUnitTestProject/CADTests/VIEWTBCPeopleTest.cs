@@ -99,5 +99,57 @@ namespace CADUnitTestProject.CADTests
             AVIEW vtbc = new VIEWTBCPeople(connectionString);
             vtbc.SelectAll();
         }
+
+        [TestMethod]
+        public void SelectWhere()
+        {
+            AVIEW vtbc = new VIEWTBCPeople(connectionString);
+            DataTable expected = tableFormat;
+            DataRow row = expected.NewRow();
+            row["DNI"] = "12345678A";
+            row["Nombre"] = "Pepe";
+            row["Apellidos"] = "Olivares";
+            row["Ejecutoria"] = "23/2013";
+            row["Juzgado"] = "Alicante";
+            row["FInicio"] = "2012/11/24";
+            row["FFin"] = "2013/03/09";
+            expected.Rows.Add(row);
+            DataTable actual = vtbc.SelectWhere("Juzgado = 'Alicante'");
+            for (int i = 0; i < expected.Rows.Count; i++)
+            {
+                Assert.AreEqual(expected.Rows[i]["DNI"], actual.Rows[i]["DNI"]);
+                Assert.AreEqual(expected.Rows[i]["Nombre"], actual.Rows[i]["Nombre"]);
+                Assert.AreEqual(expected.Rows[i]["Apellidos"], actual.Rows[i]["Apellidos"]);
+                Assert.AreEqual(expected.Rows[i]["Ejecutoria"], actual.Rows[i]["Ejecutoria"]);
+                Assert.AreEqual(expected.Rows[i]["Juzgado"], actual.Rows[i]["Juzgado"]);
+                Assert.AreEqual(expected.Rows[i]["FInicio"], actual.Rows[i]["FInicio"]);
+                Assert.AreEqual(expected.Rows[i]["FFin"], actual.Rows[i]["FFin"]);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidStartRecordException))]
+        public void SelectWhereInvalidStart()
+        {
+            AVIEW vtbc = new VIEWTBCPeople(connectionString);
+            vtbc.SelectWhere("Juzgado = 'Alicante'", -8);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(MySqlException))]
+        public void SelectWhereInvalidStatement()
+        {
+            AVIEW vtbc = new VIEWTBCPeople(connectionString);
+            vtbc.SelectWhere("``´´");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(MySqlException))]
+        public void SelectWhereFailConn()
+        {
+            setFailConn();
+            AVIEW vtbc = new VIEWTBCPeople(connectionString);
+            vtbc.SelectWhere("Juzgado = 'Alicante'");
+        }
     }
 }
