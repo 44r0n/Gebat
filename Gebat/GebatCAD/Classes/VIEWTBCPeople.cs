@@ -11,8 +11,7 @@ namespace GebatCAD.Classes
             : base(connStringName)
         {
             this.tablename = "TBCPeople";
-            /*this.idFormat.Add("DNI");
-            this.idFormat.Add("Ejecutoria");*/
+            this.idFormat.Add("Id");
         }
     }
 }
