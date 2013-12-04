@@ -9,7 +9,7 @@ namespace GebatEN.Classes
     {
         #region//Atributes
         private CADPersonas personas;
-       //private string dni -> this.id[0] hace referencia al DNI;
+        private string dni;
         private string apellidos;
         private string nombre;
 
@@ -26,10 +26,10 @@ namespace GebatEN.Classes
             {
                 if (personas == null)
                 {
-                    personas = new CADPersonas("GebatDataConnectionString");
+                    personas = new CADPersonas(defaultConnString);
                 }
                 DataRow ret = personas.GetVoidRow;
-                ret["DNI"] = (string)this.id[0];
+                ret["DNI"] = (string)this.dni;
                 ret["Nombre"] = this.nombre;
                 ret["Apellidos"] = this.apellidos;
                 return ret;
@@ -45,7 +45,8 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                this.id.Add((object)row["DNI"]);
+                this.id.Add((object)row["Id"]);
+                this.dni = (string)row["DNI"];
                 this.nombre = (string)row["Nombre"];
                 this.apellidos = (string)row["Apellidos"];
             }
@@ -62,22 +63,15 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene y establece el DNI.
         /// </summary>
-        public string DNI
+        public string DNI //TODO: falta verificar la asignación de DNI.
         {
             get
             {
-                return (string)this.id[0];
+                return this.dni;
             }
             set
             {
-                if (this.id.Count == 0)
-                {
-                    this.id.Add(value);
-                }
-                else
-                {
-                    this.id[0] = value;
-                }
+                this.dni = value;
             }
         }
 
@@ -124,7 +118,7 @@ namespace GebatEN.Classes
         public AENPersona(string DNI, string Nombre, string Apellidos)
             :base()
         {
-            personas = new CADPersonas("GebatDataConnectionString");
+            personas = new CADPersonas(defaultConnString);
             this.id = new List<object>();
             this.DNI = DNI;
             this.nombre = Nombre;
@@ -136,7 +130,7 @@ namespace GebatEN.Classes
         /// </summary>
         public AENPersona()
         {
-            personas = new CADPersonas("GebatDataConnectionString");
+            personas = new CADPersonas(defaultConnString);
             this.id = new List<object>();
         }
 

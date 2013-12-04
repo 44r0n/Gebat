@@ -9,7 +9,7 @@ namespace GebatEN.Classes
     {
         #region//Atributes
 
-        //private string ejecutoria  -> this.id[1] hace referencia a la ejeutoria.
+        private string ejecutoria;
         private string juzgado;
         private DateTime finicio;
         private DateTime ffin;
@@ -26,8 +26,8 @@ namespace GebatEN.Classes
             get
             {
                 DataRow ret = cad.GetVoidRow;
-                ret["DNI"] = this.id[0];
-                ret["Ejecutoria"] = this.id[1];
+                ret["DNI"] = this.DNI;
+                ret["Ejecutoria"] = this.ejecutoria;
                 ret["Juzgado"] = this.juzgado;
                 ret["FInicio"] = this.finicio;
                 ret["FFin"] = this.ffin;
@@ -42,7 +42,7 @@ namespace GebatEN.Classes
         protected override void FromRow(DataRow row)
         {
             base.FromRow(row);
-            this.id.Add((object)row["Ejecutoria"]);
+            this.ejecutoria = (string)row["Ejecutoria"];
             this.juzgado = (string)row["Juzgado"];
             this.finicio = (DateTime)row["FInicio"];
             this.ffin = (DateTime)row["FFin"];
@@ -56,22 +56,15 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene y establece la ejecutoria.
         /// </summary>
-        public string Ejecutoria
+        public string Ejecutoria//TODO: comprobar que el formato de la ejecutoria a la hora de asignar.
         {
             get
             {
-                return (string)this.id[1];
+                return this.ejecutoria;
             }
             set
             {
-                if (this.id.Count == 2)
-                {
-                    this.id[1] = value;
-                }
-                else
-                {
-                    this.id.Add(value);
-                }
+                this.ejecutoria = value;
             }
         }
 
@@ -137,8 +130,8 @@ namespace GebatEN.Classes
         public ENTBC(string DNI, string Ejecutoria, string Nombre, string Apellidos, string Juzgado, DateTime Finicio, DateTime Ffin)
             : base(DNI, Nombre, Apellidos)
         {
-            cad = new CADTBC("GebatDataConnectionString");
-            this.id.Add(Ejecutoria);
+            cad = new CADTBC(defaultConnString);
+            this.ejecutoria = Ejecutoria;
             this.juzgado = Juzgado;
             this.finicio = Finicio;
             this.ffin = Ffin;
@@ -150,21 +143,20 @@ namespace GebatEN.Classes
         public ENTBC()
             : base()
         {
-            cad = new CADTBC("GebatDataConnectionString");
+            cad = new CADTBC(defaultConnString);
         }
 
         /// <summary>
-        /// Busca en la base de datos la persona TBC por DNI y ejecutoria.
+        /// Busca en la base de datos la persona TBC identificador.
         /// </summary>
-        /// <param name="id">Lista formada por [0] -> DNI, [1] -> Ejecutoria</param>
+        /// <param name="id">Identificador por el que se buscará la persona TBC</param>
         /// <returns>Persona TBC en formato AEN:</returns>
         public override AEN Read(List<int> id)
         {
-            VIEWTBCPeople tbcp = new VIEWTBCPeople("GebatDataConnectionString");
+            ACAD tbcp = new CADTBC(defaultConnString);
             ENTBC ret = new ENTBC();
             List<object> param = new List<object>();
             param.Add((object)this.id[0]);
-            param.Add((object)this.id[1]);
             DataRow row = tbcp.Select(param);
             if (row != null)
             {
@@ -184,7 +176,7 @@ namespace GebatEN.Classes
         public override List<AEN> ReadAll()
         {
             List<AEN> ret = new List<AEN>();
-            VIEWTBCPeople tbcp = new VIEWTBCPeople("GebatDataConnectionString");
+            VIEWTBCPeople tbcp = new VIEWTBCPeople(defaultConnString);
             DataTable tabla = tbcp.SelectAll();
             foreach (DataRow rows in tabla.Rows)
             {
@@ -200,7 +192,7 @@ namespace GebatEN.Classes
         /// </summary>
         public override void Save()
         {
-            CADPersonas per = new CADPersonas("GebatDataConnectionString");
+            CADPersonas per = new CADPersonas(defaultConnString);
             if (!this.saved)
             {
                 per.Insert(base.ToRow);
@@ -219,7 +211,7 @@ namespace GebatEN.Classes
         /// </summary>
         public override void Delete()
         {
-            CADPersonas per = new CADPersonas("GebatDataConnectionString");
+            CADPersonas per = new CADPersonas(defaultConnString);
             if (this.saved)
             {
                 cad.Delete(this.ToRow);
