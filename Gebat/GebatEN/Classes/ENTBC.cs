@@ -9,6 +9,7 @@ namespace GebatEN.Classes
     {
         #region//Atributes
 
+        private int idtbc = 0; 
         private string ejecutoria;
         private string juzgado;
         private DateTime finicio;
@@ -27,6 +28,10 @@ namespace GebatEN.Classes
             get
             {
                 DataRow ret = cad.GetVoidRow;
+                if (this.idtbc != 0)
+                {
+                    ret["Id"] = this.idtbc;
+                }
                 ret["DNI"] = this.DNI;
                 ret["Ejecutoria"] = this.ejecutoria;
                 ret["Juzgado"] = this.juzgado;
@@ -45,10 +50,12 @@ namespace GebatEN.Classes
         {
             base.FromRow(row);
             this.ejecutoria = (string)row["Ejecutoria"];
+            this.idtbc = (int)row["Id"];
             this.juzgado = (string)row["Juzgado"];
             this.finicio = (DateTime)row["FInicio"];
             this.ffin = (DateTime)row["FFin"];
             this.numjornadas = (int)row["NumJornadas"];
+            
             this.saved = true;
         }
 
@@ -170,7 +177,7 @@ namespace GebatEN.Classes
         /// <returns>Persona TBC en formato AEN:</returns>
         public override AEN Read(List<int> id)
         {
-            ACAD tbcp = new CADTBC(defaultConnString);
+            AVIEW tbcp = new VIEWTBCPeople(defaultConnString);
             ENTBC ret = new ENTBC();
             List<object> param = new List<object>();
             param.Add((object)this.id[0]);
@@ -219,7 +226,7 @@ namespace GebatEN.Classes
             else
             {
                 per.Update(base.ToRow);
-                cad.Update(base.ToRow);
+                cad.Update(this.ToRow);
             }
         }
 

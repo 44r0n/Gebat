@@ -15,6 +15,86 @@ namespace GebatEN.Classes
 
         #endregion
 
+        #region//Private Methods
+
+        /// <summary> Tabla de asignación. </summary>
+        private const string Correspondencia = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+        /// <summary> Genera la letra correspondiente a un DNI. </summary>
+        /// <param name="dni"> DNI a procesar. </param>
+        /// <returns> Letra correspondiente al DNI. </returns>
+        private char LetraNIF(string dni)
+        {
+            int n;
+
+            if ((dni == null) || (dni.Length != 9) || (!int.TryParse(dni.Substring(0, 8), out n)))
+            {
+                throw new ArgumentException("El DNI debe contener 8 dígitos.");
+            }
+
+            return Correspondencia[n % 23];
+        }
+
+        /// <summary> Genera la letra correspondiente a un NIE. </summary>
+        /// <param name="nie"> NIE a procesar. </param>
+        /// <returns> Letra correspondiente al NIE. </returns>
+        private char LetraNIE(string nie)
+        {
+            int n;
+            if ((nie == null) || (nie.Length != 9) || ((char.ToUpper(nie[0]) != 'X') && (char.ToUpper(nie[0]) != 'Y') && (char.ToUpper(nie[0]) != 'Z')) || (!int.TryParse(nie.Substring(1, 7), out n)))
+            {
+                throw new ArgumentException("El NIE debe comenzar con la letra X, Y o Z seguida de 7 dígitos.");
+            }
+
+            switch (char.ToUpper(nie[0]))
+            {
+                case 'X':
+                    return Correspondencia[n % 23];
+                case 'Y':
+                    return Correspondencia[(10000000 + n) % 23];
+                case 'Z':
+                    return Correspondencia[(20000000 + n) % 23];
+                default:
+                    return '\0';
+            }
+        }
+
+        /// <summary>
+        /// Vefirica si el DNI introducido es correcto.
+        /// </summary>
+        /// <param name="dni">DNI a verificar.</param>
+        /// <returns>True si el DNI es correcto, false en caso contrario.</returns>
+        private bool verifyDNI(string dni)
+        {
+            if(LetraNIF(dni) == dni.Substring(dni.Length -1,1))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Verifica si el NIE introducido es correcto.
+        /// </summary>
+        /// <param name="nie">NIE a verificar.</param>
+        /// <returns>True si el NIE es correcto, false en caso contrario.</returns>
+        private bool verifyNIE(string nie)
+        {
+            if (LetraNIE(nie) == nie.Substring(nie.Length - 1, 1))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
         #region//Protected Methods
 
         /// <summary>
@@ -45,7 +125,7 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                this.id.Add((object)row["Id"]);
+                
                 this.dni = (string)row["DNI"];
                 this.nombre = (string)row["Nombre"];
                 this.apellidos = (string)row["Apellidos"];
@@ -63,7 +143,7 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene y establece el DNI.
         /// </summary>
-        public string DNI //TODO: falta verificar la asignación de DNI.
+        public string DNI
         {
             get
             {
@@ -71,7 +151,29 @@ namespace GebatEN.Classes
             }
             set
             {
-                this.dni = value;
+                string primero = value.Substring(0, 1);
+                if (primero == "X" || primero == "Y" || primero == "Z")
+                {
+                    if (verifyNIE(value))
+                    {
+                        this.dni = value;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("El formato NIE no es correcto");
+                    }
+                }
+                else
+                {
+                    if (verifyDNI(value))
+                    {
+                        this.dni = value;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("El formato DNI no es correcto");
+                    }
+                }
             }
         }
 
@@ -133,6 +235,13 @@ namespace GebatEN.Classes
             personas = new CADPersonas(defaultConnString);
             this.id = new List<object>();
         }
+
+        /// <summary>
+        /// Carga los datos de una persona.
+        /// </summary>
+        /// <param name="dni">DNI por el que se buscará a la persona.</param>
+        /// <returns>Lista de objetos AENPersona.</returns>
+        public abstract List<AENPersona> ReadByDNI(string dni);
 
         #endregion
     }
