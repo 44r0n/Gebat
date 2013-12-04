@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS TBC;
 DROP TABLE IF EXISTS Personas;
-DROP TABLE IF EXISTS Almacen;
 DROP TABLE IF EXISTS OutgoingFood;
 DROP TABLE IF EXISTS EntryFood;
 DROP TABLE IF EXISTS Food;
@@ -39,60 +38,124 @@ CREATE TABLE IF NOT EXISTS OutgoingFood
 	CONSTRAINT fk_OutgoingFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
-DELIMITER |
+
 CREATE TRIGGER addfood AFTER INSERT ON EntryFood
 FOR EACH ROW 
 BEGIN
 	UPDATE Food SET Quantity = Quantity + NEW.QuantityIn WHERE (Id = NEW.FoodType);
-END
-|
-DELIMITER ;
+END;
 
-DELIMITER |
+
 CREATE TRIGGER subfood AFTER INSERT ON OutGoingFood
 FOR EACH ROW 
 BEGIN
 	UPDATE Food SET Quantity = Quantity - NEW.QuantityOut WHERE (Id = NEW.FoodType);
-END
-|
-DELIMITER ;
+END;
 
-DELIMITER |
 CREATE TRIGGER subfoodin BEFORE DELETE ON EntryFood
 FOR EACH ROW 
 BEGIN
 	UPDATE Food SET Quantity = Quantity - OLD.QuantityIN WHERE Id = OLD.FoodType;
-END
-|
-DELIMITER ;
+END;
 
-DELIMITER |
 CREATE TRIGGER addfoodout BEFORE DELETE ON OutGoingFood
 FOR EACH ROW 
 BEGIN
 	UPDATE Food SET Quantity = Quantity + OLD.QuantityOut WHERE Id = OLD.FoodType;
-END
-|
-DELIMITER ;
+END;
 
-CREATE TABLE IF NOT EXISTS Personas 
+INSERT INTO Type (Name) VALUES
 (
-  Id int Primary Key AUTO_INCREMENT,
-  DNI CHAR(9) Unique,
-  Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL
+        'Kg'
 );
 
-CREATE TABLE IF NOT EXISTS TBC 
+INSERT INTO Type (Name) VALUES
 (
-  Id int PRIMARY KEY AUTO_INCREMENT,
-  DNI CHAR(9) NOT NULL,
-  Ejecutoria VARCHAR(10) NOT NULL,
-  Juzgado VARCHAR(45) NULL,
-  FInicio DATE NULL,
-  FFin DATE NULL,
-  Unique (DNI, Ejecutoria),
-  CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
+        'Litros'
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select Personas.DNI, Nombre, Apellidos, Ejecutoria, Juzgado, FInicio, FFin from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+INSERT INTO Type (Name) VALUES
+(
+        'Borrar'
+);
+
+INSERT INTO Type (Name) VALUES
+(
+        'Paquetes'
+);
+
+DELETE FROM Type WHERE Id = 3;
+
+INSERT INTO Food (Name,QuantityType) VALUES
+(
+        'Patates',
+        1
+);
+
+INSERT INTO Food (Name,QuantityType) VALUES
+(
+        'Tomates',
+        1
+);
+
+INSERT INTO Food (Name) VALUES
+(
+        'Pa borrar'
+);
+
+INSERT INTO Food (Name,QuantityType) VALUES
+(
+        'Pomes',
+        1
+);
+
+DELETE FROM Food WHERE Id = 3;
+
+INSERT INTO EntryFood(FoodType,QuantityIn, Fecha) VALUES
+(
+	1,
+	1,
+	'2012/11/20'
+);
+
+INSERT INTO EntryFood(FoodType,QuantityIn, Fecha) VALUES
+(
+	1,
+	2,
+	'2012/11/21'
+);
+
+INSERT INTO EntryFood(FoodType,QuantityIn,Fecha) VALUES
+(
+	4,
+	4,
+	'2012/11/22'
+);
+
+INSERT INTO EntryFood(FoodType, QuantityIn, Fecha) VALUES
+(
+	1,
+	3,
+	'2012/11/23'
+);
+
+INSERT INTO OutgoingFood(FoodType,QuantityOut, Fecha) VALUES
+(
+	1,
+	1,
+	'2012/11/24'
+);
+
+INSERT INTO OutgoingFood(FoodType,QuantityOut,Fecha) VALUES
+(
+	1,
+	1,
+	'2012/11/24'
+);
+
+INSERT INTO OutgoingFood(FoodType,QuantityOut, Fecha) VALUES
+(
+	4,
+	2,
+	'2012/11/25'
+);
