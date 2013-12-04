@@ -13,6 +13,7 @@ namespace GebatEN.Classes
         private string juzgado;
         private DateTime finicio;
         private DateTime ffin;
+        private int numjornadas;
 
         #endregion
 
@@ -31,6 +32,7 @@ namespace GebatEN.Classes
                 ret["Juzgado"] = this.juzgado;
                 ret["FInicio"] = this.finicio;
                 ret["FFin"] = this.ffin;
+                ret["NumJornadas"] = this.numjornadas;
                 return ret;
             }
         }
@@ -46,6 +48,7 @@ namespace GebatEN.Classes
             this.juzgado = (string)row["Juzgado"];
             this.finicio = (DateTime)row["FInicio"];
             this.ffin = (DateTime)row["FFin"];
+            this.numjornadas = (int)row["NumJornadas"];
             this.saved = true;
         }
 
@@ -113,6 +116,20 @@ namespace GebatEN.Classes
             }
         }
 
+        /// <summary>
+        /// Obtiene y establece el número de jornadas que debe realizar.
+        /// </summary>
+        public int NumJornadas
+        {
+            get
+            {
+                return this.numjornadas;
+            }
+            set
+            {
+                this.numjornadas = value;
+            }
+        }
         #endregion
 
         #region//Public Methods
