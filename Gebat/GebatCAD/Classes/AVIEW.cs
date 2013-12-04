@@ -299,6 +299,85 @@ namespace GebatCAD.Classes
             }
         }
 
+
+        /// <summary>
+        /// Devuelve el último Id insertado en la base de datos. El campo en la base de datos debe llamarse Id.
+        /// </summary>
+        /// <returns>La última fila de la tabla.</returns>
+        public virtual DataRow Last()
+        {
+            string sql = "SELECT * FROM " + this.tablename + " Order by ";
+            if (this.idFormat.Count == 1)
+            {
+                sql += this.idFormat[0];
+            }
+            else
+            {
+                for (int i = 0; i < idFormat.Count; i++)
+                {
+                    if (i == idFormat.Count - 1)
+                    {
+                        sql += this.idFormat[i];
+                    }
+                    else
+                    {
+                        sql += this.idFormat[i] + ", ";
+                    }
+                }
+            }
+            sql += " desc limit 1";
+            return ExecuteQuery(sql).Rows[0];
+        }
+
+        /// <summary>
+        /// Devuelve un DataRow con el registro indicado en el id. El formato de este id dependerá del IdFormat. En caso de que no lo encuentre devuelve null.
+        /// </summary>
+        /// <param name="id">Lista con los identificadores de la tabla, solo uno en casod de campo simple.</param>
+        /// <returns>Devuelve una fila de la base de datos.</returns>
+        public virtual DataRow Select(List<object> id)
+        {
+            try
+            {
+                if (id.Count != this.idFormat.Count)
+                {
+                    throw new InvalidNumberIdException("Invalid number of id");
+                }
+                string query = "SELECT * FROM " + this.TableName + " WHERE ";
+                for (int i = 0; i < id.Count; i++)
+                {
+                    query += this.idFormat[i] + " = " + id[i].ToString() + " ";
+                    if (i != id.Count - 1)
+                    {
+                        query += "AND ";
+                    }
+                }
+
+                //connect();
+                DataTable dTable = ExecuteQuery(query);
+                rowReturned = true;
+                voidRow = dTable.NewRow();
+                if (dTable.Rows.Count == 1)
+                {
+                    return dTable.Rows[0];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (uniqueconn == null)
+                {
+                    disconnect();
+                }
+            }
+        }
+
         /// <summary>
         /// Devuelve una tabla con el primer registro, en caso de estar vacia devuelve null.
         /// </summary>

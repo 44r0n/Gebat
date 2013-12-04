@@ -92,8 +92,15 @@ CREATE TABLE IF NOT EXISTS TBC
   FInicio DATE NULL,
   FFin DATE NULL,
   NumJornadas INT,
+  Lunes BOOLEAN DEFAULT FALSE,
+  Martes BOOLEAN DEFAULT FALSE,
+  Miercoles BOOLEAN DEFAULT FALSE,
+  Jueves BOOLEAN DEFAULT FALSE,
+  Viernes BOOLEAN DEFAULT FALSE,
+  Sabado BOOLEAN DEFAULT FALSE,
+  Domingo BOOLEAN DEFAULT FALSE,
   Unique (DNI, Ejecutoria),
   CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select Personas.DNI, Nombre, Apellidos, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas from Personas inner join TBC on (Personas.DNI = TBC.DNI);

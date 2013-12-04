@@ -21,6 +21,13 @@ CREATE TABLE IF NOT EXISTS TBC
   FInicio DATE NULL,
   FFin DATE NULL,
   NumJornadas INT,
+  Lunes BOOLEAN DEFAULT FALSE,
+  Martes BOOLEAN DEFAULT FALSE,
+  Miercoles BOOLEAN DEFAULT FALSE,
+  Jueves BOOLEAN DEFAULT FALSE,
+  Viernes BOOLEAN DEFAULT FALSE,
+  Sabado BOOLEAN DEFAULT FALSE,
+  Domingo BOOLEAN DEFAULT FALSE,
   Unique (DNI, Ejecutoria),
   CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
@@ -39,12 +46,19 @@ INSERT INTO Personas (DNI, Nombre, Apellidos) VALUES
 	'Entrepinares'
 );
 
-INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas) VALUES
+INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo) VALUES
 (
 	'12345678A',
 	'23/2013',
 	'Alicante',
 	'2012/11/24',
 	'2013/03/09',
-	180
+	180,
+	TRUE,
+	TRUE,
+	TRUE,
+	TRUE,
+	TRUE,
+	FALSE,
+	FALSE
 );
