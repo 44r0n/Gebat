@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS TBC
   Juzgado VARCHAR(45) NULL,
   FInicio DATE NULL,
   FFin DATE NULL,
+  NumJornadas INT,
   Unique (DNI, Ejecutoria),
   CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
@@ -38,11 +39,12 @@ INSERT INTO Personas (DNI, Nombre, Apellidos) VALUES
 	'Entrepinares'
 );
 
-INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin) VALUES
+INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas) VALUES
 (
 	'12345678A',
 	'23/2013',
 	'Alicante',
 	'2012/11/24',
-	'2013/03/09'
+	'2013/03/09',
+	180
 );

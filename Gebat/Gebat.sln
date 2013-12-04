@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatCAD", "GebatCAD\GebatC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CADUnitTestProject", "CADUnitTestProject\CADUnitTestProject.csproj", "{6CB4EB2A-5355-4BEE-9DEA-4B8E154ED4A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatEN", "GebatEN\GebatEN.csproj", "{017DA2FB-2F1F-4037-A234-F2AC68267DEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{6CB4EB2A-5355-4BEE-9DEA-4B8E154ED4A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CB4EB2A-5355-4BEE-9DEA-4B8E154ED4A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CB4EB2A-5355-4BEE-9DEA-4B8E154ED4A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{017DA2FB-2F1F-4037-A234-F2AC68267DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{017DA2FB-2F1F-4037-A234-F2AC68267DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{017DA2FB-2F1F-4037-A234-F2AC68267DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{017DA2FB-2F1F-4037-A234-F2AC68267DEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -26,6 +26,7 @@ namespace CADUnitTestProject.CADTests
                 expected.Columns.Add("Juzgado", typeof(string));
                 expected.Columns.Add("FInicio", typeof(DateTime));
                 expected.Columns.Add("FFin", typeof(DateTime));
+                expected.Columns.Add("NumJornadas", typeof(int));
                 return expected;
             }
         }
@@ -55,6 +56,7 @@ namespace CADUnitTestProject.CADTests
             expected["Juzgado"] = "Alicante";
             expected["FInicio"] = "2012/11/24";
             expected["FFin"] = "2013/03/09";
+            expected["NumJornadas"] = 180;
             ACAD tbc = new CADTBC(connectionString);
             List<object> ids = new List<object>();
             ids.Add(1);
@@ -64,6 +66,7 @@ namespace CADUnitTestProject.CADTests
             Assert.AreEqual(expected["Juzgado"], actual["Juzgado"]);
             Assert.AreEqual(expected["FInicio"], actual["FInicio"]);
             Assert.AreEqual(expected["FFin"], actual["FFin"]);
+            Assert.AreEqual(expected["NumJornadas"],actual["NumJornadas"]);
         }
 
         [TestMethod]
@@ -104,11 +107,13 @@ namespace CADUnitTestProject.CADTests
             expected["Juzgado"] = "Alicante";
             expected["FInicio"] = "2012/11/24";
             expected["FFin"] = "2013/03/09";
+            expected["NumJornadas"] = 180;
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
             Assert.AreEqual(expected["Ejecutoria"], actual["Ejecutoria"]);
             Assert.AreEqual(expected["Juzgado"], actual["Juzgado"]);
             Assert.AreEqual(expected["FInicio"], actual["FInicio"]);
             Assert.AreEqual(expected["FFin"], actual["FFin"]);
+            Assert.AreEqual(expected["NumJornadas"], actual["NumJornadas"]);
         }
 
         [TestMethod]
@@ -123,6 +128,7 @@ namespace CADUnitTestProject.CADTests
             row["Juzgado"] = "Alicante";
             row["FInicio"] = "2012/11/24";
             row["FFin"] = "2013/03/09";
+            row["NumJornadas"] = 180;
             expected.Rows.Add(row);
             for (int i = 0; i < expected.Rows.Count; i++)
             {
@@ -131,6 +137,7 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["Juzgado"], actual.Rows[i]["Juzgado"]);
                 Assert.AreEqual(expected.Rows[i]["FInicio"], actual.Rows[i]["FInicio"]);
                 Assert.AreEqual(expected.Rows[i]["FFin"], actual.Rows[i]["FFin"]);
+                Assert.AreEqual(expected.Rows[i]["NumJornadas"], actual.Rows[i]["NumJornadas"]);
             }
         }
 
@@ -184,6 +191,7 @@ namespace CADUnitTestProject.CADTests
             row["Juzgado"] = "Alicante";
             row["FInicio"] = "2012/11/24";
             row["FFin"] = "2013/03/09";
+            row["NumJornadas"] = 180;
             expected.Rows.Add(row);
             DataTable actual = tbc.SelectWhere("Juzgado = 'Alicante'");
             for (int i = 0; i < expected.Rows.Count; i++)
@@ -193,6 +201,7 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["Juzgado"], actual.Rows[i]["Juzgado"]);
                 Assert.AreEqual(expected.Rows[i]["FInicio"], actual.Rows[i]["FInicio"]);
                 Assert.AreEqual(expected.Rows[i]["FFin"], actual.Rows[i]["FFin"]);
+                Assert.AreEqual(expected.Rows[i]["NumJornadas"], actual.Rows[i]["NumJornadas"]);
             }
         }
 
@@ -231,12 +240,14 @@ namespace CADUnitTestProject.CADTests
             ins["Juzgado"] = "Juzgado de Albacete";
             ins["FInicio"] = "2013/02/12";
             ins["FFin"] = "2014/04/27";
+            ins["NumJornadas"] = 60;
             DataRow expected = tableFormat.NewRow();
             expected["DNI"] = "23456789B";
             expected["Ejecutoria"] = "45/12";
             expected["Juzgado"] = "Juzgado de Albacete";
             expected["FInicio"] = "2013/02/12";
             expected["FFin"] = "2014/04/27";
+            expected["NumJornadas"] = 60;
             DataRow actual = tbc.Insert(ins);
 
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
@@ -244,6 +255,7 @@ namespace CADUnitTestProject.CADTests
             Assert.AreEqual(expected["Juzgado"], actual["Juzgado"]);
             Assert.AreEqual(expected["FInicio"], actual["FInicio"]);
             Assert.AreEqual(expected["FFin"], actual["FFin"]);
+            Assert.AreEqual(expected["NumJornadas"], actual["NumJornadas"]);
         }
 
         [TestMethod]
@@ -258,6 +270,7 @@ namespace CADUnitTestProject.CADTests
             ins["Juzgado"] = "Juzgado de Albacete";
             ins["FInicio"] = "2013/02/12";
             ins["FFin"] = "2014/04/27";
+            ins["NumJornadas"] = 60;
             tbc.Insert(ins);
         }
 
@@ -272,6 +285,7 @@ namespace CADUnitTestProject.CADTests
             mod["Juzgado"] = "Murcia";
             mod["FInicio"] = "2013/09/13";
             mod["FFin"] = "2014/02/17";
+            mod["NumJornadas"] = 90;
             tbc.Update(mod);
         }
 
@@ -296,6 +310,7 @@ namespace CADUnitTestProject.CADTests
             mod["Juzgado"] = "Murcia";
             mod["FInicio"] = "2013/09/13";
             mod["FFin"] = "2014/02/17";
+            mod["NumJornadas"] = 90;
             tbc.Update(mod);
         }
 
@@ -310,6 +325,7 @@ namespace CADUnitTestProject.CADTests
             del["Juzgado"] = "Alicante";
             del["FInicio"] = "2012/11/24";
             del["FFin"] = "2013/03/09";
+            del["NumJornadas"] = 180;
             tbc.Delete(del);
         }
 
@@ -344,6 +360,7 @@ namespace CADUnitTestProject.CADTests
             del["Juzgado"] = "Alicante";
             del["FInicio"] = "2012/11/24";
             del["FFin"] = "2013/03/09";
+            del["NumJornadas"] = 180;
             tbc.Delete(del);            
         }
     }
