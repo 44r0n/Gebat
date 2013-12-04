@@ -243,6 +243,24 @@ namespace GebatEN.Classes
             }
         }
 
+        /// <summary>
+        /// Carga los datos de una persona.
+        /// </summary>
+        /// <param name="dni">DNI por el que se buscará a la persona.</param>
+        /// <returns>Lista de objetos AENPersona.</returns>
+        public override List<AENPersona> ReadByDNI(string dni)
+        {
+            List<AENPersona> ret = new List<AENPersona>();
+            DataTable tabla = new VIEWTBCPeople(defaultConnString).SelectWhere("DNI = '" + dni + "'");
+            foreach (DataRow fila in tabla.Rows)
+            {
+                ENTBC nuevo = new ENTBC();
+                nuevo.FromRow(fila);
+                ret.Add((AENPersona)nuevo);
+            }
+            return ret;
+        }
+
         #endregion
     }
 }

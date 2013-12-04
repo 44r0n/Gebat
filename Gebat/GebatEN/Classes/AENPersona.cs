@@ -23,7 +23,7 @@ namespace GebatEN.Classes
         /// <summary> Genera la letra correspondiente a un DNI. </summary>
         /// <param name="dni"> DNI a procesar. </param>
         /// <returns> Letra correspondiente al DNI. </returns>
-        private char LetraNIF(string dni)
+        private string LetraNIF(string dni)
         {
             int n;
 
@@ -32,13 +32,13 @@ namespace GebatEN.Classes
                 throw new ArgumentException("El DNI debe contener 8 dígitos.");
             }
 
-            return Correspondencia[n % 23];
+            return Correspondencia[n % 23].ToString();
         }
 
         /// <summary> Genera la letra correspondiente a un NIE. </summary>
         /// <param name="nie"> NIE a procesar. </param>
         /// <returns> Letra correspondiente al NIE. </returns>
-        private char LetraNIE(string nie)
+        private string LetraNIE(string nie)
         {
             int n;
             if ((nie == null) || (nie.Length != 9) || ((char.ToUpper(nie[0]) != 'X') && (char.ToUpper(nie[0]) != 'Y') && (char.ToUpper(nie[0]) != 'Z')) || (!int.TryParse(nie.Substring(1, 7), out n)))
@@ -49,13 +49,13 @@ namespace GebatEN.Classes
             switch (char.ToUpper(nie[0]))
             {
                 case 'X':
-                    return Correspondencia[n % 23];
+                    return Correspondencia[n % 23].ToString();
                 case 'Y':
-                    return Correspondencia[(10000000 + n) % 23];
+                    return Correspondencia[(10000000 + n) % 23].ToString();
                 case 'Z':
-                    return Correspondencia[(20000000 + n) % 23];
+                    return Correspondencia[(20000000 + n) % 23].ToString();
                 default:
-                    return '\0';
+                    return '\0'.ToString();
             }
         }
 
@@ -109,6 +109,10 @@ namespace GebatEN.Classes
                     personas = new CADPersonas(defaultConnString);
                 }
                 DataRow ret = personas.GetVoidRow;
+                if (this.id != null)
+                {
+                    ret["Id"] = (int)this.id[0];
+                }
                 ret["DNI"] = (string)this.dni;
                 ret["Nombre"] = this.nombre;
                 ret["Apellidos"] = this.apellidos;
@@ -125,7 +129,7 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                
+                this.id.Add(personas.SelectWhere("DNI = '" + dni + "'").Rows[0]["Id"]);
                 this.dni = (string)row["DNI"];
                 this.nombre = (string)row["Nombre"];
                 this.apellidos = (string)row["Apellidos"];
