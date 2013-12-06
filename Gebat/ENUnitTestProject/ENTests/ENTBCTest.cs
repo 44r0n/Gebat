@@ -69,7 +69,7 @@ namespace ENUnitTestProject.ENTests
             }
 
             ins.Delete();
-            dnis.RemoveAt(4);
+            dnis.RemoveAt(3);
             general = new ENTBC().ReadAll();
             for (int i = 0; i < dnis.Count; i++)
             {

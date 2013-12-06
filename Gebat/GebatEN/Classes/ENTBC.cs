@@ -19,6 +19,22 @@ namespace GebatEN.Classes
 
         #endregion
 
+        #region//Private Methods
+
+        private void initDictionary()
+        {
+            this.horario = new Dictionary<DayOfWeek, bool>();
+            this.horario[DayOfWeek.Monday] = true;
+            this.horario[DayOfWeek.Tuesday] = true;
+            this.horario[DayOfWeek.Wednesday] = true;
+            this.horario[DayOfWeek.Thursday] = true;
+            this.horario[DayOfWeek.Friday] = true;
+            this.horario[DayOfWeek.Saturday] = false;
+            this.horario[DayOfWeek.Sunday] = false;
+        }
+
+        #endregion
+
         #region//Protected Methods
 
         /// <summary>
@@ -189,7 +205,7 @@ namespace GebatEN.Classes
             this.juzgado = Juzgado;
             this.finicio = Finicio;
             this.ffin = Ffin;
-            this.horario = new Dictionary<DayOfWeek, bool>();
+            this.initDictionary();
         }
 
         /// <summary>
@@ -199,7 +215,7 @@ namespace GebatEN.Classes
             : base()
         {
             cad = new CADTBC(defaultConnString);
-            this.horario = new Dictionary<DayOfWeek, bool>();
+            this.initDictionary();
         }
 
         /// <summary>
@@ -252,7 +268,7 @@ namespace GebatEN.Classes
             if (!this.saved)
             {
                 per.Insert(base.ToRow);
-                cad.Insert(this.ToRow);
+                this.FromRow(cad.Insert(this.ToRow));
                 this.saved = true;
             }
             else

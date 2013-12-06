@@ -129,10 +129,11 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                this.id.Add(personas.SelectWhere("DNI = '" + row["DNI"] + "'").Rows[0]["Id"]);
-                this.dni = (string)row["DNI"];
-                this.nombre = (string)row["Nombre"];
-                this.apellidos = (string)row["Apellidos"];
+                DataRow perrow = personas.SelectWhere("DNI = '" + row["DNI"] + "'").Rows[0];
+                this.id.Add(perrow["Id"]);
+                this.dni = (string)perrow["DNI"];
+                this.nombre = (string)perrow["Nombre"];
+                this.apellidos = (string)perrow["Apellidos"];
             }
             else
             {

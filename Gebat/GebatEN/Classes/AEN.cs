@@ -33,6 +33,12 @@ namespace GebatEN.Classes
 		protected bool saved;
 		protected List<object> id = null;
 		protected ACAD cad;
+
+		#region//Protected Methods
+
+        /// <summary>
+        /// Obtiene el nombre de cadena de conexión por defecto.
+        /// </summary>
         protected string defaultConnString
         {
             get
@@ -40,8 +46,6 @@ namespace GebatEN.Classes
                 return ("GebatDataConnectionString");
             }
         }
-
-		#region//Protected Methods
 
 		/// <summary>
 		/// Obtiene el objeto actual en tipo DataRow de forma que corresponde en la base de datos.
