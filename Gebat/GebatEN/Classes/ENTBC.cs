@@ -15,6 +15,7 @@ namespace GebatEN.Classes
         private DateTime finicio;
         private DateTime ffin;
         private int numjornadas;
+        private Dictionary<DayOfWeek, bool> horario;
 
         #endregion
 
@@ -38,6 +39,13 @@ namespace GebatEN.Classes
                 ret["FInicio"] = this.finicio;
                 ret["FFin"] = this.ffin;
                 ret["NumJornadas"] = this.numjornadas;
+                ret["Lunes"] = this.horario[DayOfWeek.Monday];
+                ret["Martes"] = this.horario[DayOfWeek.Tuesday];
+                ret["Miercoles"] = this.horario[DayOfWeek.Wednesday];
+                ret["Jueves"] = this.horario[DayOfWeek.Thursday];
+                ret["Viernes"] = this.horario[DayOfWeek.Friday];
+                ret["Sabado"] = this.horario[DayOfWeek.Saturday];
+                ret["Domingo"] = this.horario[DayOfWeek.Sunday];
                 return ret;
             }
         }
@@ -55,7 +63,13 @@ namespace GebatEN.Classes
             this.finicio = (DateTime)row["FInicio"];
             this.ffin = (DateTime)row["FFin"];
             this.numjornadas = (int)row["NumJornadas"];
-            
+            this.horario[DayOfWeek.Monday] = (bool)row["Lunes"];
+            this.horario[DayOfWeek.Tuesday] = (bool)row["Martes"];
+            this.horario[DayOfWeek.Wednesday] = (bool)row["Miercoles"];
+            this.horario[DayOfWeek.Thursday] = (bool)row["Jueves"];
+            this.horario[DayOfWeek.Friday] = (bool)row["Viernes"];
+            this.horario[DayOfWeek.Saturday] = (bool)row["Sabado"];
+            this.horario[DayOfWeek.Sunday] = (bool)row["Domingo"];
             this.saved = true;
         }
 
@@ -137,6 +151,22 @@ namespace GebatEN.Classes
                 this.numjornadas = value;
             }
         }
+
+        /// <summary>
+        /// Obtiene y establece el horario del TBC.
+        /// </summary>
+        public Dictionary<DayOfWeek, bool> Horario
+        {
+            get
+            {
+                return this.horario;
+            }
+            set
+            {
+                this.horario = value;
+            }
+        }
+
         #endregion
 
         #region//Public Methods
@@ -159,6 +189,7 @@ namespace GebatEN.Classes
             this.juzgado = Juzgado;
             this.finicio = Finicio;
             this.ffin = Ffin;
+            this.horario = new Dictionary<DayOfWeek, bool>();
         }
 
         /// <summary>
@@ -168,6 +199,7 @@ namespace GebatEN.Classes
             : base()
         {
             cad = new CADTBC(defaultConnString);
+            this.horario = new Dictionary<DayOfWeek, bool>();
         }
 
         /// <summary>
@@ -180,7 +212,7 @@ namespace GebatEN.Classes
             AVIEW tbcp = new VIEWTBCPeople(defaultConnString);
             ENTBC ret = new ENTBC();
             List<object> param = new List<object>();
-            param.Add((object)this.id[0]);
+            param.Add((object)id[0]);
             DataRow row = tbcp.Select(param);
             if (row != null)
             {

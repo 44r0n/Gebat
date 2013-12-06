@@ -129,7 +129,7 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                this.id.Add(personas.SelectWhere("DNI = '" + dni + "'").Rows[0]["Id"]);
+                this.id.Add(personas.SelectWhere("DNI = '" + row["DNI"] + "'").Rows[0]["Id"]);
                 this.dni = (string)row["DNI"];
                 this.nombre = (string)row["Nombre"];
                 this.apellidos = (string)row["Apellidos"];
@@ -225,7 +225,7 @@ namespace GebatEN.Classes
             :base()
         {
             personas = new CADPersonas(defaultConnString);
-            this.id = new List<object>();
+            //this.id = new List<object>(); -> ni se te ocurra descomentar esta línea.
             this.DNI = DNI;
             this.nombre = Nombre;
             this.apellidos = Apellidos;
