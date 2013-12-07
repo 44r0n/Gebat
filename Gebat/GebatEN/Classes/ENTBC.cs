@@ -45,6 +45,53 @@ namespace GebatEN.Classes
             return false;
         }
 
+        private Paragraph titulo()
+        {
+            Paragraph ret = new Paragraph();
+            ret.Alignment = Element.ALIGN_CENTER;
+            ret.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 16);
+            ret.Add("COMUNICACIÓN DE CUMPLIMIENTO DE TRABAJO A FAVOR DE LA COMUNIDAD\n");
+            return ret;
+        }
+
+        private Paragraph cabecera()
+        {
+            Paragraph ret = new Paragraph();
+            ret.Alignment = Element.ALIGN_JUSTIFIED;
+            ret.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
+            ret.Add("DE ENTIDAD: [CONSIGNAS SOLIDARIAS]\n\n");
+            ret.Add("AL SERIVICO SOCIAL PENITENCIARIO DE [JUZGADO]\n\n\n");
+            return ret;
+        }
+
+        private Paragraph cuerpo()
+        {
+            Paragraph ret = new Paragraph();
+            ret.Alignment = Element.ALIGN_JUSTIFIED;
+            ret.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
+            ret.Add("Por la presente los comunicamos que [TBC.Nombre + TBC.Apellidos] con DNI [TBC.DNI] con respecto al cumplimiento de trabajo en beneficio a la comunidad, en Ejec. [TBC.Ejecutoria] del Juzgado J.P. [TBC.Juzgado] se ha producido la siguiente situación:\n\n");
+            return ret;
+        }
+
+        private Paragraph cuerpoInicio()
+        {
+            Paragraph ret = cuerpo();
+            ret.Add("                [X si es de inicio]Iniciación de cumplimiento Fecha: [TBC.Finicio]\n                Horario: –------------");
+            ret.Add("\n\n");
+            return ret;
+        }
+
+        private Paragraph pie()
+        {
+            Paragraph ret = new Paragraph();
+            ret.Alignment = Element.ALIGN_RIGHT;
+            ret.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
+            ret.Add("En Elda a [TBC.Fin]                        \n");
+            ret.Add("Por la entidad.                        \n\n\n\n");
+            ret.Add("Firmado:                       ");
+            return ret;
+        }
+
         #endregion
 
         #region//Protected Methods
@@ -324,39 +371,22 @@ namespace GebatEN.Classes
             return ret;
         }
 
+        /// <summary>
+        /// Crea un documento pdf en ruta que conetiene el inicio de sentencia.
+        /// </summary>
+        /// <param name="ruta">Ruta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
         public void InicioSentenciaToPDF(string ruta)
         {
             Document document = new Document();
             PdfWriter.GetInstance(document, new FileStream(ruta, FileMode.OpenOrCreate));
             document.Open();
-            Paragraph titulo = new Paragraph();
-            titulo.Alignment = Element.ALIGN_CENTER;
-            titulo.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 16);
             Paragraph voidparagraph = new Paragraph();
             voidparagraph.Add("\n");
-            titulo.Add("COMUNICACIÓN DE CUMPLIMIENTO DE TRABAJO A FAVOR DE LA COMUNIDAD\n");
-            document.Add(titulo);
+            document.Add(this.titulo());
             document.Add(voidparagraph);
-            Paragraph cabecera = new Paragraph();
-            cabecera.Alignment = Element.ALIGN_JUSTIFIED;
-            cabecera.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            cabecera.Add("DE ENTIDAD: [CONSIGNAS SOLIDARIAS]\n\n");
-            cabecera.Add("AL SERIVICO SOCIAL PENITENCIARIO DE [JUZGADO]\n\n\n");
-            document.Add(cabecera);
-            Paragraph cuerpo = new Paragraph();
-            cuerpo.Alignment = Element.ALIGN_JUSTIFIED;
-            cuerpo.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            cuerpo.Add("Por la presente los comunicamos que [TBC.Nombre + TBC.Apellidos] con DNI [TBC.DNI] con respecto al cumplimiento de trabajo en beneficio a la comunidad, en Ejec. [TBC.Ejecutoria] del Juzgado J.P. [TBC.Juzgado] se ha producido la siguiente situación:\n\n");
-            cuerpo.Add("                [X si es de inicio]Iniciación de cumplimiento Fecha: [TBC.Finicio]\n                Horario: –------------");
-            cuerpo.Add("\n\n");
-            document.Add(cuerpo);
-            Paragraph pie = new Paragraph();
-            pie.Alignment = Element.ALIGN_RIGHT;
-            pie.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            pie.Add("En Elda a [TBC.Fin]                        \n");
-            pie.Add("Por la entidad.                        \n\n\n\n");
-            pie.Add("Firmado:                       ");
-            document.Add(pie);
+            document.Add(this.cabecera());            
+            document.Add(this.cuerpoInicio());
+            document.Add(this.pie());
             document.Close();
         }
 
