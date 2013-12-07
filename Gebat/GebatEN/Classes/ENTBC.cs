@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 using GebatCAD.Classes;
 
 namespace GebatEN.Classes
@@ -319,6 +322,42 @@ namespace GebatEN.Classes
                 ret.Add((AENPersona)nuevo);
             }
             return ret;
+        }
+
+        public void InicioSentenciaToPDF(string ruta)
+        {
+            Document document = new Document();
+            PdfWriter.GetInstance(document, new FileStream(ruta, FileMode.OpenOrCreate));
+            document.Open();
+            Paragraph titulo = new Paragraph();
+            titulo.Alignment = Element.ALIGN_CENTER;
+            titulo.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 16);
+            Paragraph voidparagraph = new Paragraph();
+            voidparagraph.Add("\n");
+            titulo.Add("COMUNICACIÓN DE CUMPLIMIENTO DE TRABAJO A FAVOR DE LA COMUNIDAD\n");
+            document.Add(titulo);
+            document.Add(voidparagraph);
+            Paragraph cabecera = new Paragraph();
+            cabecera.Alignment = Element.ALIGN_JUSTIFIED;
+            cabecera.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
+            cabecera.Add("DE ENTIDAD: [CONSIGNAS SOLIDARIAS]\n\n");
+            cabecera.Add("AL SERIVICO SOCIAL PENITENCIARIO DE [JUZGADO]\n\n\n");
+            document.Add(cabecera);
+            Paragraph cuerpo = new Paragraph();
+            cuerpo.Alignment = Element.ALIGN_JUSTIFIED;
+            cuerpo.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
+            cuerpo.Add("Por la presente los comunicamos que [TBC.Nombre + TBC.Apellidos] con DNI [TBC.DNI] con respecto al cumplimiento de trabajo en beneficio a la comunidad, en Ejec. [TBC.Ejecutoria] del Juzgado J.P. [TBC.Juzgado] se ha producido la siguiente situación:\n\n");
+            cuerpo.Add("                [X si es de inicio]Iniciación de cumplimiento Fecha: [TBC.Finicio]\n                Horario: –------------");
+            cuerpo.Add("\n\n");
+            document.Add(cuerpo);
+            Paragraph pie = new Paragraph();
+            pie.Alignment = Element.ALIGN_RIGHT;
+            pie.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
+            pie.Add("En Elda a [TBC.Fin]                        \n");
+            pie.Add("Por la entidad.                        \n\n\n\n");
+            pie.Add("Firmado:                       ");
+            document.Add(pie);
+            document.Close();
         }
 
         #endregion
