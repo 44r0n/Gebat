@@ -76,7 +76,7 @@ namespace GebatEN.Classes
         private Paragraph cuerpoInicio()
         {
             Paragraph ret = cuerpo();
-            ret.Add("                [X si es de inicio]Iniciación de cumplimiento Fecha: [TBC.Finicio]\n                Horario: –------------");
+            ret.Add("                X Iniciación de cumplimiento Fecha: [TBC.Finicio]\n                Horario: –------------");
             ret.Add("\n\n");
             return ret;
         }
@@ -89,6 +89,14 @@ namespace GebatEN.Classes
             ret.Add("En Elda a [TBC.Fin]                        \n");
             ret.Add("Por la entidad.                        \n\n\n\n");
             ret.Add("Firmado:                       ");
+            return ret;
+        }
+
+        private Paragraph cuerpoFin()
+        {
+            Paragraph ret = cuerpo();
+            ret.Add("               X Finalización de cumplimiento: [TBC.Ffin]\n                        Total de Jornadas cumplidas: [TBC.TotalJornadas]");
+            ret.Add("\n\n");
             return ret;
         }
 
@@ -390,6 +398,24 @@ namespace GebatEN.Classes
             document.Close();
         }
 
+        /// <summary>
+        /// Crea un documento pdf en la ruta que contiene el fin de sentencia.
+        /// </summary>
+        /// <param name="ruta">RUta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
+        public void FinSentenciaToPDF(string ruta)
+        {
+            Document document = new Document();
+            PdfWriter.GetInstance(document, new FileStream(ruta, FileMode.OpenOrCreate));
+            document.Open();
+            Paragraph voidparagraph = new Paragraph();
+            voidparagraph.Add("\n");
+            document.Add(this.titulo());
+            document.Add(voidparagraph);
+            document.Add(this.cabecera());
+            document.Add(this.cuerpoFin());
+            document.Add(this.pie());
+            document.Close();
+        }
         #endregion
     }
 }
