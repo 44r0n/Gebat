@@ -33,6 +33,15 @@ namespace GebatEN.Classes
             this.horario[DayOfWeek.Sunday] = false;
         }
 
+        private bool alreadyInPerson()
+        {
+            if (new CADPersonas(defaultConnString).SelectWhere("DNI = '" + this.DNI + "'").Rows.Count == 1)
+            {
+                return true;
+            }
+            return false;
+        }
+
         #endregion
 
         #region//Protected Methods
@@ -267,7 +276,10 @@ namespace GebatEN.Classes
             CADPersonas per = new CADPersonas(defaultConnString);
             if (!this.saved)
             {
-                per.Insert(base.ToRow);
+                if (!alreadyInPerson())
+                {
+                    per.Insert(base.ToRow);
+                }
                 this.FromRow(cad.Insert(this.ToRow));
                 this.saved = true;
             }
