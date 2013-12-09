@@ -76,7 +76,36 @@ namespace GebatEN.Classes
         private Paragraph cuerpoInicio()
         {
             Paragraph ret = cuerpo();
-            ret.Add("                X Iniciación de cumplimiento Fecha: "+ this.finicio.ToShortDateString()+ "\n                Horario: –------------");
+            ret.Add("                X Iniciación de cumplimiento Fecha: "+ this.finicio.ToShortDateString()+ "\n                Horario: ");
+            if (this.horario[DayOfWeek.Monday])
+            {
+                ret.Add("Lunes ");
+            }
+            if (this.horario[DayOfWeek.Tuesday])
+            {
+                ret.Add("Martes ");
+            }
+            if (this.horario[DayOfWeek.Wednesday])
+            {
+                ret.Add("Miércoles ");
+            }
+            if (this.horario[DayOfWeek.Thursday])
+            {
+                ret.Add("Jueves ");
+            }
+            if (this.horario[DayOfWeek.Friday])
+            {
+                ret.Add("Viernes ");
+            }
+            if (this.horario[DayOfWeek.Saturday])
+            {
+                ret.Add("Sábado ");
+            }
+            if (this.horario[DayOfWeek.Sunday])
+            {
+                ret.Add("Domingo");
+            }
+
             ret.Add("\n\n");
             return ret;
         }
