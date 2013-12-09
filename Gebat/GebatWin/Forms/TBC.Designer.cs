@@ -37,7 +37,7 @@
             this.checkBoxMiercoles = new System.Windows.Forms.CheckBox();
             this.checkBoxMartes = new System.Windows.Forms.CheckBox();
             this.checkBoxLunes = new System.Windows.Forms.CheckBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownJornadas = new System.Windows.Forms.NumericUpDown();
             this.buttonInsert = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -56,16 +56,18 @@
             this.label8 = new System.Windows.Forms.Label();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.buttonDelete = new System.Windows.Forms.Button();
-            this.listaTBC = new GebatWindowComponents.Lists.ListaTBC();
             this.buttonInicio = new System.Windows.Forms.Button();
             this.buttonFin = new System.Windows.Forms.Button();
             this.buttonFirmas = new System.Windows.Forms.Button();
+            this.listaTBC = new GebatWindowComponents.Lists.ListaTBC();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJornadas)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.checkBoxDomingo);
             this.groupBox1.Controls.Add(this.checkBoxSabado);
@@ -74,7 +76,7 @@
             this.groupBox1.Controls.Add(this.checkBoxMiercoles);
             this.groupBox1.Controls.Add(this.checkBoxMartes);
             this.groupBox1.Controls.Add(this.checkBoxLunes);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.numericUpDownJornadas);
             this.groupBox1.Controls.Add(this.buttonInsert);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
@@ -176,12 +178,12 @@
             this.checkBoxLunes.Text = "Lunes";
             this.checkBoxLunes.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown1
+            // numericUpDownJornadas
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(84, 202);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 15;
+            this.numericUpDownJornadas.Location = new System.Drawing.Point(84, 202);
+            this.numericUpDownJornadas.Name = "numericUpDownJornadas";
+            this.numericUpDownJornadas.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownJornadas.TabIndex = 15;
             // 
             // buttonInsert
             // 
@@ -336,6 +338,42 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
+            // buttonInicio
+            // 
+            this.buttonInicio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonInicio.Enabled = false;
+            this.buttonInicio.Location = new System.Drawing.Point(348, 483);
+            this.buttonInicio.Name = "buttonInicio";
+            this.buttonInicio.Size = new System.Drawing.Size(83, 23);
+            this.buttonInicio.TabIndex = 5;
+            this.buttonInicio.Text = "Generar Inicio";
+            this.buttonInicio.UseVisualStyleBackColor = true;
+            this.buttonInicio.Click += new System.EventHandler(this.buttonInicio_Click);
+            // 
+            // buttonFin
+            // 
+            this.buttonFin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFin.Enabled = false;
+            this.buttonFin.Location = new System.Drawing.Point(437, 483);
+            this.buttonFin.Name = "buttonFin";
+            this.buttonFin.Size = new System.Drawing.Size(75, 23);
+            this.buttonFin.TabIndex = 6;
+            this.buttonFin.Text = "Generar Fin";
+            this.buttonFin.UseVisualStyleBackColor = true;
+            this.buttonFin.Click += new System.EventHandler(this.buttonFin_Click);
+            // 
+            // buttonFirmas
+            // 
+            this.buttonFirmas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFirmas.Enabled = false;
+            this.buttonFirmas.Location = new System.Drawing.Point(518, 483);
+            this.buttonFirmas.Name = "buttonFirmas";
+            this.buttonFirmas.Size = new System.Drawing.Size(88, 23);
+            this.buttonFirmas.TabIndex = 7;
+            this.buttonFirmas.Text = "Generar Firmas";
+            this.buttonFirmas.UseVisualStyleBackColor = true;
+            this.buttonFirmas.Click += new System.EventHandler(this.button3_Click);
+            // 
             // listaTBC
             // 
             this.listaTBC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -351,39 +389,14 @@
             this.listaTBC.View = System.Windows.Forms.View.Details;
             this.listaTBC.SelectedIndexChanged += new System.EventHandler(this.listaTBC_SelectedIndexChanged);
             // 
-            // buttonInicio
+            // label10
             // 
-            this.buttonInicio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonInicio.Enabled = false;
-            this.buttonInicio.Location = new System.Drawing.Point(348, 483);
-            this.buttonInicio.Name = "buttonInicio";
-            this.buttonInicio.Size = new System.Drawing.Size(83, 23);
-            this.buttonInicio.TabIndex = 5;
-            this.buttonInicio.Text = "Generar Inicio";
-            this.buttonInicio.UseVisualStyleBackColor = true;
-            // 
-            // buttonFin
-            // 
-            this.buttonFin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFin.Enabled = false;
-            this.buttonFin.Location = new System.Drawing.Point(437, 483);
-            this.buttonFin.Name = "buttonFin";
-            this.buttonFin.Size = new System.Drawing.Size(75, 23);
-            this.buttonFin.TabIndex = 6;
-            this.buttonFin.Text = "Generar Fin";
-            this.buttonFin.UseVisualStyleBackColor = true;
-            // 
-            // buttonFirmas
-            // 
-            this.buttonFirmas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonFirmas.Enabled = false;
-            this.buttonFirmas.Location = new System.Drawing.Point(518, 483);
-            this.buttonFirmas.Name = "buttonFirmas";
-            this.buttonFirmas.Size = new System.Drawing.Size(88, 23);
-            this.buttonFirmas.TabIndex = 7;
-            this.buttonFirmas.Text = "Generar Firmas";
-            this.buttonFirmas.UseVisualStyleBackColor = true;
-            this.buttonFirmas.Click += new System.EventHandler(this.button3_Click);
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(7, 204);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(53, 13);
+            this.label10.TabIndex = 24;
+            this.label10.Text = "Jornadas:";
             // 
             // TBC
             // 
@@ -399,11 +412,11 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listaTBC);
             this.Name = "TBC";
-            this.Text = "x";
+            this.Text = "TBC";
             this.Load += new System.EventHandler(this.TBC_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJornadas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -431,7 +444,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numericUpDownJornadas;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox checkBoxDomingo;
         private System.Windows.Forms.CheckBox checkBoxSabado;
@@ -443,5 +456,6 @@
         private System.Windows.Forms.Button buttonInicio;
         private System.Windows.Forms.Button buttonFin;
         private System.Windows.Forms.Button buttonFirmas;
+        private System.Windows.Forms.Label label10;
     }
 }

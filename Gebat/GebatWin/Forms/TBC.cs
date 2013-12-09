@@ -19,6 +19,7 @@ namespace GebatWin.Forms
         private void buttonInsert_Click(object sender, EventArgs e)
         {
             ENTBC tbc = new ENTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value);
+            tbc.NumJornadas = (int)numericUpDownJornadas.Value;
             tbc.Horario[DayOfWeek.Monday] = checkBoxLunes.Checked;
             tbc.Horario[DayOfWeek.Tuesday] = checkBoxMartes.Checked;
             tbc.Horario[DayOfWeek.Wednesday] = checkBoxMiercoles.Checked;
@@ -78,6 +79,38 @@ namespace GebatWin.Forms
             if (savedialog.FileName != "")
             {
                 tbc.FirmasToPDF(savedialog.FileName);
+                System.Diagnostics.Process.Start(savedialog.FileName);
+            }
+        }
+
+        private void buttonInicio_Click(object sender, EventArgs e)
+        {
+            ENTBC tbc = (ENTBC)listaTBC.Selected;
+            SaveFileDialog savedialog = new SaveFileDialog();
+            savedialog.FileName = "Inicio de " + tbc.Nombre + " " + tbc.DNI + ".pdf";
+            savedialog.Filter = "Archivo PDF|*.pdf";
+            savedialog.Title = "Generar Inicio...";
+            savedialog.ShowDialog();
+
+            if (savedialog.FileName != "")
+            {
+                tbc.InicioSentenciaToPDF(savedialog.FileName);
+                System.Diagnostics.Process.Start(savedialog.FileName);
+            }
+        }
+
+        private void buttonFin_Click(object sender, EventArgs e)
+        {
+            ENTBC tbc = (ENTBC)listaTBC.Selected;
+            SaveFileDialog savedialog = new SaveFileDialog();
+            savedialog.FileName = "Fin de de " + tbc.Nombre + " " + tbc.DNI + ".pdf";
+            savedialog.Filter = "Archivo PDF|*.pdf";
+            savedialog.Title = "Generar Fin...";
+            savedialog.ShowDialog();
+
+            if (savedialog.FileName != "")
+            {
+                tbc.FinSentenciaToPDF(savedialog.FileName);
                 System.Diagnostics.Process.Start(savedialog.FileName);
             }
         }
