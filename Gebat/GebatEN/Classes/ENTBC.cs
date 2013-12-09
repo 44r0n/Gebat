@@ -59,8 +59,8 @@ namespace GebatEN.Classes
             Paragraph ret = new Paragraph();
             ret.Alignment = Element.ALIGN_JUSTIFIED;
             ret.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            ret.Add("DE ENTIDAD: [CONSIGNAS SOLIDARIAS]\n\n");
-            ret.Add("AL SERIVICO SOCIAL PENITENCIARIO DE [JUZGADO]\n\n\n");
+            ret.Add("DE ENTIDAD: CONSIGNAS SOLIDARIAS\n\n");//TODO: obtener el nombre de consignas solidarias desde el archivo de configuración.
+            ret.Add("AL SERIVICO SOCIAL PENITENCIARIO DE "+this.juzgado+"\n\n\n");
             return ret;
         }
 
@@ -69,14 +69,14 @@ namespace GebatEN.Classes
             Paragraph ret = new Paragraph();
             ret.Alignment = Element.ALIGN_JUSTIFIED;
             ret.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            ret.Add("Por la presente los comunicamos que [TBC.Nombre + TBC.Apellidos] con DNI [TBC.DNI] con respecto al cumplimiento de trabajo en beneficio a la comunidad, en Ejec. [TBC.Ejecutoria] del Juzgado J.P. [TBC.Juzgado] se ha producido la siguiente situación:\n\n");
+            ret.Add("Por la presente los comunicamos que "+this.Nombre + " " + this.Apellidos +" con DNI "+ this.DNI +" con respecto al cumplimiento de trabajo en beneficio a la comunidad, en Ejec. "+ this.ejecutoria +" del Juzgado J.P. "+ this.juzgado +" se ha producido la siguiente situación:\n\n");
             return ret;
         }
 
         private Paragraph cuerpoInicio()
         {
             Paragraph ret = cuerpo();
-            ret.Add("                X Iniciación de cumplimiento Fecha: [TBC.Finicio]\n                Horario: –------------");
+            ret.Add("                X Iniciación de cumplimiento Fecha: "+ this.finicio.ToShortDateString()+ "\n                Horario: –------------");
             ret.Add("\n\n");
             return ret;
         }
@@ -86,7 +86,7 @@ namespace GebatEN.Classes
             Paragraph ret = new Paragraph();
             ret.Alignment = Element.ALIGN_RIGHT;
             ret.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            ret.Add("En Elda a [TBC.Fin]                        \n");
+            ret.Add("En Elda a "+ this.ffin.ToShortDateString() + "                        \n");
             ret.Add("Por la entidad.                        \n\n\n\n");
             ret.Add("Firmado:                       ");
             return ret;
@@ -95,9 +95,70 @@ namespace GebatEN.Classes
         private Paragraph cuerpoFin()
         {
             Paragraph ret = cuerpo();
-            ret.Add("               X Finalización de cumplimiento: [TBC.Ffin]\n                        Total de Jornadas cumplidas: [TBC.TotalJornadas]");
+            ret.Add("               X Finalización de cumplimiento: " + this.ffin.ToShortDateString() + "\n                        Total de Jornadas cumplidas: "+this.numjornadas);
             ret.Add("\n\n");
             return ret;
+        }
+
+        private Paragraph tituloFirmas()
+        {
+            Paragraph ret = new Paragraph();
+            ret.Alignment = Element.ALIGN_JUSTIFIED;
+            ret.Font = FontFactory.GetFont(FontFactory.TIMES_BOLD, 16);
+            ret.Add("REGISTRO DE PRESENTACIONES\n");
+            return ret;
+        }
+
+        private Paragraph cuerpoFirmas()
+        {
+            Paragraph cuerpo = new Paragraph();
+            cuerpo.Alignment = Element.ALIGN_JUSTIFIED;
+            cuerpo.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
+            cuerpo.Add("Nombre y apellidos: " + this.Nombre + " " + this.Apellidos + "+\nDNI: " + this.DNI + " Ejecutoria: " + this.ejecutoria + "Juzgado: "+ this.juzgado +"\n");
+            return cuerpo;
+        }
+
+        private PdfPTable tablaIniciada()
+        {
+            Font f = FontFactory.GetFont(FontFactory.TIMES, 12, Element.ALIGN_CENTER);
+
+            PdfPTable table = new PdfPTable(4);
+            PdfPCell cell = new PdfPCell(new Phrase(new Chunk("Firma del iteresado", f)));
+            table.AddCell(cell);
+            cell = new PdfPCell(new Phrase(new Chunk("Fecha control", f)));
+            table.AddCell(cell);
+            cell = new PdfPCell(new Phrase(new Chunk("Firma responable actividad", f)));
+            table.AddCell(cell);
+            cell = new PdfPCell(new Phrase(new Chunk("Jornadas", f)));
+            table.AddCell(cell);
+            return table;
+        }
+
+        private PdfPTable tablaCompleta()
+        {
+            Font f = FontFactory.GetFont(FontFactory.TIMES, 12, Element.ALIGN_CENTER);
+            PdfPTable table = tablaIniciada();
+            DateTime inicio = this.finicio;
+            PdfPCell cell = null;
+            PdfPCell voidcell = new PdfPCell(new Phrase(new Chunk("\n\n\n\n", f)));
+            int nj = 1;
+            while (inicio < this.ffin)
+            {
+                if (horario[inicio.DayOfWeek])
+                {
+                    table.AddCell(voidcell);
+                    cell = new PdfPCell(new Phrase(new Chunk("\n\n"+inicio.ToShortDateString()+"\n\n",f)));
+                    table.AddCell(cell);
+                    table.AddCell(voidcell);
+                    table.AddCell(new PdfPCell(new Phrase(new Chunk(nj.ToString(), f))));
+                    nj++;
+
+                }
+                inicio = inicio.AddDays(1);
+            }
+
+
+            return table;
         }
 
         #endregion
@@ -401,7 +462,7 @@ namespace GebatEN.Classes
         /// <summary>
         /// Crea un documento pdf en la ruta que contiene el fin de sentencia.
         /// </summary>
-        /// <param name="ruta">RUta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
+        /// <param name="ruta">Ruta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
         public void FinSentenciaToPDF(string ruta)
         {
             Document document = new Document();
@@ -416,6 +477,26 @@ namespace GebatEN.Classes
             document.Add(this.pie());
             document.Close();
         }
+
+        /// <summary>
+        /// Crea un documento pdf en la ruta que contiene la hoja de firmas.
+        /// </summary>
+        /// <param name="ruta">Ruta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
+        public void FirmasToPDF(string ruta)
+        {
+            Document document = new Document();
+            PdfWriter.GetInstance(document, new FileStream(ruta, FileMode.OpenOrCreate));
+            document.Open();
+            Paragraph voidparagraph = new Paragraph();
+            voidparagraph.Add("\n");
+            document.Add(this.tituloFirmas());
+            document.Add(voidparagraph);
+            document.Add(this.cuerpoFirmas());
+            document.Add(voidparagraph);
+            document.Add(this.tablaCompleta());
+            document.Close();
+        }
+
         #endregion
     }
 }
