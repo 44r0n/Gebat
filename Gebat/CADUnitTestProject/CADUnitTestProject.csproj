@@ -54,14 +54,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CADTests\ACADTest.cs" />
     <Compile Include="CADTests\CADTypeTest.cs" />
     <Compile Include="CADTests\Stubs\StubIsql.cs" />
     <Compile Include="CADTests\CADFoodTest.cs" />
+    <Compile Include="CADTests\CADEntryFoodTest.cs" />
+    <Compile Include="CADTests\CADOutgoingFoodTest.cs" />
+    <Compile Include="CADTests\CADPersonasTest.cs" />
+    <Compile Include="CADTests\CADTBCTest.cs" />
+    <Compile Include="CADTests\VIEWTBCPeopleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="InitTest.sql">
+    <None Include="Scripts\InitTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -74,6 +80,29 @@
       <Project>{269e7c8b-ab29-4d57-8ef5-78aa6041b71d}</Project>
       <Name>SqlManager</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\EntryFoodTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\FoodTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\OutgoingFoodTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\PersonasTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\TBCPeopleTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\TBCTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\TypeTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

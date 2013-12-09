@@ -36,6 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,8 +53,33 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ENTests\UnitTest1.cs" />
+    <Compile Include="ENTests\ENTestPrepare.cs" />
+    <Compile Include="ENTests\ENTypeTest.cs" />
+    <Compile Include="ENTests\ENFoodTest.cs" />
+    <Compile Include="ENTests\ENTBCTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestInit.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GebatCAD\GebatCAD.csproj">
+      <Project>{f9cf59be-07ec-41e9-90b6-11a03f2f6e10}</Project>
+      <Name>GebatCAD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GebatEN\GebatEN.csproj">
+      <Project>{017da2fb-2f1f-4037-a234-f2ac68267dec}</Project>
+      <Name>GebatEN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlManager\SqlManager.csproj">
+      <Project>{269e7c8b-ab29-4d57-8ef5-78aa6041b71d}</Project>
+      <Name>SqlManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

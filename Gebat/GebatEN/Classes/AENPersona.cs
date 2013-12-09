@@ -9,9 +9,89 @@ namespace GebatEN.Classes
     {
         #region//Atributes
         private CADPersonas personas;
-       //private string dni -> this.id[0] hace referencia al DNI;
+        private string dni;
         private string apellidos;
         private string nombre;
+
+        #endregion
+
+        #region//Private Methods
+
+        /// <summary> Tabla de asignación. </summary>
+        private const string Correspondencia = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+        /// <summary> Genera la letra correspondiente a un DNI. </summary>
+        /// <param name="dni"> DNI a procesar. </param>
+        /// <returns> Letra correspondiente al DNI. </returns>
+        private string LetraNIF(string dni)
+        {
+            int n;
+
+            if ((dni == null) || (dni.Length != 9) || (!int.TryParse(dni.Substring(0, 8), out n)))
+            {
+                throw new ArgumentException("El DNI debe contener 8 dígitos.");
+            }
+
+            return Correspondencia[n % 23].ToString();
+        }
+
+        /// <summary> Genera la letra correspondiente a un NIE. </summary>
+        /// <param name="nie"> NIE a procesar. </param>
+        /// <returns> Letra correspondiente al NIE. </returns>
+        private string LetraNIE(string nie)
+        {
+            int n;
+            if ((nie == null) || (nie.Length != 9) || ((char.ToUpper(nie[0]) != 'X') && (char.ToUpper(nie[0]) != 'Y') && (char.ToUpper(nie[0]) != 'Z')) || (!int.TryParse(nie.Substring(1, 7), out n)))
+            {
+                throw new ArgumentException("El NIE debe comenzar con la letra X, Y o Z seguida de 7 dígitos.");
+            }
+
+            switch (char.ToUpper(nie[0]))
+            {
+                case 'X':
+                    return Correspondencia[n % 23].ToString();
+                case 'Y':
+                    return Correspondencia[(10000000 + n) % 23].ToString();
+                case 'Z':
+                    return Correspondencia[(20000000 + n) % 23].ToString();
+                default:
+                    return '\0'.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Vefirica si el DNI introducido es correcto.
+        /// </summary>
+        /// <param name="dni">DNI a verificar.</param>
+        /// <returns>True si el DNI es correcto, false en caso contrario.</returns>
+        private bool verifyDNI(string dni)
+        {
+            if(LetraNIF(dni) == dni.Substring(dni.Length -1,1))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Verifica si el NIE introducido es correcto.
+        /// </summary>
+        /// <param name="nie">NIE a verificar.</param>
+        /// <returns>True si el NIE es correcto, false en caso contrario.</returns>
+        private bool verifyNIE(string nie)
+        {
+            if (LetraNIE(nie) == nie.Substring(nie.Length - 1, 1))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         #endregion
 
@@ -26,10 +106,14 @@ namespace GebatEN.Classes
             {
                 if (personas == null)
                 {
-                    personas = new CADPersonas("GebatDataConnectionString");
+                    personas = new CADPersonas(defaultConnString);
                 }
                 DataRow ret = personas.GetVoidRow;
-                ret["DNI"] = (string)this.id[0];
+                if (this.id != null)
+                {
+                    ret["Id"] = (int)this.id[0];
+                }
+                ret["DNI"] = (string)this.dni;
                 ret["Nombre"] = this.nombre;
                 ret["Apellidos"] = this.apellidos;
                 return ret;
@@ -45,9 +129,11 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                this.id.Add((object)row["DNI"]);
-                this.nombre = (string)row["Nombre"];
-                this.apellidos = (string)row["Apellidos"];
+                DataRow perrow = personas.SelectWhere("DNI = '" + row["DNI"] + "'").Rows[0];
+                this.id.Add(perrow["Id"]);
+                this.dni = (string)perrow["DNI"];
+                this.nombre = (string)perrow["Nombre"];
+                this.apellidos = (string)perrow["Apellidos"];
             }
             else
             {
@@ -66,17 +152,32 @@ namespace GebatEN.Classes
         {
             get
             {
-                return (string)this.id[0];
+                return this.dni;
             }
             set
             {
-                if (this.id.Count == 0)
+                string primero = value.Substring(0, 1);
+                if (primero == "X" || primero == "Y" || primero == "Z")
                 {
-                    this.id.Add(value);
+                    if (verifyNIE(value))
+                    {
+                        this.dni = value;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("El formato NIE no es correcto");
+                    }
                 }
                 else
                 {
-                    this.id[0] = value;
+                    if (verifyDNI(value))
+                    {
+                        this.dni = value;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("El formato DNI no es correcto");
+                    }
                 }
             }
         }
@@ -124,8 +225,8 @@ namespace GebatEN.Classes
         public AENPersona(string DNI, string Nombre, string Apellidos)
             :base()
         {
-            personas = new CADPersonas("GebatDataConnectionString");
-            this.id = new List<object>();
+            personas = new CADPersonas(defaultConnString);
+            //this.id = new List<object>(); -> ni se te ocurra descomentar esta línea.
             this.DNI = DNI;
             this.nombre = Nombre;
             this.apellidos = Apellidos;
@@ -136,9 +237,16 @@ namespace GebatEN.Classes
         /// </summary>
         public AENPersona()
         {
-            personas = new CADPersonas("GebatDataConnectionString");
+            personas = new CADPersonas(defaultConnString);
             this.id = new List<object>();
         }
+
+        /// <summary>
+        /// Carga los datos de una persona.
+        /// </summary>
+        /// <param name="dni">DNI por el que se buscará a la persona.</param>
+        /// <returns>Lista de objetos AENPersona.</returns>
+        public abstract List<AENPersona> ReadByDNI(string dni);
 
         #endregion
     }

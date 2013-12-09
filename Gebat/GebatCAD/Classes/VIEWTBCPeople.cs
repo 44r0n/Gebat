@@ -5,14 +5,13 @@ using System.Text;
 
 namespace GebatCAD.Classes
 {
-    public class VIEWTBCPeople : ACAD
+    public class VIEWTBCPeople : AVIEW
     {
         public VIEWTBCPeople(string connStringName)
             : base(connStringName)
         {
             this.tablename = "TBCPeople";
-            this.idFormat.Add("DNI");
-            this.idFormat.Add("Ejecutoria");
+            this.idFormat.Add("Id");
         }
     }
 }

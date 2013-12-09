@@ -100,7 +100,7 @@ namespace GebatEN.Classes
             {
                 if (this.nombre == null)
                 {
-                    CADFood food = new CADFood("GebatDataConnectionString");
+                    CADFood food = new CADFood(defaultConnString);
                     List<object> param = new List<object>();
                     param.Add(this.type);
                     DataRow fila = food.Select(param);
@@ -123,7 +123,7 @@ namespace GebatEN.Classes
         public ENFoodOut(DateTime fecha, int quantity, int tipo)
             :base()
         {
-            cad = new CADOutgoingFood("GebatDataConnectionString");
+            cad = new CADOutgoingFood(defaultConnString);
             this.quantity = quantity;
             this.fecha = fecha;
             this.type = tipo;
@@ -135,7 +135,7 @@ namespace GebatEN.Classes
         public ENFoodOut()
             : base()
         {
-            cad = new CADOutgoingFood("GebatDataConnectionString");
+            cad = new CADOutgoingFood(defaultConnString);
         }
 
         /// <summary>

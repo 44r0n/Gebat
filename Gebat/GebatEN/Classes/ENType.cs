@@ -38,7 +38,7 @@ namespace GebatEN.Classes
         private ENType ()
 			:base()
 		{
-			cad = new CADType ("GebatDataConnectionString");
+			cad = new CADType (defaultConnString);
 			name = "";
 		}
 
@@ -110,7 +110,7 @@ namespace GebatEN.Classes
 			{
 				throw new NullReferenceException("The name cannot be null");
 			}
-			cad = new CADType ("GebatDataConnectionString");
+			cad = new CADType (defaultConnString);
 			this.name = name;
 		}
 

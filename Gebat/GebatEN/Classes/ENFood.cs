@@ -41,49 +41,9 @@ namespace GebatEN.Classes
 		private ENFood()
 			: base()
 		{
-			cad = new CADFood("GebatDataConnectionString");
+			cad = new CADFood(defaultConnString);
 			name = "";
 		}
-
-        /// <summary>
-        /// Carga la comida entrante del alimento.
-        /// </summary>
-        /// <returns>Cantidad entrante.</returns>
-        private int LoadEntrada()
-        {
-            int entry = 0;
-            VIEWEntrada entrada = new VIEWEntrada("GebatDataConnectionString");
-            List<object> param = new List<object>();
-            param.Add(this.id[0]);
-            DataRow row = entrada.Select(param);
-            if (row != null)
-            {
-                entry = Convert.ToInt32(row["Quantity"]);
-            }
-            return entry;
-        }
-
-        private int LoadSalida()
-        {
-            int salida = 0;
-            VIEWSalida vsalida = new VIEWSalida("GebatDataConnectionString");
-            List<object> param = new List<object>();
-            param.Add(this.id[0]);
-            DataRow row = vsalida.Select(param);
-            if (row != null)
-            {
-                salida = Convert.ToInt32(row["Quantity"]);
-            }
-            return salida;
-        }
-
-        /// <summary>
-        /// Carga la cantidad de comida que hay en la base de datos.
-        /// </summary>
-        private void LoadQuantity()
-        {
-            this.quantity = LoadEntrada() - LoadSalida();
-        }
 
 		#endregion
 
@@ -107,6 +67,7 @@ namespace GebatEN.Classes
 				{
 					ret ["QuantityType"] = (int)type.Id[0];
 				}
+                ret["Quantity"] = quantity;
 				return ret;
 			}
 		}
@@ -128,6 +89,7 @@ namespace GebatEN.Classes
 					ids.Add ((int)row ["QuantityType"]);
 					type = (ENType)new ENType ("").Read (ids);
 				}
+                this.quantity = (int)row["Quantity"];
 				this.saved = true;
 			}
 			else
@@ -193,7 +155,7 @@ namespace GebatEN.Classes
 			{
 				throw new NullReferenceException("The name cannot be null");
 			}
-			cad = new CADFood("GebatDataConnectionString");
+			cad = new CADFood(defaultConnString);
 			this.name = name;
             this.quantity = 0;
 			this.type = type;
@@ -213,7 +175,6 @@ namespace GebatEN.Classes
 			if (row != null)
 			{
 				ret.FromRow(row);
-                ret.LoadQuantity();
 			}
 			else
 			{
@@ -234,7 +195,6 @@ namespace GebatEN.Classes
 			{
 				ENFood nueva = new ENFood();
 				nueva.FromRow(rows);
-                nueva.LoadQuantity();
 				ret.Add((ENFood)nueva);
 			}
 			return ret;

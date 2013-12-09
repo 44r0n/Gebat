@@ -36,6 +36,17 @@ namespace GebatEN.Classes
 
 		#region//Protected Methods
 
+        /// <summary>
+        /// Obtiene el nombre de cadena de conexión por defecto.
+        /// </summary>
+        protected string defaultConnString
+        {
+            get
+            {
+                return ("GebatDataConnectionString");
+            }
+        }
+
 		/// <summary>
 		/// Obtiene el objeto actual en tipo DataRow de forma que corresponde en la base de datos.
 		/// </summary>

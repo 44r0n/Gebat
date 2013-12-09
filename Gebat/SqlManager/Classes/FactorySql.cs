@@ -46,7 +46,7 @@ namespace SqlManager
 			manager = mgr;
 		}
 
-		public void ResetManager()
+		static public void ResetManager()
 		{
 			manager = null;
 		}
