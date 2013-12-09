@@ -114,7 +114,7 @@ namespace GebatEN.Classes
             Paragraph cuerpo = new Paragraph();
             cuerpo.Alignment = Element.ALIGN_JUSTIFIED;
             cuerpo.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            cuerpo.Add("Nombre y apellidos: " + this.Nombre + " " + this.Apellidos + "+\nDNI: " + this.DNI + " Ejecutoria: " + this.ejecutoria + "Juzgado: "+ this.juzgado +"\n");
+            cuerpo.Add("Nombre y apellidos: " + this.Nombre + " " + this.Apellidos + "\nDNI: " + this.DNI + " Ejecutoria: " + this.ejecutoria + " Juzgado: "+ this.juzgado +"\n");
             return cuerpo;
         }
 
