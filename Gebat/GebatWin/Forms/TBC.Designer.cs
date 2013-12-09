@@ -29,6 +29,15 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.checkBoxDomingo = new System.Windows.Forms.CheckBox();
+            this.checkBoxSabado = new System.Windows.Forms.CheckBox();
+            this.checkBoxViernes = new System.Windows.Forms.CheckBox();
+            this.checkBoxJueves = new System.Windows.Forms.CheckBox();
+            this.checkBoxMiercoles = new System.Windows.Forms.CheckBox();
+            this.checkBoxMartes = new System.Windows.Forms.CheckBox();
+            this.checkBoxLunes = new System.Windows.Forms.CheckBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.buttonInsert = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -48,13 +57,23 @@
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.listaTBC = new GebatWindowComponents.Lists.ListaTBC();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.buttonInicio = new System.Windows.Forms.Button();
+            this.buttonFin = new System.Windows.Forms.Button();
+            this.buttonFirmas = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.checkBoxDomingo);
+            this.groupBox1.Controls.Add(this.checkBoxSabado);
+            this.groupBox1.Controls.Add(this.checkBoxViernes);
+            this.groupBox1.Controls.Add(this.checkBoxJueves);
+            this.groupBox1.Controls.Add(this.checkBoxMiercoles);
+            this.groupBox1.Controls.Add(this.checkBoxMartes);
+            this.groupBox1.Controls.Add(this.checkBoxLunes);
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.buttonInsert);
             this.groupBox1.Controls.Add(this.label7);
@@ -73,14 +92,100 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(290, 358);
+            this.groupBox1.Size = new System.Drawing.Size(293, 499);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nuevo TBC";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 294);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(44, 13);
+            this.label9.TabIndex = 23;
+            this.label9.Text = "Horario:";
+            // 
+            // checkBoxDomingo
+            // 
+            this.checkBoxDomingo.AutoSize = true;
+            this.checkBoxDomingo.Location = new System.Drawing.Point(84, 437);
+            this.checkBoxDomingo.Name = "checkBoxDomingo";
+            this.checkBoxDomingo.Size = new System.Drawing.Size(68, 17);
+            this.checkBoxDomingo.TabIndex = 22;
+            this.checkBoxDomingo.Text = "Domingo";
+            this.checkBoxDomingo.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSabado
+            // 
+            this.checkBoxSabado.AutoSize = true;
+            this.checkBoxSabado.Location = new System.Drawing.Point(84, 413);
+            this.checkBoxSabado.Name = "checkBoxSabado";
+            this.checkBoxSabado.Size = new System.Drawing.Size(63, 17);
+            this.checkBoxSabado.TabIndex = 21;
+            this.checkBoxSabado.Text = "Sábado";
+            this.checkBoxSabado.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxViernes
+            // 
+            this.checkBoxViernes.AutoSize = true;
+            this.checkBoxViernes.Location = new System.Drawing.Point(84, 389);
+            this.checkBoxViernes.Name = "checkBoxViernes";
+            this.checkBoxViernes.Size = new System.Drawing.Size(61, 17);
+            this.checkBoxViernes.TabIndex = 20;
+            this.checkBoxViernes.Text = "Viernes";
+            this.checkBoxViernes.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxJueves
+            // 
+            this.checkBoxJueves.AutoSize = true;
+            this.checkBoxJueves.Location = new System.Drawing.Point(84, 365);
+            this.checkBoxJueves.Name = "checkBoxJueves";
+            this.checkBoxJueves.Size = new System.Drawing.Size(60, 17);
+            this.checkBoxJueves.TabIndex = 19;
+            this.checkBoxJueves.Text = "Jueves";
+            this.checkBoxJueves.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMiercoles
+            // 
+            this.checkBoxMiercoles.AutoSize = true;
+            this.checkBoxMiercoles.Location = new System.Drawing.Point(84, 341);
+            this.checkBoxMiercoles.Name = "checkBoxMiercoles";
+            this.checkBoxMiercoles.Size = new System.Drawing.Size(71, 17);
+            this.checkBoxMiercoles.TabIndex = 18;
+            this.checkBoxMiercoles.Text = "Miércoles";
+            this.checkBoxMiercoles.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMartes
+            // 
+            this.checkBoxMartes.AutoSize = true;
+            this.checkBoxMartes.Location = new System.Drawing.Point(84, 317);
+            this.checkBoxMartes.Name = "checkBoxMartes";
+            this.checkBoxMartes.Size = new System.Drawing.Size(58, 17);
+            this.checkBoxMartes.TabIndex = 17;
+            this.checkBoxMartes.Text = "Martes";
+            this.checkBoxMartes.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxLunes
+            // 
+            this.checkBoxLunes.AutoSize = true;
+            this.checkBoxLunes.Location = new System.Drawing.Point(84, 293);
+            this.checkBoxLunes.Name = "checkBoxLunes";
+            this.checkBoxLunes.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxLunes.TabIndex = 16;
+            this.checkBoxLunes.Text = "Lunes";
+            this.checkBoxLunes.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(84, 202);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 15;
+            // 
             // buttonInsert
             // 
-            this.buttonInsert.Location = new System.Drawing.Point(84, 272);
+            this.buttonInsert.Location = new System.Drawing.Point(84, 470);
             this.buttonInsert.Name = "buttonInsert";
             this.buttonInsert.Size = new System.Drawing.Size(75, 23);
             this.buttonInsert.TabIndex = 14;
@@ -202,8 +307,9 @@
             // 
             // label8
             // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(599, 13);
+            this.label8.Location = new System.Drawing.Point(632, 13);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(46, 13);
             this.label8.TabIndex = 2;
@@ -211,7 +317,8 @@
             // 
             // textBoxSearch
             // 
-            this.textBoxSearch.Location = new System.Drawing.Point(651, 10);
+            this.textBoxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxSearch.Location = new System.Drawing.Point(684, 10);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(100, 20);
             this.textBoxSearch.TabIndex = 3;
@@ -219,8 +326,9 @@
             // 
             // buttonDelete
             // 
+            this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDelete.Enabled = false;
-            this.buttonDelete.Location = new System.Drawing.Point(651, 348);
+            this.buttonDelete.Location = new System.Drawing.Point(710, 483);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(75, 23);
             this.buttonDelete.TabIndex = 4;
@@ -234,34 +342,64 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listaTBC.FullRowSelect = true;
             this.listaTBC.GridLines = true;
-            this.listaTBC.Location = new System.Drawing.Point(413, 53);
+            this.listaTBC.Location = new System.Drawing.Point(348, 53);
             this.listaTBC.MultiSelect = false;
             this.listaTBC.Name = "listaTBC";
-            this.listaTBC.Size = new System.Drawing.Size(437, 289);
+            this.listaTBC.Size = new System.Drawing.Size(437, 412);
             this.listaTBC.TabIndex = 0;
             this.listaTBC.UseCompatibleStateImageBehavior = false;
             this.listaTBC.View = System.Windows.Forms.View.Details;
             this.listaTBC.SelectedIndexChanged += new System.EventHandler(this.listaTBC_SelectedIndexChanged);
             // 
-            // numericUpDown1
+            // buttonInicio
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(84, 202);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 15;
+            this.buttonInicio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonInicio.Enabled = false;
+            this.buttonInicio.Location = new System.Drawing.Point(348, 483);
+            this.buttonInicio.Name = "buttonInicio";
+            this.buttonInicio.Size = new System.Drawing.Size(83, 23);
+            this.buttonInicio.TabIndex = 5;
+            this.buttonInicio.Text = "Generar Inicio";
+            this.buttonInicio.UseVisualStyleBackColor = true;
+            // 
+            // buttonFin
+            // 
+            this.buttonFin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFin.Enabled = false;
+            this.buttonFin.Location = new System.Drawing.Point(437, 483);
+            this.buttonFin.Name = "buttonFin";
+            this.buttonFin.Size = new System.Drawing.Size(75, 23);
+            this.buttonFin.TabIndex = 6;
+            this.buttonFin.Text = "Generar Fin";
+            this.buttonFin.UseVisualStyleBackColor = true;
+            // 
+            // buttonFirmas
+            // 
+            this.buttonFirmas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonFirmas.Enabled = false;
+            this.buttonFirmas.Location = new System.Drawing.Point(518, 483);
+            this.buttonFirmas.Name = "buttonFirmas";
+            this.buttonFirmas.Size = new System.Drawing.Size(88, 23);
+            this.buttonFirmas.TabIndex = 7;
+            this.buttonFirmas.Text = "Generar Firmas";
+            this.buttonFirmas.UseVisualStyleBackColor = true;
+            this.buttonFirmas.Click += new System.EventHandler(this.button3_Click);
             // 
             // TBC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(862, 410);
+            this.ClientSize = new System.Drawing.Size(797, 533);
+            this.Controls.Add(this.buttonFirmas);
+            this.Controls.Add(this.buttonFin);
+            this.Controls.Add(this.buttonInicio);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.listaTBC);
             this.Name = "TBC";
-            this.Text = "Gebat - TBC";
+            this.Text = "x";
             this.Load += new System.EventHandler(this.TBC_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -294,5 +432,16 @@
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox checkBoxDomingo;
+        private System.Windows.Forms.CheckBox checkBoxSabado;
+        private System.Windows.Forms.CheckBox checkBoxViernes;
+        private System.Windows.Forms.CheckBox checkBoxJueves;
+        private System.Windows.Forms.CheckBox checkBoxMiercoles;
+        private System.Windows.Forms.CheckBox checkBoxMartes;
+        private System.Windows.Forms.CheckBox checkBoxLunes;
+        private System.Windows.Forms.Button buttonInicio;
+        private System.Windows.Forms.Button buttonFin;
+        private System.Windows.Forms.Button buttonFirmas;
     }
 }
