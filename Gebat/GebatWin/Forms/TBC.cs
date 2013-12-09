@@ -70,11 +70,16 @@ namespace GebatWin.Forms
         {
             ENTBC tbc = (ENTBC)listaTBC.Selected;
             SaveFileDialog savedialog = new SaveFileDialog();
-            savedialog.FileName = "Archivo PDF|*.pdf";
+            savedialog.Filter = "Archivo PDF|*.pdf";
+            savedialog.FileName = "Firmas de " + tbc.Nombre + " " + tbc.DNI + ".pdf";
             savedialog.Title = "Generar Firmas...";
             savedialog.ShowDialog();
 
-            MessageBox.Show(savedialog.FileName);
+            if (savedialog.FileName != "")
+            {
+                tbc.FirmasToPDF(savedialog.FileName);
+                System.Diagnostics.Process.Start(savedialog.FileName);
+            }
         }
     }
 }
