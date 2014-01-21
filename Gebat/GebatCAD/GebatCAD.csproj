@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AVIEW.cs" />
+    <Compile Include="Classes\CADDelito.cs" />
     <Compile Include="Classes\CADEntryFood.cs" />
     <Compile Include="Classes\CADOutgoingFood.cs" />
     <Compile Include="Classes\CADPersonas.cs" />

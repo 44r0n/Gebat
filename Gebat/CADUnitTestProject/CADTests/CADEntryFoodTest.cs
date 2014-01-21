@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Data;
-using System.Data.Common;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-using SqlManager;
 using GebatCAD.Classes;
 using GebatCAD.Exceptions;
-using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CADUnitTestProject.CADTests
@@ -70,24 +66,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void TestCountConnFail()
-        {
-            setFailConn();
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.Count();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void TestLastConnFail()
-        {
-            setFailConn();
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.Last();
-        }
-
-        [TestMethod]
         public void TestLast()
         {
             ACAD entry = new CADEntryFood(connectionString);
@@ -143,45 +121,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectAllFailConn()
-        {
-            setFailConn();
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.SelectAll();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SelectVoidList()
-        {
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.Select(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidNumberIdException))]
-        public void SelectInvalidNumerId()
-        {
-            List<object> ids = new List<object>();
-            ids.Add("hola");
-            ids.Add(4);
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.Select(ids);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectConnFail()
-        {
-            setFailConn();
-            ACAD entry = new CADEntryFood(connectionString);
-            List<object> ids = new List<object>();
-            ids.Add(2);
-            entry.Select(ids);
-        }
-
-        [TestMethod]
         public void SelectWhere()
         {
             ACAD entry = new CADEntryFood(connectionString);
@@ -201,31 +140,6 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["QuantityIn"], actual.Rows[i]["QuantityIn"]);
                 Assert.AreEqual(expected.Rows[i]["Fecha"], actual.Rows[i]["Fecha"]);
             }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidStartRecordException))]
-        public void SelectWhereInvalidStart()
-        {
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.SelectWhere("Fecha = '2012/11/20'", -2);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereInvalidStatement()
-        {
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.SelectWhere("Fecha =; '2012/11/20';");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereFailConn()
-        {
-            setFailConn();
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.SelectWhere("Fecha = '2012/11/20'");
         }
 
         [TestMethod]
@@ -251,27 +165,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void InsertNullRow()
-        {
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.Insert(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void InserFailConn()
-        {
-            setFailConn();
-            ACAD entry = new CADEntryFood(connectionString);
-            DataRow ins = entry.GetVoidRow;
-            ins["FoodType"] = 2;
-            ins["QuantityIn"] = 3;
-            ins["Fecha"] = "2012/11/24";
-            entry.Insert(ins);
-        }
-
-        [TestMethod]
         public void Update()
         {
             ACAD entry = new CADEntryFood(connectionString);
@@ -284,62 +177,8 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void UpdateNullRow()
-        {
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.Update(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void UpdateFailConn()
-        {
-            setFailConn();
-            ACAD entry = new CADEntryFood(connectionString);
-            DataRow mod = tableFormat.NewRow();
-            mod["Id"] = 2;
-            mod["FoodType"] = 2;
-            mod["QuantityIn"] = 3;
-            mod["Fecha"] = "2012/11/24";
-            entry.Update(mod);
-        }
-
-        [TestMethod]
         public void Delete()
         {
-            ACAD entry = new CADEntryFood(connectionString);
-            DataRow del = tableFormat.NewRow();
-            del["Id"] = 4;
-            del["FoodType"] = 1;
-            del["QuantityIn"] = 3;
-            del["Fecha"] = "2012/11/23";
-            entry.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DeleteNullRow()
-        {
-            ACAD entry = new CADEntryFood(connectionString);
-            entry.Delete(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void DeleteWrongRow()
-        {
-            ACAD entry = new CADEntryFood(connectionString);
-            DataRow del = tableFormat.NewRow();
-            del["FoodType"] = 2;
-            entry.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void DeleteFailConn()
-        {
-            setFailConn();
             ACAD entry = new CADEntryFood(connectionString);
             DataRow del = tableFormat.NewRow();
             del["Id"] = 4;
