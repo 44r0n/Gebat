@@ -56,6 +56,12 @@
     <Compile Include="Forms\Comida.Designer.cs">
       <DependentUpon>Comida.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Delitos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Delitos.Designer.cs">
+      <DependentUpon>Delitos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TBC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Comida.resx">
       <DependentUpon>Comida.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Delitos.resx">
+      <DependentUpon>Delitos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TBC.resx">
       <DependentUpon>TBC.cs</DependentUpon>

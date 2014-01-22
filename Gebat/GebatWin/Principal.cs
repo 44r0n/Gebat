@@ -51,5 +51,12 @@ namespace GebatWin
             tbc.MdiParent = this;
             tbc.Show();
         }
+
+        private void delitosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.Delitos delitos = new Forms.Delitos();
+            delitos.MdiParent = this;
+            delitos.Show();
+        }
     }
 }

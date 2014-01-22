@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Combos\ComboDelito.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Combos\ComboBoxGeneral.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -47,6 +50,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Combos\ComboType.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaDelito.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Lists\ListaFood.cs">

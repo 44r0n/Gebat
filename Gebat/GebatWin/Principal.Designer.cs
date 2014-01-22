@@ -36,6 +36,7 @@
             this.gestionarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comidaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tBCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delitosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,6 +87,7 @@
             // 
             this.gestionarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comidaToolStripMenuItem,
+            this.delitosToolStripMenuItem,
             this.tBCToolStripMenuItem});
             this.gestionarToolStripMenuItem.Name = "gestionarToolStripMenuItem";
             this.gestionarToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
@@ -104,6 +106,13 @@
             this.tBCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.tBCToolStripMenuItem.Text = "TBC";
             this.tBCToolStripMenuItem.Click += new System.EventHandler(this.tBCToolStripMenuItem_Click);
+            // 
+            // delitosToolStripMenuItem
+            // 
+            this.delitosToolStripMenuItem.Name = "delitosToolStripMenuItem";
+            this.delitosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.delitosToolStripMenuItem.Text = "Delitos";
+            this.delitosToolStripMenuItem.Click += new System.EventHandler(this.delitosToolStripMenuItem_Click);
             // 
             // Principal
             // 
@@ -134,5 +143,6 @@
         private System.Windows.Forms.ToolStripMenuItem gestionarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem comidaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tBCToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delitosToolStripMenuItem;
     }
 }

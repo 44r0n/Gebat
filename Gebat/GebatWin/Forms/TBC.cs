@@ -14,11 +14,12 @@ namespace GebatWin.Forms
         private void TBC_Load(object sender, EventArgs e)
         {
             listaTBC.Refrescar(new ENTBC().ReadAll());
+            comboDelito.Refrescar(new ENDelito().ReadAll());
         }
 
         private void buttonInsert_Click(object sender, EventArgs e)
         {
-            ENTBC tbc = new ENTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value);
+            ENTBC tbc = new ENTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value,(ENDelito)comboDelito.Selected);
             tbc.NumJornadas = (int)numericUpDownJornadas.Value;
             tbc.Horario[DayOfWeek.Monday] = checkBoxLunes.Checked;
             tbc.Horario[DayOfWeek.Tuesday] = checkBoxMartes.Checked;

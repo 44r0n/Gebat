@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.comboDelito = new GebatWindowComponents.Combos.ComboDelito();
+            this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.checkBoxDomingo = new System.Windows.Forms.CheckBox();
             this.checkBoxSabado = new System.Windows.Forms.CheckBox();
@@ -60,13 +63,14 @@
             this.buttonFin = new System.Windows.Forms.Button();
             this.buttonFirmas = new System.Windows.Forms.Button();
             this.listaTBC = new GebatWindowComponents.Lists.ListaTBC();
-            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJornadas)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.comboDelito);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.checkBoxDomingo);
@@ -94,10 +98,36 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(293, 499);
+            this.groupBox1.Size = new System.Drawing.Size(294, 540);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nuevo TBC";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(7, 476);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(37, 13);
+            this.label11.TabIndex = 26;
+            this.label11.Text = "Delito:";
+            // 
+            // comboDelito
+            // 
+            this.comboDelito.FormattingEnabled = true;
+            this.comboDelito.Location = new System.Drawing.Point(84, 473);
+            this.comboDelito.Name = "comboDelito";
+            this.comboDelito.Size = new System.Drawing.Size(121, 21);
+            this.comboDelito.TabIndex = 25;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(7, 204);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(53, 13);
+            this.label10.TabIndex = 24;
+            this.label10.Text = "Jornadas:";
             // 
             // label9
             // 
@@ -187,7 +217,7 @@
             // 
             // buttonInsert
             // 
-            this.buttonInsert.Location = new System.Drawing.Point(84, 470);
+            this.buttonInsert.Location = new System.Drawing.Point(84, 511);
             this.buttonInsert.Name = "buttonInsert";
             this.buttonInsert.Size = new System.Drawing.Size(75, 23);
             this.buttonInsert.TabIndex = 14;
@@ -311,7 +341,7 @@
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(632, 13);
+            this.label8.Location = new System.Drawing.Point(678, 13);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(46, 13);
             this.label8.TabIndex = 2;
@@ -320,7 +350,7 @@
             // textBoxSearch
             // 
             this.textBoxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxSearch.Location = new System.Drawing.Point(684, 10);
+            this.textBoxSearch.Location = new System.Drawing.Point(730, 10);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(100, 20);
             this.textBoxSearch.TabIndex = 3;
@@ -330,7 +360,7 @@
             // 
             this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDelete.Enabled = false;
-            this.buttonDelete.Location = new System.Drawing.Point(710, 483);
+            this.buttonDelete.Location = new System.Drawing.Point(756, 530);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(75, 23);
             this.buttonDelete.TabIndex = 4;
@@ -342,7 +372,7 @@
             // 
             this.buttonInicio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonInicio.Enabled = false;
-            this.buttonInicio.Location = new System.Drawing.Point(348, 483);
+            this.buttonInicio.Location = new System.Drawing.Point(394, 530);
             this.buttonInicio.Name = "buttonInicio";
             this.buttonInicio.Size = new System.Drawing.Size(83, 23);
             this.buttonInicio.TabIndex = 5;
@@ -354,7 +384,7 @@
             // 
             this.buttonFin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonFin.Enabled = false;
-            this.buttonFin.Location = new System.Drawing.Point(437, 483);
+            this.buttonFin.Location = new System.Drawing.Point(483, 530);
             this.buttonFin.Name = "buttonFin";
             this.buttonFin.Size = new System.Drawing.Size(75, 23);
             this.buttonFin.TabIndex = 6;
@@ -366,7 +396,7 @@
             // 
             this.buttonFirmas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonFirmas.Enabled = false;
-            this.buttonFirmas.Location = new System.Drawing.Point(518, 483);
+            this.buttonFirmas.Location = new System.Drawing.Point(564, 530);
             this.buttonFirmas.Name = "buttonFirmas";
             this.buttonFirmas.Size = new System.Drawing.Size(88, 23);
             this.buttonFirmas.TabIndex = 7;
@@ -380,29 +410,20 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listaTBC.FullRowSelect = true;
             this.listaTBC.GridLines = true;
-            this.listaTBC.Location = new System.Drawing.Point(348, 53);
+            this.listaTBC.Location = new System.Drawing.Point(313, 53);
             this.listaTBC.MultiSelect = false;
             this.listaTBC.Name = "listaTBC";
-            this.listaTBC.Size = new System.Drawing.Size(437, 412);
+            this.listaTBC.Size = new System.Drawing.Size(518, 459);
             this.listaTBC.TabIndex = 0;
             this.listaTBC.UseCompatibleStateImageBehavior = false;
             this.listaTBC.View = System.Windows.Forms.View.Details;
             this.listaTBC.SelectedIndexChanged += new System.EventHandler(this.listaTBC_SelectedIndexChanged);
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(7, 204);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 13);
-            this.label10.TabIndex = 24;
-            this.label10.Text = "Jornadas:";
-            // 
             // TBC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(797, 533);
+            this.ClientSize = new System.Drawing.Size(843, 580);
             this.Controls.Add(this.buttonFirmas);
             this.Controls.Add(this.buttonFin);
             this.Controls.Add(this.buttonInicio);
@@ -457,5 +478,7 @@
         private System.Windows.Forms.Button buttonFin;
         private System.Windows.Forms.Button buttonFirmas;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private GebatWindowComponents.Combos.ComboDelito comboDelito;
     }
 }

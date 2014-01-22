@@ -26,6 +26,7 @@ namespace GebatWindowComponents.Lists
                 item.SubItems.Add(tbc.Ejecutoria);
                 item.SubItems.Add(tbc.FInicio.ToShortDateString());
                 item.SubItems.Add(tbc.FFin.ToShortDateString());
+                item.SubItems.Add(tbc.Delito.Name);
                 Items.Add(item);
                 i++;
             }
@@ -49,6 +50,7 @@ namespace GebatWindowComponents.Lists
             lista.Add("Ejecutoria");
             lista.Add("Fecha inicio");
             lista.Add("Fecha fin");
+            lista.Add("Delito");
             Init(lista);
         }
 
