@@ -378,8 +378,8 @@ namespace GebatEN.Classes
         /// <param name="Juzgado">Juzagod de TBC.</param>
         /// <param name="Finicio">Fecha de inicio de cumplimiento.</param>
         /// <param name="Ffin">Fecha final de cumplimiento.</param>
-        public ENTBC(string DNI, string Ejecutoria, string Nombre, string Apellidos, sexo Genero ,string Juzgado, DateTime Finicio, DateTime Ffin, ENDelito delito)
-            : base(DNI, Nombre, Apellidos, Genero)
+        public ENTBC(string DNI, string Ejecutoria, string Nombre, string Apellidos, DateTime FechaNac, sexo Genero ,string Juzgado, DateTime Finicio, DateTime Ffin, ENDelito delito)
+            : base(DNI, Nombre, Apellidos, FechaNac, Genero)
         {
             cad = new CADTBC(defaultConnString);
             this.ejecutoria = Ejecutoria;

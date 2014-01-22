@@ -20,7 +20,7 @@ namespace GebatWin.Forms
 
         private void buttonInsert_Click(object sender, EventArgs e)
         {
-            ENTBC tbc;
+           /* ENTBC tbc;
             if(radioButtonHombre.Checked)
             {
                 tbc = new ENTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, sexo.Masculino,textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value,(ENDelito)comboDelito.Selected);
@@ -53,7 +53,7 @@ namespace GebatWin.Forms
             checkBoxDomingo.Checked = false;
             dateTimePickerFin.Value = DateTime.Today;
             dateTimePickerInicio.Value = DateTime.Today;
-            textBoxDNI.Focus();
+            textBoxDNI.Focus();*/
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)

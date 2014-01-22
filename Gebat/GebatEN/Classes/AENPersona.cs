@@ -14,6 +14,7 @@ namespace GebatEN.Classes
         private string dni;
         private string apellidos;
         private string nombre;
+        private DateTime fechanac;
         private sexo genero;
 
         #endregion
@@ -119,6 +120,7 @@ namespace GebatEN.Classes
                 ret["DNI"] = (string)this.dni;
                 ret["Nombre"] = this.nombre;
                 ret["Apellidos"] = this.apellidos;
+                ret["FechaNac"] = this.fechanac;
                 if (this.genero == sexo.Masculino)
                 {
                     ret["Sexo"] = "M";
@@ -145,6 +147,7 @@ namespace GebatEN.Classes
                 this.dni = (string)perrow["DNI"];
                 this.nombre = (string)perrow["Nombre"];
                 this.apellidos = (string)perrow["Apellidos"];
+                this.fechanac = (DateTime)perrow["FechaNac"];
                 switch ((string)perrow["Sexo"])
                 {
                     case "M":
@@ -234,6 +237,21 @@ namespace GebatEN.Classes
             }
         }
 
+        public int Edad
+        {
+            get
+            {
+                int edad = DateTime.Now.Year - fechanac.Year;
+                DateTime nacimientoAhora = fechanac.AddYears(edad);
+                if (DateTime.Now.CompareTo(nacimientoAhora) < 0)
+                {
+                    edad--;
+                }
+
+                return edad;
+            }
+        }
+
         public sexo Genero
         {
             get
@@ -256,7 +274,7 @@ namespace GebatEN.Classes
         /// <param name="DNI">DNI de la persona.</param>
         /// <param name="Nombre">Nombre de la persona.</param>
         /// <param name="Apellidos">Apellidos de la persona.</param>
-        public AENPersona(string DNI, string Nombre, string Apellidos, sexo Genero)
+        public AENPersona(string DNI, string Nombre, string Apellidos, DateTime FechaNac, sexo Genero)
             :base()
         {
             personas = new CADPersonas(defaultConnString);
@@ -264,6 +282,7 @@ namespace GebatEN.Classes
             this.DNI = DNI;
             this.nombre = Nombre;
             this.apellidos = Apellidos;
+            this.fechanac = FechaNac;
             this.genero = Genero;
         }
 

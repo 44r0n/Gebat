@@ -48,20 +48,22 @@ INSERT INTO Delitos (Name) VALUES
 	'Robo'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
+INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac ,Sexo) VALUES
 (
 	'12345678A',
 	'Pepe',
 	'Olivares',
+	'1976/04/02',
 	'M'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
+INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 (
 	'23456789B',
 	'Ana',
 	'Entrepinares',
-	'M'
+	'1988/07/11',
+	'F'
 );
 
 INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo, Delito) VALUES
@@ -82,4 +84,4 @@ INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Mar
 	1
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);

@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS Personas
   DNI CHAR(9) Unique,
   Nombre VARCHAR(15) NULL,
   Apellidos VARCHAR(45) NULL,
+  FechaNac DATE NULL,
   Sexo CHAR(1)
 );
 
@@ -102,7 +103,7 @@ CREATE TABLE IF NOT EXISTS TBC
   
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);
 
 INSERT INTO Type (Name) VALUES
 (
@@ -215,35 +216,39 @@ INSERT INTO Delitos (Name) VALUES
 	"Otro"
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
+INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 (
 	'54508005Y',
 	'Pepe',
 	'Olivares',
+	'1976/04/02',
 	'M'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
+INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 (
 	'01086932K',
 	'Ana',
 	'Entrepinares',
+	'1988/07/11',
 	'F'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
+INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 (
 	'12218401L',
 	'Isabel',
 	'Gonzalez',
+	'1978/11/17',
 	'F'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
+INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 (
 	'93909231R',
 	'Yerai',
 	'Gallardo',
+	'1993/12/21',
 	'M'
 );
 
