@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Data;
-using System.Data.Common;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-using SqlManager;
 using GebatCAD.Classes;
 using GebatCAD.Exceptions;
-using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CADUnitTestProject.CADTests
@@ -70,24 +66,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void TestCountConnFail()
-        {
-            setFailConn();
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.Count();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void TestLastConnFail()
-        {
-            setFailConn();
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.Last();
-        }
-
-        [TestMethod]
         public void TestLast()
         {
             ACAD outgoing = new CADOutgoingFood(connectionString);
@@ -137,45 +115,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectAllFailConn()
-        {
-            setFailConn();
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.SelectAll();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SelectVoidList()
-        {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.Select(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidNumberIdException))]
-        public void SelectInvalidNumberIrd()
-        {
-            List<object> ids = new List<object>();
-            ids.Add("hola");
-            ids.Add(45);
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.Select(ids);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectConnFail()
-        {
-            setFailConn();
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            List<object> ids = new List<object>();
-            ids.Add(2);
-            outgoing.Select(ids);
-        }
-
-        [TestMethod]
         public void SelectWhere()
         {
             ACAD outgoing = new CADOutgoingFood(connectionString);
@@ -195,31 +134,6 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["QuantityOut"], actual.Rows[i]["QuantityOut"]);
                 Assert.AreEqual(expected.Rows[i]["Fecha"], actual.Rows[i]["Fecha"]);
             }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidStartRecordException))]
-        public void SelectWhereInvalidStart()
-        {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.SelectWhere("Fecha = '2012/11/25'", -2);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereInvalidStatement()
-        {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.SelectWhere("Fecha = ;");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereFailConn()
-        {
-            setFailConn();
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.SelectWhere("Fecha = '2012/11/25'");
         }
 
         [TestMethod]
@@ -244,14 +158,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void InsertNullRow()
-        {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.Insert(null);
-        }
-
-        [TestMethod]
         public void Update()
         {
             ACAD outgoing = new CADOutgoingFood(connectionString);
@@ -260,28 +166,6 @@ namespace CADUnitTestProject.CADTests
             mod["FoodType"] = 2;
             mod["QuantityOut"] = 3;
             mod["Fecha"] = "2011/02/02";
-            outgoing.Update(mod);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void UpdateNullRow()
-        {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.Update(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void UpdateFailConn()
-        {
-            setFailConn();
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            DataRow mod = tableFormat.NewRow();
-            mod["Id"] = 2;
-            mod["FoodType"] = 2;
-            mod["QuantityOut"] = 2;
-            mod["Fecha"] = "2012/11/24";
             outgoing.Update(mod);
         }
 
@@ -295,39 +179,6 @@ namespace CADUnitTestProject.CADTests
             del["QuantityOut"] = 1;
             del["Fecha"] = "2012/11/24";
             outgoing.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DeleteNullRow()
-        {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            outgoing.Delete(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void DeleteWrongRow()
-        {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            DataRow del = tableFormat.NewRow();
-            del["QuantityOut"] = 9;
-            outgoing.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void DeleteFailConn()
-        {
-            setFailConn();
-            ACAD outgoing = new CADOutgoingFood(connectionString);
-            DataRow del = tableFormat.NewRow();
-            del["Id"] = 2;
-            del["FoodType"] = 1;
-            del["QuantityOut"] = 1;
-            del["Fecha"] = "2012/11/24";
-            outgoing.Delete(del);
-
         }
     }
 }

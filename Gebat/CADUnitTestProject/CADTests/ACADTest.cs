@@ -1,14 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Data;
 using System.Data.Common;
-using System.Collections.Generic;
-using MySql.Data.MySqlClient;
 using SqlManager;
 using GebatCAD.Classes;
-using GebatCAD.Exceptions;
 using System.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CADUnitTestProject.CADTests
 {

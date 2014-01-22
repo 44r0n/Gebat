@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Data;
-using System.Data.Common;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-using SqlManager;
 using GebatCAD.Classes;
 using GebatCAD.Exceptions;
-using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CADUnitTestProject.CADTests
@@ -101,24 +97,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void TestCountFail()
-        {
-            setFailConn();
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.Count();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void TestLastConnFail()
-        {
-            setFailConn();
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.Last();
-        }
-
-        [TestMethod]
         public void TestLast()
         {
             ACAD tbc = new CADTBC(connectionString);
@@ -192,45 +170,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectAllFailConn()
-        {
-            setFailConn();
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.SelectAll();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SelectViodList()
-        {
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.Select(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidNumberIdException))]
-        public void SelectInvalidNumberId()
-        {
-            List<object> ids = new List<object>();
-            ids.Add("taca");
-            ids.Add(3);
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.Select(ids);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectConnFail()
-        {
-            setFailConn();
-            ACAD tbc = new CADTBC(connectionString);
-            List<object> ids = new List<object>();
-            ids.Add(1);
-            tbc.Select(ids);
-        }
-
-        [TestMethod]
         public void SelectWhere()
         {
             ACAD tbc = new CADTBC(connectionString);
@@ -267,31 +206,6 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["Sabado"], actual.Rows[i]["Sabado"]);
                 Assert.AreEqual(expected.Rows[i]["Domingo"], actual.Rows[i]["Domingo"]);
             }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidStartRecordException))]
-        public void SelectWhereInvalidStart()
-        {
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.SelectWhere("Juzgado = 'Alicante'", -8);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereInvalidStatement()
-        {
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.SelectWhere("Juz'[");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereFailConn()
-        {
-            setFailConn();
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.SelectWhere("Juzgado = 'Alicante'");
         }
 
         [TestMethod]
@@ -344,67 +258,12 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void InsertFailConn()
-        {
-            setFailConn();
-            ACAD tbc = new CADTBC(connectionString);
-            DataRow ins = tbc.GetVoidRow;
-            ins["DNI"] = "23456789B";
-            ins["Ejecutoria"] = "45/12";
-            ins["Juzgado"] = "Juzgado de Albacete";
-            ins["FInicio"] = "2013/02/12";
-            ins["FFin"] = "2014/04/27";
-            ins["NumJornadas"] = 60; 
-            ins["Lunes"] = false;
-            ins["Martes"] = true;
-            ins["Miercoles"] = false;
-            ins["Jueves"] = true;
-            ins["Vienres"] = false;
-            ins["Sabado"] = true;
-            ins["Domingo"] = false;
-            tbc.Insert(ins);
-        }
-
-        [TestMethod]
         public void Update()
         {
             ACAD tbc = new CADTBC(connectionString);
             DataRow mod = tableFormat.NewRow();
             mod["Id"] = 1;
             mod["DNI"] = "12345678A";
-            mod["Ejecutoria"] = "23/2013";
-            mod["Juzgado"] = "Murcia";
-            mod["FInicio"] = "2013/09/13";
-            mod["FFin"] = "2014/02/17";
-            mod["NumJornadas"] = 90;
-            mod["Lunes"] = false;
-            mod["Martes"] = true;
-            mod["Miercoles"] = false;
-            mod["Jueves"] = true;
-            mod["Viernes"] = false;
-            mod["Sabado"] = true;
-            mod["Domingo"] = false;
-            tbc.Update(mod);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void UpdateNullRow()
-        {
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.Update(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void UpdateFailConn()
-        {
-            setFailConn();
-            ACAD tbc = new CADTBC(connectionString);
-            DataRow mod = tableFormat.NewRow();
-            mod["Id"] = 1;
-            mod["DNI"] = "123456789A";
             mod["Ejecutoria"] = "23/2013";
             mod["Juzgado"] = "Murcia";
             mod["FInicio"] = "2013/09/13";
@@ -440,48 +299,6 @@ namespace CADUnitTestProject.CADTests
             del["Sabado"] = false;
             del["Domingo"] = false;
             tbc.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DeleteNullRow()
-        {
-            ACAD tbc = new CADTBC(connectionString);
-            tbc.Delete(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void DeleteWronRow()
-        {
-            ACAD tbc = new CADTBC(connectionString);
-            DataRow del = tableFormat.NewRow();
-            del["DNI"] = "365365";
-            tbc.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void DeleteFailConn()
-        {
-            setFailConn();
-            ACAD tbc = new CADTBC(connectionString);
-            DataRow del = tableFormat.NewRow();
-            del["Id"] = 1;
-            del["DNI"] = "12345678A";
-            del["Ejecutoria"] = "23/2013";
-            del["Juzgado"] = "Alicante";
-            del["FInicio"] = "2012/11/24";
-            del["FFin"] = "2013/03/09";
-            del["NumJornadas"] = 180;
-            del["Lunes"] = true;
-            del["Martes"] = true;
-            del["Miercoles"] = true;
-            del["Jueves"] = true;
-            del["Viernes"] = true;
-            del["Sabado"] = false;
-            del["Domingo"] = false;
-            tbc.Delete(del);            
         }
     }
 }
