@@ -81,7 +81,8 @@ CREATE TABLE IF NOT EXISTS Personas
   Id int Primary Key AUTO_INCREMENT,
   DNI CHAR(9) Unique,
   Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL
+  Apellidos VARCHAR(45) NULL,
+  Sexo CHAR(1) NULL
 );
 
 CREATE TABLE IF NOT EXISTS Delitos
@@ -113,4 +114,4 @@ CREATE TABLE IF NOT EXISTS TBC
   
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo from Personas inner join TBC on (Personas.DNI = TBC.DNI);

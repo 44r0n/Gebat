@@ -30,6 +30,7 @@ namespace CADUnitTestProject.CADTests
                 expected.Columns.Add("Viernes", typeof(bool));
                 expected.Columns.Add("Sabado", typeof(bool));
                 expected.Columns.Add("Domingo", typeof(bool));
+                expected.Columns.Add("Delito", typeof(int));
                 return expected;
             }
         }
@@ -67,6 +68,7 @@ namespace CADUnitTestProject.CADTests
             expected["Viernes"] = true;
             expected["Sabado"] = false;
             expected["Domingo"] = false;
+            expected["Delito"] = 1;
 
             ACAD tbc = new CADTBC(connectionString);
             List<object> ids = new List<object>();
@@ -85,6 +87,7 @@ namespace CADUnitTestProject.CADTests
             Assert.AreEqual(expected["Viernes"], actual["Viernes"]);
             Assert.AreEqual(expected["Sabado"], actual["Sabado"]);
             Assert.AreEqual(expected["Domingo"], actual["Domingo"]);
+            Assert.AreEqual(expected["Delito"], actual["Delito"]);
         }
 
         [TestMethod]
@@ -115,6 +118,7 @@ namespace CADUnitTestProject.CADTests
             expected["Viernes"] = true;
             expected["Sabado"] = false;
             expected["Domingo"] = false;
+            expected["Delito"] = 1;
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
             Assert.AreEqual(expected["Ejecutoria"], actual["Ejecutoria"]);
             Assert.AreEqual(expected["Juzgado"], actual["Juzgado"]);
@@ -128,6 +132,7 @@ namespace CADUnitTestProject.CADTests
             Assert.AreEqual(expected["Viernes"], actual["Viernes"]);
             Assert.AreEqual(expected["Sabado"], actual["Sabado"]);
             Assert.AreEqual(expected["Domingo"], actual["Domingo"]);
+            Assert.AreEqual(expected["Delito"], actual["Delito"]);
         }
 
         [TestMethod]
@@ -150,6 +155,7 @@ namespace CADUnitTestProject.CADTests
             row["Viernes"] = true;
             row["Sabado"] = false;
             row["Domingo"] = false;
+            row["Delito"] = 1;
             expected.Rows.Add(row);
             for (int i = 0; i < expected.Rows.Count; i++)
             {
@@ -166,6 +172,7 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["Viernes"], actual.Rows[i]["Viernes"]);
                 Assert.AreEqual(expected.Rows[i]["Sabado"], actual.Rows[i]["Sabado"]);
                 Assert.AreEqual(expected.Rows[i]["Domingo"], actual.Rows[i]["Domingo"]);
+                Assert.AreEqual(expected.Rows[i]["Delito"], actual.Rows[i]["Delito"]);
             }
         }
 
@@ -188,6 +195,7 @@ namespace CADUnitTestProject.CADTests
             row["Viernes"] = true;
             row["Sabado"] = false;
             row["Domingo"] = false;
+            row["Delito"] = 1;
             expected.Rows.Add(row);
             DataTable actual = tbc.SelectWhere("Juzgado = 'Alicante'");
             for (int i = 0; i < expected.Rows.Count; i++)
@@ -205,6 +213,7 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["Viernes"], actual.Rows[i]["Viernes"]);
                 Assert.AreEqual(expected.Rows[i]["Sabado"], actual.Rows[i]["Sabado"]);
                 Assert.AreEqual(expected.Rows[i]["Domingo"], actual.Rows[i]["Domingo"]);
+                Assert.AreEqual(expected.Rows[i]["Delito"], actual.Rows[i]["Delito"]);
             }
         }
 
@@ -226,6 +235,7 @@ namespace CADUnitTestProject.CADTests
             ins["Viernes"] = false;
             ins["Sabado"] = true;
             ins["Domingo"] = false;
+            ins["Delito"] = 1;
             DataRow expected = tableFormat.NewRow();
             expected["DNI"] = "23456789B";
             expected["Ejecutoria"] = "45/12";
@@ -240,6 +250,7 @@ namespace CADUnitTestProject.CADTests
             expected["Viernes"] = false;
             expected["Sabado"] = true;
             expected["Domingo"] = false;
+            expected["Delito"] = 1;
             DataRow actual = tbc.Insert(ins);
 
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
@@ -255,6 +266,7 @@ namespace CADUnitTestProject.CADTests
             Assert.AreEqual(expected["Viernes"], actual["Viernes"]);
             Assert.AreEqual(expected["Sabado"], actual["Sabado"]);
             Assert.AreEqual(expected["Domingo"], actual["Domingo"]);
+            Assert.AreEqual(expected["Delito"], actual["Delito"]);
         }
 
         [TestMethod]
@@ -276,6 +288,7 @@ namespace CADUnitTestProject.CADTests
             mod["Viernes"] = false;
             mod["Sabado"] = true;
             mod["Domingo"] = false;
+            mod["Delito"] = 1;
             tbc.Update(mod);
         }
 
@@ -298,6 +311,7 @@ namespace CADUnitTestProject.CADTests
             del["Viernes"] = true;
             del["Sabado"] = false;
             del["Domingo"] = false;
+            del["Delito"] = 1;
             tbc.Delete(del);
         }
     }

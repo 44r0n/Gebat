@@ -1,15 +1,23 @@
 DROP TABLE IF EXISTS TBC;
+DROP TABLE IF EXISTS Delitos;
 DROP TABLE IF EXISTS Personas;
 DROP TABLE IF EXISTS OutgoingFood;
 DROP TABLE IF EXISTS EntryFood;
 DROP TABLE IF EXISTS Food;
 DROP TABLE IF EXISTS Type;
 
+CREATE TABLE IF NOT EXISTS Delitos
+(
+	Id int Primary Key AUTO_INCREMENT,
+	Name VARCHAR(45) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS Personas 
 (
   DNI CHAR(9) Primary Key,
   Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL
+  Apellidos VARCHAR(45) NULL,
+  Sexo CHAR(1) NULL
 );
 
 CREATE TABLE IF NOT EXISTS TBC 
@@ -28,25 +36,35 @@ CREATE TABLE IF NOT EXISTS TBC
   Viernes BOOLEAN DEFAULT FALSE,
   Sabado BOOLEAN DEFAULT FALSE,
   Domingo BOOLEAN DEFAULT FALSE,
+  Delito INT,
   Unique (DNI, Ejecutoria),
+  CONSTRAINT fk_TBC_Delitos FOREIGN KEY (Delito) REFERENCES Delitos (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
+
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos) VALUES
+INSERT INTO Delitos (Name) VALUES
+(
+	'Robo'
+);
+
+INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
 (
 	'12345678A',
 	'Pepe',
-	'Olivares'
+	'Olivares',
+	'M'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos) VALUES
+INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
 (
 	'23456789B',
 	'Ana',
-	'Entrepinares'
+	'Entrepinares',
+	'M'
 );
 
-INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo) VALUES
+INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo, Delito) VALUES
 (
 	'12345678A',
 	'23/2013',
@@ -60,7 +78,8 @@ INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Mar
 	TRUE,
 	TRUE,
 	FALSE,
-	FALSE
+	FALSE,
+	1
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);

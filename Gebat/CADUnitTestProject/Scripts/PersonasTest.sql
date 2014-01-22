@@ -10,19 +10,22 @@ CREATE TABLE IF NOT EXISTS Personas
   Id int Primary Key AUTO_INCREMENT,
   DNI CHAR(9) Unique,
   Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL
+  Apellidos VARCHAR(45) NULL,
+  Sexo CHAR(1) NULL
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos) VALUES
+INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
 (
 	'12345678A',
 	'Pepe',
-	'Olivares'
+	'Olivares',
+	'M'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos) VALUES
+INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
 (
 	'23456789B',
 	'Ana',
-	'Entrepinares'
+	'Entrepinares',
+	'F'
 );

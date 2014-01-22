@@ -20,6 +20,7 @@ namespace CADUnitTestProject.CADTests
                 expected.Columns.Add("DNI", typeof(string));
                 expected.Columns.Add("Nombre", typeof(string));
                 expected.Columns.Add("Apellidos", typeof(string));
+                expected.Columns.Add("Sexo", typeof(string));
                 return expected;
             }
         }
@@ -47,6 +48,7 @@ namespace CADUnitTestProject.CADTests
             expected["DNI"] = "12345678A";
             expected["Nombre"] = "Pepe";
             expected["Apellidos"] = "Olivares";
+            expected["Sexo"] = "M";
             ACAD persona = new CADPersonas(connectionString);
             List<object> ids = new List<object>();
             ids.Add(1);
@@ -54,6 +56,7 @@ namespace CADUnitTestProject.CADTests
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
             Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
             Assert.AreEqual(expected["Apellidos"], actual["Apellidos"]);
+            Assert.AreEqual(expected["Sexo"], actual["Sexo"]);
         }
 
         [TestMethod]
@@ -74,9 +77,11 @@ namespace CADUnitTestProject.CADTests
             expected["DNI"] = "23456789B";
             expected["Nombre"] = "Ana";
             expected["Apellidos"] = "Entrepinares";
+            expected["Sexo"] = "F";
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
             Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
             Assert.AreEqual(expected["Apellidos"], actual["Apellidos"]);
+            Assert.AreEqual(expected["Sexo"], actual["Sexo"]);
         }
 
         [TestMethod]
@@ -89,10 +94,12 @@ namespace CADUnitTestProject.CADTests
             row["DNI"] = "12345678A";
             row["Nombre"] = "Pepe";
             row["Apellidos"] = "Olivares";
+            row["Sexo"] = "M";
             DataRow row2 = expected.NewRow();
             row2["DNI"] = "23456789B";
             row2["Nombre"] = "Ana";
             row2["Apellidos"] = "Entrepinares";
+            row2["Sexo"] = "F";
             expected.Rows.Add(row);
             expected.Rows.Add(row2);
             for (int i = 0; i < expected.Rows.Count; i++)
@@ -100,6 +107,7 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["DNI"], actual.Rows[i]["DNI"]);
                 Assert.AreEqual(expected.Rows[i]["Nombre"], actual.Rows[i]["Nombre"]);
                 Assert.AreEqual(expected.Rows[i]["Apellidos"], actual.Rows[i]["Apellidos"]);
+                Assert.AreEqual(expected.Rows[i]["Sexo"], actual.Rows[i]["Sexo"]);
             }
         }
 
@@ -112,6 +120,7 @@ namespace CADUnitTestProject.CADTests
             row["DNI"] = "12345678A";
             row["Nombre"] = "Pepe";
             row["Apellidos"] = "Olivares";
+            row["Sexo"] = "M";
             expected.Rows.Add(row);
             DataTable actual = personas.SelectWhere("Nombre = 'Pepe'");
             for (int i = 0; i < expected.Rows.Count; i++)
@@ -119,6 +128,7 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["DNI"], actual.Rows[i]["DNI"]);
                 Assert.AreEqual(expected.Rows[i]["Nombre"], actual.Rows[i]["Nombre"]);
                 Assert.AreEqual(expected.Rows[i]["Apellidos"], actual.Rows[i]["Apellidos"]);
+                Assert.AreEqual(expected.Rows[i]["Sexo"], actual.Rows[i]["Sexo"]);
             }
         }
 
@@ -130,15 +140,18 @@ namespace CADUnitTestProject.CADTests
             ins["DNI"] = "34567890C";
             ins["Nombre"] = "Antonio";
             ins["Apellidos"] = "García";
+            ins["Sexo"] = "M";
             DataRow expected = tableFormat.NewRow();
             expected["DNI"] = "34567890C";
             expected["Nombre"] = "Antonio";
             expected["Apellidos"] = "García";
+            expected["Sexo"] = "M";
             DataRow actual = persona.Insert(ins);
 
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
             Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
             Assert.AreEqual(expected["Apellidos"], actual["Apellidos"]);
+            Assert.AreEqual(expected["Sexo"], actual["Sexo"]);
         }
 
         [TestMethod]
@@ -150,6 +163,7 @@ namespace CADUnitTestProject.CADTests
             mod["DNI"] = "23456789B";
             mod["Nombre"] = "María";
             mod["Apellidos"] = "Entrepinares";
+            mod["Sexo"] = "F";
             persona.Update(mod);
         }
 
@@ -162,6 +176,7 @@ namespace CADUnitTestProject.CADTests
             del["DNI"] = "12345678A";
             del["Nombre"] = "Pepe";
             del["Apellidos"] = "Olivares";
+            del["Sexo"] = "M";
             persona.Delete(del);
         }
     }
