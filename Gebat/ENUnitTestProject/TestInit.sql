@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS TBC;
+DROP TABLE IF EXISTS Delitos;
 DROP TABLE IF EXISTS Personas;
 DROP TABLE IF EXISTS Almacen;
 DROP TABLE IF EXISTS OutgoingFood;
@@ -45,7 +46,6 @@ BEGIN
 	UPDATE Food SET Quantity = Quantity + NEW.QuantityIn WHERE (Id = NEW.FoodType);
 END;
 
-
 CREATE TRIGGER subfood AFTER INSERT ON OutGoingFood
 FOR EACH ROW 
 BEGIN
@@ -72,6 +72,12 @@ CREATE TABLE IF NOT EXISTS Personas
   Apellidos VARCHAR(45) NULL
 );
 
+CREATE TABLE IF NOT EXISTS Delitos
+(
+	Id int Primary Key AUTO_INCREMENT,
+	Name VARCHAR(45) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS TBC 
 (
   Id int PRIMARY KEY AUTO_INCREMENT,
@@ -88,55 +94,58 @@ CREATE TABLE IF NOT EXISTS TBC
   Viernes BOOLEAN DEFAULT FALSE,
   Sabado BOOLEAN DEFAULT FALSE,
   Domingo BOOLEAN DEFAULT FALSE,
+  Delito int NOT NULL,
   Unique (DNI, Ejecutoria),
+  CONSTRAINT fk_TBC_Delitos FOREIGN KEY (Delito) REFERENCES Delitos (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
+  
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);
 
 INSERT INTO Type (Name) VALUES
 (
-        'Kg'
-);
-
-INSERT INTO Type (Name) VALUES
-(
-        'Litros'
+	'Kg'
 );
 
 INSERT INTO Type (Name) VALUES
 (
-        'Borrar'
+    'Litros'
 );
 
 INSERT INTO Type (Name) VALUES
 (
-        'Paquetes'
+    'Borrar'
+);
+
+INSERT INTO Type (Name) VALUES
+(
+    'Paquetes'
 );
 
 DELETE FROM Type WHERE Id = 3;
 
 INSERT INTO Food (Name,QuantityType) VALUES
 (
-        'Patates',
-        1
+    'Patates',
+    1
 );
 
 INSERT INTO Food (Name,QuantityType) VALUES
 (
-        'Tomates',
-        1
+    'Tomates',
+    1
 );
 
 INSERT INTO Food (Name) VALUES
 (
-        'Pa borrar'
+    'Pa borrar'
 );
 
 INSERT INTO Food (Name,QuantityType) VALUES
 (
-        'Pomes',
-        1
+    'Pomes',
+    1
 );
 
 DELETE FROM Food WHERE Id = 3;
@@ -190,6 +199,21 @@ INSERT INTO OutgoingFood(FoodType,QuantityOut, Fecha) VALUES
 	'2012/11/25'
 );
 
+INSERT INTO Delitos (Name) VALUES
+(
+	"Robo"
+);
+
+INSERT INTO Delitos (Name) VALUES
+(
+	"Pelea"
+);
+
+INSERT INTO Delitos (Name) VALUES
+(
+	"Otro"
+);
+
 INSERT INTO Personas (DNI, Nombre, Apellidos) VALUES
 (
 	'54508005Y',
@@ -218,7 +242,7 @@ INSERT INTO Personas (DNI, Nombre, Apellidos) VALUES
 	'Gallardo'
 );
 
-INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo) VALUES
+INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo,Delito) VALUES
 (
 	'54508005Y',
 	'23/2013',
@@ -232,10 +256,11 @@ INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Mar
 	TRUE,
 	TRUE,
 	FALSE,
-	FALSE
+	FALSE,
+	1
 );
 
-INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo) VALUES
+INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo,Delito) VALUES
 (
 	'01086932K',
 	'1/98',
@@ -249,10 +274,11 @@ INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Mar
 	TRUE,
 	TRUE,
 	FALSE,
-	FALSE
+	FALSE,
+	2
 );
 
-INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo) VALUES
+INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo,Delito) VALUES
 (
 	'01086932K',
 	'93/2012',
@@ -266,5 +292,6 @@ INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Mar
 	TRUE,
 	TRUE,
 	FALSE,
-	FALSE
+	FALSE,
+	1
 );

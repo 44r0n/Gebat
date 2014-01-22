@@ -36,6 +36,7 @@ namespace ENUnitTestProject.ENTests
             Assert.AreEqual(false, tbc.Horario[DayOfWeek.Saturday]);
             Assert.AreEqual(false, tbc.Horario[DayOfWeek.Sunday]);
             Assert.AreEqual(250, tbc.NumJornadas);
+            Assert.AreEqual("Pelea", tbc.Delito.Name);
         }
 
         [TestMethod]
@@ -58,8 +59,9 @@ namespace ENUnitTestProject.ENTests
             {
                 Assert.AreEqual(dnis[i], ((ENTBC)general[i]).DNI);
             }
-
-            ENTBC ins = new ENTBC("52835460K", "02/2013", "Manolo", "Hansen", "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31));
+            List<int> endelito = new List<int>();
+            endelito.Add(1);
+            ENTBC ins = new ENTBC("52835460K", "02/2013", "Manolo", "Hansen", "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), (ENDelito)new ENDelito().Read(endelito));
             ins.Save();
             general = new ENTBC().ReadAll();
             dnis.Add(ins.DNI);
