@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS TBC;
+DROP TABLE IF EXISTS Delitos;
 DROP TABLE IF EXISTS Personas;
 DROP TABLE IF EXISTS Almacen;
 DROP TABLE IF EXISTS OutgoingFood;
@@ -83,6 +84,12 @@ CREATE TABLE IF NOT EXISTS Personas
   Apellidos VARCHAR(45) NULL
 );
 
+CREATE TABLE IF NOT EXISTS Delitos
+(
+	Id int Primary Key AUTO_INCREMENT,
+	Name VARCHAR(45) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS TBC 
 (
   Id int PRIMARY KEY AUTO_INCREMENT,
@@ -99,8 +106,11 @@ CREATE TABLE IF NOT EXISTS TBC
   Viernes BOOLEAN DEFAULT FALSE,
   Sabado BOOLEAN DEFAULT FALSE,
   Domingo BOOLEAN DEFAULT FALSE,
+  Delito int NOT NULL,
   Unique (DNI, Ejecutoria),
+  CONSTRAINT fk_TBC_Delitos FOREIGN KEY (Delito) REFERENCES Delitos (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
+  
 );
 
 CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo from Personas inner join TBC on (Personas.DNI = TBC.DNI);

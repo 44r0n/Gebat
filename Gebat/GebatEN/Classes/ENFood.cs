@@ -100,7 +100,7 @@ namespace GebatEN.Classes
 
 		#endregion
 
-		#region//Geters & Setters
+		#region//Getters & Setters
 
 		/// <summary>
 		/// Obtiene el nombre del alimento.

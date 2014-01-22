@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Data;
-using System.Data.Common;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-using SqlManager;
 using GebatCAD.Classes;
 using GebatCAD.Exceptions;
-using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CADUnitTestProject.CADTests
@@ -70,24 +66,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void TestCountConnFail()
-        {
-            setFailConn();
-            ACAD persona = new CADPersonas(connectionString);
-            persona.Count();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void TestLastConnFail()
-        {
-            setFailConn();
-            ACAD persona = new CADPersonas(connectionString);
-            persona.Last();
-        }
-
-        [TestMethod]
         public void TestLast()
         {
             ACAD persona = new CADPersonas(connectionString);
@@ -126,45 +104,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectAllFailConn()
-        {
-            setFailConn();
-            ACAD persona = new CADPersonas(connectionString);
-            persona.SelectAll();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void SelectVoidList()
-        {
-            ACAD persona = new CADPersonas(connectionString);
-            persona.Select(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidNumberIdException))]
-        public void SelectInvalidNumberId()
-        {
-            List<object> ids = new List<object>();
-            ids.Add("hola");
-            ids.Add(7);
-            ACAD personas = new CADPersonas(connectionString);
-            personas.Select(ids);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectConnFail()
-        {
-            setFailConn();
-            ACAD persona = new CADPersonas(connectionString);
-            List<object> ids = new List<object>();
-            ids.Add("12345678A");
-            persona.Select(ids);
-        }
-
-        [TestMethod]
         public void SelectWhere()
         {
             ACAD personas = new CADPersonas(connectionString);
@@ -181,31 +120,6 @@ namespace CADUnitTestProject.CADTests
                 Assert.AreEqual(expected.Rows[i]["Nombre"], actual.Rows[i]["Nombre"]);
                 Assert.AreEqual(expected.Rows[i]["Apellidos"], actual.Rows[i]["Apellidos"]);
             }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidStartRecordException))]
-        public void SelectWhereInvalidStart()
-        {
-            ACAD persona = new CADPersonas(connectionString);
-            persona.SelectWhere("Nombre = 'Pepe'", -9);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereInvalidStatement()
-        {
-            ACAD persona = new CADPersonas(connectionString);
-            persona.SelectWhere(";");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereFailConn()
-        {
-            setFailConn();
-            ACAD persona = new CADPersonas(connectionString);
-            persona.SelectWhere("Nombre = 'Pepe'");
         }
 
         [TestMethod]
@@ -228,27 +142,6 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void InsertNullRow()
-        {
-            ACAD persona = new CADPersonas(connectionString);
-            persona.Insert(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void InsertFailConn()
-        {
-            setFailConn();
-            ACAD persona = new CADPersonas(connectionString);
-            DataRow ins = persona.GetVoidRow;
-            ins["DNI"] = "34567890C";
-            ins["Nombre"] = "Antonio";
-            ins["Apellidos"] = "García";
-            persona.Insert(ins);
-        }
-
-        [TestMethod]
         public void Update()
         {
             ACAD persona = new CADPersonas(connectionString);
@@ -261,66 +154,12 @@ namespace CADUnitTestProject.CADTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void UpdateNullRow()
-        {
-            ACAD persona = new CADPersonas(connectionString);
-            persona.Update(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void UpdateFailConn()
-        {
-            setFailConn();
-            ACAD persona = new CADPersonas(connectionString);
-            DataRow mod = tableFormat.NewRow();
-            mod["Id"] = 1;
-            mod["DNI"] = "123456789A";
-            mod["Nombre"] = "Manolo";
-            mod["Apellidos"] = "Solo";
-            persona.Update(mod);
-        }
-
-        [TestMethod]
         public void Delete()
         {
             ACAD persona = new CADPersonas(connectionString);
             DataRow del = tableFormat.NewRow();
             del["Id"] = 1;
             del["DNI"] = "12345678A";
-            del["Nombre"] = "Pepe";
-            del["Apellidos"] = "Olivares";
-            persona.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DeleteNullRow()
-        {
-            ACAD persona = new CADPersonas(connectionString);
-            persona.Delete(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void DeleteWrongRow()
-        {
-            ACAD persona = new CADPersonas(connectionString);
-            DataRow del = tableFormat.NewRow();
-            del["Nombre"] = "tacata";
-            persona.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void DeleteFailConn()
-        {
-            setFailConn();
-            ACAD persona = new CADPersonas(connectionString);
-            DataRow del = tableFormat.NewRow();
-            del["Id"] = 1;
-            del["DNI"] = "123456789A";
             del["Nombre"] = "Pepe";
             del["Apellidos"] = "Olivares";
             persona.Delete(del);

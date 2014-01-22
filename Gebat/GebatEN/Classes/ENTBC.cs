@@ -19,6 +19,7 @@ namespace GebatEN.Classes
         private DateTime ffin;
         private int numjornadas;
         private Dictionary<DayOfWeek, bool> horario;
+        private ENDelito delito;
 
         #endregion
 
@@ -219,6 +220,7 @@ namespace GebatEN.Classes
                 ret["Viernes"] = this.horario[DayOfWeek.Friday];
                 ret["Sabado"] = this.horario[DayOfWeek.Saturday];
                 ret["Domingo"] = this.horario[DayOfWeek.Sunday];
+                ret["Delito"] = this.delito.Id[0];
                 return ret;
             }
         }
@@ -243,6 +245,12 @@ namespace GebatEN.Classes
             this.horario[DayOfWeek.Friday] = (bool)row["Viernes"];
             this.horario[DayOfWeek.Saturday] = (bool)row["Sabado"];
             this.horario[DayOfWeek.Sunday] = (bool)row["Domingo"];
+            if (row["Delito"] != DBNull.Value)
+            {
+                List<int> ids = new List<int>();
+                ids.Add((int)row["Delito"]);
+                delito = (ENDelito)new ENDelito().Read(ids);
+            }
             this.saved = true;
         }
 
@@ -340,6 +348,21 @@ namespace GebatEN.Classes
             }
         }
 
+        /// <summary>
+        /// Obtiene y establece el delito de TBC.
+        /// </summary>
+        public ENDelito Delito
+        {
+            get
+            {
+                return delito;
+            }
+            set
+            {
+                delito = value;
+            }
+        }
+
         #endregion
 
         #region//Public Methods
@@ -354,7 +377,7 @@ namespace GebatEN.Classes
         /// <param name="Juzgado">Juzagod de TBC.</param>
         /// <param name="Finicio">Fecha de inicio de cumplimiento.</param>
         /// <param name="Ffin">Fecha final de cumplimiento.</param>
-        public ENTBC(string DNI, string Ejecutoria, string Nombre, string Apellidos, string Juzgado, DateTime Finicio, DateTime Ffin)
+        public ENTBC(string DNI, string Ejecutoria, string Nombre, string Apellidos, string Juzgado, DateTime Finicio, DateTime Ffin, ENDelito delito)
             : base(DNI, Nombre, Apellidos)
         {
             cad = new CADTBC(defaultConnString);
@@ -363,6 +386,7 @@ namespace GebatEN.Classes
             this.finicio = Finicio;
             this.ffin = Ffin;
             this.initDictionary();
+            this.delito = delito;
         }
 
         /// <summary>
