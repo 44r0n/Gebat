@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Data;
 using GebatCAD.Classes;
+using GebatEN.Enums;
 
 namespace GebatEN.Classes
 {
     public abstract class AENPersona : AEN
     {
+
         #region//Atributes
         private CADPersonas personas;
         private string dni;
         private string apellidos;
         private string nombre;
+        private sexo genero;
 
         #endregion
 
@@ -116,6 +119,14 @@ namespace GebatEN.Classes
                 ret["DNI"] = (string)this.dni;
                 ret["Nombre"] = this.nombre;
                 ret["Apellidos"] = this.apellidos;
+                if (this.genero == sexo.Masculino)
+                {
+                    ret["Sexo"] = "M";
+                }
+                else
+                {
+                    ret["Sexo"] = "F";
+                }
                 return ret;
             }
         }
@@ -134,6 +145,17 @@ namespace GebatEN.Classes
                 this.dni = (string)perrow["DNI"];
                 this.nombre = (string)perrow["Nombre"];
                 this.apellidos = (string)perrow["Apellidos"];
+                switch ((string)perrow["Sexo"])
+                {
+                    case "M":
+                        this.genero = sexo.Masculino;
+                        break;
+                    case "F":
+                        this.genero = sexo.Femenino;
+                        break;
+                    default:
+                        throw new Exception("Genero desconocido");
+                }
             }
             else
             {
@@ -212,6 +234,18 @@ namespace GebatEN.Classes
             }
         }
 
+        public sexo Genero
+        {
+            get
+            {
+                return this.genero;
+            }
+            set
+            {
+                this.genero = value;
+            }
+        }
+
         #endregion
 
         #region//Public Methods
@@ -222,7 +256,7 @@ namespace GebatEN.Classes
         /// <param name="DNI">DNI de la persona.</param>
         /// <param name="Nombre">Nombre de la persona.</param>
         /// <param name="Apellidos">Apellidos de la persona.</param>
-        public AENPersona(string DNI, string Nombre, string Apellidos)
+        public AENPersona(string DNI, string Nombre, string Apellidos, sexo Genero)
             :base()
         {
             personas = new CADPersonas(defaultConnString);
@@ -230,6 +264,7 @@ namespace GebatEN.Classes
             this.DNI = DNI;
             this.nombre = Nombre;
             this.apellidos = Apellidos;
+            this.genero = Genero;
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using GebatEN.Classes;
+using GebatEN.Enums;
 
 namespace GebatWin.Forms
 {
@@ -19,7 +20,15 @@ namespace GebatWin.Forms
 
         private void buttonInsert_Click(object sender, EventArgs e)
         {
-            ENTBC tbc = new ENTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value,(ENDelito)comboDelito.Selected);
+            ENTBC tbc;
+            if(radioButtonHombre.Checked)
+            {
+                tbc = new ENTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, sexo.Masculino,textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value,(ENDelito)comboDelito.Selected);
+            }
+            else
+            {
+                tbc = new ENTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, sexo.Femenino, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, (ENDelito)comboDelito.Selected);
+            }
             tbc.NumJornadas = (int)numericUpDownJornadas.Value;
             tbc.Horario[DayOfWeek.Monday] = checkBoxLunes.Checked;
             tbc.Horario[DayOfWeek.Tuesday] = checkBoxMartes.Checked;

@@ -1,5 +1,6 @@
 ﻿using System;
 using GebatEN.Classes;
+using GebatEN.Enums;
 using GebatCAD.Classes;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -24,6 +25,7 @@ namespace ENUnitTestProject.ENTests
             Assert.AreEqual("01086932K", tbc.DNI);
             Assert.AreEqual("Ana", tbc.Nombre);
             Assert.AreEqual("Entrepinares", tbc.Apellidos);
+            Assert.AreEqual(sexo.Femenino, tbc.Genero);
             Assert.AreEqual("1/98", tbc.Ejecutoria);
             Assert.AreEqual("Juzgado Valencia", tbc.Juzgado);
             Assert.AreEqual("20/07/2013", tbc.FInicio.ToShortDateString());
@@ -61,7 +63,7 @@ namespace ENUnitTestProject.ENTests
             }
             List<int> endelito = new List<int>();
             endelito.Add(1);
-            ENTBC ins = new ENTBC("52835460K", "02/2013", "Manolo", "Hansen", "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), (ENDelito)new ENDelito().Read(endelito));
+            ENTBC ins = new ENTBC("52835460K", "02/2013", "Manolo", "Hansen", sexo.Masculino , "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), (ENDelito)new ENDelito().Read(endelito));
             ins.Save();
             general = new ENTBC().ReadAll();
             dnis.Add(ins.DNI);

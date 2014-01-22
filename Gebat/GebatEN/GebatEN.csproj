@@ -43,6 +43,7 @@
     <Compile Include="Classes\ENFoodIN.cs" />
     <Compile Include="Classes\ENFoodOut.cs" />
     <Compile Include="Classes\ENTBC.cs" />
+    <Compile Include="Enums\Genero.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\AEN.cs" />
     <Compile Include="Classes\ENFood.cs" />

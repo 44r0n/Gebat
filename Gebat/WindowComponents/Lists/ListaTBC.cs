@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using GebatEN.Classes;
+using GebatEN.Enums;
 
 namespace GebatWindowComponents.Lists
 {
@@ -22,6 +23,14 @@ namespace GebatWindowComponents.Lists
                 item.SubItems.Add(tbc.DNI);
                 item.SubItems.Add(tbc.Nombre);
                 item.SubItems.Add(tbc.Apellidos);
+                if (tbc.Genero == sexo.Masculino)
+                {
+                    item.SubItems.Add("Hombre");
+                }
+                else
+                {
+                    item.SubItems.Add("Mujer");
+                }
                 item.SubItems.Add(tbc.Juzgado);
                 item.SubItems.Add(tbc.Ejecutoria);
                 item.SubItems.Add(tbc.FInicio.ToShortDateString());
@@ -46,6 +55,7 @@ namespace GebatWindowComponents.Lists
             lista.Add("DNI");
             lista.Add("Nombre");
             lista.Add("Apellidos");
+            lista.Add("Sexo");
             lista.Add("Juzgado");
             lista.Add("Ejecutoria");
             lista.Add("Fecha inicio");

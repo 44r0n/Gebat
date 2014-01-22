@@ -24,6 +24,10 @@ namespace GebatWindowComponents.Combos
         {
             get
             {
+                if (this.SelectedIndex == -1)
+                {
+                    return null;
+                }
                 return colection[this.SelectedIndex];
             }
         }
