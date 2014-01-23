@@ -58,6 +58,7 @@
     <Compile Include="ENTests\ENFoodTest.cs" />
     <Compile Include="ENTests\ENTBCTest.cs" />
     <Compile Include="ENTests\ENDelitoTest.cs" />
+    <Compile Include="ENTests\ENTelefonoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

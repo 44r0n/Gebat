@@ -41,6 +41,7 @@
     <Compile Include="Classes\CADOutgoingFood.cs" />
     <Compile Include="Classes\CADPersonas.cs" />
     <Compile Include="Classes\CADTBC.cs" />
+    <Compile Include="Classes\CADTelefonos.cs" />
     <Compile Include="Classes\VIEWTBCPeople.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\InvalidNumberIdException.cs" />

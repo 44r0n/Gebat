@@ -63,6 +63,7 @@
     <Compile Include="CADTests\CADPersonasTest.cs" />
     <Compile Include="CADTests\CADTBCTest.cs" />
     <Compile Include="CADTests\CADDelitoTest.cs" />
+    <Compile Include="CADTests\CADTelefonosTest.cs" />
     <Compile Include="CADTests\VIEWTBCPeopleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -102,6 +103,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\TBCTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\TelefonosTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\TypeTest.sql">

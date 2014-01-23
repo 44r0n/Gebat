@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
 using GebatCAD.Classes;
-using GebatCAD.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CADUnitTestProject.CADTests
@@ -85,7 +83,6 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void TestLast()
         {
-            ACAD persona = new CADPersonas(connectionString);
             DataRow actual = persona.Last();
             DataRow expected = tableFormat.NewRow();
             expected["DNI"] = "23456789B";
@@ -99,7 +96,6 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectAll()
         {
-            ACAD persona = new CADPersonas(connectionString);
             DataTable actual = persona.SelectAll();
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
@@ -125,10 +121,9 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectWhere()
         {
-            ACAD personas = new CADPersonas(connectionString);
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
-            DataTable actual = personas.SelectWhere("Nombre = 'Pepe'");
+            DataTable actual = persona.SelectWhere("Nombre = 'Pepe'");
             for (int i = 0; i < expected.Rows.Count; i++)
             {
                 AssertRows(expected.Rows[i], actual.Rows[i]);
@@ -138,7 +133,6 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Insert()
         {
-            ACAD persona = new CADPersonas(connectionString);
             DataRow ins = persona.GetVoidRow;
             ins["DNI"] = "34567890C";
             ins["Nombre"] = "Antonio";
@@ -158,7 +152,6 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Update()
         {
-            ACAD persona = new CADPersonas(connectionString);
             DataRow mod = tableFormat.NewRow();
             mod["Id"] = 2;
             mod["DNI"] = "23456789B";
@@ -172,7 +165,6 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Delete()
         {
-            ACAD persona = new CADPersonas(connectionString);
             DataRow del = tableFormat.NewRow();
             del["Id"] = 1;
             del["DNI"] = "12345678A";

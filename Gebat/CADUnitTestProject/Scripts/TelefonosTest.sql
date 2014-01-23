@@ -8,19 +8,21 @@ DROP TABLE IF EXISTS EntryFood;
 DROP TABLE IF EXISTS Food;
 DROP TABLE IF EXISTS Type;
 
-CREATE TABLE IF NOT EXISTS Delitos
-(
-	Id int Primary Key AUTO_INCREMENT,
-	Name VARCHAR(45) NOT NULL
-);
 
 CREATE TABLE IF NOT EXISTS Personas 
 (
-  DNI CHAR(9) Primary Key,
+  Id int Primary Key AUTO_INCREMENT,
+  DNI CHAR(9) Unique,
   Nombre VARCHAR(15) NULL,
   Apellidos VARCHAR(45) NULL,
   FechaNac DATE NULL,
   Sexo CHAR(1) NULL
+);
+
+CREATE TABLE IF NOT EXISTS Delitos
+(
+	Id int Primary Key AUTO_INCREMENT,
+	Name VARCHAR(45) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS TBC 
@@ -39,11 +41,19 @@ CREATE TABLE IF NOT EXISTS TBC
   Viernes BOOLEAN DEFAULT FALSE,
   Sabado BOOLEAN DEFAULT FALSE,
   Domingo BOOLEAN DEFAULT FALSE,
-  Delito INT,
+  Delito int NOT NULL,
   Unique (DNI, Ejecutoria),
   CONSTRAINT fk_TBC_Delitos FOREIGN KEY (Delito) REFERENCES Delitos (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
+  
+);
 
+CREATE TABLE IF NOT EXISTS Telefonos
+(
+	Id int PRIMARY KEY AUTO_INCREMENT,
+	Numero CHAR(9) NOT NULL,
+	DNI CHAR(9) NOT NULL,
+	CONSTRAINT fk_Telefonos_Personas FOREIGN KEY (DNI) REFERENCES Personas(DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 INSERT INTO Delitos (Name) VALUES
@@ -85,6 +95,18 @@ INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Mar
 	FALSE,
 	FALSE,
 	1
+);
+
+INSERT INTO Telefonos(Numero, DNI) VALUES
+(
+	'123456789',
+	'12345678A'
+);
+
+INSERT INTO Telefonos (Numero, DNI) VALUES
+(
+	'234567890',
+	'12345678A'
 );
 
 CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);
