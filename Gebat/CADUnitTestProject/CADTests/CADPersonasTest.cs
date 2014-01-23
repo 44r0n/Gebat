@@ -26,6 +26,27 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
+        private ACAD persona;
+
+        private void AssertRows(DataRow expected, DataRow actual)
+        {
+            Assert.AreEqual(expected["DNI"], actual["DNI"]);
+            Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
+            Assert.AreEqual(expected["Apellidos"], actual["Apellidos"]);
+            Assert.AreEqual(expected["FechaNac"], actual["FechaNac"]);
+            Assert.AreEqual(expected["Sexo"], actual["Sexo"]);
+        }
+
+        private DataRow testRow(DataRow voidRow)
+        {
+            voidRow["DNI"] = "12345678A";
+            voidRow["Nombre"] = "Pepe";
+            voidRow["Apellidos"] = "Olivares";
+            voidRow["FechaNac"] = "1976/04/02";
+            voidRow["Sexo"] = "M";
+            return voidRow;
+        }
+
         protected override string specificScript
         {
             get 
@@ -40,34 +61,24 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
+            persona = new CADPersonas(connectionString);
         }
 
         [TestMethod]
         public void TestSelectOne()
         {
-            DataRow expected = tableFormat.NewRow();
-            expected["DNI"] = "12345678A";
-            expected["Nombre"] = "Pepe";
-            expected["Apellidos"] = "Olivares";
-            expected["FechaNac"] = "1976/04/02";
-            expected["Sexo"] = "M";
-            ACAD persona = new CADPersonas(connectionString);
+            DataRow expected = testRow(tableFormat.NewRow());
             List<object> ids = new List<object>();
             ids.Add(1);
             DataRow actual = persona.Select(ids);
-            Assert.AreEqual(expected["DNI"], actual["DNI"]);
-            Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
-            Assert.AreEqual(expected["Apellidos"], actual["Apellidos"]);
-            Assert.AreEqual(expected["FechaNac"], actual["FechaNac"]);
-            Assert.AreEqual(expected["Sexo"], actual["Sexo"]);
+            AssertRows(expected, actual);
         }
 
         [TestMethod]
         public void TestCount()
         {
             int expected = 2;
-            ACAD personas = new CADPersonas(connectionString);
-            int actual = personas.Count();
+            int actual = persona.Count();
             Assert.AreEqual(expected, actual);
         }
 
@@ -82,11 +93,7 @@ namespace CADUnitTestProject.CADTests
             expected["Apellidos"] = "Entrepinares";
             expected["FechaNac"] = "1988/07/11";
             expected["Sexo"] = "F";
-            Assert.AreEqual(expected["DNI"], actual["DNI"]);
-            Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
-            Assert.AreEqual(expected["Apellidos"], actual["Apellidos"]);
-            Assert.AreEqual(expected["FechaNac"], actual["FechaNac"]);
-            Assert.AreEqual(expected["Sexo"], actual["Sexo"]);
+            AssertRows(expected, actual);
         }
 
         [TestMethod]
@@ -111,11 +118,7 @@ namespace CADUnitTestProject.CADTests
             expected.Rows.Add(row2);
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["DNI"], actual.Rows[i]["DNI"]);
-                Assert.AreEqual(expected.Rows[i]["Nombre"], actual.Rows[i]["Nombre"]);
-                Assert.AreEqual(expected.Rows[i]["Apellidos"], actual.Rows[i]["Apellidos"]);
-                Assert.AreEqual(expected.Rows[i]["FechaNac"], actual.Rows[i]["FechaNac"]);
-                Assert.AreEqual(expected.Rows[i]["Sexo"], actual.Rows[i]["Sexo"]);
+                AssertRows(expected.Rows[i], actual.Rows[i]);
             }
         }
 
@@ -124,21 +127,11 @@ namespace CADUnitTestProject.CADTests
         {
             ACAD personas = new CADPersonas(connectionString);
             DataTable expected = tableFormat;
-            DataRow row = expected.NewRow();
-            row["DNI"] = "12345678A";
-            row["Nombre"] = "Pepe";
-            row["Apellidos"] = "Olivares";
-            row["FechaNac"] = "1976/04/02";
-            row["Sexo"] = "M";
-            expected.Rows.Add(row);
+            DataRow row = testRow(expected.NewRow());
             DataTable actual = personas.SelectWhere("Nombre = 'Pepe'");
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["DNI"], actual.Rows[i]["DNI"]);
-                Assert.AreEqual(expected.Rows[i]["Nombre"], actual.Rows[i]["Nombre"]);
-                Assert.AreEqual(expected.Rows[i]["Apellidos"], actual.Rows[i]["Apellidos"]);
-                Assert.AreEqual(expected.Rows[i]["FechaNac"], actual.Rows[i]["FechaNac"]);
-                Assert.AreEqual(expected.Rows[i]["Sexo"], actual.Rows[i]["Sexo"]);
+                AssertRows(expected.Rows[i], actual.Rows[i]);
             }
         }
 
@@ -159,12 +152,7 @@ namespace CADUnitTestProject.CADTests
             expected["FechaNAc"] = "1982/03/12";
             expected["Sexo"] = "M";
             DataRow actual = persona.Insert(ins);
-
-            Assert.AreEqual(expected["DNI"], actual["DNI"]);
-            Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
-            Assert.AreEqual(expected["Apellidos"], actual["Apellidos"]);
-            Assert.AreEqual(expected["FechaNac"], actual["FechaNac"]);
-            Assert.AreEqual(expected["Sexo"], actual["Sexo"]);
+            AssertRows(expected, actual);
         }
 
         [TestMethod]

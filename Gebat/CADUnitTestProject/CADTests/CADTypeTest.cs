@@ -31,31 +31,38 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
+        private void AssertRows(DataRow expected, DataRow actual)
+        {
+            Assert.AreEqual(expected["Id"], actual["Id"]);
+            Assert.AreEqual(expected["Name"], actual["Name"]);
+        }
+
+        private ACAD type;
+
         [TestInitialize()]
         public void InnitTest()
         {
             ResetConn();
             SetPasswd();    
             InitBD(specificScript);
+            type = new CADType(connectionString);
         }
 
         [TestMethod]
         public void TestSelectOne()
         {
             string expected = "Kg";
-            ACAD food = new CADType(connectionString);
             List<object> ids = new List<object>();
             ids.Add((int)1);
-            DataRow actual = food.Select(ids);
-            Assert.AreEqual(actual["Name"].ToString(), expected);
+            DataRow actual = type.Select(ids);
+            Assert.AreEqual(expected, actual["Name"].ToString());
         }
 
         [TestMethod]
         public void TestCount()
         {
             int expected = 3;
-            ACAD food = new CADType(connectionString);
-            int actual = food.Count();
+            int actual = type.Count();
             Assert.AreEqual(expected, actual);
         }
 
@@ -64,9 +71,7 @@ namespace CADUnitTestProject.CADTests
         public void TestCountConnFail()
         {
             setFailConn();
-            ACAD food = new CADType(connectionString);
-
-            food.Count();
+            type.Count();
         }
 
         [TestMethod]
@@ -74,29 +79,24 @@ namespace CADUnitTestProject.CADTests
         public void TestLastConnFail()
         {
             setFailConn();
-            ACAD food = new CADType(connectionString);
-
-            food.Last();
+            type.Last();
         }
 
         [TestMethod]
         public void TestLast()
         {
 
-            ACAD food = new CADType(connectionString);
-            DataRow actual = food.Last();
+            DataRow actual = type.Last();
             DataRow expected = tableFormat.NewRow();
             expected["Id"] = 4;
             expected["Name"] = "Paquetes";
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["Name"], actual["Name"]);
+            AssertRows(expected, actual);
         }
 
         [TestMethod]
         public void SelectAll()
         {
-            ACAD food = new CADType(connectionString);
-            DataTable actual = food.SelectAll();
+            DataTable actual = type.SelectAll();
             DataTable expected = this.tableFormat;
             DataRow row = expected.NewRow();
             row["Id"] = 1;
@@ -112,8 +112,7 @@ namespace CADUnitTestProject.CADTests
             expected.Rows.Add(row3);
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
-                Assert.AreEqual(expected.Rows[i]["Name"], actual.Rows[i]["Name"]);
+                AssertRows(expected.Rows[i], actual.Rows[i]);
             }
         }
 
@@ -122,33 +121,27 @@ namespace CADUnitTestProject.CADTests
         public void SelectAllFailConn()
         {
             setFailConn();
-            ACAD food = new CADType(connectionString);
-
-            food.SelectAll();
+            type.SelectAll();
         }
 
         [TestMethod]
         public void Select()
         {
-            ACAD food = new CADType(connectionString);
             List<object> ids = new List<object>();
             ids.Add(1);
-            DataRow actual = food.Select(ids);
+            DataRow actual = type.Select(ids);
             DataTable table = tableFormat;
             DataRow expected = table.NewRow();
             expected["Id"] = 1;
             expected["Name"] = "Kg";
-
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["Name"], actual["Name"]);
+            AssertRows(expected, actual);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void SelectVoidList()
         {
-            ACAD food = new CADType(connectionString);
-            food.Select(null);
+            type.Select(null);
         }
 
         [TestMethod]
@@ -158,8 +151,7 @@ namespace CADUnitTestProject.CADTests
             List<object> ids = new List<object>();
             ids.Add("hola");
             ids.Add(3);
-            ACAD food = new CADType(connectionString);
-            food.Select(ids);
+            type.Select(ids);
         }
 
         [TestMethod]
@@ -167,29 +159,25 @@ namespace CADUnitTestProject.CADTests
         public void SelectConnFail()
         {
             setFailConn();
-
-            ACAD food = new CADType(connectionString);
             List<object> ids = new List<object>();
             ids.Add(2);
-            food.Select(ids);
+            type.Select(ids);
 
         }
 
         [TestMethod]
         public void SelectWhere()
         {
-            ACAD food = new CADType(connectionString);
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
             row["Id"] = 1;
             row["Name"] = "Kg";
             expected.Rows.Add(row);
-            DataTable actual = food.SelectWhere("Name = 'Kg'");
+            DataTable actual = type.SelectWhere("Name = 'Kg'");
 
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
-                Assert.AreEqual(expected.Rows[i]["Name"], actual.Rows[i]["Name"]);
+                AssertRows(expected.Rows[i], actual.Rows[i]);
             }
         }
 
@@ -197,16 +185,14 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(InvalidStartRecordException))]
         public void SelectWhereInvalidStart()
         {
-            ACAD food = new CADType(connectionString);
-            food.SelectWhere("Name = 'Kg'", -3);
+            type.SelectWhere("Name = 'Kg'", -3);
         }
 
         [TestMethod]
         [ExpectedException(typeof(MySqlException))]
         public void SelectWhereInvalidStatement()
         {
-            ACAD food = new CADType(connectionString);
-            food.SelectWhere("Name = ; ");
+            type.SelectWhere("Name = ; ");
         }
 
         [TestMethod]
@@ -214,32 +200,27 @@ namespace CADUnitTestProject.CADTests
         public void SelectWhereFailConn()
         {
             setFailConn();
-
-            ACAD food = new CADType(connectionString);
-            food.SelectWhere("Name = 'Kg'");
+            type.SelectWhere("Name = 'Kg'");
         }
 
         [TestMethod]
         public void Insert()
         {
-            ACAD food = new CADType(connectionString);
-            DataRow ins = food.GetVoidRow;
+            DataRow ins = type.GetVoidRow;
             ins["Name"] = "Cajas";
-            DataRow expected = food.GetVoidRow;
+            DataRow expected = type.GetVoidRow;
             expected["Id"] = 5;
             expected["Name"] = "Cajas";
-            DataRow actual = food.Insert(ins);
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["Name"], actual["Name"]);
+            DataRow actual = type.Insert(ins);
+            AssertRows(expected, actual);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void InsertNullRow()
         {
-            ACAD food = new CADType(connectionString);
             DataRow ins = null;
-            food.Insert(ins);
+            type.Insert(ins);
         }
 
         [TestMethod]
@@ -247,29 +228,26 @@ namespace CADUnitTestProject.CADTests
         public void InsertFailCOnn()
         {
             setFailConn();
-            ACAD food = new CADType(connectionString);
-            DataRow ins = food.GetVoidRow;
+            DataRow ins = type.GetVoidRow;
             ins["Name"] = "Cajas";
-            food.Insert(ins);
+            type.Insert(ins);
         }
 
         [TestMethod]
         public void Update()
         {
-            ACAD food = new CADType(connectionString);
-            DataRow mod = food.GetVoidRow;
+            DataRow mod = type.GetVoidRow;
             mod["Id"] = 1;
             mod["Name"] = "Cajas";
-            food.Update(mod);
+            type.Update(mod);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void UpdateNullRow()
         {
-            ACAD food = new CADType(connectionString);
             DataRow mod = null;
-            food.Update(mod);
+            type.Update(mod);
         }
 
         [TestMethod]
@@ -277,39 +255,35 @@ namespace CADUnitTestProject.CADTests
         public void UpdateFailConn()
         {
             setFailConn();
-            ACAD food = new CADType(connectionString);
-            DataRow ins = food.GetVoidRow;
+            DataRow ins = type.GetVoidRow;
             ins["Id"] = 1;
             ins["Name"] = "Cajas";
-            food.Update(ins);
+            type.Update(ins);
         }
 
         [TestMethod]
         public void Delete()
         {
-            ACAD food = new CADType(connectionString);
-            DataRow del = food.GetVoidRow;
+            DataRow del = type.GetVoidRow;
             del["Id"] = 1;
             del["Name"] = "Kg";
-            food.Delete(del);
+            type.Delete(del);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void DeleteNullRow()
         {
-            ACAD food = new CADType(connectionString);
-            food.Delete(null);
+            type.Delete(null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(IndexOutOfRangeException))]
         public void DeleteWrongRow()
         {
-            ACAD food = new CADType(connectionString);
-            DataRow del = food.GetVoidRow;
+            DataRow del = type.GetVoidRow;
             del["Name"] = new MySqlConnection();
-            food.Delete(del);
+            type.Delete(del);
         }
 
         [TestMethod]
@@ -317,11 +291,10 @@ namespace CADUnitTestProject.CADTests
         public void DeleteFailConn()
         {
             setFailConn();
-            ACAD food = new CADType(connectionString);
-            DataRow del = food.GetVoidRow;
+            DataRow del = type.GetVoidRow;
             del["Id"] = 1;
             del["Name"] = "cajas";
-            food.Delete(del);
+            type.Delete(del);
         }
     }
 }

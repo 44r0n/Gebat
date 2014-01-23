@@ -31,22 +31,30 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
+        private ACAD delito;
+
+        private void AssertRow(DataRow expected, DataRow actual)
+        {
+            Assert.AreEqual(expected["Id"], actual["Id"]);
+            Assert.AreEqual(expected["Name"], actual["Name"]);
+        }
+
         [TestInitialize()]
         public void InnitTest()
         {
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
+            delito = new CADDelito(connectionString);
         }
 
         [TestMethod]
         public void TestSelectOne()
         {
             string expected = "Robo";
-            ACAD food = new CADDelito(connectionString);
             List<object> ids = new List<object>();
             ids.Add((int)1);
-            DataRow actual = food.Select(ids);
+            DataRow actual = delito.Select(ids);
             Assert.AreEqual(actual["Name"].ToString(), expected);
         }
 
@@ -62,31 +70,26 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Select()
         {
-            ACAD food = new CADDelito(connectionString);
             List<object> ids = new List<object>();
             ids.Add(1);
-            DataRow actual = food.Select(ids);
+            DataRow actual = delito.Select(ids);
             DataTable table = tableFormat;
             DataRow expected = table.NewRow();
             expected["Id"] = 1;
             expected["Name"] = "Robo";
-
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["Name"], actual["Name"]);
+            AssertRow(expected, actual);
         }
 
         [TestMethod]
         public void Insert()
         {
-            ACAD food = new CADDelito(connectionString);
-            DataRow ins = food.GetVoidRow;
+            DataRow ins = delito.GetVoidRow;
             ins["Name"] = "Cosas";
-            DataRow expected = food.GetVoidRow;
+            DataRow expected = delito.GetVoidRow;
             expected["Id"] = 2;
             expected["Name"] = "Cosas";
-            DataRow actual = food.Insert(ins);
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["Name"], actual["Name"]);
+            DataRow actual = delito.Insert(ins);
+            AssertRow(expected, actual);
         }
 
         [TestMethod]

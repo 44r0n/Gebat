@@ -32,12 +32,22 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
+        private ACAD outgoing;
+
+        private void AssertRow(DataRow expected, DataRow actual)
+        {
+            Assert.AreEqual(expected["FoodType"], actual["FoodType"]);
+            Assert.AreEqual(expected["QuantityOut"], actual["QuantityOut"]);
+            Assert.AreEqual(expected["Fecha"], actual["Fecha"]);
+        }
+
         [TestInitialize()]
         public void InitTest()
         {
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
+            outgoing = new CADOutgoingFood(connectionString);
         }
 
         [TestMethod]
@@ -47,20 +57,16 @@ namespace CADUnitTestProject.CADTests
             expected["FoodType"] = 1;
             expected["QuantityOut"] = 1;
             expected["Fecha"] = "2012/11/24";
-            ACAD outgoing = new CADOutgoingFood(connectionString);
             List<object> ids = new List<object>();
             ids.Add((int)1);
             DataRow actual = outgoing.Select(ids);
-            Assert.AreEqual(expected["FoodType"], actual["FoodType"]);
-            Assert.AreEqual(expected["QuantityOut"], actual["QuantityOut"]);
-            Assert.AreEqual(expected["Fecha"], actual["Fecha"]);
+            AssertRow(expected, actual);
         }
 
         [TestMethod]
         public void TestCount()
         {
             int expected = 3;
-            ACAD outgoing = new CADOutgoingFood(connectionString);
             int actual = outgoing.Count();
             Assert.AreEqual(expected, actual);
         }
@@ -68,17 +74,13 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void TestLast()
         {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
             DataRow actual = outgoing.Last();
             DataRow expected = tableFormat.NewRow();
             expected["Id"] = 3;
             expected["FoodType"] = 4;
             expected["QuantityOut"] = 2;
             expected["Fecha"] = "2012/11/25";
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["FoodType"], actual["FoodType"]);
-            Assert.AreEqual(expected["QuantityOut"], actual["QuantityOut"]);
-            Assert.AreEqual(expected["Fecha"], actual["Fecha"]);
+            AssertRow(expected, actual);
         }
 
         [TestMethod]
@@ -107,10 +109,7 @@ namespace CADUnitTestProject.CADTests
             expected.Rows.Add(row3);
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
-                Assert.AreEqual(expected.Rows[i]["FoodType"], actual.Rows[i]["FoodType"]);
-                Assert.AreEqual(expected.Rows[i]["QuantityOut"], actual.Rows[i]["QuantityOut"]);
-                Assert.AreEqual(expected.Rows[i]["Fecha"], actual.Rows[i]["Fecha"]);
+                AssertRow(expected.Rows[i], actual.Rows[i]);
             }
         }
 
@@ -129,10 +128,7 @@ namespace CADUnitTestProject.CADTests
 
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
-                Assert.AreEqual(expected.Rows[i]["FoodType"], actual.Rows[i]["FoodType"]);
-                Assert.AreEqual(expected.Rows[i]["QuantityOut"], actual.Rows[i]["QuantityOut"]);
-                Assert.AreEqual(expected.Rows[i]["Fecha"], actual.Rows[i]["Fecha"]);
+                AssertRow(expected.Rows[i], actual.Rows[i]);
             }
         }
 
@@ -150,11 +146,7 @@ namespace CADUnitTestProject.CADTests
             expected["QuantityOut"] = 2;
             expected["Fecha"] = "2012/11/25";
             DataRow actual = outgoing.Insert(ins);
-
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["FoodType"], actual["FoodType"]);
-            Assert.AreEqual(expected["QuantityOut"], actual["QuantityOut"]);
-            Assert.AreEqual(expected["Fecha"], actual["Fecha"]);
+            AssertRow(expected, actual);
         }
 
         [TestMethod]

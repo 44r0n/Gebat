@@ -32,23 +32,32 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
+        private ACAD food;
+
+        private void AssertRow(DataRow expected, DataRow actual)
+        {
+            Assert.AreEqual(expected["Id"], actual["Id"]);
+            Assert.AreEqual(expected["Name"], actual["Name"]);
+            Assert.AreEqual(expected["QuantityType"], actual["QuantityType"]);
+        }
+
         [TestInitialize()]
         public void InnitTest()
         {
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
+            food = new CADFood(connectionString);
         }
 
         [TestMethod]
         public void TestSelectOne()
         {
             string expected = "Patates";
-            ACAD food = new CADFood(connectionString);
             List<object> ids = new List<object>();
             ids.Add((int)1);
             DataRow actual = food.Select(ids);
-            Assert.AreEqual(actual["Name"].ToString(), expected);
+            Assert.AreEqual(expected, (string)actual["Name"]);
         }
 
         [TestMethod]
@@ -69,9 +78,8 @@ namespace CADUnitTestProject.CADTests
             expected["Id"] = 4;
             expected["Name"] = "Pomes";
             expected["QuantityType"] = 1;
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["Name"], actual["Name"]);
-            Assert.AreEqual(expected["QuantityType"], actual["QuantityType"]);
+            expected["Quantity"] = 2;
+            AssertRow(expected, actual);
         }
 
         [TestMethod]
@@ -100,10 +108,7 @@ namespace CADUnitTestProject.CADTests
             expected.Rows.Add(row3);
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
-                Assert.AreEqual(expected.Rows[i]["Name"], actual.Rows[i]["Name"]);
-                Assert.AreEqual(expected.Rows[i]["QuantityType"], actual.Rows[i]["QuantityType"]);
-                Assert.AreEqual(expected.Rows[i]["Quantity"], actual.Rows[i]["Quantity"]);
+                AssertRow(expected.Rows[i], actual.Rows[i]);
             }
         }
 
@@ -120,11 +125,7 @@ namespace CADUnitTestProject.CADTests
             expected["Name"] = "Patates";
             expected["QuantityType"] = 1;
             expected["Quantity"] = 4;
-
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["Name"], actual["Name"]);
-            Assert.AreEqual(expected["QuantityType"], actual["QuantityType"]);
-            Assert.AreEqual(expected["Quantity"], actual["Quantity"]);
+            AssertRow(expected, actual);
         }
 
         [TestMethod]
@@ -142,10 +143,7 @@ namespace CADUnitTestProject.CADTests
 
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["Id"], actual.Rows[i]["Id"]);
-                Assert.AreEqual(expected.Rows[i]["Name"], actual.Rows[i]["Name"]);
-                Assert.AreEqual(expected.Rows[i]["QuantityType"], actual.Rows[i]["QuantityType"]);
-                Assert.AreEqual(expected.Rows[i]["Quantity"], actual.Rows[i]["Quantity"]);
+                AssertRow(expected.Rows[i], actual.Rows[i]);
             }
         }
 

@@ -35,90 +35,8 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        protected override string specificScript
+        private void AssertRow(DataRow expected, DataRow actual)
         {
-            get 
-            {
-                return "Scripts/TBCTest.sql";
-            }
-        }
-
-        [TestInitialize()]
-        public void InitTest()
-        {
-            ResetConn();
-            SetPasswd();
-            InitBD(specificScript);
-        }
-
-        [TestMethod]
-        public void TestSelectOne()
-        {
-            DataRow expected = tableFormat.NewRow();
-            expected["DNI"] = "12345678A";
-            expected["Ejecutoria"] = "23/2013";
-            expected["Juzgado"] = "Alicante";
-            expected["FInicio"] = "2012/11/24";
-            expected["FFin"] = "2013/03/09";
-            expected["NumJornadas"] = 180;
-            expected["Lunes"] = true;
-            expected["Martes"] = true;
-            expected["Miercoles"] = true;
-            expected["Jueves"] = true;
-            expected["Viernes"] = true;
-            expected["Sabado"] = false;
-            expected["Domingo"] = false;
-            expected["Delito"] = 1;
-
-            ACAD tbc = new CADTBC(connectionString);
-            List<object> ids = new List<object>();
-            ids.Add(1);
-            DataRow actual = tbc.Select(ids);
-            Assert.AreEqual(expected["DNI"], actual["DNI"]);
-            Assert.AreEqual(expected["Ejecutoria"], actual["Ejecutoria"]);
-            Assert.AreEqual(expected["Juzgado"], actual["Juzgado"]);
-            Assert.AreEqual(expected["FInicio"], actual["FInicio"]);
-            Assert.AreEqual(expected["FFin"], actual["FFin"]);
-            Assert.AreEqual(expected["NumJornadas"],actual["NumJornadas"]);
-            Assert.AreEqual(expected["Lunes"], actual["Lunes"]);
-            Assert.AreEqual(expected["Martes"], actual["Martes"]);
-            Assert.AreEqual(expected["Miercoles"], actual["Miercoles"]);
-            Assert.AreEqual(expected["Jueves"], actual["Jueves"]);
-            Assert.AreEqual(expected["Viernes"], actual["Viernes"]);
-            Assert.AreEqual(expected["Sabado"], actual["Sabado"]);
-            Assert.AreEqual(expected["Domingo"], actual["Domingo"]);
-            Assert.AreEqual(expected["Delito"], actual["Delito"]);
-        }
-
-        [TestMethod]
-        public void TestCount()
-        {
-            int expected = 1;
-            ACAD tbc = new CADTBC(connectionString);
-            int actual = tbc.Count();
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void TestLast()
-        {
-            ACAD tbc = new CADTBC(connectionString);
-            DataRow actual = tbc.Last();
-            DataRow expected = tableFormat.NewRow();
-            expected["DNI"] = "12345678A";
-            expected["Ejecutoria"] = "23/2013";
-            expected["Juzgado"] = "Alicante";
-            expected["FInicio"] = "2012/11/24";
-            expected["FFin"] = "2013/03/09";
-            expected["NumJornadas"] = 180;
-            expected["Lunes"] = true;
-            expected["Martes"] = true;
-            expected["Miercoles"] = true;
-            expected["Jueves"] = true;
-            expected["Viernes"] = true;
-            expected["Sabado"] = false;
-            expected["Domingo"] = false;
-            expected["Delito"] = 1;
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
             Assert.AreEqual(expected["Ejecutoria"], actual["Ejecutoria"]);
             Assert.AreEqual(expected["Juzgado"], actual["Juzgado"]);
@@ -135,44 +53,80 @@ namespace CADUnitTestProject.CADTests
             Assert.AreEqual(expected["Delito"], actual["Delito"]);
         }
 
+        private DataRow testRow(DataRow voidRow)
+        {
+            voidRow["DNI"] = "12345678A";
+            voidRow["Ejecutoria"] = "23/2013";
+            voidRow["Juzgado"] = "Alicante";
+            voidRow["FInicio"] = "2012/11/24";
+            voidRow["FFin"] = "2013/03/09";
+            voidRow["NumJornadas"] = 180;
+            voidRow["Lunes"] = true;
+            voidRow["Martes"] = true;
+            voidRow["Miercoles"] = true;
+            voidRow["Jueves"] = true;
+            voidRow["Viernes"] = true;
+            voidRow["Sabado"] = false;
+            voidRow["Domingo"] = false;
+            voidRow["Delito"] = 1;
+            return voidRow;
+        }
+
+        private ACAD tbc;
+
+        protected override string specificScript
+        {
+            get 
+            {
+                return "Scripts/TBCTest.sql";
+            }
+        }
+
+        [TestInitialize()]
+        public void InitTest()
+        {
+            ResetConn();
+            SetPasswd();
+            InitBD(specificScript);
+            tbc = new CADTBC(connectionString);
+        }
+
+        [TestMethod]
+        public void TestSelectOne()
+        {
+            DataRow expected = testRow(tableFormat.NewRow());
+            List<object> ids = new List<object>();
+            ids.Add(1);
+            DataRow actual = tbc.Select(ids);
+            AssertRow(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestCount()
+        {
+            int expected = 1;
+            int actual = tbc.Count();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestLast()
+        {
+            DataRow actual = tbc.Last();
+            DataRow expected = testRow(tableFormat.NewRow());
+            AssertRow(expected, actual);
+        }
+
         [TestMethod]
         public void SelectAll()
         {
             ACAD tbc = new CADTBC(connectionString);
             DataTable actual = tbc.SelectAll();
             DataTable expected = tableFormat;
-            DataRow row = expected.NewRow();
-            row["DNI"] = "12345678A";
-            row["Ejecutoria"] = "23/2013";
-            row["Juzgado"] = "Alicante";
-            row["FInicio"] = "2012/11/24";
-            row["FFin"] = "2013/03/09";
-            row["NumJornadas"] = 180;
-            row["Lunes"] = true;
-            row["Martes"] = true;
-            row["Miercoles"] = true;
-            row["Jueves"] = true;
-            row["Viernes"] = true;
-            row["Sabado"] = false;
-            row["Domingo"] = false;
-            row["Delito"] = 1;
-            expected.Rows.Add(row);
+            DataRow row = testRow(expected.NewRow());
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["DNI"], actual.Rows[i]["DNI"]);
-                Assert.AreEqual(expected.Rows[i]["Ejecutoria"], actual.Rows[i]["Ejecutoria"]);
-                Assert.AreEqual(expected.Rows[i]["Juzgado"], actual.Rows[i]["Juzgado"]);
-                Assert.AreEqual(expected.Rows[i]["FInicio"], actual.Rows[i]["FInicio"]);
-                Assert.AreEqual(expected.Rows[i]["FFin"], actual.Rows[i]["FFin"]);
-                Assert.AreEqual(expected.Rows[i]["NumJornadas"], actual.Rows[i]["NumJornadas"]);
-                Assert.AreEqual(expected.Rows[i]["Lunes"], actual.Rows[i]["Lunes"]);
-                Assert.AreEqual(expected.Rows[i]["Martes"], actual.Rows[i]["Martes"]);
-                Assert.AreEqual(expected.Rows[i]["Miercoles"], actual.Rows[i]["Miercoles"]);
-                Assert.AreEqual(expected.Rows[i]["Jueves"], actual.Rows[i]["Jueves"]);
-                Assert.AreEqual(expected.Rows[i]["Viernes"], actual.Rows[i]["Viernes"]);
-                Assert.AreEqual(expected.Rows[i]["Sabado"], actual.Rows[i]["Sabado"]);
-                Assert.AreEqual(expected.Rows[i]["Domingo"], actual.Rows[i]["Domingo"]);
-                Assert.AreEqual(expected.Rows[i]["Delito"], actual.Rows[i]["Delito"]);
+                AssertRow(expected.Rows[i], actual.Rows[i]);
             }
         }
 
@@ -181,39 +135,11 @@ namespace CADUnitTestProject.CADTests
         {
             ACAD tbc = new CADTBC(connectionString);
             DataTable expected = tableFormat;
-            DataRow row = expected.NewRow();
-            row["DNI"] = "12345678A";
-            row["Ejecutoria"] = "23/2013";
-            row["Juzgado"] = "Alicante";
-            row["FInicio"] = "2012/11/24";
-            row["FFin"] = "2013/03/09";
-            row["NumJornadas"] = 180;
-            row["Lunes"] = true;
-            row["Martes"] = true;
-            row["Miercoles"] = true;
-            row["Jueves"] = true;
-            row["Viernes"] = true;
-            row["Sabado"] = false;
-            row["Domingo"] = false;
-            row["Delito"] = 1;
-            expected.Rows.Add(row);
+            DataRow row = testRow(expected.NewRow());
             DataTable actual = tbc.SelectWhere("Juzgado = 'Alicante'");
             for (int i = 0; i < expected.Rows.Count; i++)
             {
-                Assert.AreEqual(expected.Rows[i]["DNI"], actual.Rows[i]["DNI"]);
-                Assert.AreEqual(expected.Rows[i]["Ejecutoria"], actual.Rows[i]["Ejecutoria"]);
-                Assert.AreEqual(expected.Rows[i]["Juzgado"], actual.Rows[i]["Juzgado"]);
-                Assert.AreEqual(expected.Rows[i]["FInicio"], actual.Rows[i]["FInicio"]);
-                Assert.AreEqual(expected.Rows[i]["FFin"], actual.Rows[i]["FFin"]);
-                Assert.AreEqual(expected.Rows[i]["NumJornadas"], actual.Rows[i]["NumJornadas"]);
-                Assert.AreEqual(expected.Rows[i]["Lunes"], actual.Rows[i]["Lunes"]);
-                Assert.AreEqual(expected.Rows[i]["Martes"], actual.Rows[i]["Martes"]);
-                Assert.AreEqual(expected.Rows[i]["Miercoles"], actual.Rows[i]["Miercoles"]);
-                Assert.AreEqual(expected.Rows[i]["Jueves"], actual.Rows[i]["Jueves"]);
-                Assert.AreEqual(expected.Rows[i]["Viernes"], actual.Rows[i]["Viernes"]);
-                Assert.AreEqual(expected.Rows[i]["Sabado"], actual.Rows[i]["Sabado"]);
-                Assert.AreEqual(expected.Rows[i]["Domingo"], actual.Rows[i]["Domingo"]);
-                Assert.AreEqual(expected.Rows[i]["Delito"], actual.Rows[i]["Delito"]);
+                AssertRow(expected.Rows[i], actual.Rows[i]);
             }
         }
 
@@ -253,20 +179,7 @@ namespace CADUnitTestProject.CADTests
             expected["Delito"] = 1;
             DataRow actual = tbc.Insert(ins);
 
-            Assert.AreEqual(expected["DNI"], actual["DNI"]);
-            Assert.AreEqual(expected["Ejecutoria"], actual["Ejecutoria"]);
-            Assert.AreEqual(expected["Juzgado"], actual["Juzgado"]);
-            Assert.AreEqual(expected["FInicio"], actual["FInicio"]);
-            Assert.AreEqual(expected["FFin"], actual["FFin"]);
-            Assert.AreEqual(expected["NumJornadas"], actual["NumJornadas"]);
-            Assert.AreEqual(expected["Lunes"], actual["Lunes"]);
-            Assert.AreEqual(expected["Martes"], actual["Martes"]);
-            Assert.AreEqual(expected["Miercoles"], actual["Miercoles"]);
-            Assert.AreEqual(expected["Jueves"], actual["Jueves"]);
-            Assert.AreEqual(expected["Viernes"], actual["Viernes"]);
-            Assert.AreEqual(expected["Sabado"], actual["Sabado"]);
-            Assert.AreEqual(expected["Domingo"], actual["Domingo"]);
-            Assert.AreEqual(expected["Delito"], actual["Delito"]);
+            AssertRow(expected, actual);
         }
 
         [TestMethod]

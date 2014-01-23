@@ -23,6 +23,7 @@ namespace GebatWindowComponents.Lists
                 item.SubItems.Add(tbc.DNI);
                 item.SubItems.Add(tbc.Nombre);
                 item.SubItems.Add(tbc.Apellidos);
+                item.SubItems.Add(tbc.Edad.ToString());
                 if (tbc.Genero == sexo.Masculino)
                 {
                     item.SubItems.Add("Hombre");
@@ -55,6 +56,7 @@ namespace GebatWindowComponents.Lists
             lista.Add("DNI");
             lista.Add("Nombre");
             lista.Add("Apellidos");
+            lista.Add("Edad");
             lista.Add("Sexo");
             lista.Add("Juzgado");
             lista.Add("Ejecutoria");
