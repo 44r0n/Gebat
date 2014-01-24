@@ -21,6 +21,9 @@ namespace ENUnitTestProject.ENTests
         {
             List<int> id = new List<int>();
             id.Add(2);
+            List<string> telfs = new List<string>();
+            telfs.Add("123456789");
+            telfs.Add("234567890");
             ENTBC tbc = (ENTBC)(new ENTBC().Read(id));
             Assert.AreEqual("01086932K", tbc.DNI);
             Assert.AreEqual("Ana", tbc.Nombre);
@@ -40,6 +43,8 @@ namespace ENUnitTestProject.ENTests
             Assert.AreEqual(false, tbc.Horario[DayOfWeek.Sunday]);
             Assert.AreEqual(250, tbc.NumJornadas);
             Assert.AreEqual("Pelea", tbc.Delito.Name);
+            Assert.AreEqual(telfs[0], tbc.Telefonos[0]);
+            Assert.AreEqual(telfs[1], tbc.Telefonos[1]);
         }
 
         [TestMethod]
@@ -73,7 +78,12 @@ namespace ENUnitTestProject.ENTests
                 Assert.AreEqual(dnis[i], ((ENTBC)general[i]).DNI);
             }
 
+            ins.AddTelf("132456789");
+
+            Assert.AreEqual("132456789", ins.Telefonos[0]);
+
             ins.Delete();
+
             dnis.RemoveAt(3);
             general = new ENTBC().ReadAll();
             for (int i = 0; i < dnis.Count; i++)

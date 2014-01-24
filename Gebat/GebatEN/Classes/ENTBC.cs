@@ -466,7 +466,7 @@ namespace GebatEN.Classes
         /// <summary>
         /// Elimina el TBC de la base de datos.
         /// </summary>
-        public override void Delete()
+       /* public override void Delete()
         {
             CADPersonas per = new CADPersonas(defaultConnString);
             if (this.saved)
@@ -474,7 +474,7 @@ namespace GebatEN.Classes
                 cad.Delete(this.ToRow);
                 per.Delete(base.ToRow);
             }
-        }
+        }*/
 
         /// <summary>
         /// Carga los datos de una persona.

@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS TBC
   Delito int NOT NULL,
   Unique (DNI, Ejecutoria),
   CONSTRAINT fk_TBC_Delitos FOREIGN KEY (Delito) REFERENCES Delitos (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Telefonos
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS Telefonos
 	Id int PRIMARY KEY AUTO_INCREMENT,
 	Numero CHAR(9) NOT NULL,
 	DNI CHAR(9) NOT NULL,
-	CONSTRAINT fk_Telefonos_Personas FOREIGN KEY (DNI) REFERENCES Personas(DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
+	CONSTRAINT fk_Telefonos_Personas FOREIGN KEY (DNI) REFERENCES Personas(DNI) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);

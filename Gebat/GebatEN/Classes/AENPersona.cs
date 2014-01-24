@@ -16,6 +16,7 @@ namespace GebatEN.Classes
         private string nombre;
         private DateTime fechanac;
         private sexo genero;
+        private List<string> telefonos = null;
 
         #endregion
 
@@ -94,6 +95,20 @@ namespace GebatEN.Classes
             else
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Carga los telefonos de la persona actual.
+        /// </summary>
+        private void loadTelfs()
+        {
+            CADTelefonos cadtelfs = new CADTelefonos(defaultConnString);
+            telefonos = new List<string>();
+            DataTable telfs = cadtelfs.SelectWhere("DNI = '" + this.dni + "'");
+            foreach (DataRow row in telfs.Rows)
+            {
+                telefonos.Add((string)row["Numero"]);
             }
         }
 
@@ -237,6 +252,9 @@ namespace GebatEN.Classes
             }
         }
 
+        /// <summary>
+        /// Obtiene la edad de la persona.
+        /// </summary>
         public int Edad
         {
             get
@@ -252,6 +270,9 @@ namespace GebatEN.Classes
             }
         }
 
+        /// <summary>
+        /// Obtiene y establece el sexo de la persona.
+        /// </summary>
         public sexo Genero
         {
             get
@@ -261,6 +282,21 @@ namespace GebatEN.Classes
             set
             {
                 this.genero = value;
+            }
+        }
+
+        /// <summary>
+        /// Obtiene los telefonos de la persona.
+        /// </summary>
+        public List<string> Telefonos
+        {
+            get
+            {
+                if (this.telefonos == null)
+                {
+                    this.loadTelfs();
+                }
+                return telefonos;
             }
         }
 
@@ -301,6 +337,24 @@ namespace GebatEN.Classes
         /// <param name="dni">DNI por el que se buscará a la persona.</param>
         /// <returns>Lista de objetos AENPersona.</returns>
         public abstract List<AENPersona> ReadByDNI(string dni);
+
+        /// <summary>
+        /// Añade un telefono de contacto.
+        /// </summary>
+        /// <param name="numero">Nuevo numero de telefono.</param>
+        public void AddTelf(string numero)
+        {
+            CADTelefonos cadtelfs = new CADTelefonos(defaultConnString);
+            DataRow newrow = cadtelfs.GetVoidRow;
+            newrow["Numero"] = numero;
+            newrow["DNI"] = this.dni;
+            cadtelfs.Insert(newrow);
+            if (telefonos == null)
+            {
+                telefonos = new List<string>();
+            }
+            telefonos.Add(numero);
+        }
 
         #endregion
     }
