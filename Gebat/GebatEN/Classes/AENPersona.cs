@@ -356,6 +356,21 @@ namespace GebatEN.Classes
             telefonos.Add(numero);
         }
 
+        /// <summary>
+        /// Elimina el teléfono de contacto.
+        /// </summary>
+        /// <param name="numero">Número de teléfono a eliminar.</param>
+        public void DelTelf(string numero)
+        {
+            CADTelefonos cadtelfs = new CADTelefonos(defaultConnString);
+            DataTable del = cadtelfs.SelectWhere("Numero = " + numero + " AND DNI = '" + this.dni+"'");
+            if (del.Rows.Count == 1)
+            {
+                cadtelfs.Delete(del.Rows[0]);
+                telefonos.Remove(numero);
+            }
+        }
+
         #endregion
     }
 }

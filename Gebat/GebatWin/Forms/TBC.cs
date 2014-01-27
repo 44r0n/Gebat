@@ -67,6 +67,24 @@ namespace GebatWin.Forms
             buttonInicio.Enabled = true;
             buttonFin.Enabled = true;
             buttonFirmas.Enabled = true;
+            buttonAddTelf.Enabled = true;
+            showTelfs((AENPersona)listaTBC.Selected);
+        }
+
+        private void showTelfs(AENPersona persona)
+        {
+            listViewTelfs.Items.Clear();
+            if (persona != null)
+            {
+                int i = 0;
+                foreach (string telf in persona.Telefonos)
+                {
+                    ListViewItem item = new ListViewItem(i.ToString(), 0);
+                    item.SubItems.Add(telf);
+                    listViewTelfs.Items.Add(item);
+                    i++;
+                }
+            }
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -123,6 +141,15 @@ namespace GebatWin.Forms
                 tbc.FinSentenciaToPDF(savedialog.FileName);
                 System.Diagnostics.Process.Start(savedialog.FileName);
             }
+        }
+
+        private void buttonAddTelf_Click(object sender, EventArgs e)
+        {
+            AENPersona selected = (AENPersona)listaTBC.Selected;
+            AddTelfs addTelfsForm = new AddTelfs(selected);
+            addTelfsForm.ShowDialog();
+            addTelfsForm.BringToFront();
+            showTelfs(selected);
         }
     }
 }

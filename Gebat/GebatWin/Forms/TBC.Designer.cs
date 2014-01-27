@@ -35,7 +35,6 @@
             this.radioButtonHombre = new System.Windows.Forms.RadioButton();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.comboDelito = new GebatWindowComponents.Combos.ComboDelito();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.checkBoxDomingo = new System.Windows.Forms.CheckBox();
@@ -67,6 +66,11 @@
             this.buttonInicio = new System.Windows.Forms.Button();
             this.buttonFin = new System.Windows.Forms.Button();
             this.buttonFirmas = new System.Windows.Forms.Button();
+            this.listViewTelfs = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buttonAddTelf = new System.Windows.Forms.Button();
+            this.comboDelito = new GebatWindowComponents.Combos.ComboDelito();
             this.listaTBC = new GebatWindowComponents.Lists.ListaTBC();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJornadas)).BeginInit();
@@ -108,7 +112,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(354, 637);
+            this.groupBox1.Size = new System.Drawing.Size(323, 637);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nuevo TBC";
@@ -169,14 +173,6 @@
             this.label11.Size = new System.Drawing.Size(37, 13);
             this.label11.TabIndex = 26;
             this.label11.Text = "Delito:";
-            // 
-            // comboDelito
-            // 
-            this.comboDelito.FormattingEnabled = true;
-            this.comboDelito.Location = new System.Drawing.Point(112, 563);
-            this.comboDelito.Name = "comboDelito";
-            this.comboDelito.Size = new System.Drawing.Size(121, 21);
-            this.comboDelito.TabIndex = 25;
             // 
             // label10
             // 
@@ -399,7 +395,7 @@
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(810, 13);
+            this.label8.Location = new System.Drawing.Point(1081, 13);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(46, 13);
             this.label8.TabIndex = 2;
@@ -408,7 +404,7 @@
             // textBoxSearch
             // 
             this.textBoxSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxSearch.Location = new System.Drawing.Point(862, 10);
+            this.textBoxSearch.Location = new System.Drawing.Point(1133, 10);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(100, 20);
             this.textBoxSearch.TabIndex = 3;
@@ -418,7 +414,7 @@
             // 
             this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDelete.Enabled = false;
-            this.buttonDelete.Location = new System.Drawing.Point(888, 612);
+            this.buttonDelete.Location = new System.Drawing.Point(342, 612);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(75, 23);
             this.buttonDelete.TabIndex = 4;
@@ -430,7 +426,7 @@
             // 
             this.buttonInicio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonInicio.Enabled = false;
-            this.buttonInicio.Location = new System.Drawing.Point(526, 612);
+            this.buttonInicio.Location = new System.Drawing.Point(736, 612);
             this.buttonInicio.Name = "buttonInicio";
             this.buttonInicio.Size = new System.Drawing.Size(83, 23);
             this.buttonInicio.TabIndex = 5;
@@ -442,7 +438,7 @@
             // 
             this.buttonFin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonFin.Enabled = false;
-            this.buttonFin.Location = new System.Drawing.Point(615, 612);
+            this.buttonFin.Location = new System.Drawing.Point(825, 612);
             this.buttonFin.Name = "buttonFin";
             this.buttonFin.Size = new System.Drawing.Size(75, 23);
             this.buttonFin.TabIndex = 6;
@@ -454,7 +450,7 @@
             // 
             this.buttonFirmas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonFirmas.Enabled = false;
-            this.buttonFirmas.Location = new System.Drawing.Point(696, 612);
+            this.buttonFirmas.Location = new System.Drawing.Point(906, 612);
             this.buttonFirmas.Name = "buttonFirmas";
             this.buttonFirmas.Size = new System.Drawing.Size(88, 23);
             this.buttonFirmas.TabIndex = 7;
@@ -462,16 +458,62 @@
             this.buttonFirmas.UseVisualStyleBackColor = true;
             this.buttonFirmas.Click += new System.EventHandler(this.button3_Click);
             // 
+            // listViewTelfs
+            // 
+            this.listViewTelfs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewTelfs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listViewTelfs.GridLines = true;
+            this.listViewTelfs.Location = new System.Drawing.Point(1000, 56);
+            this.listViewTelfs.Name = "listViewTelfs";
+            this.listViewTelfs.Scrollable = false;
+            this.listViewTelfs.Size = new System.Drawing.Size(234, 541);
+            this.listViewTelfs.TabIndex = 8;
+            this.listViewTelfs.UseCompatibleStateImageBehavior = false;
+            this.listViewTelfs.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 0;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Número";
+            this.columnHeader2.Width = 230;
+            // 
+            // buttonAddTelf
+            // 
+            this.buttonAddTelf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddTelf.Enabled = false;
+            this.buttonAddTelf.Location = new System.Drawing.Point(1122, 612);
+            this.buttonAddTelf.Name = "buttonAddTelf";
+            this.buttonAddTelf.Size = new System.Drawing.Size(111, 23);
+            this.buttonAddTelf.TabIndex = 9;
+            this.buttonAddTelf.Text = "Gestionar Telefono";
+            this.buttonAddTelf.UseVisualStyleBackColor = true;
+            this.buttonAddTelf.Click += new System.EventHandler(this.buttonAddTelf_Click);
+            // 
+            // comboDelito
+            // 
+            this.comboDelito.FormattingEnabled = true;
+            this.comboDelito.Location = new System.Drawing.Point(112, 563);
+            this.comboDelito.Name = "comboDelito";
+            this.comboDelito.Size = new System.Drawing.Size(121, 21);
+            this.comboDelito.TabIndex = 25;
+            // 
             // listaTBC
             // 
-            this.listaTBC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listaTBC.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listaTBC.FullRowSelect = true;
             this.listaTBC.GridLines = true;
-            this.listaTBC.Location = new System.Drawing.Point(373, 53);
+            this.listaTBC.Location = new System.Drawing.Point(342, 56);
             this.listaTBC.MultiSelect = false;
             this.listaTBC.Name = "listaTBC";
-            this.listaTBC.Size = new System.Drawing.Size(590, 541);
+            this.listaTBC.Size = new System.Drawing.Size(652, 541);
             this.listaTBC.TabIndex = 0;
             this.listaTBC.UseCompatibleStateImageBehavior = false;
             this.listaTBC.View = System.Windows.Forms.View.Details;
@@ -481,7 +523,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(975, 662);
+            this.ClientSize = new System.Drawing.Size(1246, 662);
+            this.Controls.Add(this.buttonAddTelf);
+            this.Controls.Add(this.listViewTelfs);
             this.Controls.Add(this.buttonFirmas);
             this.Controls.Add(this.buttonFin);
             this.Controls.Add(this.buttonInicio);
@@ -543,5 +587,9 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DateTimePicker dateTimePickerFechaNac;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ListView listViewTelfs;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Button buttonAddTelf;
     }
 }

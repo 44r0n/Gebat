@@ -53,7 +53,14 @@ namespace GebatWindowComponents.Lists
         {
             get
             {
-                return colection[Convert.ToInt32(SelectedItems[0].Text)];
+                if (SelectedItems.Count != 0)
+                {
+                    return colection[Convert.ToInt32(SelectedItems[0].Text)];
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
