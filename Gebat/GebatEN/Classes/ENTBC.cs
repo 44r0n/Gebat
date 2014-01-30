@@ -38,15 +38,6 @@ namespace GebatEN.Classes
             this.horario[DayOfWeek.Sunday] = false;
         }
 
-        private bool alreadyInPerson()
-        {
-            if (new CADPersonas(defaultConnString).SelectWhere("DNI = '" + this.DNI + "'").Rows.Count == 1)
-            {
-                return true;
-            }
-            return false;
-        }
-
         private Paragraph titulo()
         {
             Paragraph ret = new Paragraph();
@@ -404,7 +395,7 @@ namespace GebatEN.Classes
         /// Busca en la base de datos la persona TBC identificador.
         /// </summary>
         /// <param name="id">Identificador por el que se buscará la persona TBC</param>
-        /// <returns>Persona TBC en formato AEN:</returns>
+        /// <returns>Persona TBC en formato AEN.</returns>
         public override AEN Read(List<int> id)
         {
             AVIEW tbcp = new VIEWTBCPeople(defaultConnString);
@@ -424,7 +415,7 @@ namespace GebatEN.Classes
         }
 
         /// <summary>
-        /// Obtiene todosl os tbc de la base de datos.
+        /// Obtiene todos los tbc de la base de datos.
         /// </summary>
         /// <returns>Lista de TBC en formato AEN.</returns>
         public override List<AEN> ReadAll()
@@ -462,19 +453,6 @@ namespace GebatEN.Classes
                 cad.Update(this.ToRow);
             }
         }
-
-        /// <summary>
-        /// Elimina el TBC de la base de datos.
-        /// </summary>
-       /* public override void Delete()
-        {
-            CADPersonas per = new CADPersonas(defaultConnString);
-            if (this.saved)
-            {
-                cad.Delete(this.ToRow);
-                per.Delete(base.ToRow);
-            }
-        }*/
 
         /// <summary>
         /// Carga los datos de una persona.

@@ -181,6 +181,19 @@ namespace GebatEN.Classes
             }
         }
 
+        /// <summary>
+        /// Comprueba si la instancia actual está guardada en la tabla personas.
+        /// </summary>
+        /// <returns>True si está guardada en la tabla, false en caso contrario.</returns>
+        protected bool alreadyInPerson()
+        {
+            if (new CADPersonas(defaultConnString).SelectWhere("DNI = '" + this.DNI + "'").Rows.Count == 1)
+            {
+                return true;
+            }
+            return false;
+        }
+
         #endregion
 
         #region//Getters & Setters

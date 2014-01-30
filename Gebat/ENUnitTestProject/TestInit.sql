@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS Telefonos;
 DROP TABLE IF EXISTS TBC;
 DROP TABLE IF EXISTS Delitos;
+DROP TABLE IF EXISTS Familiares;
 DROP TABLE IF EXISTS Personas;
-DROP TABLE IF EXISTS Almacen;
 DROP TABLE IF EXISTS OutgoingFood;
 DROP TABLE IF EXISTS EntryFood;
 DROP TABLE IF EXISTS Food;
@@ -72,7 +72,14 @@ CREATE TABLE IF NOT EXISTS Personas
   Nombre VARCHAR(15) NULL,
   Apellidos VARCHAR(45) NULL,
   FechaNac DATE NULL,
-  Sexo CHAR(1)
+  Sexo CHAR(1) NULL
+);
+
+CREATE TABLE IF NOT EXISTS Familiares
+(
+	Id int Primary Key AUTO_INCREMENT,
+	DNI CHAR(9) NOT NULL,
+	CONSTRAINT fk_Familiares_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Delitos
@@ -101,7 +108,6 @@ CREATE TABLE IF NOT EXISTS TBC
   Unique (DNI, Ejecutoria),
   CONSTRAINT fk_TBC_Delitos FOREIGN KEY (Delito) REFERENCES Delitos (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE
-  
 );
 
 CREATE TABLE IF NOT EXISTS Telefonos
@@ -109,10 +115,12 @@ CREATE TABLE IF NOT EXISTS Telefonos
 	Id int PRIMARY KEY AUTO_INCREMENT,
 	Numero CHAR(9) NOT NULL,
 	DNI CHAR(9) NOT NULL,
-	CONSTRAINT fk_Telefonos_Personas FOREIGN KEY (DNI) REFERENCES Personas(DNI) ON DELETE CASCADE ON UPDATE NO ACTION
+	CONSTRAINT fk_Telefonos_Personas FOREIGN KEY (DNI) REFERENCES Personas(DNI) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+
+CREATE OR REPLACE VIEW DatosFamiliares as select Familiares.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo FROM Personas inner join Familiares on (Personas.DNI = Familiares.DNI);
 
 INSERT INTO Type (Name) VALUES
 (
@@ -261,6 +269,33 @@ INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 	'M'
 );
 
+INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
+(
+	'53705134L',
+	'María',
+	'Marcial',
+	'1982/01/01',
+	'F'
+);
+
+INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
+(
+	'91071949E',
+	'Jose',
+	'Logroño',
+	'1972/12/06',
+	'M'
+);
+
+INSERT INTO Personas (DNI, Nombre,Apellidos,FechaNac, Sexo) VALUES
+(
+	'29556003Z',
+	'Jenny',
+	'Pecco',
+	'2000/02/14',
+	'F'
+);
+
 INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo,Delito) VALUES
 (
 	'54508005Y',
@@ -325,4 +360,19 @@ INSERT INTO Telefonos (Numero, DNI) VALUES
 (
 	'234567890',
 	'01086932K'
+);
+
+INSERT INTO Familiares(DNI) VALUES
+(
+	'53705134L'
+);
+
+INSERT INTO Familiares(DNI) VALUES
+(
+	'91071949E'
+);
+
+INSERT INTO Familiares(DNI) VALUES
+(
+	'29556003Z'
 );

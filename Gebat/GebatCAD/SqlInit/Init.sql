@@ -1,7 +1,9 @@
 DROP TABLE IF EXISTS Telefonos;
 DROP TABLE IF EXISTS TBC;
 DROP TABLE IF EXISTS Delitos;
+DROP TABLE IF EXISTS Familiares;
 DROP TABLE IF EXISTS Personas;
+DROP TABLE IF EXISTS ExpedientesPersonales;
 DROP TABLE IF EXISTS OutgoingFood;
 DROP TABLE IF EXISTS EntryFood;
 DROP TABLE IF EXISTS Food;
@@ -86,6 +88,22 @@ CREATE TABLE IF NOT EXISTS Personas
   Sexo CHAR(1) NULL
 );
 
+CREATE TABLE IF NOT EXISTS ExpedientesPersonales
+(
+	Id int PRIMARY KEY AUTO_INCREMENT,
+	Ingresos INT,
+	Observaciones varchar(255)
+);
+
+CREATE TABLE IF NOT EXISTS Familiares
+(
+	Id int Primary Key AUTO_INCREMENT,
+	DNI CHAR(9) NOT NULL,
+	Expediente int,
+	CONSTRAINT fk_Familiares_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_Familiares_Expediente FOREIGN KEY (Expediente) REFERENCES ExpedientesPersonales (Id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS Delitos
 (
 	Id int Primary Key AUTO_INCREMENT,
@@ -123,3 +141,5 @@ CREATE TABLE IF NOT EXISTS Telefonos
 );
 
 CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+
+CREATE OR REPLACE VIEW DatosFamiliares as select Familiares.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo FROM Personas inner join Familiares on (Personas.DNI = Familiares.DNI);
