@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Classes\AENPersona.cs" />
     <Compile Include="Classes\ENDelito.cs" />
+    <Compile Include="Classes\ENExpedientePersonal.cs" />
     <Compile Include="Classes\ENFamiliar.cs" />
     <Compile Include="Classes\ENFoodIN.cs" />
     <Compile Include="Classes\ENFoodOut.cs" />

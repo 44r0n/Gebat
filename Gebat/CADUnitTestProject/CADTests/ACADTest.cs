@@ -38,21 +38,42 @@ namespace CADUnitTestProject.CADTests
             factory.SetManager(conn);
         }
 
+        private string connString;
+        DbConnection conn;
+        ISql manager;
+
         protected void InitBD(string fileScript)
         {
-            string connString = ConfigurationManager.ConnectionStrings[connectionString].ConnectionString;
+            connString = ConfigurationManager.ConnectionStrings[connectionString].ConnectionString;
             connString += "Password=root";
             string provider = ConfigurationManager.ConnectionStrings[connectionString].ProviderName;
-            ISql manager = FactorySql.Create(provider);
+            manager = FactorySql.Create(provider);
+            //FileInfo file = new FileInfo(fileScript);
+            //StreamReader lector = file.OpenText();
+            //string script = lector.ReadToEnd();
+            //lector.Close();
+            conn = manager.Connection(connString);
+            conn.Open();
+            ExecScript("Scripts/CleanDB.sql");
+            ExecScript(fileScript);
+            //DbCommand comando = manager.Command(script, conn);
+            //comando.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        private void ExecScript(string fileScript)
+        {
             FileInfo file = new FileInfo(fileScript);
             StreamReader lector = file.OpenText();
-            string script = lector.ReadToEnd();
+            string sciript = lector.ReadToEnd();
             lector.Close();
-            DbConnection conn = manager.Connection(connString);
-            conn.Open();
-            DbCommand comando = manager.Command(script, conn);
+            DbCommand comando = manager.Command(sciript, conn);
             comando.ExecuteNonQuery();
-            conn.Close();
+        }
+
+        private void CleanDB()
+        {
+
         }
 
         protected void ResetConn()

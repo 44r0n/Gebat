@@ -20,9 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
-//using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GebatCAD.Classes;
 using System.Data;
 
@@ -47,10 +44,14 @@ namespace GebatEN.Classes
             }
         }
 
-		/// <summary>
+        #endregion  
+
+        #region//Internal Methods
+
+        /// <summary>
 		/// Obtiene el objeto actual en tipo DataRow de forma que corresponde en la base de datos.
 		/// </summary>
-		protected abstract DataRow ToRow
+		internal abstract DataRow ToRow
 		{
 			get;
 		}
@@ -59,7 +60,7 @@ namespace GebatEN.Classes
 		/// Asigna al objeto actual los datos contenientes en el DataRow.
 		/// </summary>
 		/// <param name="row">Fila con los datos.</param>
-		protected abstract void FromRow(DataRow row);
+		internal abstract void FromRow(DataRow row);
 
 		#endregion
 

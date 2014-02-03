@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
-using System.IO;
 using GebatCAD.Classes;
 using GebatEN.Enums;
 
@@ -17,12 +14,12 @@ namespace GebatEN.Classes
 
         #endregion
 
-        #region//Protected Methods
+        #region//Internal Methods
 
         /// <summary>
         /// Obtiene el objeto actual en tipo DataRow de forma que corresponde en la base de datos.
         /// </summary>
-        protected override DataRow ToRow
+        internal override DataRow ToRow
         {
             get
             {
@@ -40,7 +37,7 @@ namespace GebatEN.Classes
         /// Asigna al objeto actual los datos contenientes en el DataRow.
         /// </summary>
         /// <param name="row"></param>
-        protected override void FromRow(DataRow row)
+        internal override void FromRow(DataRow row)
         {
             base.FromRow(row);
             this.idfam = (int)row["Id"];

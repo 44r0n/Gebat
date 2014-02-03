@@ -65,6 +65,7 @@
     <Compile Include="CADTests\CADDelitoTest.cs" />
     <Compile Include="CADTests\CADTelefonosTest.cs" />
     <Compile Include="CADTests\CADFamiliarTest.cs" />
+    <Compile Include="CADTests\CADExpedientePersonalTest.cs" />
     <Compile Include="CADTests\VIEWDatosFamiliarTest.cs" />
     <Compile Include="CADTests\VIEWTBCPeopleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +87,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\CleanDB.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\DatosFamiliaresTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -93,6 +97,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\EntryFoodTest.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\ExpedientePersonalTest.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\FoodTest.sql">

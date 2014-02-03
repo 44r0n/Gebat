@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS TBC;
 DROP TABLE IF EXISTS Delitos;
 DROP TABLE IF EXISTS Familiares;
 DROP TABLE IF EXISTS Personas;
+DROP TABLE IF EXISTS ExpedientesPersonales;
 DROP TABLE IF EXISTS OutgoingFood;
 DROP TABLE IF EXISTS EntryFood;
 DROP TABLE IF EXISTS Food;
@@ -65,6 +66,13 @@ BEGIN
 	UPDATE Food SET Quantity = Quantity + OLD.QuantityOut WHERE Id = OLD.FoodType;
 END;
 
+CREATE TABLE IF NOT EXISTS ExpedientesPersonales
+(
+	Id int PRIMARY KEY AUTO_INCREMENT,
+	Ingresos INT,
+	Observaciones varchar(255)
+);
+
 CREATE TABLE IF NOT EXISTS Personas 
 (
   Id int Primary Key AUTO_INCREMENT,
@@ -79,7 +87,9 @@ CREATE TABLE IF NOT EXISTS Familiares
 (
 	Id int Primary Key AUTO_INCREMENT,
 	DNI CHAR(9) NOT NULL,
-	CONSTRAINT fk_Familiares_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE
+	Expediente int,
+	CONSTRAINT fk_Familiares_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_Familiares_Expediente FOREIGN KEY (Expediente) REFERENCES ExpedientesPersonales (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Delitos
@@ -233,6 +243,18 @@ INSERT INTO Delitos (Name) VALUES
 	"Otro"
 );
 
+INSERT INTO ExpedientesPersonales(Ingresos, Observaciones) VALUES
+(
+	1000,
+	"Una observación"
+);
+
+INSERT INTO ExpedientesPersonales(Ingresos, Observaciones) VALUES
+(
+	500,
+	"otra"
+);
+
 INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 (
 	'54508005Y',
@@ -362,17 +384,20 @@ INSERT INTO Telefonos (Numero, DNI) VALUES
 	'01086932K'
 );
 
-INSERT INTO Familiares(DNI) VALUES
+INSERT INTO Familiares(DNI, Expediente) VALUES
 (
-	'53705134L'
+	'53705134L',
+	1
 );
 
-INSERT INTO Familiares(DNI) VALUES
+INSERT INTO Familiares(DNI, Expediente) VALUES
 (
-	'91071949E'
+	'91071949E',
+	1
 );
 
-INSERT INTO Familiares(DNI) VALUES
+INSERT INTO Familiares(DNI, Expediente) VALUES
 (
-	'29556003Z'
+	'29556003Z',
+	2
 );
