@@ -7,6 +7,34 @@ namespace GebatWindowComponents.Lists
 {
     public class ListaTBC : ListaGeneral
     {
+
+        #region//Private Methods
+
+        private void addItem(ENTBC newitem, int i)
+        {
+            ListViewItem item = new ListViewItem(i.ToString(), 0);
+            item.SubItems.Add(newitem.DNI);
+            item.SubItems.Add(newitem.Nombre);
+            item.SubItems.Add(newitem.Apellidos);
+            item.SubItems.Add(newitem.Edad.ToString());
+            if (newitem.Genero == sexo.Masculino)
+            {
+                item.SubItems.Add("Hombre");
+            }
+            else
+            {
+                item.SubItems.Add("Mujer");
+            }
+            item.SubItems.Add(newitem.Juzgado);
+            item.SubItems.Add(newitem.Ejecutoria);
+            item.SubItems.Add(newitem.FInicio.ToShortDateString());
+            item.SubItems.Add(newitem.FFin.ToShortDateString());
+            item.SubItems.Add(newitem.Delito.Name);
+            Items.Add(item);
+        }
+
+        #endregion
+
         #region Protected Methods
 
         /// <summary>
@@ -18,26 +46,7 @@ namespace GebatWindowComponents.Lists
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENTBC tbc = (ENTBC)it;
-                ListViewItem item = new ListViewItem(i.ToString(), 0);
-                item.SubItems.Add(tbc.DNI);
-                item.SubItems.Add(tbc.Nombre);
-                item.SubItems.Add(tbc.Apellidos);
-                item.SubItems.Add(tbc.Edad.ToString());
-                if (tbc.Genero == sexo.Masculino)
-                {
-                    item.SubItems.Add("Hombre");
-                }
-                else
-                {
-                    item.SubItems.Add("Mujer");
-                }
-                item.SubItems.Add(tbc.Juzgado);
-                item.SubItems.Add(tbc.Ejecutoria);
-                item.SubItems.Add(tbc.FInicio.ToShortDateString());
-                item.SubItems.Add(tbc.FFin.ToShortDateString());
-                item.SubItems.Add(tbc.Delito.Name);
-                Items.Add(item);
+                addItem((ENTBC)it,i);
                 i++;
             }
         }
@@ -75,15 +84,7 @@ namespace GebatWindowComponents.Lists
                 ENTBC tbc = (ENTBC)it;
                 if (tbc.DNI.Contains(filtro))
                 {
-                    ListViewItem item = new ListViewItem(i.ToString(), 0);
-                    item.SubItems.Add(tbc.DNI);
-                    item.SubItems.Add(tbc.Nombre);
-                    item.SubItems.Add(tbc.Apellidos);
-                    item.SubItems.Add(tbc.Juzgado);
-                    item.SubItems.Add(tbc.Ejecutoria);
-                    item.SubItems.Add(tbc.FInicio.ToShortDateString());
-                    item.SubItems.Add(tbc.FFin.ToShortDateString());
-                    Items.Add(item);
+                    addItem((ENTBC)it, i);
                 }
                 i++;
             }

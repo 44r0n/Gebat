@@ -1,29 +1,38 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using GebatEN.Classes;
+using GebatEN.Enums;
 
 namespace GebatWindowComponents.Lists
 {
-    public class ListaFoodIN : ListaGeneral
+    public class ListaFamiliares : ListaGeneral
     {
-
         #region//Private Methods
 
-        private void addItem(ENFoodIN newitem, int i)
+        private void addItem(ENFamiliar newitem, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString(), 0);
+            item.SubItems.Add(newitem.DNI);
             item.SubItems.Add(newitem.Nombre);
-            item.SubItems.Add(newitem.Fecha.ToShortDateString());
-            item.SubItems.Add(newitem.Quantity.ToString());
+            item.SubItems.Add(newitem.Apellidos);
+            item.SubItems.Add(newitem.Edad.ToString());
+            if (newitem.Genero == sexo.Masculino)
+            {
+                item.SubItems.Add("Hombre");
+            }
+            else
+            {
+                item.SubItems.Add("Mujer");
+            }
             Items.Add(item);
         }
 
         #endregion
-        
+
         #region//Protected Methods
 
         /// <summary>
-        /// Muestra todos los elementos en la lista.
+        /// Muestra todos los elementos de la lista.
         /// </summary>
         protected override void MostrarElementos()
         {
@@ -31,7 +40,7 @@ namespace GebatWindowComponents.Lists
             int i = 0;
             foreach (AEN it in colection)
             {
-                addItem((ENFoodIN)it, i);
+                addItem((ENFamiliar)it, i);
                 i++;
             }
         }
@@ -43,30 +52,28 @@ namespace GebatWindowComponents.Lists
         /// <summary>
         /// Constructor que inicializa los nombres de las columnas.
         /// </summary>
-        public ListaFoodIN()
+        public ListaFamiliares()
             : base()
         {
             List<string> lista = new List<string>();
+            lista.Add("DNI");
             lista.Add("Nombre");
-            lista.Add("Fecha");
-            lista.Add("Cantidad");
+            lista.Add("Apellidos");
+            lista.Add("Edad");
+            lista.Add("Sexo");
             Init(lista);
         }
 
-        /// <summary>
-        /// Filtra la vista con la string especificada.
-        /// </summary>
-        /// <param name="filtro">Cadena a buscar.</param>
         public void Filter(string filtro)
         {
             Items.Clear();
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENFoodIN entrada = (ENFoodIN)it;
-                if (entrada.Nombre.Contains(filtro))
+                ENFamiliar fam = (ENFamiliar)it;
+                if (fam.DNI.Contains(filtro))
                 {
-                    addItem((ENFoodIN)it, i);
+                    addItem((ENFamiliar)it, i);
                 }
                 i++;
             }

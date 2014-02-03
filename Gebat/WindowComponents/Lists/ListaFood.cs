@@ -6,6 +6,19 @@ namespace GebatWindowComponents.Lists
 {
     public class ListaFood : ListaGeneral
     {
+
+        #region//Private Methods
+
+        private void addItem(ENFood newitem,int i)
+        {
+            ListViewItem item = new ListViewItem(i.ToString(), 0);
+            item.SubItems.Add(newitem.Name);
+            item.SubItems.Add(newitem.Quantity.ToString() + " " + newitem.MyType.Name);
+            Items.Add(item);
+        }
+
+        #endregion
+
         #region//Protected Methods
 
         /// <summary>
@@ -17,11 +30,7 @@ namespace GebatWindowComponents.Lists
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENFood comida = (ENFood)it;
-                ListViewItem item = new ListViewItem(i.ToString(), 0);
-                item.SubItems.Add(comida.Name);
-                item.SubItems.Add(comida.Quantity.ToString() + " " + comida.MyType.Name);
-                Items.Add(item);
+                addItem((ENFood)it, i);
                 i++;
             }
         }
@@ -51,10 +60,7 @@ namespace GebatWindowComponents.Lists
                 ENFood comida = (ENFood)it;
                 if (comida.Name.Contains(filtro))
                 {
-                    ListViewItem item = new ListViewItem(i.ToString(), 0);
-                    item.SubItems.Add(comida.Name);
-                    item.SubItems.Add(comida.Quantity.ToString() + comida.MyType.Name);
-                    Items.Add(item);
+                    addItem((ENFood)it, i);
                 }
                 i++;
             }

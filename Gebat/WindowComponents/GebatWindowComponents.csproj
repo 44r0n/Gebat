@@ -55,6 +55,12 @@
     <Compile Include="Lists\ListaDelito.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Lists\ListaExpedientes.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaFamiliares.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Lists\ListaFood.cs">
       <SubType>Component</SubType>
     </Compile>

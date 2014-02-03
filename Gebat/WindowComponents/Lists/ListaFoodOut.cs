@@ -6,6 +6,19 @@ namespace GebatWindowComponents.Lists
 {
     public class ListaFoodOut :ListaGeneral
     {
+        #region//Private Methods
+
+        private void addItem(ENFoodOut newitem, int i)
+        {
+            ListViewItem item = new ListViewItem(i.ToString(), 0);
+            item.SubItems.Add(newitem.Nombre);
+            item.SubItems.Add(newitem.Fecha.ToShortDateString());
+            item.SubItems.Add(newitem.Quantity.ToString());
+            Items.Add(item);
+        }
+
+        #endregion
+
         #region//Protected Methods
 
         /// <summary>
@@ -17,12 +30,7 @@ namespace GebatWindowComponents.Lists
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENFoodOut salida = (ENFoodOut)it;
-                ListViewItem item = new ListViewItem(i.ToString(), 0);
-                item.SubItems.Add(salida.Nombre);
-                item.SubItems.Add(salida.Fecha.ToShortDateString());
-                item.SubItems.Add(salida.Quantity.ToString());
-                Items.Add(item);
+                addItem((ENFoodOut)it,i);
                 i++;
             }
         }
@@ -57,11 +65,7 @@ namespace GebatWindowComponents.Lists
                 ENFoodOut salida = (ENFoodOut)it;
                 if(salida.Nombre.Contains(filtro))
                 {
-                    ListViewItem item = new ListViewItem(i.ToString(),0);
-                    item.SubItems.Add(salida.Nombre);
-                    item.SubItems.Add(salida.Fecha.ToShortDateString());
-                    item.SubItems.Add(salida.Quantity.ToString());
-                    Items.Add(item);
+                    addItem((ENFoodOut)it,i);
                 }
                 i++;
             }

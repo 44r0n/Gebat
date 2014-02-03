@@ -6,6 +6,18 @@ namespace GebatWindowComponents.Lists
 {
     public class ListaDelito:ListaGeneral
     {
+
+        #region//Private Methods
+
+        private void addItem(ENDelito newitem, int i)
+        {
+            ListViewItem item = new ListViewItem(i.ToString(), 0);
+            item.SubItems.Add(newitem.Name);
+            Items.Add(item);
+        }
+
+        #endregion
+
         #region//Protected Methods
 
         /// <summary>
@@ -17,10 +29,7 @@ namespace GebatWindowComponents.Lists
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENDelito del = (ENDelito)it;
-                ListViewItem item = new ListViewItem(i.ToString(), 0);
-                item.SubItems.Add(del.Name);
-                Items.Add(item);
+                addItem((ENDelito)it, i);
                 i++;
             }
         }
@@ -53,9 +62,7 @@ namespace GebatWindowComponents.Lists
                 ENDelito delito = (ENDelito)it;
                 if (delito.Name.Contains(filtro))
                 {
-                    ListViewItem item = new ListViewItem();
-                    item.SubItems.Add(delito.Name);
-                    Items.Add(item);
+                    addItem((ENDelito)it, i);
                 }
                 i++;
             }

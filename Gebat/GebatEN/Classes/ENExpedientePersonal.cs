@@ -23,6 +23,7 @@ namespace GebatEN.Classes
         /// </summary>
         private void loadFamiliares()
         {
+            this.familiares = new List<ENFamiliar>();
             CADFamiliares cfam = new CADFamiliares(defaultConnString);
             foreach (DataRow row in cfam.SelectWhere("Expediente = " + (int)this.id[0]).Rows)
             {
@@ -116,7 +117,6 @@ namespace GebatEN.Classes
             {
                 if (this.familiares == null)
                 {
-                    this.familiares = new List<ENFamiliar>();
                     loadFamiliares();
                 }
                 return this.familiares;
@@ -124,6 +124,8 @@ namespace GebatEN.Classes
         }
 
         #endregion
+
+        #region//Public Methods
 
         /// <summary>
         /// Constructor del expediente.
@@ -169,6 +171,10 @@ namespace GebatEN.Classes
             return ret;
         }
 
+        /// <summary>
+        /// Obtiene todos los Expedientes en formate AEN.
+        /// </summary>
+        /// <returns>Lista de expedientes en formato AEN.</returns>
         public override List<AEN> ReadAll()
         {
             List<AEN> ret = new List<AEN>();
@@ -181,5 +187,19 @@ namespace GebatEN.Classes
             }
             return ret;
         }
+
+        /// <summary>
+        /// Añade un familiar al expediente personal.
+        /// </summary>
+        /// <param name="familiar">Familiar a añadir.</param>
+        public void AddFamiliar(ENFamiliar familiar)
+        {
+            loadFamiliares();
+            familiar.expediente = (int)this.id[0];
+            familiar.Save();
+            familiares.Add(familiar);
+        }
+
+        #endregion
     }
 }

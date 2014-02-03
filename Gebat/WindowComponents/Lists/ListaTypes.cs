@@ -6,6 +6,17 @@ namespace GebatWindowComponents.Lists
 {
     public class ListaTypes:ListaGeneral
     {
+        #region//Private Methods
+
+        private void addItem(ENType newitem, int i)
+        {
+            ListViewItem item = new ListViewItem(i.ToString(), 0);
+            item.SubItems.Add(newitem.Name);
+            Items.Add(item);
+        }
+
+        #endregion
+
         #region//Protected methods
 
         /// <summary>
@@ -17,10 +28,7 @@ namespace GebatWindowComponents.Lists
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENType tipo = (ENType)it;
-                ListViewItem item = new ListViewItem(i.ToString(), 0);
-                item.SubItems.Add(tipo.Name);
-                Items.Add(item);
+                addItem((ENType)it, i);
                 i++;
             }
         }
@@ -53,9 +61,7 @@ namespace GebatWindowComponents.Lists
                 ENType tipo = (ENType)it;
                 if (tipo.Name.Contains(filtro))
                 {
-                    ListViewItem item = new ListViewItem(i.ToString(), 0);
-                    item.SubItems.Add(tipo.Name);
-                    Items.Add(item);
+                    addItem((ENType)it, i);
                 }
                 i++;
             }

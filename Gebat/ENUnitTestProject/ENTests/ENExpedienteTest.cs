@@ -30,8 +30,14 @@ namespace ENUnitTestProject.ENTests
         }
 
         [TestMethod]
-        public void TestMethod1()
+        public void AddFamiliar()
         {
+            List<int> id = new List<int>();
+            id.Add(2);
+            ENExpedientePersonal exp = (ENExpedientePersonal)(new ENExpedientePersonal().Read(id));
+            ENFamiliar fam = new ENFamiliar("16229371L", "Lucia", "Quevedo", new DateTime(1983, 11, 07), sexo.Femenino);
+            fam.Save();
+            exp.AddFamiliar(fam);
         }
     }
 }

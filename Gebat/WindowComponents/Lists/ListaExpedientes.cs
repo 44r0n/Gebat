@@ -4,26 +4,25 @@ using GebatEN.Classes;
 
 namespace GebatWindowComponents.Lists
 {
-    public class ListaFoodIN : ListaGeneral
+    public class ListaExpedientes : ListaGeneral
     {
-
         #region//Private Methods
 
-        private void addItem(ENFoodIN newitem, int i)
+        private void addItem(ENExpedientePersonal newitem, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString(), 0);
-            item.SubItems.Add(newitem.Nombre);
-            item.SubItems.Add(newitem.Fecha.ToShortDateString());
-            item.SubItems.Add(newitem.Quantity.ToString());
+            item.SubItems.Add(i.ToString());
+            item.SubItems.Add(newitem.Ingresos.ToString());
+            item.SubItems.Add(newitem.Observaciones);
             Items.Add(item);
         }
 
         #endregion
-        
+
         #region//Protected Methods
 
         /// <summary>
-        /// Muestra todos los elementos en la lista.
+        /// Muestra todos los elementos de la lista.
         /// </summary>
         protected override void MostrarElementos()
         {
@@ -31,7 +30,7 @@ namespace GebatWindowComponents.Lists
             int i = 0;
             foreach (AEN it in colection)
             {
-                addItem((ENFoodIN)it, i);
+                addItem((ENExpedientePersonal)it, i);
                 i++;
             }
         }
@@ -43,30 +42,26 @@ namespace GebatWindowComponents.Lists
         /// <summary>
         /// Constructor que inicializa los nombres de las columnas.
         /// </summary>
-        public ListaFoodIN()
+        public ListaExpedientes()
             : base()
         {
             List<string> lista = new List<string>();
-            lista.Add("Nombre");
-            lista.Add("Fecha");
-            lista.Add("Cantidad");
+            lista.Add("Num. Expediente");
+            lista.Add("Ingresos");
+            lista.Add("Observaciones");
             Init(lista);
         }
 
-        /// <summary>
-        /// Filtra la vista con la string especificada.
-        /// </summary>
-        /// <param name="filtro">Cadena a buscar.</param>
         public void Filter(string filtro)
         {
             Items.Clear();
             int i = 0;
             foreach (AEN it in colection)
             {
-                ENFoodIN entrada = (ENFoodIN)it;
-                if (entrada.Nombre.Contains(filtro))
+                ENExpedientePersonal exp = (ENExpedientePersonal)it;
+                if (exp.Id[0].ToString().Contains(filtro))
                 {
-                    addItem((ENFoodIN)it, i);
+                    addItem(exp, i);
                 }
                 i++;
             }

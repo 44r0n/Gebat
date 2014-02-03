@@ -29,5 +29,12 @@ namespace ENUnitTestProject.ENTests
             Assert.AreEqual(41, fam.Edad);
             Assert.AreEqual(sexo.Masculino, fam.Genero);
         }
+
+        [TestMethod]
+        public void Save()
+        {
+            ENFamiliar nuevo = new ENFamiliar("42919826D", "Paco", "Mendoza", new DateTime(1978, 04, 18), sexo.Masculino);
+            nuevo.Save();
+        }
     }
 }

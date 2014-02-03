@@ -11,6 +11,7 @@ namespace GebatEN.Classes
         #region//Atributes
 
         private int idfam = 0;
+        internal int expediente = 0;
 
         #endregion
 
@@ -29,6 +30,10 @@ namespace GebatEN.Classes
                     ret["Id"] = this.idfam;
                 }
                 ret["DNI"] = this.DNI;
+                if (expediente != 0)
+                {
+                    ret["Expediente"] = expediente;
+                }
                 return ret;
             }
         }
