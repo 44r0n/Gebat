@@ -11,7 +11,7 @@ namespace GebatWindowComponents.Lists
         private void addItem(ENExpedientePersonal newitem, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString(), 0);
-            item.SubItems.Add(i.ToString());
+            item.SubItems.Add(newitem.Id[0].ToString());
             item.SubItems.Add(newitem.Ingresos.ToString());
             item.SubItems.Add(newitem.Observaciones);
             Items.Add(item);

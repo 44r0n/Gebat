@@ -50,7 +50,7 @@ namespace GebatEN.Classes
                     ret["Id"] = (int)this.id[0];
                 }
                 ret["Ingresos"] = this.ingresos;
-                ret["Observaciones"] = this.ingresos;
+                ret["Observaciones"] = this.observaciones;
                 return ret;
             }
         }
@@ -67,6 +67,7 @@ namespace GebatEN.Classes
                 this.id.Add((int)row["Id"]);
                 this.ingresos = (int)row["Ingresos"];
                 this.observaciones = (string)row["Observaciones"];
+                this.saved = true;
             }
             else
             {
@@ -189,7 +190,7 @@ namespace GebatEN.Classes
         }
 
         /// <summary>
-        /// Añade un familiar al expediente personal.
+        /// Añade un familiar al expediente personal, guardando el familiar en la base de datos.
         /// </summary>
         /// <param name="familiar">Familiar a añadir.</param>
         public void AddFamiliar(ENFamiliar familiar)

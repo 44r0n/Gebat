@@ -58,5 +58,12 @@ namespace GebatWin
             delitos.MdiParent = this;
             delitos.Show();
         }
+
+        private void expedientesPersonalesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.ExpedientePersonal exp = new Forms.ExpedientePersonal();
+            exp.MdiParent = this;
+            exp.Show();
+        }
     }
 }

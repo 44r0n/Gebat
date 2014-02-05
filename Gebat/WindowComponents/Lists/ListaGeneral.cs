@@ -102,6 +102,15 @@ namespace GebatWindowComponents.Lists
             MostrarElementos();
         }
 
+        /// <summary>
+        /// Elimina todos los items mostrados en la lista.
+        /// </summary>
+        public void Clean()
+        {
+            colection.Clear();
+            Items.Clear();
+        }
+        
         #endregion
     }
 }

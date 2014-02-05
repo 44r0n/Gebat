@@ -74,6 +74,12 @@
     <Compile Include="Forms\ExpedientePersonal.Designer.cs">
       <DependentUpon>ExpedientePersonal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\GestionFamiliares.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GestionFamiliares.Designer.cs">
+      <DependentUpon>GestionFamiliares.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TBC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ExpedientePersonal.resx">
       <DependentUpon>ExpedientePersonal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GestionFamiliares.resx">
+      <DependentUpon>GestionFamiliares.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TBC.resx">
       <DependentUpon>TBC.cs</DependentUpon>

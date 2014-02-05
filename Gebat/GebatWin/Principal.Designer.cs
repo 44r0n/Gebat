@@ -35,8 +35,9 @@
             this.cantidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comidaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tBCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.delitosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tBCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.expedientesPersonalesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,7 +89,8 @@
             this.gestionarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comidaToolStripMenuItem,
             this.delitosToolStripMenuItem,
-            this.tBCToolStripMenuItem});
+            this.tBCToolStripMenuItem,
+            this.expedientesPersonalesToolStripMenuItem});
             this.gestionarToolStripMenuItem.Name = "gestionarToolStripMenuItem";
             this.gestionarToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.gestionarToolStripMenuItem.Text = "Gestionar";
@@ -96,23 +98,30 @@
             // comidaToolStripMenuItem
             // 
             this.comidaToolStripMenuItem.Name = "comidaToolStripMenuItem";
-            this.comidaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.comidaToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.comidaToolStripMenuItem.Text = "Comida";
             this.comidaToolStripMenuItem.Click += new System.EventHandler(this.comidaToolStripMenuItem_Click);
-            // 
-            // tBCToolStripMenuItem
-            // 
-            this.tBCToolStripMenuItem.Name = "tBCToolStripMenuItem";
-            this.tBCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.tBCToolStripMenuItem.Text = "TBC";
-            this.tBCToolStripMenuItem.Click += new System.EventHandler(this.tBCToolStripMenuItem_Click);
             // 
             // delitosToolStripMenuItem
             // 
             this.delitosToolStripMenuItem.Name = "delitosToolStripMenuItem";
-            this.delitosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.delitosToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.delitosToolStripMenuItem.Text = "Delitos";
             this.delitosToolStripMenuItem.Click += new System.EventHandler(this.delitosToolStripMenuItem_Click);
+            // 
+            // tBCToolStripMenuItem
+            // 
+            this.tBCToolStripMenuItem.Name = "tBCToolStripMenuItem";
+            this.tBCToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.tBCToolStripMenuItem.Text = "TBC";
+            this.tBCToolStripMenuItem.Click += new System.EventHandler(this.tBCToolStripMenuItem_Click);
+            // 
+            // expedientesPersonalesToolStripMenuItem
+            // 
+            this.expedientesPersonalesToolStripMenuItem.Name = "expedientesPersonalesToolStripMenuItem";
+            this.expedientesPersonalesToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.expedientesPersonalesToolStripMenuItem.Text = "Expedientes Personales";
+            this.expedientesPersonalesToolStripMenuItem.Click += new System.EventHandler(this.expedientesPersonalesToolStripMenuItem_Click);
             // 
             // Principal
             // 
@@ -144,5 +153,6 @@
         private System.Windows.Forms.ToolStripMenuItem comidaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tBCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem delitosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem expedientesPersonalesToolStripMenuItem;
     }
 }
