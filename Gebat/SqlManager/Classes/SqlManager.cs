@@ -29,6 +29,11 @@ namespace SqlManager
 	{
 		private string provider;
 
+        private void providerNotSupported()
+        {
+            throw new NotSupportedException("The provider " + provider + " is not supported in this library.");
+        }
+
 		public SqlManager(string sqlprovider)
 		{
 			provider = sqlprovider;
@@ -36,62 +41,74 @@ namespace SqlManager
 
 		public DbConnection Connection(string sqlConnectionString)
 		{
-			DbConnection conn;
+			DbConnection conn = null;
 			switch (provider) 
 			{
 				case "System.Data.SqlClient":
 					conn = new SqlConnection (sqlConnectionString);
-					return conn;
+                    break;
 				case "MySql.Data.MySqlClient":
 					conn = new MySqlConnection (sqlConnectionString);
-					return conn;
+                    break;
 				default:
-					throw new NotSupportedException ("The provider "+provider+" is not supported in this library.");
+                    providerNotSupported();
+                    break;
 			}
+            return conn;
 		}
 
 		public DbCommand Command (string sqlQuery, DbConnection connection)
 		{
-			DbCommand command;
+			DbCommand command = null;
 			switch (provider) 
 			{
 				case "System.Data.SqlClient":
 					command = new SqlCommand (sqlQuery, (SqlConnection)connection);
-					return command;
+                    break;
 				case "MySql.Data.MySqlClient":
 					command = new MySqlCommand (sqlQuery, (MySqlConnection)connection);
-					return command;
+                    break;
 				default:
-					throw new NotSupportedException ("The provider "+provider+" is not supported in this library.");
+                    providerNotSupported();
+                    break;
 			}
+            return command;
 		}
 
 		public DbDataAdapter Adapter (string sqlQuery, DbConnection connection)
 		{
+            DbDataAdapter adapter = null;
 			switch (provider) 
 			{
 				case "System.Data.SqlClient":
-					SqlDataAdapter sqladapter = new SqlDataAdapter (sqlQuery, (SqlConnection) connection);
-					return sqladapter;
+                    adapter = new SqlDataAdapter(sqlQuery, (SqlConnection)connection);
+                    break;
 				case "MySql.Data.MySqlClient":
-					MySqlDataAdapter mysqladapter = new MySqlDataAdapter (sqlQuery, (MySqlConnection) connection);
-					return mysqladapter;
+                    adapter = new MySqlDataAdapter(sqlQuery, (MySqlConnection)connection);
+                    break;
 				default:
-					throw new NotSupportedException ("The provider "+provider+" is not supported in this library.");
+                    providerNotSupported();
+                    break;
 			}
+            return adapter;
 		}
 
 		public DbCommandBuilder Builder (DbDataAdapter adapter)
 		{
+            DbCommandBuilder builder = null;
 			switch (provider) 
 			{
 				case "System.Data.SqlClient":
-					return new SqlCommandBuilder ((SqlDataAdapter)adapter);
+					builder = new SqlCommandBuilder ((SqlDataAdapter)adapter);
+                    break;
 				case "MySql.Data.MySqlClient":
-					return new MySqlCommandBuilder ((MySqlDataAdapter)adapter);
+                    builder = new MySqlCommandBuilder((MySqlDataAdapter)adapter);
+                    break;
 				default:
-					throw new NotSupportedException ("The provider "+provider+" is not supported in this library.");
+                    providerNotSupported();
+                    break;
 			}
+            return builder;
 		}
 	}
 }
