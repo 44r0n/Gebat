@@ -67,59 +67,50 @@ namespace GebatCAD.Classes
 		/// <returns>La fila insertada, con los id's inicializados de la base de datos.</returns>
 		public virtual DataRow Insert(DataRow newRow)
 		{
-			try
+			if (newRow == null)
 			{
-				if (newRow == null)
-				{
-					throw new NullReferenceException("Cannot insert a null row");
-				}
-
-				string query = "SELECT * FROM " + this.TableName;
-				DbDataAdapter adapter;
-
-				if(uniqueconn == null)
-				{
-					connect();
-					adapter = sql.Adapter(query, conn);
-				}
-				else
-				{
-					adapter = ssql.Adapter(query,uniqueconn);
-				}
-
-				DataSet dSet = new DataSet();
-				adapter.Fill(dSet, this.TableName);
-				DataTable dTable = dSet.Tables[this.TableName];
-				rowReturned = true;
-
-				voidRow = dTable.NewRow();
-				DataRow addRow = dTable.NewRow();
-				addRow.ItemArray = newRow.ItemArray;
-				dTable.Rows.Add(addRow);
-
-                if (uniqueconn == null)
-                {
-                    sql.Builder(adapter);
-                }
-                else
-                {
-                    ssql.Builder(adapter);
-                }
-				adapter.Update(dSet, tablename);
-
-				return this.Last();
+				throw new NullReferenceException("Cannot insert a null row");
 			}
-			catch (Exception ex)
+
+			string query = "SELECT * FROM " + this.TableName;
+			DbDataAdapter adapter;
+
+			if(uniqueconn == null)
 			{
-				throw ex;
+				connect();
+				adapter = sql.Adapter(query, conn);
 			}
-			finally
+			else
 			{
-				if (uniqueconn == null)
-				{
-					disconnect ();
-				}
+				adapter = ssql.Adapter(query,uniqueconn);
 			}
+
+			DataSet dSet = new DataSet();
+			adapter.Fill(dSet, this.TableName);
+			DataTable dTable = dSet.Tables[this.TableName];
+			rowReturned = true;
+
+			voidRow = dTable.NewRow();
+			DataRow addRow = dTable.NewRow();
+			addRow.ItemArray = newRow.ItemArray;
+			dTable.Rows.Add(addRow);
+
+            if (uniqueconn == null)
+            {
+                sql.Builder(adapter);
+            }
+            else
+            {
+                ssql.Builder(adapter);
+            }
+			adapter.Update(dSet, tablename);
+
+            if (uniqueconn == null)
+			{
+				disconnect ();
+			}
+
+			return this.Last();
 		}
 
 		/// <summary>
@@ -128,57 +119,49 @@ namespace GebatCAD.Classes
 		/// <param name="newRow">Fila a modificar en la base de datos.</param>
 		public virtual void Update(DataRow newRow)
 		{
-			try
+			if (newRow == null)
 			{
-				if (newRow == null)
-				{
-					throw new NullReferenceException("Cannot update a null row");
-				}
-
-				string query = rowToQuery(newRow);
-				DbDataAdapter adapter;
-
-				if(uniqueconn == null)
-				{
-					connect();
-					adapter = sql.Adapter(query, conn);
-				}
-				else
-				{	
-					adapter = ssql.Adapter(query,uniqueconn);
-				}
-
-				DataSet dSet = new DataSet();
-				adapter.Fill(dSet, this.TableName);
-				DataTable dTable = dSet.Tables[this.TableName];
-				rowReturned = true;
-
-				dTable.Rows[0].BeginEdit();
-				dTable.Rows[0].ItemArray = newRow.ItemArray;
-				dTable.Rows[0].EndEdit();
-
-                if (uniqueconn == null)
-                {
-                    sql.Builder(adapter);
-                }
-                else
-                {
-                    ssql.Builder(adapter);
-                }
-
-				adapter.Update(dSet, tablename);
+				throw new NullReferenceException("Cannot update a null row");
 			}
-			catch (Exception ex)
+
+			string query = rowToQuery(newRow);
+			DbDataAdapter adapter;
+
+			if(uniqueconn == null)
 			{
-				throw ex;
+				connect();
+				adapter = sql.Adapter(query, conn);
 			}
-			finally
+			else
+			{	
+				adapter = ssql.Adapter(query,uniqueconn);
+			}
+
+			DataSet dSet = new DataSet();
+			adapter.Fill(dSet, this.TableName);
+			DataTable dTable = dSet.Tables[this.TableName];
+			rowReturned = true;
+
+			dTable.Rows[0].BeginEdit();
+			dTable.Rows[0].ItemArray = newRow.ItemArray;
+			dTable.Rows[0].EndEdit();
+
+            if (uniqueconn == null)
+            {
+                sql.Builder(adapter);
+            }
+            else
+            {
+                ssql.Builder(adapter);
+            }
+
+			adapter.Update(dSet, tablename);
+
+            if (uniqueconn == null)
 			{
-				if (uniqueconn == null)
-				{
-					disconnect ();
-				}
+				disconnect ();
 			}
+			
 		}
 
 		/// <summary>
@@ -187,54 +170,46 @@ namespace GebatCAD.Classes
 		/// <param name="delRow">Fila a eliminar.</param>
 		public virtual void Delete(DataRow delRow)
 		{
-			try
+			if (delRow == null)
 			{
-				if (delRow == null)
-				{
-					throw new NullReferenceException("Cannot delete a null row");
-				}
-
-				string query = rowToQuery(delRow);
-				DbDataAdapter adapter;
-
-				if(uniqueconn == null)
-				{
-					connect();
-					adapter = sql.Adapter(query, conn);
-				}
-				else
-				{
-					adapter = ssql.Adapter(query,uniqueconn);
-				}
-
-				DataSet dSet = new DataSet();
-				adapter.Fill(dSet, this.TableName);
-				DataTable dTable = dSet.Tables[this.TableName];
-				rowReturned = true;
-
-				dTable.Rows[0].Delete();
-
-                if (uniqueconn == null)
-                {
-                    sql.Builder(adapter);
-                }
-                else
-                {
-                    ssql.Builder(adapter);
-                }
-				adapter.Update(dSet, tablename);
+				throw new NullReferenceException("Cannot delete a null row");
 			}
-			catch (Exception ex)
+
+			string query = rowToQuery(delRow);
+			DbDataAdapter adapter;
+
+			if(uniqueconn == null)
 			{
-				throw ex;
+				connect();
+				adapter = sql.Adapter(query, conn);
 			}
-			finally
+			else
 			{
-				if (uniqueconn == null)
-				{
-					disconnect ();
-				}
+				adapter = ssql.Adapter(query,uniqueconn);
 			}
+
+			DataSet dSet = new DataSet();
+			adapter.Fill(dSet, this.TableName);
+			DataTable dTable = dSet.Tables[this.TableName];
+			rowReturned = true;
+
+			dTable.Rows[0].Delete();
+
+            if (uniqueconn == null)
+            {
+                sql.Builder(adapter);
+            }
+            else
+            {
+                ssql.Builder(adapter);
+            }
+			adapter.Update(dSet, tablename);
+			
+            if (uniqueconn == null)
+			{
+				disconnect ();
+			}
+			
 		}
 
 		#endregion

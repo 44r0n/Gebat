@@ -186,6 +186,7 @@ namespace GebatCAD.Classes
             }
             catch (Exception ex)
             {
+                //Log
                 return false;
             }
         }
@@ -260,43 +261,34 @@ namespace GebatCAD.Classes
         /// <returns>DataTable con los datos de la base de datos.</returns>
         public DataTable SelectAll()
         {
-            try
+            string query = "SELECT * FROM " + tablename;
+            DbDataAdapter adapter;
+            if (uniqueconn == null)
             {
-                string query = "SELECT * FROM " + tablename;
-                DbDataAdapter adapter;
-                if (uniqueconn == null)
-                {
-                    connect();
+                connect();
 
-                    adapter = sql.Adapter(query, conn);
-                }
-                else
-                {
-                    adapter = ssql.Adapter(query, uniqueconn);
-                }
-                DataTable datatable = new DataTable();
-                DataSet dataset = new DataSet();
-
-                adapter.Fill(dataset, tablename);
-                datatable = dataset.Tables[tablename];
-
-
-                voidRow = datatable.NewRow();
-                rowReturned = true;
-
-                return datatable;
+                adapter = sql.Adapter(query, conn);
             }
-            catch (Exception ex)
+            else
             {
-                throw ex;
+                adapter = ssql.Adapter(query, uniqueconn);
             }
-            finally
+            DataTable datatable = new DataTable();
+            DataSet dataset = new DataSet();
+
+            adapter.Fill(dataset, tablename);
+            datatable = dataset.Tables[tablename];
+
+
+            voidRow = datatable.NewRow();
+            rowReturned = true;
+    
+            if (uniqueconn == null)
             {
-                if (uniqueconn == null)
-                {
-                    disconnect();
-                }
-            }
+                disconnect();
+            }    
+
+            return datatable;
         }
 
 
@@ -336,45 +328,37 @@ namespace GebatCAD.Classes
         /// <returns>Devuelve una fila de la base de datos.</returns>
         public virtual DataRow Select(List<object> id)
         {
-            try
+            if (id.Count != this.idFormat.Count)
             {
-                if (id.Count != this.idFormat.Count)
+                throw new InvalidNumberIdException("Invalid number of id");
+            }
+            string query = "SELECT * FROM " + this.TableName + " WHERE ";
+            for (int i = 0; i < id.Count; i++)
+            {
+                query += this.idFormat[i] + " = " + id[i].ToString() + " ";
+                if (i != id.Count - 1)
                 {
-                    throw new InvalidNumberIdException("Invalid number of id");
+                    query += "AND ";
                 }
-                string query = "SELECT * FROM " + this.TableName + " WHERE ";
-                for (int i = 0; i < id.Count; i++)
-                {
-                    query += this.idFormat[i] + " = " + id[i].ToString() + " ";
-                    if (i != id.Count - 1)
-                    {
-                        query += "AND ";
-                    }
-                }
+            }
 
-                //connect();
-                DataTable dTable = ExecuteQuery(query);
-                rowReturned = true;
-                voidRow = dTable.NewRow();
-                if (dTable.Rows.Count == 1)
-                {
-                    return dTable.Rows[0];
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
+            //connect();
+            DataTable dTable = ExecuteQuery(query);
+            rowReturned = true;
+            voidRow = dTable.NewRow();
+                
+            if (uniqueconn == null)
             {
-                throw ex;
+                disconnect();
             }
-            finally
+                
+            if (dTable.Rows.Count == 1)
             {
-                if (uniqueconn == null)
-                {
-                    disconnect();
-                }
+                return dTable.Rows[0];
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -383,33 +367,24 @@ namespace GebatCAD.Classes
         /// </summary>
         public virtual DataTable First()
         {
-            try
-            {
-                string query = "SELECT * FROM " + this.tablename + " limit 1";
-                DataTable dTable = ExecuteQuery(query);
-                rowReturned = true;
-                voidRow = dTable.NewRow();
+            string query = "SELECT * FROM " + this.tablename + " limit 1";
+            DataTable dTable = ExecuteQuery(query);
+            rowReturned = true;
+            voidRow = dTable.NewRow();
 
-                if (dTable.Rows.Count == 1)
-                {
-                    return dTable;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
+            if (uniqueconn == null)
             {
-                throw ex;
+                disconnect();
             }
-            finally
+
+            if (dTable.Rows.Count == 1)
             {
-                if (uniqueconn == null)
-                {
-                    disconnect();
-                }
+                return dTable;
             }
+            else
+            {
+                return null;
+            }             
         }
 
         /// <summary>
@@ -421,55 +396,46 @@ namespace GebatCAD.Classes
         /// <returns>DaTatable con los datos de la base de datos.</returns>
         public virtual DataTable SelectWhere(string whereStatement, int startRecord = 0, int maxRecords = -1)
         {
-            try
+            if (startRecord < 0)
             {
-                if (startRecord < 0)
-                {
-                    throw new InvalidStartRecordException("Start record cannot be negative");
-                }
-
-                string query = "SELECT * FROM " + this.TableName + " WHERE " + whereStatement;
-                DbDataAdapter adapter;
-
-                if (uniqueconn == null)
-                {
-                    connect();
-                    adapter = sql.Adapter(query, conn);
-                }
-                else
-                {
-                    adapter = ssql.Adapter(query, uniqueconn);
-                }
-
-                DataTable dt = new DataTable();
-                DataSet ds = new DataSet();
-
-                if (maxRecords < 0)
-                {
-                    adapter.Fill(ds, this.TableName);
-                    dt = ds.Tables[this.TableName];
-                }
-                else
-                {
-                    adapter.Fill(startRecord, maxRecords, dt);
-                }
-
-                rowReturned = true;
-                voidRow = dt.NewRow();
-
-                return dt;
+                throw new InvalidStartRecordException("Start record cannot be negative");
             }
-            catch (Exception ex)
+
+            string query = "SELECT * FROM " + this.TableName + " WHERE " + whereStatement;
+            DbDataAdapter adapter;
+
+            if (uniqueconn == null)
             {
-                throw ex;
+                connect();
+                adapter = sql.Adapter(query, conn);
             }
-            finally
+            else
             {
-                if (uniqueconn == null)
-                {
-                    disconnect();
-                }
+                adapter = ssql.Adapter(query, uniqueconn);
             }
+
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+
+            if (maxRecords < 0)
+            {
+                adapter.Fill(ds, this.TableName);
+                dt = ds.Tables[this.TableName];
+            }
+            else
+            {
+                adapter.Fill(startRecord, maxRecords, dt);
+            }
+
+            rowReturned = true;
+            voidRow = dt.NewRow();
+
+            if (uniqueconn == null)
+            {
+                disconnect();
+            }
+
+            return dt;
         }
         #endregion
     }
