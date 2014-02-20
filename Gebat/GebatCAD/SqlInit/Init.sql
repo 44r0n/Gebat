@@ -1,9 +1,9 @@
-DROP TABLE IF EXISTS Telefonos;
+DROP TABLE IF EXISTS Phones;
 DROP TABLE IF EXISTS TBC;
-DROP TABLE IF EXISTS Delitos;
-DROP TABLE IF EXISTS Familiares;
-DROP TABLE IF EXISTS Personas;
-DROP TABLE IF EXISTS ExpedientesPersonales;
+DROP TABLE IF EXISTS Crimes;
+DROP TABLE IF EXISTS Familiars;
+DROP TABLE IF EXISTS People;
+DROP TABLE IF EXISTS PersonalDosier;
 DROP TABLE IF EXISTS OutgoingFood;
 DROP TABLE IF EXISTS EntryFood;
 DROP TABLE IF EXISTS Food;
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS EntryFood
 	Id int Primary Key AUTO_INCREMENT,
 	FoodType int,
 	QuantityIn int,
-	Fecha date,
+	DateTime date,
 	CONSTRAINT fk_EntryFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS OutgoingFood
 	Id int Primary Key AUTO_INCREMENT,
 	FoodType int,
 	QuantityOut int,
-	Fecha date,
+	DateTime date,
 	CONSTRAINT fk_OutgoingFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
@@ -78,33 +78,33 @@ END
 |
 DELIMITER ;
 
-CREATE TABLE IF NOT EXISTS Personas 
+CREATE TABLE IF NOT EXISTS People
 (
   Id int Primary Key AUTO_INCREMENT,
   DNI CHAR(9) Unique,
-  Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL,
-  FechaNac DATE NULL,
-  Sexo CHAR(1) NULL
+  Name VARCHAR(15) NULL,
+  Surname VARCHAR(45) NULL,
+  BirthDate DATE NULL,
+  Gender CHAR(1) NULL
 );
 
-CREATE TABLE IF NOT EXISTS ExpedientesPersonales
+CREATE TABLE IF NOT EXISTS PersonalDosier
 (
 	Id int PRIMARY KEY AUTO_INCREMENT,
-	Ingresos INT,
-	Observaciones varchar(255)
+	Income INT,
+	Observations varchar(255)
 );
 
-CREATE TABLE IF NOT EXISTS Familiares
+CREATE TABLE IF NOT EXISTS Familiars
 (
 	Id int Primary Key AUTO_INCREMENT,
 	DNI CHAR(9) NOT NULL,
-	Expediente int,
-	CONSTRAINT fk_Familiares_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT fk_Familiares_Expediente FOREIGN KEY (Expediente) REFERENCES ExpedientesPersonales (Id) ON DELETE SET NULL ON UPDATE CASCADE
+	Dosier int,
+	CONSTRAINT fk_Familiars_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_Familiars_Dosier FOREIGN KEY (Dosier) REFERENCES PersonalDosier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Delitos
+CREATE TABLE IF NOT EXISTS Crimes
 (
 	Id int Primary Key AUTO_INCREMENT,
 	Name VARCHAR(45) NOT NULL
@@ -114,32 +114,32 @@ CREATE TABLE IF NOT EXISTS TBC
 (
   Id int PRIMARY KEY AUTO_INCREMENT,
   DNI CHAR(9) NOT NULL,
-  Ejecutoria VARCHAR(10) NOT NULL,
-  Juzgado VARCHAR(45) NULL,
-  FInicio DATE NULL,
-  FFin DATE NULL,
-  NumJornadas INT,
-  Lunes BOOLEAN DEFAULT FALSE,
-  Martes BOOLEAN DEFAULT FALSE,
-  Miercoles BOOLEAN DEFAULT FALSE,
-  Jueves BOOLEAN DEFAULT FALSE,
-  Viernes BOOLEAN DEFAULT FALSE,
-  Sabado BOOLEAN DEFAULT FALSE,
-  Domingo BOOLEAN DEFAULT FALSE,
-  Delito int NOT NULL,
-  Unique (DNI, Ejecutoria),
-  CONSTRAINT fk_TBC_Delitos FOREIGN KEY (Delito) REFERENCES Delitos (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE
+  Judgement VARCHAR(10) NOT NULL,
+  Court VARCHAR(45) NULL,
+  BeginDate DATE NULL,
+  FinishDate DATE NULL,
+  NumJourney INT,
+  Monday BOOLEAN DEFAULT FALSE,
+  Tuesday BOOLEAN DEFAULT FALSE,
+  Wednesday BOOLEAN DEFAULT FALSE,
+  Thursday BOOLEAN DEFAULT FALSE,
+  Friday BOOLEAN DEFAULT FALSE,
+  Saturday BOOLEAN DEFAULT FALSE,
+  Sunday BOOLEAN DEFAULT FALSE,
+  Crime int NOT NULL,
+  Unique (DNI, Judgement),
+  CONSTRAINT fk_TBC_Crimes FOREIGN KEY (Crime) REFERENCES Crimes (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT fk_TBC_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Telefonos
+CREATE TABLE IF NOT EXISTS Phones
 (
 	Id int PRIMARY KEY AUTO_INCREMENT,
-	Numero CHAR(9) NOT NULL,
-	DNI CHAR(9) NOT NULL,
-	CONSTRAINT fk_Telefonos_Personas FOREIGN KEY (DNI) REFERENCES Personas(DNI) ON DELETE CASCADE ON UPDATE CASCADE
+	PhoneNumber CHAR(9) NOT NULL,
+	Owner CHAR(9) NOT NULL,
+	CONSTRAINT fk_Phones_People FOREIGN KEY (Owner) REFERENCES People(DNI) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Crime from People inner join TBC on (People.DNI = TBC.DNI);
 
-CREATE OR REPLACE VIEW DatosFamiliares as select Familiares.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo FROM Personas inner join Familiares on (Personas.DNI = Familiares.DNI);
+CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender FROM People inner join Familiars on (People.DNI = Familiars.DNI);
