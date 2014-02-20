@@ -72,7 +72,7 @@ namespace CADUnitTestProject.CADTests
             return voidRow;
         }
 
-        private ACAD tbc;
+        private AADL tbc;
 
         protected override string specificScript
         {
@@ -120,7 +120,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectAll()
         {
-            ACAD tbc = new CADTBC(connectionString);
+            AADL tbc = new CADTBC(connectionString);
             DataTable actual = tbc.SelectAll();
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
@@ -133,7 +133,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectWhere()
         {
-            ACAD tbc = new CADTBC(connectionString);
+            AADL tbc = new CADTBC(connectionString);
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
             DataTable actual = tbc.SelectWhere("Juzgado = 'Alicante'");
@@ -146,7 +146,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Insert()
         {
-            ACAD tbc = new CADTBC(connectionString);
+            AADL tbc = new CADTBC(connectionString);
             DataRow ins = tbc.GetVoidRow;
             ins["DNI"] = "23456789B";
             ins["Ejecutoria"] = "45/12";
@@ -185,7 +185,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Update()
         {
-            ACAD tbc = new CADTBC(connectionString);
+            AADL tbc = new CADTBC(connectionString);
             DataRow mod = tableFormat.NewRow();
             mod["Id"] = 1;
             mod["DNI"] = "12345678A";
@@ -208,7 +208,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Delete()
         {
-            ACAD tbc = new CADTBC(connectionString);
+            AADL tbc = new CADTBC(connectionString);
             DataRow del = tableFormat.NewRow();
             del["Id"] = 1;
             del["DNI"] = "12345678A";

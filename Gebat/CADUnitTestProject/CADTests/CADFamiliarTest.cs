@@ -21,7 +21,7 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private ACAD familiar;
+        private AADL familiar;
 
         protected override string specificScript
         {

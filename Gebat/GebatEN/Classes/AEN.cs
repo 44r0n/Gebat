@@ -29,7 +29,7 @@ namespace GebatEN.Classes
 	{
 		protected bool saved;
 		protected List<object> id = null;
-		protected ACAD cad;
+		protected AADL cad;
 
 		#region//Protected Methods
 

@@ -21,7 +21,7 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private ACAD telefono;
+        private AADL telefono;
 
         private void AssertRows(DataRow expected, DataRow actual)
         {

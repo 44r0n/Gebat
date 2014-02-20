@@ -2,7 +2,7 @@
 
 namespace GebatCAD.Classes
 {
-    public class CADPersonas : ACAD
+    public class CADPersonas : AADL
     {
         public CADPersonas(string connStringName)
             : base(connStringName)

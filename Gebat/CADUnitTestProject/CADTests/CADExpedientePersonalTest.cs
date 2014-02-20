@@ -22,7 +22,7 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private ACAD Expediente;
+        private AADL Expediente;
 
         protected override string specificScript
         {

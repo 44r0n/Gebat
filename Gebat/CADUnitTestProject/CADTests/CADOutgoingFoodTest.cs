@@ -32,7 +32,7 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private ACAD outgoing;
+        private AADL outgoing;
 
         private void AssertRow(DataRow expected, DataRow actual)
         {
@@ -86,7 +86,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectAll()
         {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new CADOutgoingFood(connectionString);
             DataTable actual = outgoing.SelectAll();
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
@@ -116,7 +116,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectWhere()
         {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new CADOutgoingFood(connectionString);
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
             row["Id"] = 3;
@@ -135,7 +135,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Insert()
         {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new CADOutgoingFood(connectionString);
             DataRow ins = outgoing.GetVoidRow;
             ins["FoodType"] = 4;
             ins["QuantityOut"] = 2;
@@ -152,7 +152,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Update()
         {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new CADOutgoingFood(connectionString);
             DataRow mod = tableFormat.NewRow();
             mod["Id"] = 2;
             mod["FoodType"] = 2;
@@ -164,7 +164,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Delete()
         {
-            ACAD outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new CADOutgoingFood(connectionString);
             DataRow del = tableFormat.NewRow();
             del["Id"] = 2;
             del["FoodType"] = 1;

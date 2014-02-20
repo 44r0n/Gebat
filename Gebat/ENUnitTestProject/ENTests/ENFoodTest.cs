@@ -12,7 +12,7 @@ namespace ENUnitTestProject.ENTests
         [ClassInitialize()]
         public static void stepasswd(TestContext context)
         {
-            ACAD.Password = "root";
+            AADL.Password = "root";
         }
 
         [TestMethod]

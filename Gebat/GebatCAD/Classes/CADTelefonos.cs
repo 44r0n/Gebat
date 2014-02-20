@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GebatCAD.Classes
 {
-    public class CADTelefonos : ACAD
+    public class CADTelefonos : AADL
     {
         public CADTelefonos(string connectionString)
             : base(connectionString)

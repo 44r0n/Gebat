@@ -31,7 +31,7 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private ACAD delito;
+        private AADL delito;
 
         private void AssertRow(DataRow expected, DataRow actual)
         {
@@ -62,7 +62,7 @@ namespace CADUnitTestProject.CADTests
         public void TestCount()
         {
             int expected = 1;
-            ACAD food = new CADDelito(connectionString);
+            AADL food = new CADDelito(connectionString);
             int actual = food.Count();
             Assert.AreEqual(expected, actual);
         }
@@ -95,7 +95,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Update()
         {
-            ACAD food = new CADDelito(connectionString);
+            AADL food = new CADDelito(connectionString);
             DataRow mod = food.GetVoidRow;
             mod["Id"] = 1;
             mod["Name"] = "Cajas";
@@ -105,7 +105,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Delete()
         {
-            ACAD food = new CADDelito(connectionString);
+            AADL food = new CADDelito(connectionString);
             DataRow del = food.GetVoidRow;
             del["Id"] = 1;
             del["Name"] = "Robo";

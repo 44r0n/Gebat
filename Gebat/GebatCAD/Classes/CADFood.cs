@@ -22,7 +22,7 @@ using System;
 
 namespace GebatCAD.Classes
 {
-	public class CADFood : ACAD
+	public class CADFood : AADL
 	{
 		public CADFood(string connStringName)
 			: base(connStringName)

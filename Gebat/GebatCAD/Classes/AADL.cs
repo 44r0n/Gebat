@@ -28,14 +28,14 @@ using SqlManager;
 
 namespace GebatCAD.Classes
 {
-	public abstract class ACAD : AVIEW
+	public abstract class AADL : AVIEW
 	{
 		#region //Public Methods
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="connStringName">Nombre de la connectionString que está definida en el archivo de configuración de la aplicación.</param>
-		public ACAD(string connStringName)
+		public AADL(string connStringName)
             :base(connStringName)
 		{
 			

@@ -2,7 +2,7 @@
 
 namespace GebatCAD.Classes
 {
-    public class CADOutgoingFood : ACAD
+    public class CADOutgoingFood : AADL
     {
         public CADOutgoingFood(string connStringName)
             : base(connStringName)

@@ -22,7 +22,7 @@ using System;
 
 namespace GebatCAD.Classes
 {
-	public class CADType : ACAD
+	public class CADType : AADL
 	{
 		public CADType (string connStringName)
 			:base(connStringName)

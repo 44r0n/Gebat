@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GebatCAD.Classes
 {
-    public class CADFamiliares : ACAD
+    public class CADFamiliares : AADL
     {
         public CADFamiliares(string connStringName)
             :base(connStringName)

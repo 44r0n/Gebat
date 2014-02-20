@@ -24,7 +24,7 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private ACAD persona;
+        private AADL persona;
 
         private void AssertRows(DataRow expected, DataRow actual)
         {

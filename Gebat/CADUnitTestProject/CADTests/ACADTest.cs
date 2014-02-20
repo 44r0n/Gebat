@@ -83,7 +83,7 @@ namespace CADUnitTestProject.CADTests
 
         protected void SetPasswd()
         {
-            ACAD.Password = "root";
+            AADL.Password = "root";
         }
     }
 }

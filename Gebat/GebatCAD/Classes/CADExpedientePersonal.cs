@@ -2,7 +2,7 @@
 
 namespace GebatCAD.Classes
 {
-    public class CADExpedientePersonal : ACAD
+    public class CADExpedientePersonal : AADL
     {
         public CADExpedientePersonal(string connectionString)
             :base(connectionString)

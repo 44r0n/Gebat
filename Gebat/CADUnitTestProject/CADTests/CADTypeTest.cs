@@ -37,7 +37,7 @@ namespace CADUnitTestProject.CADTests
             Assert.AreEqual(expected["Name"], actual["Name"]);
         }
 
-        private ACAD type;
+        private AADL type;
 
         [TestInitialize()]
         public void InnitTest()
