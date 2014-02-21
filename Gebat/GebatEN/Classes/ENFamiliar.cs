@@ -64,7 +64,7 @@ namespace GebatEN.Classes
         public ENFamiliar(string DNI, string Nombre, string Apellidos, DateTime FechaNac, sexo Genero)
             : base(DNI, Nombre, Apellidos, FechaNac, Genero)
         {
-            cad = new CADFamiliares(defaultConnString);
+            cad = new ADLFamiliars(defaultConnString);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace GebatEN.Classes
         public ENFamiliar()
             :base()
         {
-            cad = new CADPersonas(defaultConnString);
+            cad = new ADLPeople(defaultConnString);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace GebatEN.Classes
         /// <returns>Familiar en formato AEN.</returns>
         public override AEN Read(List<int> id)
         {
-            AVIEW vfam = new VIEWDatosFamiliares(defaultConnString);
+            AVIEW vfam = new VIEWFamiliarData(defaultConnString);
             ENFamiliar ret = new ENFamiliar();
             List<object> param = new List<object>();
             param.Add(id[0]);
@@ -106,7 +106,7 @@ namespace GebatEN.Classes
         public override List<AEN> ReadAll()
         {
             List<AEN> ret = new List<AEN>();
-            VIEWDatosFamiliares tfam = new VIEWDatosFamiliares(defaultConnString);
+            VIEWFamiliarData tfam = new VIEWFamiliarData(defaultConnString);
             DataTable tabla = tfam.SelectAll();
             foreach (DataRow rows in tabla.Rows)
             {
@@ -122,7 +122,7 @@ namespace GebatEN.Classes
         /// </summary>
         public override void Save()
         {
-            CADPersonas per = new CADPersonas(defaultConnString);
+            ADLPeople per = new ADLPeople(defaultConnString);
             if (!this.saved)
             {
                 if (!alreadyInPerson())
@@ -147,7 +147,7 @@ namespace GebatEN.Classes
         public override List<AENPersona> ReadByDNI(string dni)
         {
             List<AENPersona> ret = new List<AENPersona>();
-            DataTable tabla = new VIEWDatosFamiliares(defaultConnString).SelectWhere("DNI = '" + dni + "'");
+            DataTable tabla = new VIEWFamiliarData(defaultConnString).SelectWhere("DNI = '" + dni + "'");
             foreach (DataRow fila in tabla.Rows)
             {
                 ENFamiliar nuevo = new ENFamiliar();

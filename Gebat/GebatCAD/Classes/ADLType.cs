@@ -22,9 +22,9 @@ using System;
 
 namespace GebatCAD.Classes
 {
-	public class CADType : AADL
+	public class ADLType : AADL
 	{
-		public CADType (string connStringName)
+		public ADLType (string connStringName)
 			:base(connStringName)
 		{
 			this.tablename = "Type";

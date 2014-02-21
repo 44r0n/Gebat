@@ -10,7 +10,7 @@ namespace GebatEN.Classes
     {
 
         #region//Atributes
-        private CADPersonas personas;
+        private ADLPeople personas;
         private string dni;
         private string apellidos;
         private string nombre;
@@ -103,7 +103,7 @@ namespace GebatEN.Classes
         /// </summary>
         private void loadTelfs()
         {
-            CADTelefonos cadtelfs = new CADTelefonos(defaultConnString);
+            ADLPhones cadtelfs = new ADLPhones(defaultConnString);
             telefonos = new List<string>();
             DataTable telfs = cadtelfs.SelectWhere("DNI = '" + this.dni + "'");
             foreach (DataRow row in telfs.Rows)
@@ -125,7 +125,7 @@ namespace GebatEN.Classes
             {
                 if (personas == null)
                 {
-                    personas = new CADPersonas(defaultConnString);
+                    personas = new ADLPeople(defaultConnString);
                 }
                 DataRow ret = personas.GetVoidRow;
                 if (this.id != null)
@@ -187,7 +187,7 @@ namespace GebatEN.Classes
         /// <returns>True si está guardada en la tabla, false en caso contrario.</returns>
         protected bool alreadyInPerson()
         {
-            if (new CADPersonas(defaultConnString).SelectWhere("DNI = '" + this.DNI + "'").Rows.Count == 1)
+            if (new ADLPeople(defaultConnString).SelectWhere("DNI = '" + this.DNI + "'").Rows.Count == 1)
             {
                 return true;
             }
@@ -326,7 +326,7 @@ namespace GebatEN.Classes
         public AENPersona(string DNI, string Nombre, string Apellidos, DateTime FechaNac, sexo Genero)
             :base()
         {
-            personas = new CADPersonas(defaultConnString);
+            personas = new ADLPeople(defaultConnString);
             //this.id = new List<object>(); -> ni se te ocurra descomentar esta línea.
             this.DNI = DNI;
             this.nombre = Nombre;
@@ -340,7 +340,7 @@ namespace GebatEN.Classes
         /// </summary>
         public AENPersona()
         {
-            personas = new CADPersonas(defaultConnString);
+            personas = new ADLPeople(defaultConnString);
             this.id = new List<object>();
         }
 
@@ -357,7 +357,7 @@ namespace GebatEN.Classes
         /// <param name="numero">Nuevo numero de telefono.</param>
         public void AddTelf(string numero)
         {
-            CADTelefonos cadtelfs = new CADTelefonos(defaultConnString);
+            ADLPhones cadtelfs = new ADLPhones(defaultConnString);
             DataRow newrow = cadtelfs.GetVoidRow;
             newrow["Numero"] = numero;
             newrow["DNI"] = this.dni;
@@ -375,7 +375,7 @@ namespace GebatEN.Classes
         /// <param name="numero">Número de teléfono a eliminar.</param>
         public void DelTelf(string numero)
         {
-            CADTelefonos cadtelfs = new CADTelefonos(defaultConnString);
+            ADLPhones cadtelfs = new ADLPhones(defaultConnString);
             DataTable del = cadtelfs.SelectWhere("Numero = " + numero + " AND DNI = '" + this.dni+"'");
             if (del.Rows.Count == 1)
             {

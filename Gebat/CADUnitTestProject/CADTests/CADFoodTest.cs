@@ -47,7 +47,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            food = new CADFood(connectionString);
+            food = new ADLFood(connectionString);
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace CADUnitTestProject.CADTests
         public void TestCount()
         {
             int expected = 3;
-            AADL food = new CADFood(connectionString);
+            AADL food = new ADLFood(connectionString);
             int actual = food.Count();
             Assert.AreEqual(expected, actual);
         }
@@ -72,7 +72,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void TestLast()
         {
-            AADL food = new CADFood(connectionString);
+            AADL food = new ADLFood(connectionString);
             DataRow actual = food.Last();
             DataRow expected = food.GetVoidRow;
             expected["Id"] = 4;
@@ -85,7 +85,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectAll()
         {
-            AADL food = new CADFood(connectionString);
+            AADL food = new ADLFood(connectionString);
             DataTable actual = food.SelectAll();
             DataTable expected = this.tableFormat;
             DataRow row = expected.NewRow();
@@ -115,7 +115,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Select()
         {
-            AADL food = new CADFood(connectionString);
+            AADL food = new ADLFood(connectionString);
             List<object> ids = new List<object>();
             ids.Add(1);
             DataRow actual = food.Select(ids);
@@ -131,7 +131,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectWhere()
         {
-            AADL food = new CADFood(connectionString);
+            AADL food = new ADLFood(connectionString);
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
             row["Id"] = 1;
@@ -150,7 +150,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Insert()
         {
-            AADL food = new CADFood(connectionString);
+            AADL food = new ADLFood(connectionString);
             DataRow ins = food.GetVoidRow;
             ins["Name"] = "Peres";
             DataRow expected = food.GetVoidRow;
@@ -164,7 +164,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Update()
         {
-            AADL food = new CADFood(connectionString);
+            AADL food = new ADLFood(connectionString);
             DataRow mod = food.GetVoidRow;
             mod["Id"] = 1;
             mod["Name"] = "Peres";
@@ -174,7 +174,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Delete()
         {
-            AADL food = new CADFood(connectionString);
+            AADL food = new ADLFood(connectionString);
             DataRow del = food.GetVoidRow;
             del["Id"] = 1;
             del["Name"] = "Patates";

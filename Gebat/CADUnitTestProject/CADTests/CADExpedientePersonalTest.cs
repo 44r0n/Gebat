@@ -38,7 +38,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            Expediente = new CADExpedientePersonal(connectionString);
+            Expediente = new ADLPersonalDosier(connectionString);
         }
 
         [TestMethod]

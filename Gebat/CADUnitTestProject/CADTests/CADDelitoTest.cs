@@ -45,7 +45,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            delito = new CADDelito(connectionString);
+            delito = new ADLCrime(connectionString);
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace CADUnitTestProject.CADTests
         public void TestCount()
         {
             int expected = 1;
-            AADL food = new CADDelito(connectionString);
+            AADL food = new ADLCrime(connectionString);
             int actual = food.Count();
             Assert.AreEqual(expected, actual);
         }
@@ -95,7 +95,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Update()
         {
-            AADL food = new CADDelito(connectionString);
+            AADL food = new ADLCrime(connectionString);
             DataRow mod = food.GetVoidRow;
             mod["Id"] = 1;
             mod["Name"] = "Cajas";
@@ -105,7 +105,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Delete()
         {
-            AADL food = new CADDelito(connectionString);
+            AADL food = new ADLCrime(connectionString);
             DataRow del = food.GetVoidRow;
             del["Id"] = 1;
             del["Name"] = "Robo";

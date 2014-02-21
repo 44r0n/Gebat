@@ -62,7 +62,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            vfamiliar = new VIEWDatosFamiliares(connectionString);
+            vfamiliar = new VIEWFamiliarData(connectionString);
         }
 
         [TestMethod]

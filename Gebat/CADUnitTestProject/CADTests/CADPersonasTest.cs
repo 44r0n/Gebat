@@ -59,7 +59,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            persona = new CADPersonas(connectionString);
+            persona = new ADLPeople(connectionString);
         }
 
         [TestMethod]

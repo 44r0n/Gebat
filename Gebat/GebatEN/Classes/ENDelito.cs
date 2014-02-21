@@ -85,7 +85,7 @@ namespace GebatEN.Classes
                 throw new NullReferenceException("The name cannot be null");
             }
             this.name = name;
-            cad = new CADDelito(defaultConnString);
+            cad = new ADLCrime(defaultConnString);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace GebatEN.Classes
         /// </summary>
         public ENDelito()
         {
-            cad = new CADDelito(defaultConnString);
+            cad = new ADLCrime(defaultConnString);
         }
 
         /// <summary>

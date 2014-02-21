@@ -5,9 +5,9 @@ using System.Text;
 
 namespace GebatCAD.Classes
 {
-    public class CADFamiliares : AADL
+    public class ADLFamiliars : AADL
     {
-        public CADFamiliares(string connStringName)
+        public ADLFamiliars(string connStringName)
             :base(connStringName)
         {
             this.tablename = "Familiares";

@@ -372,7 +372,7 @@ namespace GebatEN.Classes
         public ENTBC(string DNI, string Ejecutoria, string Nombre, string Apellidos, DateTime FechaNac, sexo Genero ,string Juzgado, DateTime Finicio, DateTime Ffin, ENDelito delito)
             : base(DNI, Nombre, Apellidos, FechaNac, Genero)
         {
-            cad = new CADTBC(defaultConnString);
+            cad = new ADLTBC(defaultConnString);
             this.ejecutoria = Ejecutoria;
             this.juzgado = Juzgado;
             this.finicio = Finicio;
@@ -387,7 +387,7 @@ namespace GebatEN.Classes
         public ENTBC()
             : base()
         {
-            cad = new CADTBC(defaultConnString);
+            cad = new ADLTBC(defaultConnString);
             this.initDictionary();
         }
 
@@ -437,7 +437,7 @@ namespace GebatEN.Classes
         /// </summary>
         public override void Save()
         {
-            CADPersonas per = new CADPersonas(defaultConnString);
+            ADLPeople per = new ADLPeople(defaultConnString);
             if (!this.saved)
             {
                 if (!alreadyInPerson())

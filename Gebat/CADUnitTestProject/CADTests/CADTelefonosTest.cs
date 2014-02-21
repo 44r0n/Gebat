@@ -52,7 +52,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            telefono = new CADTelefonos(connectionString);
+            telefono = new ADLPhones(connectionString);
         }
 
         [TestMethod]

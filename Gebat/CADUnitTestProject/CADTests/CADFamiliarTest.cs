@@ -37,7 +37,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            familiar = new CADFamiliares(connectionString);
+            familiar = new ADLFamiliars(connectionString);
         }
 
         [TestMethod]

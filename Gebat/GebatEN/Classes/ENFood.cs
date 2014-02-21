@@ -41,7 +41,7 @@ namespace GebatEN.Classes
 		private ENFood()
 			: base()
 		{
-			cad = new CADFood(defaultConnString);
+			cad = new ADLFood(defaultConnString);
 			name = "";
 		}
 
@@ -155,7 +155,7 @@ namespace GebatEN.Classes
 			{
 				throw new NullReferenceException("The name cannot be null");
 			}
-			cad = new CADFood(defaultConnString);
+			cad = new ADLFood(defaultConnString);
 			this.name = name;
             this.quantity = 0;
 			this.type = type;

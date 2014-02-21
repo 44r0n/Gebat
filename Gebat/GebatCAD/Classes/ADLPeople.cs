@@ -2,12 +2,12 @@
 
 namespace GebatCAD.Classes
 {
-    public class CADPersonas : AADL
+    public class ADLPeople : AADL
     {
-        public CADPersonas(string connStringName)
+        public ADLPeople(string connStringName)
             : base(connStringName)
         {
-            this.tablename = "Personas";
+            this.tablename = "People";
             this.idFormat.Add("Id");
         }
     }

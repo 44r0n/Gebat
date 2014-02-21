@@ -5,12 +5,12 @@ using System.Text;
 
 namespace GebatCAD.Classes
 {
-    public class CADTelefonos : AADL
+    public class ADLPhones : AADL
     {
-        public CADTelefonos(string connectionString)
+        public ADLPhones(string connectionString)
             : base(connectionString)
         {
-            this.tablename = "Telefonos";
+            this.tablename = "Phones";
             this.idFormat.Add("Id");
         }
     }

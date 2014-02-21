@@ -2,13 +2,14 @@
 
 namespace GebatCAD.Classes
 {
-    public class CADEntryFood : AADL
+    public class ADLOutgoingFood : AADL
     {
-        public CADEntryFood(string connStringName)
+        public ADLOutgoingFood(string connStringName)
             : base(connStringName)
         {
-            this.tablename = "EntryFood";
+            this.tablename = "OutgoingFood";
             this.idFormat.Add("Id");
         }
+        
     }
 }

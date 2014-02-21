@@ -24,7 +24,7 @@ namespace GebatEN.Classes
         private void loadFamiliares()
         {
             this.familiares = new List<ENFamiliar>();
-            CADFamiliares cfam = new CADFamiliares(defaultConnString);
+            ADLFamiliars cfam = new ADLFamiliars(defaultConnString);
             foreach (DataRow row in cfam.SelectWhere("Expediente = " + (int)this.id[0]).Rows)
             {
                 ENFamiliar fam = new ENFamiliar();
@@ -136,7 +136,7 @@ namespace GebatEN.Classes
         public ENExpedientePersonal(int Ingresos, string Observaciones)
             :base()
         {
-            cad = new CADExpedientePersonal(defaultConnString);
+            cad = new ADLPersonalDosier(defaultConnString);
             this.ingresos = Ingresos;
             this.observaciones = Observaciones;
         }
@@ -147,7 +147,7 @@ namespace GebatEN.Classes
         public ENExpedientePersonal()
             :base()
         {
-            cad = new CADExpedientePersonal(defaultConnString);
+            cad = new ADLPersonalDosier(defaultConnString);
         }
 
         /// <summary>

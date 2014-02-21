@@ -47,7 +47,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            outgoing = new CADOutgoingFood(connectionString);
+            outgoing = new ADLOutgoingFood(connectionString);
         }
 
         [TestMethod]
@@ -86,7 +86,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectAll()
         {
-            AADL outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new ADLOutgoingFood(connectionString);
             DataTable actual = outgoing.SelectAll();
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
@@ -116,7 +116,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectWhere()
         {
-            AADL outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new ADLOutgoingFood(connectionString);
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
             row["Id"] = 3;
@@ -135,7 +135,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Insert()
         {
-            AADL outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new ADLOutgoingFood(connectionString);
             DataRow ins = outgoing.GetVoidRow;
             ins["FoodType"] = 4;
             ins["QuantityOut"] = 2;
@@ -152,7 +152,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Update()
         {
-            AADL outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new ADLOutgoingFood(connectionString);
             DataRow mod = tableFormat.NewRow();
             mod["Id"] = 2;
             mod["FoodType"] = 2;
@@ -164,7 +164,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Delete()
         {
-            AADL outgoing = new CADOutgoingFood(connectionString);
+            AADL outgoing = new ADLOutgoingFood(connectionString);
             DataRow del = tableFormat.NewRow();
             del["Id"] = 2;
             del["FoodType"] = 1;

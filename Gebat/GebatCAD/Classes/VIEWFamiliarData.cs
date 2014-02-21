@@ -5,12 +5,12 @@ using System.Text;
 
 namespace GebatCAD.Classes
 {
-    public class VIEWDatosFamiliares : AVIEW
+    public class VIEWFamiliarData : AVIEW
     {
-        public VIEWDatosFamiliares(string connStringName)
+        public VIEWFamiliarData(string connStringName)
             : base(connStringName)
         {
-            this.tablename = "DatosFamiliares";
+            this.tablename = "FamiliarData";
             this.idFormat.Add("Id");
         }
     }

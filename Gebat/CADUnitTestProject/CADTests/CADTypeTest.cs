@@ -45,7 +45,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();    
             InitBD(specificScript);
-            type = new CADType(connectionString);
+            type = new ADLType(connectionString);
         }
 
         [TestMethod]

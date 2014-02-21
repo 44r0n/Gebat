@@ -22,9 +22,9 @@ using System;
 
 namespace GebatCAD.Classes
 {
-	public class CADFood : AADL
+	public class ADLFood : AADL
 	{
-		public CADFood(string connStringName)
+		public ADLFood(string connStringName)
 			: base(connStringName)
 		{
 			this.tablename = "Food";

@@ -88,7 +88,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            tbc = new CADTBC(connectionString);
+            tbc = new ADLTBC(connectionString);
         }
 
         [TestMethod]
@@ -120,7 +120,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectAll()
         {
-            AADL tbc = new CADTBC(connectionString);
+            AADL tbc = new ADLTBC(connectionString);
             DataTable actual = tbc.SelectAll();
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
@@ -133,7 +133,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void SelectWhere()
         {
-            AADL tbc = new CADTBC(connectionString);
+            AADL tbc = new ADLTBC(connectionString);
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
             DataTable actual = tbc.SelectWhere("Juzgado = 'Alicante'");
@@ -146,7 +146,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Insert()
         {
-            AADL tbc = new CADTBC(connectionString);
+            AADL tbc = new ADLTBC(connectionString);
             DataRow ins = tbc.GetVoidRow;
             ins["DNI"] = "23456789B";
             ins["Ejecutoria"] = "45/12";
@@ -185,7 +185,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Update()
         {
-            AADL tbc = new CADTBC(connectionString);
+            AADL tbc = new ADLTBC(connectionString);
             DataRow mod = tableFormat.NewRow();
             mod["Id"] = 1;
             mod["DNI"] = "12345678A";
@@ -208,7 +208,7 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Delete()
         {
-            AADL tbc = new CADTBC(connectionString);
+            AADL tbc = new ADLTBC(connectionString);
             DataRow del = tableFormat.NewRow();
             del["Id"] = 1;
             del["DNI"] = "12345678A";
