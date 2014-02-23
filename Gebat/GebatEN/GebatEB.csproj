@@ -38,25 +38,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\AENPersona.cs" />
-    <Compile Include="Classes\ENDelito.cs" />
-    <Compile Include="Classes\ENExpedientePersonal.cs" />
-    <Compile Include="Classes\ENFamiliar.cs" />
-    <Compile Include="Classes\ENFoodIN.cs" />
-    <Compile Include="Classes\ENFoodOut.cs" />
-    <Compile Include="Classes\ENTBC.cs" />
-    <Compile Include="Enums\Genero.cs" />
+    <Compile Include="Classes\AEBPerson.cs" />
+    <Compile Include="Classes\EBCrime.cs" />
+    <Compile Include="Classes\EBPersonalDosier.cs" />
+    <Compile Include="Classes\EBFamiliar.cs" />
+    <Compile Include="Classes\EBFoodIN.cs" />
+    <Compile Include="Classes\EBFoodOut.cs" />
+    <Compile Include="Classes\EBTBC.cs" />
+    <Compile Include="Enums\MyGender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\AEN.cs" />
-    <Compile Include="Classes\ENFood.cs" />
-    <Compile Include="Classes\ENType.cs" />
+    <Compile Include="Classes\AEB.cs" />
+    <Compile Include="Classes\EBFood.cs" />
+    <Compile Include="Classes\EBType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\GebatCAD\GebatCAD.csproj">
+    <ProjectReference Include="..\GebatCAD\GebatADL.csproj">
       <Project>{F9CF59BE-07EC-41E9-90B6-11A03F2F6E10}</Project>
-      <Name>GebatCAD</Name>
+      <Name>GebatADL</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

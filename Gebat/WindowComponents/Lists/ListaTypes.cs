@@ -8,7 +8,7 @@ namespace GebatWindowComponents.Lists
     {
         #region//Private Methods
 
-        private void addItem(ENType newitem, int i)
+        private void addItem(EBType newitem, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString(), 0);
             item.SubItems.Add(newitem.Name);
@@ -26,9 +26,9 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                addItem((ENType)it, i);
+                addItem((EBType)it, i);
                 i++;
             }
         }
@@ -56,12 +56,12 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                ENType tipo = (ENType)it;
+                EBType tipo = (EBType)it;
                 if (tipo.Name.Contains(filtro))
                 {
-                    addItem((ENType)it, i);
+                    addItem((EBType)it, i);
                 }
                 i++;
             }

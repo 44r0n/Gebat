@@ -9,18 +9,18 @@ using GebatEN.Enums;
 
 namespace GebatEN.Classes
 {
-    public class ENTBC : AENPersona
+    public class EBTBC : AEBPerson
     {
         #region//Atributes
 
         private int idtbc = 0; 
-        private string ejecutoria;
-        private string juzgado;
-        private DateTime finicio;
-        private DateTime ffin;
-        private int numjornadas;
-        private Dictionary<DayOfWeek, bool> horario;
-        private ENDelito delito;
+        private string judgement;
+        private string court;
+        private DateTime begindate;
+        private DateTime finishdate;
+        private int numjourney;
+        private Dictionary<DayOfWeek, bool> timetable;
+        private EBCrime crime;
 
         #endregion
 
@@ -28,17 +28,17 @@ namespace GebatEN.Classes
 
         private void initDictionary()
         {
-            this.horario = new Dictionary<DayOfWeek, bool>();
-            this.horario[DayOfWeek.Monday] = true;
-            this.horario[DayOfWeek.Tuesday] = true;
-            this.horario[DayOfWeek.Wednesday] = true;
-            this.horario[DayOfWeek.Thursday] = true;
-            this.horario[DayOfWeek.Friday] = true;
-            this.horario[DayOfWeek.Saturday] = false;
-            this.horario[DayOfWeek.Sunday] = false;
+            this.timetable = new Dictionary<DayOfWeek, bool>();
+            this.timetable[DayOfWeek.Monday] = true;
+            this.timetable[DayOfWeek.Tuesday] = true;
+            this.timetable[DayOfWeek.Wednesday] = true;
+            this.timetable[DayOfWeek.Thursday] = true;
+            this.timetable[DayOfWeek.Friday] = true;
+            this.timetable[DayOfWeek.Saturday] = false;
+            this.timetable[DayOfWeek.Sunday] = false;
         }
 
-        private Paragraph titulo()
+        private Paragraph title()
         {
             Paragraph ret = new Paragraph();
             ret.Alignment = Element.ALIGN_CENTER;
@@ -47,54 +47,54 @@ namespace GebatEN.Classes
             return ret;
         }
 
-        private Paragraph cabecera()
+        private Paragraph head()
         {
             Paragraph ret = new Paragraph();
             ret.Alignment = Element.ALIGN_JUSTIFIED;
             ret.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
             ret.Add("DE ENTIDAD: CONSIGNAS SOLIDARIAS\n\n");//TODO: obtener el nombre de consignas solidarias desde el archivo de configuración.
-            ret.Add("AL SERIVICO SOCIAL PENITENCIARIO DE "+this.juzgado+"\n\n\n");
+            ret.Add("AL SERIVICO SOCIAL PENITENCIARIO DE "+this.court+"\n\n\n");
             return ret;
         }
 
-        private Paragraph cuerpo()
+        private Paragraph body()
         {
             Paragraph ret = new Paragraph();
             ret.Alignment = Element.ALIGN_JUSTIFIED;
             ret.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            ret.Add("Por la presente los comunicamos que "+this.Nombre + " " + this.Apellidos +" con DNI "+ this.DNI +" con respecto al cumplimiento de trabajo en beneficio a la comunidad, en Ejec. "+ this.ejecutoria +" del Juzgado J.P. "+ this.juzgado +" se ha producido la siguiente situación:\n\n");
+            ret.Add("Por la presente los comunicamos que "+this.Name + " " + this.Surname +" con DNI "+ this.DNI +" con respecto al cumplimiento de trabajo en beneficio a la comunidad, en Ejec. "+ this.judgement +" del Juzgado J.P. "+ this.court +" se ha producido la siguiente situación:\n\n");
             return ret;
         }
 
-        private Paragraph cuerpoInicio()
+        private Paragraph beginBody()
         {
-            Paragraph ret = cuerpo();
-            ret.Add("                X Iniciación de cumplimiento Fecha: "+ this.finicio.ToShortDateString()+ "\n                Horario: ");
-            if (this.horario[DayOfWeek.Monday])
+            Paragraph ret = body();
+            ret.Add("                X Iniciación de cumplimiento Fecha: "+ this.begindate.ToShortDateString()+ "\n                Horario: ");
+            if (this.timetable[DayOfWeek.Monday])
             {
                 ret.Add("Lunes ");
             }
-            if (this.horario[DayOfWeek.Tuesday])
+            if (this.timetable[DayOfWeek.Tuesday])
             {
                 ret.Add("Martes ");
             }
-            if (this.horario[DayOfWeek.Wednesday])
+            if (this.timetable[DayOfWeek.Wednesday])
             {
                 ret.Add("Miércoles ");
             }
-            if (this.horario[DayOfWeek.Thursday])
+            if (this.timetable[DayOfWeek.Thursday])
             {
                 ret.Add("Jueves ");
             }
-            if (this.horario[DayOfWeek.Friday])
+            if (this.timetable[DayOfWeek.Friday])
             {
                 ret.Add("Viernes ");
             }
-            if (this.horario[DayOfWeek.Saturday])
+            if (this.timetable[DayOfWeek.Saturday])
             {
                 ret.Add("Sábado ");
             }
-            if (this.horario[DayOfWeek.Sunday])
+            if (this.timetable[DayOfWeek.Sunday])
             {
                 ret.Add("Domingo");
             }
@@ -103,26 +103,26 @@ namespace GebatEN.Classes
             return ret;
         }
 
-        private Paragraph pie()
+        private Paragraph foot()
         {
             Paragraph ret = new Paragraph();
             ret.Alignment = Element.ALIGN_RIGHT;
             ret.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            ret.Add("En Elda a "+ this.ffin.ToShortDateString() + "                        \n");
+            ret.Add("En Elda a "+ this.finishdate.ToShortDateString() + "                        \n");
             ret.Add("Por la entidad.                        \n\n\n\n");
             ret.Add("Firmado:                       ");
             return ret;
         }
 
-        private Paragraph cuerpoFin()
+        private Paragraph endBody()
         {
-            Paragraph ret = cuerpo();
-            ret.Add("               X Finalización de cumplimiento: " + this.ffin.ToShortDateString() + "\n                        Total de Jornadas cumplidas: "+this.numjornadas);
+            Paragraph ret = body();
+            ret.Add("               X Finalización de cumplimiento: " + this.finishdate.ToShortDateString() + "\n                        Total de Jornadas cumplidas: "+this.numjourney);
             ret.Add("\n\n");
             return ret;
         }
 
-        private Paragraph tituloFirmas()
+        private Paragraph signatureTitle()
         {
             Paragraph ret = new Paragraph();
             ret.Alignment = Element.ALIGN_JUSTIFIED;
@@ -131,16 +131,16 @@ namespace GebatEN.Classes
             return ret;
         }
 
-        private Paragraph cuerpoFirmas()
+        private Paragraph singarutreBody()
         {
-            Paragraph cuerpo = new Paragraph();
-            cuerpo.Alignment = Element.ALIGN_JUSTIFIED;
-            cuerpo.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
-            cuerpo.Add("Nombre y apellidos: " + this.Nombre + " " + this.Apellidos + "\nDNI: " + this.DNI + " Ejecutoria: " + this.ejecutoria + " Juzgado: "+ this.juzgado +"\n");
-            return cuerpo;
+            Paragraph body = new Paragraph();
+            body.Alignment = Element.ALIGN_JUSTIFIED;
+            body.Font = FontFactory.GetFont(FontFactory.TIMES, 12);
+            body.Add("Nombre y apellidos: " + this.Name + " " + this.Surname + "\nDNI: " + this.DNI + " Ejecutoria: " + this.judgement + " Juzgado: "+ this.court +"\n");
+            return body;
         }
 
-        private PdfPTable tablaIniciada()
+        private PdfPTable beginTable()
         {
             Font f = FontFactory.GetFont(FontFactory.TIMES, 12, Element.ALIGN_CENTER);
 
@@ -156,27 +156,27 @@ namespace GebatEN.Classes
             return table;
         }
 
-        private PdfPTable tablaCompleta()
+        private PdfPTable comleteTable()
         {
             Font f = FontFactory.GetFont(FontFactory.TIMES, 12, Element.ALIGN_CENTER);
-            PdfPTable table = tablaIniciada();
-            DateTime inicio = this.finicio;
+            PdfPTable table = beginTable();
+            DateTime begin = this.begindate;
             PdfPCell cell = null;
             PdfPCell voidcell = new PdfPCell(new Phrase(new Chunk("\n\n\n\n", f)));
             int nj = 1;
-            while (inicio < this.ffin)
+            while (begin < this.finishdate)
             {
-                if (horario[inicio.DayOfWeek])
+                if (timetable[begin.DayOfWeek])
                 {
                     table.AddCell(voidcell);
-                    cell = new PdfPCell(new Phrase(new Chunk("\n\n"+inicio.ToShortDateString()+"\n\n",f)));
+                    cell = new PdfPCell(new Phrase(new Chunk("\n\n"+begin.ToShortDateString()+"\n\n",f)));
                     table.AddCell(cell);
                     table.AddCell(voidcell);
                     table.AddCell(new PdfPCell(new Phrase(new Chunk(nj.ToString(), f))));
                     nj++;
 
                 }
-                inicio = inicio.AddDays(1);
+                begin = begin.AddDays(1);
             }
 
 
@@ -194,25 +194,25 @@ namespace GebatEN.Classes
         {
             get
             {
-                DataRow ret = cad.GetVoidRow;
+                DataRow ret = adl.GetVoidRow;
                 if (this.idtbc != 0)
                 {
                     ret["Id"] = this.idtbc;
                 }
                 ret["DNI"] = this.DNI;
-                ret["Ejecutoria"] = this.ejecutoria;
-                ret["Juzgado"] = this.juzgado;
-                ret["FInicio"] = this.finicio;
-                ret["FFin"] = this.ffin;
-                ret["NumJornadas"] = this.numjornadas;
-                ret["Lunes"] = this.horario[DayOfWeek.Monday];
-                ret["Martes"] = this.horario[DayOfWeek.Tuesday];
-                ret["Miercoles"] = this.horario[DayOfWeek.Wednesday];
-                ret["Jueves"] = this.horario[DayOfWeek.Thursday];
-                ret["Viernes"] = this.horario[DayOfWeek.Friday];
-                ret["Sabado"] = this.horario[DayOfWeek.Saturday];
-                ret["Domingo"] = this.horario[DayOfWeek.Sunday];
-                ret["Delito"] = this.delito.Id[0];
+                ret["Judgement"] = this.judgement;
+                ret["Court"] = this.court;
+                ret["BeginDate"] = this.begindate;
+                ret["FinishDate"] = this.finishdate;
+                ret["NumJourney"] = this.numjourney;
+                ret["Monday"] = this.timetable[DayOfWeek.Monday];
+                ret["Tuesday"] = this.timetable[DayOfWeek.Tuesday];
+                ret["Wednesday"] = this.timetable[DayOfWeek.Wednesday];
+                ret["Thursday"] = this.timetable[DayOfWeek.Thursday];
+                ret["Friday"] = this.timetable[DayOfWeek.Friday];
+                ret["Saturday"] = this.timetable[DayOfWeek.Saturday];
+                ret["Sunday"] = this.timetable[DayOfWeek.Sunday];
+                ret["Crime"] = this.crime.Id[0];
                 return ret;
             }
         }
@@ -224,24 +224,24 @@ namespace GebatEN.Classes
         internal override void FromRow(DataRow row)
         {
             base.FromRow(row);
-            this.ejecutoria = (string)row["Ejecutoria"];
+            this.judgement = (string)row["Judgement"];
             this.idtbc = (int)row["Id"];
-            this.juzgado = (string)row["Juzgado"];
-            this.finicio = (DateTime)row["FInicio"];
-            this.ffin = (DateTime)row["FFin"];
-            this.numjornadas = (int)row["NumJornadas"];
-            this.horario[DayOfWeek.Monday] = (bool)row["Lunes"];
-            this.horario[DayOfWeek.Tuesday] = (bool)row["Martes"];
-            this.horario[DayOfWeek.Wednesday] = (bool)row["Miercoles"];
-            this.horario[DayOfWeek.Thursday] = (bool)row["Jueves"];
-            this.horario[DayOfWeek.Friday] = (bool)row["Viernes"];
-            this.horario[DayOfWeek.Saturday] = (bool)row["Sabado"];
-            this.horario[DayOfWeek.Sunday] = (bool)row["Domingo"];
-            if (row["Delito"] != DBNull.Value)
+            this.court = (string)row["Court"];
+            this.begindate = (DateTime)row["BeginDate"];
+            this.finishdate = (DateTime)row["FinishDate"];
+            this.numjourney = (int)row["NumJourney"];
+            this.timetable[DayOfWeek.Monday] = (bool)row["Monday"];
+            this.timetable[DayOfWeek.Tuesday] = (bool)row["Tuesday"];
+            this.timetable[DayOfWeek.Wednesday] = (bool)row["Wednesday"];
+            this.timetable[DayOfWeek.Thursday] = (bool)row["Thursday"];
+            this.timetable[DayOfWeek.Friday] = (bool)row["Friday"];
+            this.timetable[DayOfWeek.Saturday] = (bool)row["Saturday"];
+            this.timetable[DayOfWeek.Sunday] = (bool)row["Sunday"];
+            if (row["Crime"] != DBNull.Value)
             {
                 List<int> ids = new List<int>();
-                ids.Add((int)row["Delito"]);
-                delito = (ENDelito)new ENDelito().Read(ids);
+                ids.Add((int)row["Crime"]);
+                crime = (EBCrime)new EBCrime().Read(ids);
             }
             this.saved = true;
         }
@@ -253,105 +253,105 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene y establece la ejecutoria.
         /// </summary>
-        public string Ejecutoria//TODO: comprobar que el formato de la ejecutoria a la hora de asignar.
+        public string Judgement//TODO: comprobar que el formato de la ejecutoria a la hora de asignar.
         {
             get
             {
-                return this.ejecutoria;
+                return this.judgement;
             }
             set
             {
-                this.ejecutoria = value;
+                this.judgement = value;
             }
         }
 
         /// <summary>
         /// Obtiene y establece el Juzgado.
         /// </summary>
-        public string Juzgado
+        public string Court
         {
             get
             {
-                return this.juzgado;
+                return this.court;
             }
             set
             {
-                this.juzgado = value;
+                this.court = value;
             }
         }
 
         /// <summary>
         /// Obtiene y establece la fecha de inicio.
         /// </summary>
-        public DateTime FInicio
+        public DateTime BeginDate
         {
             get
             {
-                return this.finicio;
+                return this.begindate;
             }
             set
             {
-                this.finicio = value;
+                this.begindate = value;
             }
         }
 
         /// <summary>
         /// Obtiene y establece la fecha de fin.
         /// </summary>
-        public DateTime FFin
+        public DateTime FinishDate
         {
             get
             {
-                return this.ffin;
+                return this.finishdate;
             }
             set
             {
-                this.ffin = value;
+                this.finishdate = value;
             }
         }
 
         /// <summary>
         /// Obtiene y establece el número de jornadas que debe realizar.
         /// </summary>
-        public int NumJornadas
+        public int NumJourney
         {
             get
             {
-                return this.numjornadas;
+                return this.numjourney;
             }
             set
             {
-                this.numjornadas = value;
+                this.numjourney = value;
             }
         }
 
         /// <summary>
         /// Obtiene y establece el horario del TBC.
         /// </summary>
-        public Dictionary<DayOfWeek, bool> Horario
+        public Dictionary<DayOfWeek, bool> Timetable
         {
             get
             {
-                return this.horario;
+                return this.timetable;
             }
             set
             {
-                this.horario = value;
+                this.timetable = value;
             }
         }
 
         /// <summary>
         /// Obtiene y establece el delito de TBC.
         /// </summary>
-        public ENDelito Delito
+        public EBCrime Crime
         {
             get
             {
-                return delito;
+                return crime;
             }
             set
             {
-                delito = value;
+                crime = value;
             }
         }
 
@@ -363,31 +363,31 @@ namespace GebatEN.Classes
         /// Constructor de TBC
         /// </summary>
         /// <param name="DNI">DNI de la persona.</param>
-        /// <param name="Ejecutoria">Ejecutoria de TBC.</param>
-        /// <param name="Nombre">Nombre de la persona.</param>
-        /// <param name="Apellidos">Apellidos de la persona.</param>
-        /// <param name="Juzgado">Juzagod de TBC.</param>
-        /// <param name="Finicio">Fecha de inicio de cumplimiento.</param>
-        /// <param name="Ffin">Fecha final de cumplimiento.</param>
-        public ENTBC(string DNI, string Ejecutoria, string Nombre, string Apellidos, DateTime FechaNac, sexo Genero ,string Juzgado, DateTime Finicio, DateTime Ffin, ENDelito delito)
-            : base(DNI, Nombre, Apellidos, FechaNac, Genero)
+        /// <param name="Court">Ejecutoria de TBC.</param>
+        /// <param name="Name">Nombre de la persona.</param>
+        /// <param name="Surname">Apellidos de la persona.</param>
+        /// <param name="Court">Juzagod de TBC.</param>
+        /// <param name="BeginDate">Fecha de inicio de cumplimiento.</param>
+        /// <param name="FinishDate">Fecha final de cumplimiento.</param>
+        public EBTBC(string DNI, string Judgement, string Name, string Surname, DateTime BirthDate, MyGender Gender ,string Court, DateTime BeginDate, DateTime FinishDate, EBCrime Crime)
+            : base(DNI, Name, Surname, BirthDate, Gender)
         {
-            cad = new ADLTBC(defaultConnString);
-            this.ejecutoria = Ejecutoria;
-            this.juzgado = Juzgado;
-            this.finicio = Finicio;
-            this.ffin = Ffin;
+            adl = new ADLTBC(defaultConnString);
+            this.judgement = Judgement;
+            this.court = Court;
+            this.begindate = BeginDate;
+            this.finishdate = FinishDate;
             this.initDictionary();
-            this.delito = delito;
+            this.crime = Crime;
         }
 
         /// <summary>
         /// Constructor por defecto.
         /// </summary>
-        public ENTBC()
+        public EBTBC()
             : base()
         {
-            cad = new ADLTBC(defaultConnString);
+            adl = new ADLTBC(defaultConnString);
             this.initDictionary();
         }
 
@@ -396,10 +396,10 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará la persona TBC</param>
         /// <returns>Persona TBC en formato AEN.</returns>
-        public override AEN Read(List<int> id)
+        public override AEB Read(List<int> id)
         {
             AVIEW tbcp = new VIEWTBCPeople(defaultConnString);
-            ENTBC ret = new ENTBC();
+            EBTBC ret = new EBTBC();
             List<object> param = new List<object>();
             param.Add((object)id[0]);
             DataRow row = tbcp.Select(param);
@@ -418,16 +418,16 @@ namespace GebatEN.Classes
         /// Obtiene todos los tbc de la base de datos.
         /// </summary>
         /// <returns>Lista de TBC en formato AEN.</returns>
-        public override List<AEN> ReadAll()
+        public override List<AEB> ReadAll()
         {
-            List<AEN> ret = new List<AEN>();
+            List<AEB> ret = new List<AEB>();
             VIEWTBCPeople tbcp = new VIEWTBCPeople(defaultConnString);
-            DataTable tabla = tbcp.SelectAll();
-            foreach (DataRow rows in tabla.Rows)
+            DataTable table = tbcp.SelectAll();
+            foreach (DataRow rows in table.Rows)
             {
-                ENTBC nuevo = new ENTBC();
-                nuevo.FromRow(rows);
-                ret.Add((ENTBC)nuevo);
+                EBTBC newtbc = new EBTBC();
+                newtbc.FromRow(rows);
+                ret.Add((EBTBC)newtbc);
             }
             return ret;
         }
@@ -444,13 +444,13 @@ namespace GebatEN.Classes
                 {
                     per.Insert(base.ToRow);
                 }
-                this.FromRow(cad.Insert(this.ToRow));
+                this.FromRow(adl.Insert(this.ToRow));
                 this.saved = true;
             }
             else
             {
                 per.Update(base.ToRow);
-                cad.Update(this.ToRow);
+                adl.Update(this.ToRow);
             }
         }
 
@@ -459,15 +459,15 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="dni">DNI por el que se buscará a la persona.</param>
         /// <returns>Lista de objetos AENPersona.</returns>
-        public override List<AENPersona> ReadByDNI(string dni)
+        public override List<AEBPerson> ReadByDNI(string dni)
         {
-            List<AENPersona> ret = new List<AENPersona>();
-            DataTable tabla = new VIEWTBCPeople(defaultConnString).SelectWhere("DNI = '" + dni + "'");
-            foreach (DataRow fila in tabla.Rows)
+            List<AEBPerson> ret = new List<AEBPerson>();
+            DataTable table = new VIEWTBCPeople(defaultConnString).SelectWhere("DNI = '" + dni + "'");
+            foreach (DataRow row in table.Rows)
             {
-                ENTBC nuevo = new ENTBC();
-                nuevo.FromRow(fila);
-                ret.Add((AENPersona)nuevo);
+                EBTBC newtbc = new EBTBC();
+                newtbc.FromRow(row);
+                ret.Add((AEBPerson)newtbc);
             }
             return ret;
         }
@@ -475,57 +475,57 @@ namespace GebatEN.Classes
         /// <summary>
         /// Crea un documento pdf en ruta que conetiene el inicio de sentencia.
         /// </summary>
-        /// <param name="ruta">Ruta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
-        public void InicioSentenciaToPDF(string ruta)
+        /// <param name="file">Ruta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
+        public void BeginSentenceToPDF(string file)
         {
             Document document = new Document();
-            PdfWriter.GetInstance(document, new FileStream(ruta, FileMode.OpenOrCreate));
+            PdfWriter.GetInstance(document, new FileStream(file, FileMode.OpenOrCreate));
             document.Open();
             Paragraph voidparagraph = new Paragraph();
             voidparagraph.Add("\n");
-            document.Add(this.titulo());
+            document.Add(this.title());
             document.Add(voidparagraph);
-            document.Add(this.cabecera());            
-            document.Add(this.cuerpoInicio());
-            document.Add(this.pie());
+            document.Add(this.head());            
+            document.Add(this.beginBody());
+            document.Add(this.foot());
             document.Close();
         }
 
         /// <summary>
         /// Crea un documento pdf en la ruta que contiene el fin de sentencia.
         /// </summary>
-        /// <param name="ruta">Ruta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
-        public void FinSentenciaToPDF(string ruta)
+        /// <param name="file">Ruta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
+        public void FinishSentenceToPDF(string file)
         {
             Document document = new Document();
-            PdfWriter.GetInstance(document, new FileStream(ruta, FileMode.OpenOrCreate));
+            PdfWriter.GetInstance(document, new FileStream(file, FileMode.OpenOrCreate));
             document.Open();
             Paragraph voidparagraph = new Paragraph();
             voidparagraph.Add("\n");
-            document.Add(this.titulo());
+            document.Add(this.title());
             document.Add(voidparagraph);
-            document.Add(this.cabecera());
-            document.Add(this.cuerpoFin());
-            document.Add(this.pie());
+            document.Add(this.head());
+            document.Add(this.endBody());
+            document.Add(this.foot());
             document.Close();
         }
 
         /// <summary>
         /// Crea un documento pdf en la ruta que contiene la hoja de firmas.
         /// </summary>
-        /// <param name="ruta">Ruta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
-        public void FirmasToPDF(string ruta)
+        /// <param name="file">Ruta del archivo pdf a crear, se debe incluir la extensión pdf.</param>
+        public void SignaturesToPDF(string file)
         {
             Document document = new Document();
-            PdfWriter.GetInstance(document, new FileStream(ruta, FileMode.OpenOrCreate));
+            PdfWriter.GetInstance(document, new FileStream(file, FileMode.OpenOrCreate));
             document.Open();
             Paragraph voidparagraph = new Paragraph();
             voidparagraph.Add("\n");
-            document.Add(this.tituloFirmas());
+            document.Add(this.signatureTitle());
             document.Add(voidparagraph);
-            document.Add(this.cuerpoFirmas());
+            document.Add(this.singarutreBody());
             document.Add(voidparagraph);
-            document.Add(this.tablaCompleta());
+            document.Add(this.comleteTable());
             document.Close();
         }
 

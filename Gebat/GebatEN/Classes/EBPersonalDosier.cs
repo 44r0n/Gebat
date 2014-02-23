@@ -6,13 +6,13 @@ using GebatEN.Enums;
 
 namespace GebatEN.Classes
 {
-    public class ENExpedientePersonal : AEN
+    public class EBPersonalDosier : AEB
     {
         #region//Atributes
 
-        private List<ENFamiliar> familiares = null;
-        private int ingresos;
-        private string observaciones;
+        private List<EBFamiliar> familiars = null;
+        private int income;
+        private string observations;
 
         #endregion
 
@@ -21,15 +21,15 @@ namespace GebatEN.Classes
         /// <summary>
         /// Carga todos los familiares ligados a un expediente.
         /// </summary>
-        private void loadFamiliares()
+        private void loadFamiliars()
         {
-            this.familiares = new List<ENFamiliar>();
-            ADLFamiliars cfam = new ADLFamiliars(defaultConnString);
-            foreach (DataRow row in cfam.SelectWhere("Expediente = " + (int)this.id[0]).Rows)
+            this.familiars = new List<EBFamiliar>();
+            ADLFamiliars adlfam = new ADLFamiliars(defaultConnString);
+            foreach (DataRow row in adlfam.SelectWhere("Expediente = " + (int)this.id[0]).Rows)
             {
-                ENFamiliar fam = new ENFamiliar();
+                EBFamiliar fam = new EBFamiliar();
                 fam.FromRow(row);
-                this.familiares.Add(fam);
+                this.familiars.Add(fam);
             }
         }
 
@@ -44,13 +44,13 @@ namespace GebatEN.Classes
         {
             get 
             {
-                DataRow ret = cad.GetVoidRow;
+                DataRow ret = adl.GetVoidRow;
                 if (this.id != null)
                 {
                     ret["Id"] = (int)this.id[0];
                 }
-                ret["Ingresos"] = this.ingresos;
-                ret["Observaciones"] = this.observaciones;
+                ret["Income"] = this.income;
+                ret["Observations"] = this.observations;
                 return ret;
             }
         }
@@ -65,8 +65,8 @@ namespace GebatEN.Classes
             {
                 this.id = new List<object>();
                 this.id.Add((int)row["Id"]);
-                this.ingresos = (int)row["Ingresos"];
-                this.observaciones = (string)row["Observaciones"];
+                this.income = (int)row["Income"];
+                this.observations = (string)row["Observations"];
                 this.saved = true;
             }
             else
@@ -82,45 +82,45 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene y establece los ingresos.
         /// </summary>
-        public int Ingresos
+        public int Income
         {
             get
             {
-                return this.ingresos;
+                return this.income;
             }
             set
             {
-                this.ingresos = value;
+                this.income = value;
             }
         }
 
         /// <summary>
         /// Obtiene y establece las observaciones.
         /// </summary>
-        public string Observaciones
+        public string Observations
         {
             get
             {
-                return this.observaciones;
+                return this.observations;
             }
             set
             {
-                this.observaciones = value;
+                this.observations = value;
             }
         }
 
         /// <summary>
         /// Obtiene los familiares del expediente.
         /// </summary>
-        public List<ENFamiliar> Familiares
+        public List<EBFamiliar> Familiars
         {
             get
             {
-                if (this.familiares == null)
+                if (this.familiars == null)
                 {
-                    loadFamiliares();
+                    loadFamiliars();
                 }
-                return this.familiares;
+                return this.familiars;
             }
         }
 
@@ -131,23 +131,23 @@ namespace GebatEN.Classes
         /// <summary>
         /// Constructor del expediente.
         /// </summary>
-        /// <param name="Ingresos">Ingresos del expediente.</param>
-        /// <param name="Observaciones">Observaciones sobre el expediente.</param>
-        public ENExpedientePersonal(int Ingresos, string Observaciones)
+        /// <param name="Income">Ingresos del expediente.</param>
+        /// <param name="Observations">Observaciones sobre el expediente.</param>
+        public EBPersonalDosier(int Income, string Observations)
             :base()
         {
-            cad = new ADLPersonalDosier(defaultConnString);
-            this.ingresos = Ingresos;
-            this.observaciones = Observaciones;
+            adl = new ADLPersonalDosier(defaultConnString);
+            this.income = Income;
+            this.observations = Observations;
         }
 
         /// <summary>
         /// Constructor por defecto.
         /// </summary>
-        public ENExpedientePersonal()
+        public EBPersonalDosier()
             :base()
         {
-            cad = new ADLPersonalDosier(defaultConnString);
+            adl = new ADLPersonalDosier(defaultConnString);
         }
 
         /// <summary>
@@ -155,12 +155,12 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por le que se buscará el expediente.</param>
         /// <returns>Expediente en formato AEN.</returns>
-        public override AEN Read(List<int> id)
+        public override AEB Read(List<int> id)
         {
-            ENExpedientePersonal ret = new ENExpedientePersonal();
+            EBPersonalDosier ret = new EBPersonalDosier();
             List<object> param = new List<object>();
             param.Add(id[0]);
-            DataRow row = cad.Select(param);
+            DataRow row = adl.Select(param);
             if (row != null)
             {
                 ret.FromRow(row);
@@ -176,15 +176,15 @@ namespace GebatEN.Classes
         /// Obtiene todos los Expedientes en formate AEN.
         /// </summary>
         /// <returns>Lista de expedientes en formato AEN.</returns>
-        public override List<AEN> ReadAll()
+        public override List<AEB> ReadAll()
         {
-            List<AEN> ret = new List<AEN>();
-            DataTable tabla = cad.SelectAll();
-            foreach (DataRow rows in tabla.Rows)
+            List<AEB> ret = new List<AEB>();
+            DataTable table = adl.SelectAll();
+            foreach (DataRow rows in table.Rows)
             {
-                ENExpedientePersonal nuevo = new ENExpedientePersonal();
-                nuevo.FromRow(rows);
-                ret.Add((ENExpedientePersonal)nuevo);
+                EBPersonalDosier newdossier = new EBPersonalDosier();
+                newdossier.FromRow(rows);
+                ret.Add((EBPersonalDosier)newdossier);
             }
             return ret;
         }
@@ -193,12 +193,12 @@ namespace GebatEN.Classes
         /// Añade un familiar al expediente personal, guardando el familiar en la base de datos.
         /// </summary>
         /// <param name="familiar">Familiar a añadir.</param>
-        public void AddFamiliar(ENFamiliar familiar)
+        public void AddFamiliar(EBFamiliar familiar)
         {
-            loadFamiliares();
-            familiar.expediente = (int)this.id[0];
+            loadFamiliars();
+            familiar.dossier = (int)this.id[0];
             familiar.Save();
-            familiares.Add(familiar);
+            familiars.Add(familiar);
         }
 
         #endregion

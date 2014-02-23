@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlManager", "SqlManager\SqlManager.csproj", "{269E7C8B-AB29-4D57-8EF5-78AA6041B71D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatCAD", "GebatCAD\GebatCAD.csproj", "{F9CF59BE-07EC-41E9-90B6-11A03F2F6E10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatADL", "GebatCAD\GebatADL.csproj", "{F9CF59BE-07EC-41E9-90B6-11A03F2F6E10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CADUnitTestProject", "CADUnitTestProject\CADUnitTestProject.csproj", "{6CB4EB2A-5355-4BEE-9DEA-4B8E154ED4A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatEN", "GebatEN\GebatEN.csproj", "{017DA2FB-2F1F-4037-A234-F2AC68267DEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatEB", "GebatEN\GebatEB.csproj", "{017DA2FB-2F1F-4037-A234-F2AC68267DEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENUnitTestProject", "ENUnitTestProject\ENUnitTestProject.csproj", "{AB2ED90C-1130-41FB-BF66-999B29C74810}"
 EndProject

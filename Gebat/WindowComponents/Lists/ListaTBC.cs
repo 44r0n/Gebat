@@ -10,14 +10,14 @@ namespace GebatWindowComponents.Lists
 
         #region//Private Methods
 
-        private void addItem(ENTBC newitem, int i)
+        private void addItem(EBTBC newitem, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString(), 0);
             item.SubItems.Add(newitem.DNI);
-            item.SubItems.Add(newitem.Nombre);
-            item.SubItems.Add(newitem.Apellidos);
-            item.SubItems.Add(newitem.Edad.ToString());
-            if (newitem.Genero == sexo.Masculino)
+            item.SubItems.Add(newitem.Name);
+            item.SubItems.Add(newitem.Surname);
+            item.SubItems.Add(newitem.Age.ToString());
+            if (newitem.Gender == MyGender.Male)
             {
                 item.SubItems.Add("Hombre");
             }
@@ -25,11 +25,11 @@ namespace GebatWindowComponents.Lists
             {
                 item.SubItems.Add("Mujer");
             }
-            item.SubItems.Add(newitem.Juzgado);
-            item.SubItems.Add(newitem.Ejecutoria);
-            item.SubItems.Add(newitem.FInicio.ToShortDateString());
-            item.SubItems.Add(newitem.FFin.ToShortDateString());
-            item.SubItems.Add(newitem.Delito.Name);
+            item.SubItems.Add(newitem.Court);
+            item.SubItems.Add(newitem.Judgement);
+            item.SubItems.Add(newitem.BeginDate.ToShortDateString());
+            item.SubItems.Add(newitem.FinishDate.ToShortDateString());
+            item.SubItems.Add(newitem.Crime.Name);
             Items.Add(item);
         }
 
@@ -44,9 +44,9 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                addItem((ENTBC)it,i);
+                addItem((EBTBC)it,i);
                 i++;
             }
         }
@@ -79,12 +79,12 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                ENTBC tbc = (ENTBC)it;
+                EBTBC tbc = (EBTBC)it;
                 if (tbc.DNI.Contains(filtro))
                 {
-                    addItem((ENTBC)it, i);
+                    addItem((EBTBC)it, i);
                 }
                 i++;
             }

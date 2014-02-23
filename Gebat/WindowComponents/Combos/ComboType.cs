@@ -15,9 +15,9 @@ namespace GebatWindowComponents.Combos
         protected override void MostrarElementos()
         {
             Items.Clear();
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                ENType tipo = (ENType)it;
+                EBType tipo = (EBType)it;
                 this.Items.Add(tipo.Name);
             }
         }

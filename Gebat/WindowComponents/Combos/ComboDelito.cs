@@ -15,9 +15,9 @@ namespace GebatWindowComponents.Combos
         protected override void MostrarElementos()
         {
             Items.Clear();
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                ENDelito delito = (ENDelito)it;
+                EBCrime delito = (EBCrime)it;
                 this.Items.Add(delito.Name);
             }
         }

@@ -6,12 +6,12 @@ using GebatEN.Enums;
 
 namespace GebatEN.Classes
 {
-    public class ENFamiliar : AENPersona
+    public class EBFamiliar : AEBPerson
     {
         #region//Atributes
 
         private int idfam = 0;
-        internal int expediente = 0;
+        internal int dossier = 0;
 
         #endregion
 
@@ -24,15 +24,15 @@ namespace GebatEN.Classes
         {
             get
             {
-                DataRow ret = cad.GetVoidRow;
+                DataRow ret = adl.GetVoidRow;
                 if (this.idfam != 0)
                 {
                     ret["Id"] = this.idfam;
                 }
                 ret["DNI"] = this.DNI;
-                if (expediente != 0)
+                if (dossier != 0)
                 {
-                    ret["Expediente"] = expediente;
+                    ret["Dossier"] = dossier;
                 }
                 return ret;
             }
@@ -57,23 +57,23 @@ namespace GebatEN.Classes
         /// Constructor de Familiar
         /// </summary>
         /// <param name="DNI">DNI de la persona.</param>
-        /// <param name="Nombre">Nombre de la persona.</param>
-        /// <param name="Apellidos">Apellidos de la persona.</param>
-        /// <param name="FechaNac">Fecha de nacimiento de la persona.</param>
-        /// <param name="Genero">Genero de la persona.</param>
-        public ENFamiliar(string DNI, string Nombre, string Apellidos, DateTime FechaNac, sexo Genero)
-            : base(DNI, Nombre, Apellidos, FechaNac, Genero)
+        /// <param name="Name">Nombre de la persona.</param>
+        /// <param name="Surname">Apellidos de la persona.</param>
+        /// <param name="BirthDate">Fecha de nacimiento de la persona.</param>
+        /// <param name="Gender">Genero de la persona.</param>
+        public EBFamiliar(string DNI, string Name, string Surname, DateTime BirthDate, MyGender Gender)
+            : base(DNI, Name, Surname, BirthDate, Gender)
         {
-            cad = new ADLFamiliars(defaultConnString);
+            adl = new ADLFamiliars(defaultConnString);
         }
 
         /// <summary>
         /// Constructor por defecto.
         /// </summary>
-        public ENFamiliar()
+        public EBFamiliar()
             :base()
         {
-            cad = new ADLPeople(defaultConnString);
+            adl = new ADLPeople(defaultConnString);
         }
 
         /// <summary>
@@ -81,10 +81,10 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará el familiar.</param>
         /// <returns>Familiar en formato AEN.</returns>
-        public override AEN Read(List<int> id)
+        public override AEB Read(List<int> id)
         {
             AVIEW vfam = new VIEWFamiliarData(defaultConnString);
-            ENFamiliar ret = new ENFamiliar();
+            EBFamiliar ret = new EBFamiliar();
             List<object> param = new List<object>();
             param.Add(id[0]);
             DataRow row = vfam.Select(param);
@@ -103,16 +103,16 @@ namespace GebatEN.Classes
         /// Obtiene todos los familiares de la base de datos.
         /// </summary>
         /// <returns></returns>
-        public override List<AEN> ReadAll()
+        public override List<AEB> ReadAll()
         {
-            List<AEN> ret = new List<AEN>();
+            List<AEB> ret = new List<AEB>();
             VIEWFamiliarData tfam = new VIEWFamiliarData(defaultConnString);
-            DataTable tabla = tfam.SelectAll();
-            foreach (DataRow rows in tabla.Rows)
+            DataTable table = tfam.SelectAll();
+            foreach (DataRow rows in table.Rows)
             {
-                ENFamiliar nuevo = new ENFamiliar();
-                nuevo.FromRow(rows);
-                ret.Add((ENFamiliar)nuevo);
+                EBFamiliar newfamiliar = new EBFamiliar();
+                newfamiliar.FromRow(rows);
+                ret.Add((EBFamiliar)newfamiliar);
             }
             return ret;
         }
@@ -129,13 +129,13 @@ namespace GebatEN.Classes
                 {
                     per.Insert(base.ToRow);
                 }
-                this.FromRow(cad.Insert(this.ToRow));
+                this.FromRow(adl.Insert(this.ToRow));
                 this.saved = true;
             }
             else
             {
                 per.Update(base.ToRow);
-                cad.Update(this.ToRow);
+                adl.Update(this.ToRow);
             }
         }
 
@@ -144,15 +144,15 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="dni">DNI por el que se buscará a la persona.</param>
         /// <returns>Lista de objetos AENPersona.</returns>
-        public override List<AENPersona> ReadByDNI(string dni)
+        public override List<AEBPerson> ReadByDNI(string dni)
         {
-            List<AENPersona> ret = new List<AENPersona>();
-            DataTable tabla = new VIEWFamiliarData(defaultConnString).SelectWhere("DNI = '" + dni + "'");
-            foreach (DataRow fila in tabla.Rows)
+            List<AEBPerson> ret = new List<AEBPerson>();
+            DataTable table = new VIEWFamiliarData(defaultConnString).SelectWhere("DNI = '" + dni + "'");
+            foreach (DataRow row in table.Rows)
             {
-                ENFamiliar nuevo = new ENFamiliar();
-                nuevo.FromRow(fila);
-                ret.Add((AENPersona)nuevo);
+                EBFamiliar newfamiliar = new EBFamiliar();
+                newfamiliar.FromRow(row);
+                ret.Add((AEBPerson)newfamiliar);
             }
             return ret;
         }

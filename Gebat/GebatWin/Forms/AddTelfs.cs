@@ -7,12 +7,12 @@ namespace GebatWin.Forms
 {
     public partial class AddTelfs : Form
     {
-        private AENPersona persona;
+        private AEBPerson persona;
 
-        public AddTelfs(AENPersona persona)
+        public AddTelfs(AEBPerson persona)
         {
             InitializeComponent();
-            this.Text = "Añadir teléfono a " + persona.Nombre;
+            this.Text = "Añadir teléfono a " + persona.Name;
             this.persona = persona;
         }
 
@@ -27,7 +27,7 @@ namespace GebatWin.Forms
 
         private void buttonAddTelf_Click(object sender, EventArgs e)
         {
-            this.persona.AddTelf(textBoxTelf.Text);
+            this.persona.AddPhone(textBoxTelf.Text);
             textBoxTelf.Text = "";
             textBoxTelf.Focus();
             showTelfs();
@@ -37,7 +37,7 @@ namespace GebatWin.Forms
         {
             listViewTelfs.Items.Clear();
             int i = 0;
-            foreach (string telf in persona.Telefonos)
+            foreach (string telf in persona.Phones)
             {
                 ListViewItem item = new ListViewItem(i.ToString(), 0);
                 item.SubItems.Add(telf);
@@ -49,7 +49,7 @@ namespace GebatWin.Forms
         private void buttonDelTelf_Click(object sender, EventArgs e)
         {
 
-            persona.DelTelf(listViewTelfs.Items[listViewTelfs.SelectedIndices[0]].SubItems[1].Text);
+            persona.DelPhone(listViewTelfs.Items[listViewTelfs.SelectedIndices[0]].SubItems[1].Text);
             showTelfs();
         }
 

@@ -20,7 +20,7 @@ namespace ENUnitTestProject.ENTests
         {
             List<int> id = new List<int>();
             id.Add(2);
-            ENDelito delito = (ENDelito)new ENDelito().Read(id);
+            EBCrime delito = (EBCrime)new EBCrime().Read(id);
             Assert.AreEqual("Pelea", delito.Name);
             Assert.AreEqual(2, delito.Id[0]);
         }
@@ -29,40 +29,40 @@ namespace ENUnitTestProject.ENTests
         [ExpectedException(typeof(NullReferenceException))]
         public void ReadNullId()
         {
-            ENDelito delito = (ENDelito)new ENDelito().Read(null);
+            EBCrime delito = (EBCrime)new EBCrime().Read(null);
         }
 
         [TestMethod]
         public void ReadAll_Insert_Delete()
         {
-            List<AEN> general = new ENDelito().ReadAll();
-            List<ENDelito> expected = new List<ENDelito>();
-            ENDelito p = new ENDelito("Robo");
+            List<AEB> general = new EBCrime().ReadAll();
+            List<EBCrime> expected = new List<EBCrime>();
+            EBCrime p = new EBCrime("Robo");
             expected.Add(p);
-            ENDelito s = new ENDelito("Pelea");
+            EBCrime s = new EBCrime("Pelea");
             expected.Add(s);
-            ENDelito t = new ENDelito("Otro");
+            EBCrime t = new EBCrime("Otro");
             expected.Add(t);
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((ENDelito)general[i]).Name);
+                Assert.AreEqual(expected[i].Name, ((EBCrime)general[i]).Name);
             }
-            ENDelito ins = new ENDelito("De prueba");
+            EBCrime ins = new EBCrime("De prueba");
             ins.Save();
-            general = new ENDelito().ReadAll();
+            general = new EBCrime().ReadAll();
             expected.Add(ins);
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((ENDelito)general[i]).Name);
+                Assert.AreEqual(expected[i].Name, ((EBCrime)general[i]).Name);
             }
 
             ins.Delete();
             expected.RemoveAt(3);
 
-            general = new ENDelito().ReadAll();
+            general = new EBCrime().ReadAll();
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((ENDelito)general[i]).Name);
+                Assert.AreEqual(expected[i].Name, ((EBCrime)general[i]).Name);
             }
         }
     }

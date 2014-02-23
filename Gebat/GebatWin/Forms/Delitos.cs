@@ -13,7 +13,7 @@ namespace GebatWin.Forms
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
-            ENDelito nuevo = new ENDelito(textBoxNombre.Text);
+            EBCrime nuevo = new EBCrime(textBoxNombre.Text);
             nuevo.Save();
             listaDelito1.Add(nuevo);
             textBoxNombre.Text = "";
@@ -22,7 +22,7 @@ namespace GebatWin.Forms
 
         private void Delitos_Load(object sender, EventArgs e)
         {
-            listaDelito1.Refrescar(new ENDelito().ReadAll());
+            listaDelito1.Refrescar(new EBCrime().ReadAll());
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace GebatWin.Forms
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            ENDelito delito = (ENDelito)listaDelito1.Selected;
+            EBCrime delito = (EBCrime)listaDelito1.Selected;
             delito.Delete();
             listaDelito1.Refrescar(delito.ReadAll());
         }

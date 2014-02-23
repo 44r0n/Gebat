@@ -13,7 +13,7 @@ namespace GebatWin.Forms
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
-            ENType nuevo = new ENType(textBoxNombreTipo.Text);
+            EBType nuevo = new EBType(textBoxNombreTipo.Text);
             nuevo.Save();
             listaTypes1.Add(nuevo);
             textBoxNombreTipo.Text = "";
@@ -22,7 +22,7 @@ namespace GebatWin.Forms
 
         private void Cantidades_Load(object sender, EventArgs e)
         {
-            listaTypes1.Refrescar(new ENType("").ReadAll());
+            listaTypes1.Refrescar(new EBType("").ReadAll());
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace GebatWin.Forms
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            ENType tipo = (ENType)listaTypes1.Selected;
+            EBType tipo = (EBType)listaTypes1.Selected;
             tipo.Delete();
             listaTypes1.Refrescar(tipo.ReadAll());
         }

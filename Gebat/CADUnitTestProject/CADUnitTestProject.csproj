@@ -77,9 +77,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GebatCAD\GebatCAD.csproj">
+    <ProjectReference Include="..\GebatCAD\GebatADL.csproj">
       <Project>{f9cf59be-07ec-41e9-90b6-11a03f2f6e10}</Project>
-      <Name>GebatCAD</Name>
+      <Name>GebatADL</Name>
     </ProjectReference>
     <ProjectReference Include="..\SqlManager\SqlManager.csproj">
       <Project>{269e7c8b-ab29-4d57-8ef5-78aa6041b71d}</Project>

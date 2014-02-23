@@ -15,12 +15,12 @@ namespace GebatWin.Forms
 
         private void ExpedientePersonal_Load(object sender, EventArgs e)
         {
-            listaExpedientes.Refrescar(new ENExpedientePersonal().ReadAll());
+            listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
         }
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
-            ENExpedientePersonal exp = new ENExpedientePersonal((int)numericUpDownIngresos.Value, textBoxObservaciones.Text);
+            EBPersonalDosier exp = new EBPersonalDosier((int)numericUpDownIngresos.Value, textBoxObservaciones.Text);
             numericUpDownIngresos.Value = 0;
             textBoxObservaciones.Text = "";
             exp.Save();
@@ -29,9 +29,9 @@ namespace GebatWin.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            AEN exp = listaExpedientes.Selected;
+            AEB exp = listaExpedientes.Selected;
             exp.Delete();
-            listaExpedientes.Refrescar(new ENExpedientePersonal().ReadAll());
+            listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
             buttonDelete.Enabled = false;
             buttonAddFamiliar.Enabled = false;
         }
@@ -41,19 +41,19 @@ namespace GebatWin.Forms
             buttonDelete.Enabled = true;
             buttonAddFamiliar.Enabled = true;
             listaFamiliares.Clean();
-            ENExpedientePersonal exp = (ENExpedientePersonal)listaExpedientes.Selected;
+            EBPersonalDosier exp = (EBPersonalDosier)listaExpedientes.Selected;
             if (exp != null)
             {
                 mostrarFamiliares(exp);   
             }
         }
 
-        private void mostrarFamiliares(ENExpedientePersonal expediente)
+        private void mostrarFamiliares(EBPersonalDosier expediente)
         {
-            List<ENFamiliar> fams = expediente.Familiares;
+            List<EBFamiliar> fams = expediente.Familiars;
             if (fams != null)
             {
-                foreach (ENFamiliar fam in fams)
+                foreach (EBFamiliar fam in fams)
                 {
                     listaFamiliares.Add(fam);
                 }
@@ -62,7 +62,7 @@ namespace GebatWin.Forms
 
         private void buttonAddFamiliar_Click(object sender, EventArgs e)
         {
-            GestionFamiliares gestionfam = new GestionFamiliares((ENExpedientePersonal)listaExpedientes.Selected);
+            GestionFamiliares gestionfam = new GestionFamiliares((EBPersonalDosier)listaExpedientes.Selected);
             gestionfam.ShowDialog();
             gestionfam.BringToFront();
             buttonAddFamiliar.Enabled = false;

@@ -9,14 +9,14 @@ namespace GebatWindowComponents.Lists
     {
         #region//Private Methods
 
-        private void addItem(ENFamiliar newitem, int i)
+        private void addItem(EBFamiliar newitem, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString(), 0);
             item.SubItems.Add(newitem.DNI);
-            item.SubItems.Add(newitem.Nombre);
-            item.SubItems.Add(newitem.Apellidos);
-            item.SubItems.Add(newitem.Edad.ToString());
-            if (newitem.Genero == sexo.Masculino)
+            item.SubItems.Add(newitem.Name);
+            item.SubItems.Add(newitem.Surname);
+            item.SubItems.Add(newitem.Age.ToString());
+            if (newitem.Gender == MyGender.Male)
             {
                 item.SubItems.Add("Hombre");
             }
@@ -38,9 +38,9 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                addItem((ENFamiliar)it, i);
+                addItem((EBFamiliar)it, i);
                 i++;
             }
         }
@@ -68,12 +68,12 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                ENFamiliar fam = (ENFamiliar)it;
+                EBFamiliar fam = (EBFamiliar)it;
                 if (fam.DNI.Contains(filtro))
                 {
-                    addItem((ENFamiliar)it, i);
+                    addItem((EBFamiliar)it, i);
                 }
                 i++;
             }

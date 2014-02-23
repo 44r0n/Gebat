@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace GebatEN.Classes
 {
-	public class ENType : AEN
+	public class EBType : AEB
     {
         #region//Atributes
 
@@ -35,10 +35,10 @@ namespace GebatEN.Classes
 
         #region//Private Methods
 
-        private ENType ()
+        private EBType ()
 			:base()
 		{
-			cad = new ADLType (defaultConnString);
+			adl = new ADLType (defaultConnString);
 			name = "";
 		}
 
@@ -53,7 +53,7 @@ namespace GebatEN.Classes
 		{
 			get
 			{
-				DataRow ret = cad.GetVoidRow;
+				DataRow ret = adl.GetVoidRow;
 				if (this.id != null)
 				{
 					ret ["Id"] = this.id [0];
@@ -104,13 +104,13 @@ namespace GebatEN.Classes
 		/// Inicializa el tipo con el nombre.
 		/// </summary>
 		/// <param name="name">Nombre del tipo.</param>
-		public ENType(string name)
+		public EBType(string name)
 		{
 			if (name == null)
 			{
 				throw new NullReferenceException("The name cannot be null");
 			}
-			cad = new ADLType (defaultConnString);
+			adl = new ADLType (defaultConnString);
 			this.name = name;
 		}
 
@@ -119,15 +119,15 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará el tipo de alimento.</param>
         /// <returns>Tipo de alimento en formatoAEN</returns>
-		public override AEN Read (List<int> id)
+		public override AEB Read (List<int> id)
 		{
-			ENType ret = new ENType();
+			EBType ret = new EBType();
 			List<object> param = new List<object>();
 			param.Add((object)id[0]);
-			DataRow row = cad.Select(param);
+			DataRow row = adl.Select(param);
 			if (row != null)
 			{
-				ret.FromRow(cad.Select(param));
+				ret.FromRow(adl.Select(param));
 			}
 			else
 			{
@@ -140,15 +140,15 @@ namespace GebatEN.Classes
         /// Obtiene todos los tipos de alimentos de la base de datos.
         /// </summary>
         /// <returns>Listo de los tipos de alimentos en formato AEN.</returns>
-		public override List<AEN> ReadAll()
+		public override List<AEB> ReadAll()
 		{
-			List<AEN> ret = new List<AEN>();
-			DataTable tabla = cad.SelectAll();
-			foreach (DataRow rows in tabla.Rows)
+			List<AEB> ret = new List<AEB>();
+			DataTable table = adl.SelectAll();
+			foreach (DataRow rows in table.Rows)
 			{
-				ENType nueva = new ENType();
-				nueva.FromRow(rows);
-				ret.Add((ENType)nueva);
+				EBType newtype = new EBType();
+				newtype.FromRow(rows);
+				ret.Add((EBType)newtype);
 			}
 			return ret;
 		}

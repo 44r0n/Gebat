@@ -5,5 +5,5 @@ using System.Text;
 
 namespace GebatEN.Enums
 {
-    public enum sexo { Masculino, Femenino };
+    public enum MyGender { Male, Female };
 }

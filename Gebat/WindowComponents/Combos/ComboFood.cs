@@ -15,9 +15,9 @@ namespace GebatWindowComponents.Combos
         protected override void MostrarElementos()
         {
             Items.Clear();
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                ENFood food = (ENFood)it;
+                EBFood food = (EBFood)it;
                 this.Items.Add(food.Name);
             }
         }

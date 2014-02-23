@@ -24,40 +24,40 @@ namespace ENUnitTestProject.ENTests
             List<string> telfs = new List<string>();
             telfs.Add("123456789");
             telfs.Add("234567890");
-            ENTBC tbc = (ENTBC)(new ENTBC().Read(id));
+            EBTBC tbc = (EBTBC)(new EBTBC().Read(id));
             Assert.AreEqual("01086932K", tbc.DNI);
-            Assert.AreEqual("Ana", tbc.Nombre);
-            Assert.AreEqual("Entrepinares", tbc.Apellidos);
-            Assert.AreEqual(25, tbc.Edad);
-            Assert.AreEqual(sexo.Femenino, tbc.Genero);
-            Assert.AreEqual("1/98", tbc.Ejecutoria);
-            Assert.AreEqual("Juzgado Valencia", tbc.Juzgado);
-            Assert.AreEqual("20/07/2013", tbc.FInicio.ToShortDateString());
-            Assert.AreEqual("10/03/2014", tbc.FFin.ToShortDateString());
-            Assert.AreEqual(true, tbc.Horario[DayOfWeek.Monday]);
-            Assert.AreEqual(true, tbc.Horario[DayOfWeek.Tuesday]);
-            Assert.AreEqual(true, tbc.Horario[DayOfWeek.Wednesday]);
-            Assert.AreEqual(true, tbc.Horario[DayOfWeek.Thursday]);
-            Assert.AreEqual(true, tbc.Horario[DayOfWeek.Friday]);
-            Assert.AreEqual(false, tbc.Horario[DayOfWeek.Saturday]);
-            Assert.AreEqual(false, tbc.Horario[DayOfWeek.Sunday]);
-            Assert.AreEqual(250, tbc.NumJornadas);
-            Assert.AreEqual("Pelea", tbc.Delito.Name);
-            Assert.AreEqual(telfs[0], tbc.Telefonos[0]);
-            Assert.AreEqual(telfs[1], tbc.Telefonos[1]);
+            Assert.AreEqual("Ana", tbc.Name);
+            Assert.AreEqual("Entrepinares", tbc.Surname);
+            Assert.AreEqual(25, tbc.Age);
+            Assert.AreEqual(MyGender.Female, tbc.Gender);
+            Assert.AreEqual("1/98", tbc.Judgement);
+            Assert.AreEqual("Juzgado Valencia", tbc.Court);
+            Assert.AreEqual("20/07/2013", tbc.BeginDate.ToShortDateString());
+            Assert.AreEqual("10/03/2014", tbc.FinishDate.ToShortDateString());
+            Assert.AreEqual(true, tbc.Timetable[DayOfWeek.Monday]);
+            Assert.AreEqual(true, tbc.Timetable[DayOfWeek.Tuesday]);
+            Assert.AreEqual(true, tbc.Timetable[DayOfWeek.Wednesday]);
+            Assert.AreEqual(true, tbc.Timetable[DayOfWeek.Thursday]);
+            Assert.AreEqual(true, tbc.Timetable[DayOfWeek.Friday]);
+            Assert.AreEqual(false, tbc.Timetable[DayOfWeek.Saturday]);
+            Assert.AreEqual(false, tbc.Timetable[DayOfWeek.Sunday]);
+            Assert.AreEqual(250, tbc.NumJourney);
+            Assert.AreEqual("Pelea", tbc.Crime.Name);
+            Assert.AreEqual(telfs[0], tbc.Phones[0]);
+            Assert.AreEqual(telfs[1], tbc.Phones[1]);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void ReadNullId()
         {
-            ENTBC tbc = (ENTBC)(new ENTBC().Read(null));
+            EBTBC tbc = (EBTBC)(new EBTBC().Read(null));
         }
 
         [TestMethod]
         public void ReadAll_Insert_Delete()
         {
-            List<AEN> general = new ENTBC().ReadAll();
+            List<AEB> general = new EBTBC().ReadAll();
             List<string> dnis = new List<string>();
             dnis.Add("54508005Y");
             dnis.Add("01086932K");
@@ -65,30 +65,30 @@ namespace ENUnitTestProject.ENTests
 
             for (int i = 0; i < dnis.Count; i++)
             {
-                Assert.AreEqual(dnis[i], ((ENTBC)general[i]).DNI);
+                Assert.AreEqual(dnis[i], ((EBTBC)general[i]).DNI);
             }
             List<int> endelito = new List<int>();
             endelito.Add(1);
-            ENTBC ins = new ENTBC("52835460K", "02/2013", "Manolo", "Hansen", new DateTime(1968,04,30) ,sexo.Masculino , "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), (ENDelito)new ENDelito().Read(endelito));
+            EBTBC ins = new EBTBC("52835460K", "02/2013", "Manolo", "Hansen", new DateTime(1968,04,30) ,MyGender.Male , "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), (EBCrime)new EBCrime().Read(endelito));
             ins.Save();
-            general = new ENTBC().ReadAll();
+            general = new EBTBC().ReadAll();
             dnis.Add(ins.DNI);
             for (int i = 0; i < dnis.Count; i++)
             {
-                Assert.AreEqual(dnis[i], ((ENTBC)general[i]).DNI);
+                Assert.AreEqual(dnis[i], ((EBTBC)general[i]).DNI);
             }
 
-            ins.AddTelf("132456789");
+            ins.AddPhone("132456789");
 
-            Assert.AreEqual("132456789", ins.Telefonos[0]);
+            Assert.AreEqual("132456789", ins.Phones[0]);
 
             ins.Delete();
 
             dnis.RemoveAt(3);
-            general = new ENTBC().ReadAll();
+            general = new EBTBC().ReadAll();
             for (int i = 0; i < dnis.Count; i++)
             {
-                Assert.AreEqual(dnis[i], ((ENTBC)general[i]).DNI);
+                Assert.AreEqual(dnis[i], ((EBTBC)general[i]).DNI);
             }
         }
     }

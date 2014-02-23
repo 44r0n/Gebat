@@ -7,7 +7,7 @@ namespace GebatWindowComponents.Combos
 {
     public abstract class ComboBoxGeneral : ComboBox
     {
-        protected List<AEN> colection;
+        protected List<AEB> colection;
 
         #region//Protected Methods
 
@@ -20,7 +20,7 @@ namespace GebatWindowComponents.Combos
         /// <summary>
         /// Obtiene el elemento seleccionado.
         /// </summary>
-        public AEN Selected
+        public AEB Selected
         {
             get
             {
@@ -42,17 +42,17 @@ namespace GebatWindowComponents.Combos
         public ComboBoxGeneral()
             : base()
         {
-            colection = new List<AEN>();
+            colection = new List<AEB>();
         }
 
         /// <summary>
         /// Mñetodo que actualiza la vista del combobox.
         /// </summary>
         /// <param name="elems"></param>
-        public void Refrescar(List<AEN> elems)
+        public void Refrescar(List<AEB> elems)
         {
             colection.Clear();
-            foreach (AEN item in elems)
+            foreach (AEB item in elems)
             {
                 colection.Add(item);
             }
@@ -63,7 +63,7 @@ namespace GebatWindowComponents.Combos
         /// Añade un elemento a la lista.
         /// </summary>
         /// <param name="elem">Elemento a añadir.</param>
-        public void Add(AEN elem)
+        public void Add(AEB elem)
         {
             colection.Add(elem);
             MostrarElementos();

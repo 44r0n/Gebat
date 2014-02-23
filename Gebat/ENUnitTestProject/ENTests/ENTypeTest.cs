@@ -20,7 +20,7 @@ namespace ENUnitTestProject.ENTests
         {
             List<int> id = new List<int>();
             id.Add(2);
-            ENType tipo = (ENType)(new ENType("").Read(id));
+            EBType tipo = (EBType)(new EBType("").Read(id));
             Assert.AreEqual("Litros", tipo.Name);
             Assert.AreEqual(2, tipo.Id[0]);
         }
@@ -29,40 +29,40 @@ namespace ENUnitTestProject.ENTests
         [ExpectedException(typeof(NullReferenceException))]
         public void ReadNullId()
         {
-            ENType tipo = (ENType)(new ENType("").Read(null));
+            EBType tipo = (EBType)(new EBType("").Read(null));
         }
 
         [TestMethod]
         public void ReadAll_Insert_Delete()
         {
-            List<AEN> general = new ENType("").ReadAll();
-            List<ENType> expected = new List<ENType>();
-            ENType p = new ENType("Kg");
+            List<AEB> general = new EBType("").ReadAll();
+            List<EBType> expected = new List<EBType>();
+            EBType p = new EBType("Kg");
             expected.Add(p);
-            ENType s = new ENType("Litros");
+            EBType s = new EBType("Litros");
             expected.Add(s);
-            ENType t = new ENType("Paquetes");
+            EBType t = new EBType("Paquetes");
             expected.Add(t);
             for(int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((ENType)general[i]).Name);
+                Assert.AreEqual(expected[i].Name, ((EBType)general[i]).Name);
             }
-            ENType ins = new ENType("De prueba");
+            EBType ins = new EBType("De prueba");
             ins.Save();
-            general = new ENType("").ReadAll();
+            general = new EBType("").ReadAll();
             expected.Add(ins);
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((ENType)general[i]).Name);
+                Assert.AreEqual(expected[i].Name, ((EBType)general[i]).Name);
             }
 
             ins.Delete();
             expected.RemoveAt(3);
 
-            general = new ENType("").ReadAll();
+            general = new EBType("").ReadAll();
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((ENType)general[i]).Name);
+                Assert.AreEqual(expected[i].Name, ((EBType)general[i]).Name);
             }
         }
     }

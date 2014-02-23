@@ -25,11 +25,16 @@ using System.Data;
 
 namespace GebatEN.Classes
 {
-	public abstract class AEN
+	public abstract class AEB
 	{
 		protected bool saved;
 		protected List<object> id = null;
-		protected AADL cad;
+		protected AADL adl;
+
+        private void nullADL()
+        {
+            throw new NullReferenceException("The adl cannot be null");
+        }
 
 		#region//Protected Methods
 
@@ -80,9 +85,9 @@ namespace GebatEN.Classes
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public AEN()
+		public AEB()
 		{
-			cad = null;
+			adl = null;
 			saved = false;
 		}
 
@@ -91,18 +96,18 @@ namespace GebatEN.Classes
 		/// </summary>
 		public virtual void Save()
 		{
-			if (cad == null)
+			if (adl == null)
 			{
-				throw new NullReferenceException("The cad cannot be null");
+                nullADL();
 			}
 			if (!saved)
 			{
-				this.FromRow(cad.Insert(ToRow));
+				this.FromRow(adl.Insert(ToRow));
 				this.saved = true;
 			}
 			else
 			{
-				cad.Update(ToRow);
+				adl.Update(ToRow);
 			}
 		}
 
@@ -111,14 +116,14 @@ namespace GebatEN.Classes
 		/// </summary>
 		public virtual void Delete()
 		{
-			if (cad == null)
+			if (adl == null)
 			{
-				throw new NullReferenceException("Cannot delete, the cad object is null");
+                nullADL();
 			}
 
 			if (saved)
 			{
-				cad.Delete(ToRow);
+				adl.Delete(ToRow);
 				saved = false;
 			}
 		}
@@ -128,13 +133,13 @@ namespace GebatEN.Classes
 		/// </summary>
 		/// <param name="id">Identificador a buscar.</param>
 		/// <returns>El objeto de tipo ENGeneral.</returns>
-		public abstract AEN Read(List<int> id);
+		public abstract AEB Read(List<int> id);
 
 		/// <summary>
 		/// Devuelve todos los registros de la base de datos.
 		/// </summary>
 		/// <returns></returns>
-		public abstract List<AEN> ReadAll();
+		public abstract List<AEB> ReadAll();
 
 		#endregion
 	}

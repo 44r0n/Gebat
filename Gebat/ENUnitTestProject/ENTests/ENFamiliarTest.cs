@@ -22,18 +22,18 @@ namespace ENUnitTestProject.ENTests
             List<int> id = new List<int>();
             id.Add(2);
             List<string> telfs = new List<string>();
-            ENFamiliar fam = (ENFamiliar)(new ENFamiliar().Read(id));
+            EBFamiliar fam = (EBFamiliar)(new EBFamiliar().Read(id));
             Assert.AreEqual("91071949E", fam.DNI);
-            Assert.AreEqual("Jose", fam.Nombre);
-            Assert.AreEqual("Logroño", fam.Apellidos);
-            Assert.AreEqual(41, fam.Edad);
-            Assert.AreEqual(sexo.Masculino, fam.Genero);
+            Assert.AreEqual("Jose", fam.Name);
+            Assert.AreEqual("Logroño", fam.Surname);
+            Assert.AreEqual(41, fam.Age);
+            Assert.AreEqual(MyGender.Male, fam.Gender);
         }
 
         [TestMethod]
         public void Save()
         {
-            ENFamiliar nuevo = new ENFamiliar("42919826D", "Paco", "Mendoza", new DateTime(1978, 04, 18), sexo.Masculino);
+            EBFamiliar nuevo = new EBFamiliar("42919826D", "Paco", "Mendoza", new DateTime(1978, 04, 18), MyGender.Male);
             nuevo.Save();
         }
     }

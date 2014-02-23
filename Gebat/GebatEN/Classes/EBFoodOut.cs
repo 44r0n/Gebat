@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace GebatEN.Classes
 {
-    public class ENFoodOut: AEN
+    public class EBFoodOut: AEB
     {
         #region//Private atributes
 
         private int quantity;
-        private DateTime fecha;
+        private DateTime date;
         private int type;
-        private string nombre = null;
+        private string name = null;
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace GebatEN.Classes
         {
             get 
             {
-                DataRow ret = cad.GetVoidRow;
+                DataRow ret = adl.GetVoidRow;
                 if (this.id != null)
                 {
                     ret["Id"] = this.id[0];
@@ -33,7 +33,7 @@ namespace GebatEN.Classes
 
                 ret["QuantityOut"] = this.quantity;
                 ret["FoodType"] = this.type;
-                ret["Fecha"] = this.fecha;
+                ret["DateTime"] = this.date;
                 return ret;
             }
         }
@@ -49,7 +49,7 @@ namespace GebatEN.Classes
                 this.id = new List<object>();
                 this.id.Add((int)row["Id"]);
                 this.quantity = (int)row["QuantityOut"];
-                this.fecha = (DateTime)row["Fecha"];
+                this.date = (DateTime)row["DateTime"];
                 if (row["FoodType"] != DBNull.Value)
                 {
                     type = (int)row["FoodType"];
@@ -75,11 +75,11 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene la fecha en la que salió.
         /// </summary>
-        public DateTime Fecha
+        public DateTime Date
         {
             get
             {
-                return this.fecha;
+                return this.date;
             }
         }
 
@@ -94,19 +94,22 @@ namespace GebatEN.Classes
             }
         }
 
-        public string Nombre
+        /// <summary>
+        /// Obtiene el nombre del alimento.
+        /// </summary>
+        public string Name
         {
             get
             {
-                if (this.nombre == null)
+                if (this.name == null)
                 {
                     ADLFood food = new ADLFood(defaultConnString);
                     List<object> param = new List<object>();
                     param.Add(this.type);
                     DataRow fila = food.Select(param);
-                    this.nombre = (string)fila["Name"];
+                    this.name = (string)fila["Name"];
                 }
-                return this.nombre;
+                return this.name;
             }
         }
 
@@ -117,25 +120,25 @@ namespace GebatEN.Classes
         /// <summary>
         /// Constructor de comida saliente.
         /// </summary>
-        /// <param name="fecha">Fecha en la que salió la comida.</param>
-        /// <param name="quantity">Cantidad que sale.</param>
-        /// <param name="tipo">Identificador de la comida.</param>
-        public ENFoodOut(DateTime fecha, int quantity, int tipo)
+        /// <param name="Date">Fecha en la que salió la comida.</param>
+        /// <param name="Quantity">Cantidad que sale.</param>
+        /// <param name="Type">Identificador de la comida.</param>
+        public EBFoodOut(DateTime Date, int Quantity, int Type)
             :base()
         {
-            cad = new ADLOutgoingFood(defaultConnString);
-            this.quantity = quantity;
-            this.fecha = fecha;
-            this.type = tipo;
+            adl = new ADLOutgoingFood(defaultConnString);
+            this.quantity = Quantity;
+            this.date = Date;
+            this.type = Type;
         }
 
         /// <summary>
         /// Constructor por defecto.
         /// </summary>
-        public ENFoodOut()
+        public EBFoodOut()
             : base()
         {
-            cad = new ADLOutgoingFood(defaultConnString);
+            adl = new ADLOutgoingFood(defaultConnString);
         }
 
         /// <summary>
@@ -143,12 +146,12 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará la salida de alimentos</param>
         /// <returns>Salida en formato AEN.</returns>
-        public override AEN Read(List<int> id)
+        public override AEB Read(List<int> id)
         {
-            ENFoodOut ret = new ENFoodOut();
+            EBFoodOut ret = new EBFoodOut();
             List<object> param = new List<object>();
             param.Add((object)id[0]);
-            DataRow row = cad.Select(param);
+            DataRow row = adl.Select(param);
             if(row != null)
             {
                 ret.FromRow(row);
@@ -164,15 +167,15 @@ namespace GebatEN.Classes
         /// Obtiene todas las salidas de comida de la base de datos.
         /// </summary>
         /// <returns>Lista de las salidas de comida en formato AEN.</returns>
-        public override List<AEN> ReadAll()
+        public override List<AEB> ReadAll()
         {
-            List<AEN> ret = new List<AEN>();
-            DataTable tabla = cad.SelectAll();
-            foreach (DataRow rows in tabla.Rows)
+            List<AEB> ret = new List<AEB>();
+            DataTable table = adl.SelectAll();
+            foreach (DataRow rows in table.Rows)
             {
-                ENFoodOut nueva = new ENFoodOut();
-                nueva.FromRow(rows);
-                ret.Add((ENFoodOut)nueva);
+                EBFoodOut newfoodout = new EBFoodOut();
+                newfoodout.FromRow(rows);
+                ret.Add((EBFoodOut)newfoodout);
             }
             return ret;
         }

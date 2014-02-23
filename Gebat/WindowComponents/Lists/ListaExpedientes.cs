@@ -8,12 +8,12 @@ namespace GebatWindowComponents.Lists
     {
         #region//Private Methods
 
-        private void addItem(ENExpedientePersonal newitem, int i)
+        private void addItem(EBPersonalDosier newitem, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString(), 0);
             item.SubItems.Add(newitem.Id[0].ToString());
-            item.SubItems.Add(newitem.Ingresos.ToString());
-            item.SubItems.Add(newitem.Observaciones);
+            item.SubItems.Add(newitem.Income.ToString());
+            item.SubItems.Add(newitem.Observations);
             Items.Add(item);
         }
 
@@ -28,9 +28,9 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                addItem((ENExpedientePersonal)it, i);
+                addItem((EBPersonalDosier)it, i);
                 i++;
             }
         }
@@ -56,9 +56,9 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                ENExpedientePersonal exp = (ENExpedientePersonal)it;
+                EBPersonalDosier exp = (EBPersonalDosier)it;
                 if (exp.Id[0].ToString().Contains(filtro))
                 {
                     addItem(exp, i);

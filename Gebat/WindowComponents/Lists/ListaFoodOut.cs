@@ -8,11 +8,11 @@ namespace GebatWindowComponents.Lists
     {
         #region//Private Methods
 
-        private void addItem(ENFoodOut newitem, int i)
+        private void addItem(EBFoodOut newitem, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString(), 0);
-            item.SubItems.Add(newitem.Nombre);
-            item.SubItems.Add(newitem.Fecha.ToShortDateString());
+            item.SubItems.Add(newitem.Name);
+            item.SubItems.Add(newitem.Date.ToShortDateString());
             item.SubItems.Add(newitem.Quantity.ToString());
             Items.Add(item);
         }
@@ -28,9 +28,9 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                addItem((ENFoodOut)it,i);
+                addItem((EBFoodOut)it,i);
                 i++;
             }
         }
@@ -60,12 +60,12 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach(AEN it in colection)
+            foreach(AEB it in colection)
             {
-                ENFoodOut salida = (ENFoodOut)it;
-                if(salida.Nombre.Contains(filtro))
+                EBFoodOut salida = (EBFoodOut)it;
+                if(salida.Name.Contains(filtro))
                 {
-                    addItem((ENFoodOut)it,i);
+                    addItem((EBFoodOut)it,i);
                 }
                 i++;
             }

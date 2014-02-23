@@ -8,9 +8,9 @@ namespace GebatWin.Forms
 {
     public partial class GestionFamiliares : Form
     {
-        private ENExpedientePersonal expediente;
+        private EBPersonalDosier expediente;
 
-        public GestionFamiliares(ENExpedientePersonal expediente)
+        public GestionFamiliares(EBPersonalDosier expediente)
         {
             InitializeComponent();
             this.expediente = expediente;
@@ -20,7 +20,7 @@ namespace GebatWin.Forms
         private void mostrarFamiliares()
         {
             listaFamiliares.Clean();
-            foreach (ENFamiliar fam in expediente.Familiares)
+            foreach (EBFamiliar fam in expediente.Familiars)
             {
                 listaFamiliares.Add(fam);
             }
@@ -30,24 +30,24 @@ namespace GebatWin.Forms
         {
             if (radioButtonHombre.Checked)
             {
-                expediente.AddFamiliar(new ENFamiliar(textBoxDNI.Text,textBoxNombre.Text,textBoxApellidos.Text,dateTimePickerFechaNacimiento.Value,sexo.Masculino));
+                expediente.AddFamiliar(new EBFamiliar(textBoxDNI.Text,textBoxNombre.Text,textBoxApellidos.Text,dateTimePickerFechaNacimiento.Value,MyGender.Male));
             }
 
             if (radioButtonMujer.Checked)
             {
-                expediente.AddFamiliar(new ENFamiliar(textBoxDNI.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNacimiento.Value, sexo.Femenino));
+                expediente.AddFamiliar(new EBFamiliar(textBoxDNI.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNacimiento.Value, MyGender.Female));
             }
 
             mostrarFamiliares();
         }
 
-        private void showTelfs(AENPersona persona)
+        private void showTelfs(AEBPerson persona)
         {
             listViewTelfs.Items.Clear();
             if (persona != null)
             {
                 int i = 0;
-                foreach (string telf in persona.Telefonos)
+                foreach (string telf in persona.Phones)
                 {
                     ListViewItem item = new ListViewItem(i.ToString(), 0);
                     item.SubItems.Add(telf);
@@ -60,12 +60,12 @@ namespace GebatWin.Forms
         private void listaFamiliares_SelectedIndexChanged(object sender, EventArgs e)
         {
             buttonAddTelf.Enabled = true;
-            showTelfs((AENPersona)listaFamiliares.Selected);
+            showTelfs((AEBPerson)listaFamiliares.Selected);
         }
 
         private void buttonAddTelf_Click(object sender, EventArgs e)
         {
-            AENPersona selected = (AENPersona)listaFamiliares.Selected;
+            AEBPerson selected = (AEBPerson)listaFamiliares.Selected;
             AddTelfs addTelfsForm = new AddTelfs(selected);
             addTelfsForm.ShowDialog();
             addTelfsForm.BringToFront();

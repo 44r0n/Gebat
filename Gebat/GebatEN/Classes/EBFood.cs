@@ -25,12 +25,12 @@ using GebatCAD.Classes;
 
 namespace GebatEN.Classes
 {
-	public class ENFood : AEN
+	public class EBFood : AEB
 	{
 		#region//Atributes
 
 		private string name;
-		private ENType type;
+		private EBType type;
         private int quantity;
         
 
@@ -38,10 +38,10 @@ namespace GebatEN.Classes
 
 		#region//Private Methods
 
-		private ENFood()
+		private EBFood()
 			: base()
 		{
-			cad = new ADLFood(defaultConnString);
+			adl = new ADLFood(defaultConnString);
 			name = "";
 		}
 
@@ -56,7 +56,7 @@ namespace GebatEN.Classes
 		{
 			get 
 			{
-				DataRow ret = cad.GetVoidRow;
+				DataRow ret = adl.GetVoidRow;
 				if (this.id != null)
 				{
 					ret ["Id"] = (int)this.id [0];
@@ -87,7 +87,7 @@ namespace GebatEN.Classes
 				{
 					List<int> ids = new List<int> ();
 					ids.Add ((int)row ["QuantityType"]);
-					type = (ENType)new ENType ("").Read (ids);
+					type = (EBType)new EBType ("").Read (ids);
 				}
                 this.quantity = (int)row["Quantity"];
 				this.saved = true;
@@ -127,7 +127,7 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene y establece el tipo de cantidad del alimento.
         /// </summary>
-		public ENType MyType
+		public EBType MyType
 		{
 			get
 			{
@@ -148,14 +148,14 @@ namespace GebatEN.Classes
 		/// </summary>
 		/// <param name="name">Nombre del alimento.</param>
 		/// <param name="quantity">Cantidad del alimento.</param>
-		public ENFood(string name, ENType type = null)
+		public EBFood(string name, EBType type = null)
 			: base()
 		{
 			if (name == null)
 			{
 				throw new NullReferenceException("The name cannot be null");
 			}
-			cad = new ADLFood(defaultConnString);
+			adl = new ADLFood(defaultConnString);
 			this.name = name;
             this.quantity = 0;
 			this.type = type;
@@ -166,12 +166,12 @@ namespace GebatEN.Classes
 		/// </summary>
 		/// <param name="id">Identificador por el que se buscará el alimento.</param>
 		/// <returns>Alimento en formato AEN.</returns>
-		public override AEN Read(List<int> id)
+		public override AEB Read(List<int> id)
 		{
-			ENFood ret = new ENFood();
+			EBFood ret = new EBFood();
 			List<object> param = new List<object>();
 			param.Add((object)id[0]);
-			DataRow row = cad.Select(param);
+			DataRow row = adl.Select(param);
 			if (row != null)
 			{
 				ret.FromRow(row);
@@ -187,15 +187,15 @@ namespace GebatEN.Classes
 		/// Obtiene todos los alimentos de la base de datos.
 		/// </summary>
 		/// <returns>Lista de alimentos en formato AEN.</returns>
-		public override List<AEN> ReadAll()
+		public override List<AEB> ReadAll()
 		{
-			List<AEN> ret = new List<AEN>();
-			DataTable tabla = cad.SelectAll();
-			foreach (DataRow rows in tabla.Rows)
+			List<AEB> ret = new List<AEB>();
+			DataTable table = adl.SelectAll();
+			foreach (DataRow rows in table.Rows)
 			{
-				ENFood nueva = new ENFood();
-				nueva.FromRow(rows);
-				ret.Add((ENFood)nueva);
+				EBFood newfood = new EBFood();
+				newfood.FromRow(rows);
+				ret.Add((EBFood)newfood);
 			}
 			return ret;
 		}
@@ -207,7 +207,7 @@ namespace GebatEN.Classes
         /// <param name="date">Fecha en la que se introduce.</param>
         public void Add(int quantity, DateTime date)
         {
-            ENFoodIN fin = new ENFoodIN(date, quantity, (int)this.id[0]);
+            EBFoodIN fin = new EBFoodIN(date, quantity, (int)this.id[0]);
             fin.Save();
             this.quantity += quantity;
         }
@@ -219,7 +219,7 @@ namespace GebatEN.Classes
         /// <param name="date">Fecha en la que sale.</param>
         public void Remove(int quantity, DateTime date)
         {
-            ENFoodOut fout = new ENFoodOut(date, quantity, (int)this.id[0]);
+            EBFoodOut fout = new EBFoodOut(date, quantity, (int)this.id[0]);
             fout.Save();
             this.quantity -= quantity;
         }

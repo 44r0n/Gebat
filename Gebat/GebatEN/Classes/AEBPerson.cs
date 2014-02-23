@@ -6,29 +6,30 @@ using GebatEN.Enums;
 
 namespace GebatEN.Classes
 {
-    public abstract class AENPersona : AEN
+    public abstract class AEBPerson : AEB
     {
 
         #region//Atributes
-        private ADLPeople personas;
+
+        private ADLPeople people;
         private string dni;
-        private string apellidos;
-        private string nombre;
-        private DateTime fechanac;
-        private sexo genero;
-        private List<string> telefonos = null;
+        private string surname;
+        private string name;
+        private DateTime birthDate;
+        private MyGender gender;
+        private List<string> phones = null;
 
         #endregion
 
         #region//Private Methods
 
         /// <summary> Tabla de asignación. </summary>
-        private const string Correspondencia = "TRWAGMYFPDXBNJZSQVHLCKE";
+        private const string connection = "TRWAGMYFPDXBNJZSQVHLCKE";
 
         /// <summary> Genera la letra correspondiente a un DNI. </summary>
         /// <param name="dni"> DNI a procesar. </param>
         /// <returns> Letra correspondiente al DNI. </returns>
-        private string LetraNIF(string dni)
+        private string NIFLetter(string dni)
         {
             int n;
 
@@ -37,13 +38,13 @@ namespace GebatEN.Classes
                 throw new ArgumentException("El DNI debe contener 8 dígitos.");
             }
 
-            return Correspondencia[n % 23].ToString();
+            return connection[n % 23].ToString();
         }
 
         /// <summary> Genera la letra correspondiente a un NIE. </summary>
         /// <param name="nie"> NIE a procesar. </param>
         /// <returns> Letra correspondiente al NIE. </returns>
-        private string LetraNIE(string nie)
+        private string NIELetter(string nie)
         {
             int n;
             if ((nie == null) || (nie.Length != 9) || ((char.ToUpper(nie[0]) != 'X') && (char.ToUpper(nie[0]) != 'Y') && (char.ToUpper(nie[0]) != 'Z')) || (!int.TryParse(nie.Substring(1, 7), out n)))
@@ -54,11 +55,11 @@ namespace GebatEN.Classes
             switch (char.ToUpper(nie[0]))
             {
                 case 'X':
-                    return Correspondencia[n % 23].ToString();
+                    return connection[n % 23].ToString();
                 case 'Y':
-                    return Correspondencia[(10000000 + n) % 23].ToString();
+                    return connection[(10000000 + n) % 23].ToString();
                 case 'Z':
-                    return Correspondencia[(20000000 + n) % 23].ToString();
+                    return connection[(20000000 + n) % 23].ToString();
                 default:
                     return '\0'.ToString();
             }
@@ -71,7 +72,7 @@ namespace GebatEN.Classes
         /// <returns>True si el DNI es correcto, false en caso contrario.</returns>
         private bool verifyDNI(string dni)
         {
-            if(LetraNIF(dni) == dni.Substring(dni.Length -1,1))
+            if(NIFLetter(dni) == dni.Substring(dni.Length -1,1))
             {
                 return true;
             }
@@ -88,7 +89,7 @@ namespace GebatEN.Classes
         /// <returns>True si el NIE es correcto, false en caso contrario.</returns>
         private bool verifyNIE(string nie)
         {
-            if (LetraNIE(nie) == nie.Substring(nie.Length - 1, 1))
+            if (NIELetter(nie) == nie.Substring(nie.Length - 1, 1))
             {
                 return true;
             }
@@ -101,14 +102,14 @@ namespace GebatEN.Classes
         /// <summary>
         /// Carga los telefonos de la persona actual.
         /// </summary>
-        private void loadTelfs()
+        private void loadPhones()
         {
-            ADLPhones cadtelfs = new ADLPhones(defaultConnString);
-            telefonos = new List<string>();
-            DataTable telfs = cadtelfs.SelectWhere("DNI = '" + this.dni + "'");
+            ADLPhones adlphones = new ADLPhones(defaultConnString);
+            phones = new List<string>();
+            DataTable telfs = adlphones.SelectWhere("DNI = '" + this.dni + "'");
             foreach (DataRow row in telfs.Rows)
             {
-                telefonos.Add((string)row["Numero"]);
+                phones.Add((string)row["Numero"]);
             }
         }
 
@@ -123,26 +124,26 @@ namespace GebatEN.Classes
         {
             get 
             {
-                if (personas == null)
+                if (people == null)
                 {
-                    personas = new ADLPeople(defaultConnString);
+                    people = new ADLPeople(defaultConnString);
                 }
-                DataRow ret = personas.GetVoidRow;
+                DataRow ret = people.GetVoidRow;
                 if (this.id != null)
                 {
                     ret["Id"] = (int)this.id[0];
                 }
                 ret["DNI"] = (string)this.dni;
-                ret["Nombre"] = this.nombre;
-                ret["Apellidos"] = this.apellidos;
-                ret["FechaNac"] = this.fechanac;
-                if (this.genero == sexo.Masculino)
+                ret["Name"] = this.name;
+                ret["Surname"] = this.surname;
+                ret["BirthDate"] = this.birthDate;
+                if (this.gender == MyGender.Male)
                 {
-                    ret["Sexo"] = "M";
+                    ret["Gender"] = "M";
                 }
                 else
                 {
-                    ret["Sexo"] = "F";
+                    ret["Gender"] = "F";
                 }
                 return ret;
             }
@@ -157,19 +158,19 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                DataRow perrow = personas.SelectWhere("DNI = '" + row["DNI"] + "'").Rows[0];
+                DataRow perrow = people.SelectWhere("DNI = '" + row["DNI"] + "'").Rows[0];
                 this.id.Add(perrow["Id"]);
                 this.dni = (string)perrow["DNI"];
-                this.nombre = (string)perrow["Nombre"];
-                this.apellidos = (string)perrow["Apellidos"];
-                this.fechanac = (DateTime)perrow["FechaNac"];
-                switch ((string)perrow["Sexo"])
+                this.name = (string)perrow["Name"];
+                this.surname = (string)perrow["Surname"];
+                this.birthDate = (DateTime)perrow["BirthDate"];
+                switch ((string)perrow["Gender"])
                 {
                     case "M":
-                        this.genero = sexo.Masculino;
+                        this.gender = MyGender.Male;
                         break;
                     case "F":
-                        this.genero = sexo.Femenino;
+                        this.gender = MyGender.Female;
                         break;
                     default:
                         throw new Exception("Genero desconocido");
@@ -209,8 +210,8 @@ namespace GebatEN.Classes
             }
             set
             {
-                string primero = value.Substring(0, 1);
-                if (primero == "X" || primero == "Y" || primero == "Z")
+                string first = value.Substring(0, 1);
+                if (first == "X" || first == "Y" || first == "Z")
                 {
                     if (verifyNIE(value))
                     {
@@ -238,78 +239,78 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene y establece el nombre.
         /// </summary>
-        public string Nombre
+        public string Name
         {
             get
             {
-                return this.nombre;
+                return this.name;
             }
             set
             {
-                this.nombre = value;
+                this.name = value;
             }
         }
 
         /// <summary>
         /// Obtiene y establece los apellidos.
         /// </summary>
-        public string Apellidos
+        public string Surname
         {
             get
             {
-                return this.apellidos;
+                return this.surname;
             }
             set
             {
-                this.apellidos = value;
+                this.surname = value;
             }
         }
 
         /// <summary>
         /// Obtiene la edad de la persona.
         /// </summary>
-        public int Edad
+        public int Age
         {
             get
             {
-                int edad = DateTime.Now.Year - fechanac.Year;
-                DateTime nacimientoAhora = fechanac.AddYears(edad);
-                if (DateTime.Now.CompareTo(nacimientoAhora) < 0)
+                int age = DateTime.Now.Year - birthDate.Year;
+                DateTime nowBirth = birthDate.AddYears(age);
+                if (DateTime.Now.CompareTo(nowBirth) < 0)
                 {
-                    edad--;
+                    age--;
                 }
 
-                return edad;
+                return age;
             }
         }
 
         /// <summary>
         /// Obtiene y establece el sexo de la persona.
         /// </summary>
-        public sexo Genero
+        public MyGender Gender
         {
             get
             {
-                return this.genero;
+                return this.gender;
             }
             set
             {
-                this.genero = value;
+                this.gender = value;
             }
         }
 
         /// <summary>
         /// Obtiene los telefonos de la persona.
         /// </summary>
-        public List<string> Telefonos
+        public List<string> Phones
         {
             get
             {
-                if (this.telefonos == null)
+                if (this.phones == null)
                 {
-                    this.loadTelfs();
+                    this.loadPhones();
                 }
-                return telefonos;
+                return phones;
             }
         }
 
@@ -321,26 +322,28 @@ namespace GebatEN.Classes
         /// Constructor con parámetros de Persona.
         /// </summary>
         /// <param name="DNI">DNI de la persona.</param>
-        /// <param name="Nombre">Nombre de la persona.</param>
-        /// <param name="Apellidos">Apellidos de la persona.</param>
-        public AENPersona(string DNI, string Nombre, string Apellidos, DateTime FechaNac, sexo Genero)
+        /// <param name="Name">Nombre de la persona.</param>
+        /// <param name="Surname">Apellidos de la persona.</param>
+        /// <param name="BirthDate">Fehca de nacimiento de la persona.</param>
+        /// <param name="Gender">Genero de la persona.</param>
+        public AEBPerson(string DNI, string Name, string Surname, DateTime BirthDate, MyGender Gender)
             :base()
         {
-            personas = new ADLPeople(defaultConnString);
+            people = new ADLPeople(defaultConnString);
             //this.id = new List<object>(); -> ni se te ocurra descomentar esta línea.
             this.DNI = DNI;
-            this.nombre = Nombre;
-            this.apellidos = Apellidos;
-            this.fechanac = FechaNac;
-            this.genero = Genero;
+            this.name = Name;
+            this.surname = Surname;
+            this.birthDate = BirthDate;
+            this.gender = Gender;
         }
 
         /// <summary>
         /// Constructor por defecto. No asigna ningún dato.
         /// </summary>
-        public AENPersona()
+        public AEBPerson()
         {
-            personas = new ADLPeople(defaultConnString);
+            people = new ADLPeople(defaultConnString);
             this.id = new List<object>();
         }
 
@@ -349,38 +352,38 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="dni">DNI por el que se buscará a la persona.</param>
         /// <returns>Lista de objetos AENPersona.</returns>
-        public abstract List<AENPersona> ReadByDNI(string dni);
+        public abstract List<AEBPerson> ReadByDNI(string dni);
 
         /// <summary>
         /// Añade un telefono de contacto.
         /// </summary>
-        /// <param name="numero">Nuevo numero de telefono.</param>
-        public void AddTelf(string numero)
+        /// <param name="number">Nuevo numero de telefono.</param>
+        public void AddPhone(string number)
         {
-            ADLPhones cadtelfs = new ADLPhones(defaultConnString);
-            DataRow newrow = cadtelfs.GetVoidRow;
-            newrow["Numero"] = numero;
+            ADLPhones adlphones = new ADLPhones(defaultConnString);
+            DataRow newrow = adlphones.GetVoidRow;
+            newrow["Number"] = number;
             newrow["DNI"] = this.dni;
-            cadtelfs.Insert(newrow);
-            if (telefonos == null)
+            adlphones.Insert(newrow);
+            if (phones == null)
             {
-                telefonos = new List<string>();
+                phones = new List<string>();
             }
-            telefonos.Add(numero);
+            phones.Add(number);
         }
 
         /// <summary>
         /// Elimina el teléfono de contacto.
         /// </summary>
-        /// <param name="numero">Número de teléfono a eliminar.</param>
-        public void DelTelf(string numero)
+        /// <param name="number">Número de teléfono a eliminar.</param>
+        public void DelPhone(string number)
         {
-            ADLPhones cadtelfs = new ADLPhones(defaultConnString);
-            DataTable del = cadtelfs.SelectWhere("Numero = " + numero + " AND DNI = '" + this.dni+"'");
+            ADLPhones adlphone = new ADLPhones(defaultConnString);
+            DataTable del = adlphone.SelectWhere("Numero = " + number + " AND DNI = '" + this.dni+"'");
             if (del.Rows.Count == 1)
             {
-                cadtelfs.Delete(del.Rows[0]);
-                telefonos.Remove(numero);
+                adlphone.Delete(del.Rows[0]);
+                phones.Remove(number);
             }
         }
 

@@ -14,29 +14,29 @@ namespace GebatWin.Forms
 
         private void TBC_Load(object sender, EventArgs e)
         {
-            listaTBC.Refrescar(new ENTBC().ReadAll());
-            comboDelito.Refrescar(new ENDelito().ReadAll());
+            listaTBC.Refrescar(new EBTBC().ReadAll());
+            comboDelito.Refrescar(new EBCrime().ReadAll());
         }
 
         private void buttonInsert_Click(object sender, EventArgs e)
         {
-            ENTBC tbc;
+            EBTBC tbc;
             if(radioButtonHombre.Checked)
             {
-                tbc = new ENTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNac.Value, sexo.Masculino, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, (ENDelito)comboDelito.Selected);
+                tbc = new EBTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNac.Value, MyGender.Male, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, (EBCrime)comboDelito.Selected);
             }
             else
             {
-                tbc = new ENTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNac.Value ,sexo.Femenino, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, (ENDelito)comboDelito.Selected);
+                tbc = new EBTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNac.Value ,MyGender.Female, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, (EBCrime)comboDelito.Selected);
             }
-            tbc.NumJornadas = (int)numericUpDownJornadas.Value;
-            tbc.Horario[DayOfWeek.Monday] = checkBoxLunes.Checked;
-            tbc.Horario[DayOfWeek.Tuesday] = checkBoxMartes.Checked;
-            tbc.Horario[DayOfWeek.Wednesday] = checkBoxMiercoles.Checked;
-            tbc.Horario[DayOfWeek.Thursday] = checkBoxJueves.Checked;
-            tbc.Horario[DayOfWeek.Friday] = checkBoxViernes.Checked;
-            tbc.Horario[DayOfWeek.Saturday] = checkBoxSabado.Checked;
-            tbc.Horario[DayOfWeek.Sunday] = checkBoxDomingo.Checked;
+            tbc.NumJourney = (int)numericUpDownJornadas.Value;
+            tbc.Timetable[DayOfWeek.Monday] = checkBoxLunes.Checked;
+            tbc.Timetable[DayOfWeek.Tuesday] = checkBoxMartes.Checked;
+            tbc.Timetable[DayOfWeek.Wednesday] = checkBoxMiercoles.Checked;
+            tbc.Timetable[DayOfWeek.Thursday] = checkBoxJueves.Checked;
+            tbc.Timetable[DayOfWeek.Friday] = checkBoxViernes.Checked;
+            tbc.Timetable[DayOfWeek.Saturday] = checkBoxSabado.Checked;
+            tbc.Timetable[DayOfWeek.Sunday] = checkBoxDomingo.Checked;
             tbc.Save();
             listaTBC.Add(tbc);
             textBoxDNI.Text = "";
@@ -68,16 +68,16 @@ namespace GebatWin.Forms
             buttonFin.Enabled = true;
             buttonFirmas.Enabled = true;
             buttonAddTelf.Enabled = true;
-            showTelfs((AENPersona)listaTBC.Selected);
+            showTelfs((AEBPerson)listaTBC.Selected);
         }
 
-        private void showTelfs(AENPersona persona)
+        private void showTelfs(AEBPerson persona)
         {
             listViewTelfs.Items.Clear();
             if (persona != null)
             {
                 int i = 0;
-                foreach (string telf in persona.Telefonos)
+                foreach (string telf in persona.Phones)
                 {
                     ListViewItem item = new ListViewItem(i.ToString(), 0);
                     item.SubItems.Add(telf);
@@ -89,63 +89,63 @@ namespace GebatWin.Forms
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            AEN tbc = listaTBC.Selected;
+            AEB tbc = listaTBC.Selected;
             tbc.Delete();
-            listaTBC.Refrescar(new ENTBC().ReadAll());
+            listaTBC.Refrescar(new EBTBC().ReadAll());
             buttonDelete.Enabled = false;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ENTBC tbc = (ENTBC)listaTBC.Selected;
+            EBTBC tbc = (EBTBC)listaTBC.Selected;
             SaveFileDialog savedialog = new SaveFileDialog();
             savedialog.Filter = "Archivo PDF|*.pdf";
-            savedialog.FileName = "Firmas de " + tbc.Nombre + " " + tbc.DNI + ".pdf";
+            savedialog.FileName = "Firmas de " + tbc.Name + " " + tbc.DNI + ".pdf";
             savedialog.Title = "Generar Firmas...";
             savedialog.ShowDialog();
 
             if (savedialog.FileName != "")
             {
-                tbc.FirmasToPDF(savedialog.FileName);
+                tbc.SignaturesToPDF(savedialog.FileName);
                 System.Diagnostics.Process.Start(savedialog.FileName);
             }
         }
 
         private void buttonInicio_Click(object sender, EventArgs e)
         {
-            ENTBC tbc = (ENTBC)listaTBC.Selected;
+            EBTBC tbc = (EBTBC)listaTBC.Selected;
             SaveFileDialog savedialog = new SaveFileDialog();
-            savedialog.FileName = "Inicio de " + tbc.Nombre + " " + tbc.DNI + ".pdf";
+            savedialog.FileName = "Inicio de " + tbc.Name + " " + tbc.DNI + ".pdf";
             savedialog.Filter = "Archivo PDF|*.pdf";
             savedialog.Title = "Generar Inicio...";
             savedialog.ShowDialog();
 
             if (savedialog.FileName != "")
             {
-                tbc.InicioSentenciaToPDF(savedialog.FileName);
+                tbc.BeginSentenceToPDF(savedialog.FileName);
                 System.Diagnostics.Process.Start(savedialog.FileName);
             }
         }
 
         private void buttonFin_Click(object sender, EventArgs e)
         {
-            ENTBC tbc = (ENTBC)listaTBC.Selected;
+            EBTBC tbc = (EBTBC)listaTBC.Selected;
             SaveFileDialog savedialog = new SaveFileDialog();
-            savedialog.FileName = "Fin de de " + tbc.Nombre + " " + tbc.DNI + ".pdf";
+            savedialog.FileName = "Fin de de " + tbc.Name + " " + tbc.DNI + ".pdf";
             savedialog.Filter = "Archivo PDF|*.pdf";
             savedialog.Title = "Generar Fin...";
             savedialog.ShowDialog();
 
             if (savedialog.FileName != "")
             {
-                tbc.FinSentenciaToPDF(savedialog.FileName);
+                tbc.FinishSentenceToPDF(savedialog.FileName);
                 System.Diagnostics.Process.Start(savedialog.FileName);
             }
         }
 
         private void buttonAddTelf_Click(object sender, EventArgs e)
         {
-            AENPersona selected = (AENPersona)listaTBC.Selected;
+            AEBPerson selected = (AEBPerson)listaTBC.Selected;
             AddTelfs addTelfsForm = new AddTelfs(selected);
             addTelfsForm.ShowDialog();
             addTelfsForm.BringToFront();

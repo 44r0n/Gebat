@@ -9,7 +9,7 @@ namespace GebatWindowComponents.Lists
 
         #region//Private Methods
 
-        private void addItem(ENDelito newitem, int i)
+        private void addItem(EBCrime newitem, int i)
         {
             ListViewItem item = new ListViewItem(i.ToString(), 0);
             item.SubItems.Add(newitem.Name);
@@ -27,9 +27,9 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                addItem((ENDelito)it, i);
+                addItem((EBCrime)it, i);
                 i++;
             }
         }
@@ -57,12 +57,12 @@ namespace GebatWindowComponents.Lists
         {
             Items.Clear();
             int i = 0;
-            foreach (AEN it in colection)
+            foreach (AEB it in colection)
             {
-                ENDelito delito = (ENDelito)it;
+                EBCrime delito = (EBCrime)it;
                 if (delito.Name.Contains(filtro))
                 {
-                    addItem((ENDelito)it, i);
+                    addItem((EBCrime)it, i);
                 }
                 i++;
             }

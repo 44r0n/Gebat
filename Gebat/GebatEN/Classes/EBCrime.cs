@@ -5,7 +5,7 @@ using GebatCAD.Classes;
 
 namespace GebatEN.Classes
 {
-    public class ENDelito : AEN
+    public class EBCrime : AEB
     {
         #region//Atributes
 
@@ -22,7 +22,7 @@ namespace GebatEN.Classes
         {
             get 
             {
-                DataRow ret = cad.GetVoidRow;
+                DataRow ret = adl.GetVoidRow;
                 if (this.id != null)
                 {
                     ret["Id"] = (int)this.id[0];
@@ -78,22 +78,22 @@ namespace GebatEN.Classes
         /// Constructor que inicializa el objeto.
         /// </summary>
         /// <param name="name">Nombre del delito.</param>
-        public ENDelito(string name)
+        public EBCrime(string name)
         {
             if (name == null)
             {
                 throw new NullReferenceException("The name cannot be null");
             }
             this.name = name;
-            cad = new ADLCrime(defaultConnString);
+            adl = new ADLCrime(defaultConnString);
         }
 
         /// <summary>
         /// Constructor por defecto.
         /// </summary>
-        public ENDelito()
+        public EBCrime()
         {
-            cad = new ADLCrime(defaultConnString);
+            adl = new ADLCrime(defaultConnString);
         }
 
         /// <summary>
@@ -101,12 +101,12 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará el delito</param>
         /// <returns>Delito en formato AEN.</returns>
-        public override AEN Read(List<int> id)
+        public override AEB Read(List<int> id)
         {
-            ENDelito ret = new ENDelito();
+            EBCrime ret = new EBCrime();
             List<object> param = new List<object>();
             param.Add((object)id[0]);
-            DataRow row = cad.Select(param);
+            DataRow row = adl.Select(param);
             if (row != null)
             {
                 ret.FromRow(row);
@@ -122,15 +122,15 @@ namespace GebatEN.Classes
         /// Obtiene todos los delitos de la base de datos.
         /// </summary>
         /// <returns>Lista de delitos en formato AEN.</returns>
-        public override List<AEN> ReadAll()
+        public override List<AEB> ReadAll()
         {
-            List<AEN> ret = new List<AEN>();
-            DataTable tabla = cad.SelectAll();
-            foreach (DataRow rows in tabla.Rows)
+            List<AEB> ret = new List<AEB>();
+            DataTable table = adl.SelectAll();
+            foreach (DataRow rows in table.Rows)
             {
-                ENDelito nuevo = new ENDelito();
+                EBCrime nuevo = new EBCrime();
                 nuevo.FromRow(rows);
-                ret.Add((ENDelito)nuevo);
+                ret.Add((EBCrime)nuevo);
             }
             return ret;
         }

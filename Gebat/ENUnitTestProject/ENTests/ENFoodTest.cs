@@ -20,7 +20,7 @@ namespace ENUnitTestProject.ENTests
         {
             List<int> id = new List<int>();
             id.Add(4);
-            ENFood comida = (ENFood)(new ENFood("").Read(id));
+            EBFood comida = (EBFood)(new EBFood("").Read(id));
             Assert.AreEqual("Pomes", comida.Name);
             Assert.AreEqual("Kg", comida.MyType.Name);
             Assert.AreEqual(2, comida.Quantity);
@@ -30,47 +30,47 @@ namespace ENUnitTestProject.ENTests
         [ExpectedException(typeof(NullReferenceException))]
         public void ReadNullId()
         {
-            new ENFood("").Read(null);
+            new EBFood("").Read(null);
         }
 
         [TestMethod]
         public void ReadAll_Insert_Delete()
         {
-            List<AEN> general = new ENFood("").ReadAll();
-            List<ENFood> expected = new List<ENFood>();
+            List<AEB> general = new EBFood("").ReadAll();
+            List<EBFood> expected = new List<EBFood>();
             List<int> idtype = new List<int>();
             idtype.Add(1);
-            ENFood p = new ENFood("Patates",(ENType)(new ENType("").Read(idtype)));
+            EBFood p = new EBFood("Patates",(EBType)(new EBType("").Read(idtype)));
             expected.Add(p);
-            ENFood s = new ENFood("Tomates",(ENType)(new ENType("").Read(idtype)));
+            EBFood s = new EBFood("Tomates",(EBType)(new EBType("").Read(idtype)));
             expected.Add(s);
-            ENFood t = new ENFood("Pomes", (ENType)(new ENType("").Read(idtype)));
+            EBFood t = new EBFood("Pomes", (EBType)(new EBType("").Read(idtype)));
             expected.Add(t);
 
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((ENFood)general[i]).Name);
-                Assert.AreEqual(expected[i].MyType.Name, ((ENFood)general[i]).MyType.Name);
+                Assert.AreEqual(expected[i].Name, ((EBFood)general[i]).Name);
+                Assert.AreEqual(expected[i].MyType.Name, ((EBFood)general[i]).MyType.Name);
             }
 
-            ENFood ins = new ENFood("Testing", (ENType)(new ENType("").Read(idtype)));
+            EBFood ins = new EBFood("Testing", (EBType)(new EBType("").Read(idtype)));
             ins.Save();
-            general = new ENFood("").ReadAll();
+            general = new EBFood("").ReadAll();
             expected.Add(ins);
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((ENFood)general[i]).Name);
-                Assert.AreEqual(expected[i].MyType.Name, ((ENFood)general[i]).MyType.Name);
+                Assert.AreEqual(expected[i].Name, ((EBFood)general[i]).Name);
+                Assert.AreEqual(expected[i].MyType.Name, ((EBFood)general[i]).MyType.Name);
             }
 
             ins.Delete();
             expected.RemoveAt(3);
 
-            general = new ENFood("").ReadAll();
+            general = new EBFood("").ReadAll();
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((ENFood)general[i]).Name);
-                Assert.AreEqual(expected[i].MyType.Name, ((ENFood)general[i]).MyType.Name);
+                Assert.AreEqual(expected[i].Name, ((EBFood)general[i]).Name);
+                Assert.AreEqual(expected[i].MyType.Name, ((EBFood)general[i]).MyType.Name);
             }
         }
 
@@ -79,18 +79,18 @@ namespace ENUnitTestProject.ENTests
         {
             List<int> idfood = new List<int>();
             idfood.Add(2);
-            ENFood f = (ENFood)(new ENFood("").Read(idfood));
+            EBFood f = (EBFood)(new EBFood("").Read(idfood));
             f.Add(3,new DateTime(2012,11,09));
             f.Remove(1, new DateTime(2012, 11, 09));
             Assert.AreEqual(2, f.Quantity);
 
             List<int> foodin = new List<int>();
             foodin.Add(5);
-            ENFoodIN fin = (ENFoodIN)(new ENFoodIN().Read(foodin));
+            EBFoodIN fin = (EBFoodIN)(new EBFoodIN().Read(foodin));
             fin.Delete();
             List<int> foodout = new List<int>();
             foodout.Add(4);
-            ENFoodOut fout = (ENFoodOut)(new ENFoodOut().Read(foodout));
+            EBFoodOut fout = (EBFoodOut)(new EBFoodOut().Read(foodout));
             fout.Delete();
         }
     }

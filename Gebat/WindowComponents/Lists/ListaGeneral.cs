@@ -7,7 +7,7 @@ namespace GebatWindowComponents.Lists
 {
     public abstract class ListaGeneral:ListView
     {
-        protected List<AEN> colection;
+        protected List<AEB> colection;
         protected bool init;
 
         #region//Protected Methods
@@ -49,7 +49,7 @@ namespace GebatWindowComponents.Lists
         /// <summary>
         /// Obtiene el elemento seleccionado.
         /// </summary>
-        public AEN Selected
+        public AEB Selected
         {
             get
             {
@@ -75,17 +75,17 @@ namespace GebatWindowComponents.Lists
             : base()
         {
             init = false;
-            colection = new List<AEN>();
+            colection = new List<AEB>();
         }
 
         /// <summary>
         /// Método que actualiza la vista de una lista.
         /// </summary>
         /// <param name="elems">Lista de elementos a mostrar.</param>
-        public void Refrescar(List<AEN> elems)
+        public void Refrescar(List<AEB> elems)
         {
             colection.Clear();
-            foreach (AEN item in elems)
+            foreach (AEB item in elems)
             {
                 colection.Add(item);
             }
@@ -96,7 +96,7 @@ namespace GebatWindowComponents.Lists
         /// Añade un elemento a la lista.
         /// </summary>
         /// <param name="elem">Elemento a añadir.</param>
-        public void Add(AEN elem)
+        public void Add(AEB elem)
         {
             colection.Add(elem);
             MostrarElementos();

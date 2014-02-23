@@ -83,9 +83,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\GebatEN\GebatEN.csproj">
+    <ProjectReference Include="..\GebatEN\GebatEB.csproj">
       <Project>{017da2fb-2f1f-4037-a234-f2ac68267dec}</Project>
-      <Name>GebatEN</Name>
+      <Name>GebatEB</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
