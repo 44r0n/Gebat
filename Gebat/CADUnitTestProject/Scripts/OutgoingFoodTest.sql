@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS OutgoingFood
 	Id int Primary Key AUTO_INCREMENT,
 	FoodType int,
 	QuantityOut int,
-	Fecha date,
+	DateTime date,
 	CONSTRAINT fk_OutgoingFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
@@ -68,21 +68,21 @@ INSERT INTO Food (Name,QuantityType) VALUES
 
 DELETE FROM Food WHERE Id = 3;
 
-INSERT INTO OutgoingFood(FoodType,QuantityOut, Fecha) VALUES
+INSERT INTO OutgoingFood(FoodType,QuantityOut, DateTime) VALUES
 (
 	1,
 	1,
 	'2012/11/24'
 );
 
-INSERT INTO OutgoingFood(FoodType,QuantityOut,Fecha) VALUES
+INSERT INTO OutgoingFood(FoodType,QuantityOut,DateTime) VALUES
 (
 	1,
 	1,
 	'2012/11/24'
 );
 
-INSERT INTO OutgoingFood(FoodType,QuantityOut, Fecha) VALUES
+INSERT INTO OutgoingFood(FoodType,QuantityOut, DateTime) VALUES
 (
 	4,
 	2,

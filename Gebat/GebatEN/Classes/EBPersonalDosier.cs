@@ -25,7 +25,7 @@ namespace GebatEN.Classes
         {
             this.familiars = new List<EBFamiliar>();
             ADLFamiliars adlfam = new ADLFamiliars(defaultConnString);
-            foreach (DataRow row in adlfam.SelectWhere("Expediente = " + (int)this.id[0]).Rows)
+            foreach (DataRow row in adlfam.SelectWhere("Dossier = " + (int)this.id[0]).Rows)
             {
                 EBFamiliar fam = new EBFamiliar();
                 fam.FromRow(row);
@@ -136,7 +136,7 @@ namespace GebatEN.Classes
         public EBPersonalDosier(int Income, string Observations)
             :base()
         {
-            adl = new ADLPersonalDosier(defaultConnString);
+            adl = new ADLPersonalDossier(defaultConnString);
             this.income = Income;
             this.observations = Observations;
         }
@@ -147,7 +147,7 @@ namespace GebatEN.Classes
         public EBPersonalDosier()
             :base()
         {
-            adl = new ADLPersonalDosier(defaultConnString);
+            adl = new ADLPersonalDossier(defaultConnString);
         }
 
         /// <summary>

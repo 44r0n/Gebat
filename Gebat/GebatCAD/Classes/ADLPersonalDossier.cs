@@ -2,12 +2,12 @@
 
 namespace GebatCAD.Classes
 {
-    public class ADLPersonalDosier : AADL
+    public class ADLPersonalDossier : AADL
     {
-        public ADLPersonalDosier(string connectionString)
+        public ADLPersonalDossier(string connectionString)
             :base(connectionString)
         {
-            this.tablename = "PersonalDosier";
+            this.tablename = "PersonalDossier";
             this.idFormat.Add("Id");
         }
     }

@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CADUnitTestProject.CADTests
 {
     [TestClass]
-    public class CADOutgoingFoodTest : ACADTest
+    public class ADLOutgoingFoodTest : AADLTest
     {
         protected override DataTable tableFormat
         {
@@ -19,7 +19,7 @@ namespace CADUnitTestProject.CADTests
                 expected.Columns.Add("Id", typeof(int));
                 expected.Columns.Add("FoodType", typeof(int));
                 expected.Columns.Add("QuantityOut", typeof(int));
-                expected.Columns.Add("Fecha", typeof(DateTime));
+                expected.Columns.Add("DateTime", typeof(DateTime));
                 return expected;
             }
         }
@@ -38,7 +38,7 @@ namespace CADUnitTestProject.CADTests
         {
             Assert.AreEqual(expected["FoodType"], actual["FoodType"]);
             Assert.AreEqual(expected["QuantityOut"], actual["QuantityOut"]);
-            Assert.AreEqual(expected["Fecha"], actual["Fecha"]);
+            Assert.AreEqual(expected["DateTime"], actual["DateTime"]);
         }
 
         [TestInitialize()]
@@ -56,7 +56,7 @@ namespace CADUnitTestProject.CADTests
             DataRow expected = tableFormat.NewRow();
             expected["FoodType"] = 1;
             expected["QuantityOut"] = 1;
-            expected["Fecha"] = "2012/11/24";
+            expected["DateTime"] = "2012/11/24";
             List<object> ids = new List<object>();
             ids.Add((int)1);
             DataRow actual = outgoing.Select(ids);
@@ -79,7 +79,7 @@ namespace CADUnitTestProject.CADTests
             expected["Id"] = 3;
             expected["FoodType"] = 4;
             expected["QuantityOut"] = 2;
-            expected["Fecha"] = "2012/11/25";
+            expected["DateTime"] = "2012/11/25";
             AssertRow(expected, actual);
         }
 
@@ -93,17 +93,17 @@ namespace CADUnitTestProject.CADTests
             row["Id"] = 1;
             row["FoodType"] = 1;
             row["QuantityOut"] = 1;
-            row["Fecha"] = "2012/11/24";
+            row["DateTime"] = "2012/11/24";
             DataRow row2 = expected.NewRow();
             row2["Id"] = 2;
             row2["FoodType"] = 1;
             row2["QuantityOut"] = 1;
-            row2["Fecha"] = "2012/11/24";
+            row2["DateTime"] = "2012/11/24";
             DataRow row3 = expected.NewRow();
             row3["Id"] = 3;
             row3["FoodType"] = 4;
             row3["QuantityOut"] = 2;
-            row3["Fecha"] = "2012/11/25";
+            row3["DateTime"] = "2012/11/25";
             expected.Rows.Add(row);
             expected.Rows.Add(row2);
             expected.Rows.Add(row3);
@@ -122,9 +122,9 @@ namespace CADUnitTestProject.CADTests
             row["Id"] = 3;
             row["FoodType"] = 4;
             row["QuantityOut"] = 2;
-            row["Fecha"] = "2012/11/25";
+            row["DateTime"] = "2012/11/25";
             expected.Rows.Add(row);
-            DataTable actual = outgoing.SelectWhere("Fecha = '2012/11/25'");
+            DataTable actual = outgoing.SelectWhere("DateTime = '2012/11/25'");
 
             for (int i = 0; i < expected.Rows.Count; i++)
             {
@@ -139,12 +139,12 @@ namespace CADUnitTestProject.CADTests
             DataRow ins = outgoing.GetVoidRow;
             ins["FoodType"] = 4;
             ins["QuantityOut"] = 2;
-            ins["Fecha"] = "2012/11/25";
+            ins["DateTime"] = "2012/11/25";
             DataRow expected = tableFormat.NewRow();
             expected["Id"] = 4;
             expected["FoodType"] = 4;
             expected["QuantityOut"] = 2;
-            expected["Fecha"] = "2012/11/25";
+            expected["DateTime"] = "2012/11/25";
             DataRow actual = outgoing.Insert(ins);
             AssertRow(expected, actual);
         }
@@ -157,7 +157,7 @@ namespace CADUnitTestProject.CADTests
             mod["Id"] = 2;
             mod["FoodType"] = 2;
             mod["QuantityOut"] = 3;
-            mod["Fecha"] = "2011/02/02";
+            mod["DateTime"] = "2011/02/02";
             outgoing.Update(mod);
         }
 
@@ -169,7 +169,7 @@ namespace CADUnitTestProject.CADTests
             del["Id"] = 2;
             del["FoodType"] = 1;
             del["QuantityOut"] = 1;
-            del["Fecha"] = "2012/11/24";
+            del["DateTime"] = "2012/11/24";
             outgoing.Delete(del);
         }
     }

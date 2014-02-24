@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ENUnitTestProject.ENTests
 {
     [TestClass]
-    public class ENFamiliarTest
+    public class EBFamiliarTest
     {
         [ClassInitialize()]
         public static void setpasswd(TestContext context)
@@ -21,7 +21,7 @@ namespace ENUnitTestProject.ENTests
         {
             List<int> id = new List<int>();
             id.Add(2);
-            List<string> telfs = new List<string>();
+            List<string> phones = new List<string>();
             EBFamiliar fam = (EBFamiliar)(new EBFamiliar().Read(id));
             Assert.AreEqual("91071949E", fam.DNI);
             Assert.AreEqual("Jose", fam.Name);
@@ -33,8 +33,8 @@ namespace ENUnitTestProject.ENTests
         [TestMethod]
         public void Save()
         {
-            EBFamiliar nuevo = new EBFamiliar("42919826D", "Paco", "Mendoza", new DateTime(1978, 04, 18), MyGender.Male);
-            nuevo.Save();
+            EBFamiliar newfamiliar = new EBFamiliar("42919826D", "Paco", "Mendoza", new DateTime(1978, 04, 18), MyGender.Male);
+            newfamiliar.Save();
         }
     }
 }

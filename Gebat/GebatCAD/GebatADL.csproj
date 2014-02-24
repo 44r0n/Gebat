@@ -38,7 +38,7 @@
     <Compile Include="Classes\AVIEW.cs" />
     <Compile Include="Classes\ADLCrime.cs" />
     <Compile Include="Classes\ADLEntryFood.cs" />
-    <Compile Include="Classes\ADLPersonalDosier.cs" />
+    <Compile Include="Classes\ADLPersonalDossier.cs" />
     <Compile Include="Classes\ADLFamiliars.cs" />
     <Compile Include="Classes\ADLOutgoingFood.cs" />
     <Compile Include="Classes\ADLPeople.cs" />

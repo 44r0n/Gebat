@@ -1,14 +1,14 @@
-CREATE TABLE IF NOT EXISTS Personas 
+CREATE TABLE IF NOT EXISTS People 
 (
   Id int Primary Key AUTO_INCREMENT,
   DNI CHAR(9) Unique,
-  Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL,
-  FechaNac DATE NULL,
-  Sexo CHAR(1) NULL
+  Name VARCHAR(15) NULL,
+  Surname VARCHAR(45) NULL,
+  BirthDate DATE NULL,
+  Gender CHAR(1) NULL
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
+INSERT INTO People (DNI, Name, Surname, BirthDate, Gender) VALUES
 (
 	'12345678A',
 	'Pepe',
@@ -17,7 +17,7 @@ INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 	'M'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
+INSERT INTO People (DNI, Name, Surname, BirthDate, Gender) VALUES
 (
 	'23456789B',
 	'Ana',

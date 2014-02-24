@@ -7,7 +7,7 @@ using System.Configuration;
 
 namespace CADUnitTestProject.CADTests
 {
-    public abstract class ACADTest
+    public abstract class AADLTest
     {
         protected abstract DataTable tableFormat
         {
@@ -48,32 +48,21 @@ namespace CADUnitTestProject.CADTests
             connString += "Password=root";
             string provider = ConfigurationManager.ConnectionStrings[connectionString].ProviderName;
             manager = FactorySql.Create(provider);
-            //FileInfo file = new FileInfo(fileScript);
-            //StreamReader lector = file.OpenText();
-            //string script = lector.ReadToEnd();
-            //lector.Close();
             conn = manager.Connection(connString);
             conn.Open();
             ExecScript("Scripts/CleanDB.sql");
             ExecScript(fileScript);
-            //DbCommand comando = manager.Command(script, conn);
-            //comando.ExecuteNonQuery();
             conn.Close();
         }
 
         private void ExecScript(string fileScript)
         {
             FileInfo file = new FileInfo(fileScript);
-            StreamReader lector = file.OpenText();
-            string sciript = lector.ReadToEnd();
-            lector.Close();
-            DbCommand comando = manager.Command(sciript, conn);
-            comando.ExecuteNonQuery();
-        }
-
-        private void CleanDB()
-        {
-
+            StreamReader reader = file.OpenText();
+            string sciript = reader.ReadToEnd();
+            reader.Close();
+            DbCommand command = manager.Command(sciript, conn);
+            command.ExecuteNonQuery();
         }
 
         protected void ResetConn()

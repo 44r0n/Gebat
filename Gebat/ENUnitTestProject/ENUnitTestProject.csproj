@@ -53,13 +53,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ENTests\ENTestPrepare.cs" />
-    <Compile Include="ENTests\ENTypeTest.cs" />
-    <Compile Include="ENTests\ENFoodTest.cs" />
-    <Compile Include="ENTests\ENTBCTest.cs" />
-    <Compile Include="ENTests\ENDelitoTest.cs" />
-    <Compile Include="ENTests\ENFamiliarTest.cs" />
-    <Compile Include="ENTests\ENExpedienteTest.cs" />
+    <Compile Include="EBTests\EBTestPrepare.cs" />
+    <Compile Include="EBTests\EBTypeTest.cs" />
+    <Compile Include="EBTests\EBFoodTest.cs" />
+    <Compile Include="EBTests\EBTBCTest.cs" />
+    <Compile Include="EBTests\EBCrimeTest.cs" />
+    <Compile Include="EBTests\EBFamiliarTest.cs" />
+    <Compile Include="EBTests\EBDossierTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

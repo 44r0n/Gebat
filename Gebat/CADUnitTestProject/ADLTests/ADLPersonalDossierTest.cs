@@ -9,20 +9,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CADUnitTestProject.CADTests
 {
     [TestClass]
-    public class CADExpedientePersonalTest : ACADTest
+    public class ADLPersonalDossierTest : AADLTest
     {
         protected override DataTable tableFormat
         {
             get 
             {
                 DataTable expected = new DataTable();
-                expected.Columns.Add("Ingresos", typeof(int));
-                expected.Columns.Add("Observaciones", typeof(string));
+                expected.Columns.Add("Income", typeof(int));
+                expected.Columns.Add("Observations", typeof(string));
                 return expected;
             }
         }
 
-        private AADL Expediente;
+        private AADL dossier;
 
         protected override string specificScript
         {
@@ -38,16 +38,16 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            Expediente = new ADLPersonalDosier(connectionString);
+            dossier = new ADLPersonalDossier(connectionString);
         }
 
         [TestMethod]
         public void TestLast()
         {
-            DataRow actual = Expediente.Last();
+            DataRow actual = dossier.Last();
             DataRow expected = tableFormat.NewRow();
-            expected["Ingresos"] = 500;
-            Assert.AreEqual(expected["Ingresos"], actual["Ingresos"]);
+            expected["Income"] = 500;
+            Assert.AreEqual(expected["Income"], actual["Income"]);
         }
     }
 }

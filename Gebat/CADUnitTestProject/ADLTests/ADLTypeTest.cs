@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CADUnitTestProject.CADTests
 {
     [TestClass]
-    public class CADTypeTest : ACADTest
+    public class ADLTypeTest : AADLTest
     {
 
         protected override DataTable tableFormat

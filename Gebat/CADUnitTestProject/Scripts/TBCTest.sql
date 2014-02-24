@@ -1,45 +1,45 @@
-CREATE TABLE IF NOT EXISTS Delitos
+CREATE TABLE IF NOT EXISTS Crimes
 (
 	Id int Primary Key AUTO_INCREMENT,
 	Name VARCHAR(45) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Personas 
+CREATE TABLE IF NOT EXISTS People 
 (
   DNI CHAR(9) Primary Key,
-  Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL,
-  Sexo CHAR(1) NULL
+  Name VARCHAR(15) NULL,
+  Surname VARCHAR(45) NULL,
+  Gender CHAR(1) NULL
 );
 
 CREATE TABLE IF NOT EXISTS TBC 
 (
   Id int PRIMARY KEY AUTO_INCREMENT,
   DNI CHAR(9) NOT NULL,
-  Ejecutoria VARCHAR(10) NOT NULL,
-  Juzgado VARCHAR(45) NULL,
-  FInicio DATE NULL,
-  FFin DATE NULL,
-  NumJornadas INT,
-  Lunes BOOLEAN DEFAULT FALSE,
-  Martes BOOLEAN DEFAULT FALSE,
-  Miercoles BOOLEAN DEFAULT FALSE,
-  Jueves BOOLEAN DEFAULT FALSE,
-  Viernes BOOLEAN DEFAULT FALSE,
-  Sabado BOOLEAN DEFAULT FALSE,
-  Domingo BOOLEAN DEFAULT FALSE,
-  Delito INT,
-  Unique (DNI, Ejecutoria),
-  CONSTRAINT fk_TBC_Delitos FOREIGN KEY (Delito) REFERENCES Delitos (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT fk_TBC_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
+  Judgement VARCHAR(10) NOT NULL,
+  Court VARCHAR(45) NULL,
+  BeginDate DATE NULL,
+  FinishDate DATE NULL,
+  NumJourney INT,
+  Monday BOOLEAN DEFAULT FALSE,
+  Tuesday BOOLEAN DEFAULT FALSE,
+  Wednesday BOOLEAN DEFAULT FALSE,
+  Thursday BOOLEAN DEFAULT FALSE,
+  Friday BOOLEAN DEFAULT FALSE,
+  Saturday BOOLEAN DEFAULT FALSE,
+  Sunday BOOLEAN DEFAULT FALSE,
+  Crime INT,
+  Unique (DNI, Judgement),
+  CONSTRAINT fk_TBC_Crimes FOREIGN KEY (Crime) REFERENCES Crimes (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT fk_TBC_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-INSERT INTO Delitos (Name) VALUES
+INSERT INTO Crimes (Name) VALUES
 (
 	'Robo'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
+INSERT INTO People (DNI, Name, Surname, Gender) VALUES
 (
 	'12345678A',
 	'Pepe',
@@ -47,7 +47,7 @@ INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
 	'M'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
+INSERT INTO People (DNI, Name, Surname, Gender) VALUES
 (
 	'23456789B',
 	'Ana',
@@ -55,7 +55,7 @@ INSERT INTO Personas (DNI, Nombre, Apellidos, Sexo) VALUES
 	'M'
 );
 
-INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Martes, Miercoles, Jueves, Viernes, Sabado, Domingo, Delito) VALUES
+INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Crime) VALUES
 (
 	'12345678A',
 	'23/2013',
@@ -73,4 +73,4 @@ INSERT INTO TBC (DNI, Ejecutoria, Juzgado, FInicio, FFin, NumJornadas,Lunes, Mar
 	1
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, Personas.DNI, Nombre, Apellidos, Sexo ,Ejecutoria, Juzgado, FInicio, FFin, NumJornadas, Lunes, Martes, Miercoles, Jueves, Viernes,Sabado, Domingo, Delito from Personas inner join TBC on (Personas.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday,Saturday, Sunday, Crime from People inner join TBC on (People.DNI = TBC.DNI);

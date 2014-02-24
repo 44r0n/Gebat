@@ -54,27 +54,24 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CADTests\ACADTest.cs" />
-    <Compile Include="CADTests\CADTypeTest.cs" />
-    <Compile Include="CADTests\Stubs\StubIsql.cs" />
-    <Compile Include="CADTests\CADFoodTest.cs" />
-    <Compile Include="CADTests\CADEntryFoodTest.cs" />
-    <Compile Include="CADTests\CADOutgoingFoodTest.cs" />
-    <Compile Include="CADTests\CADPersonasTest.cs" />
-    <Compile Include="CADTests\CADTBCTest.cs" />
-    <Compile Include="CADTests\CADDelitoTest.cs" />
-    <Compile Include="CADTests\CADTelefonosTest.cs" />
-    <Compile Include="CADTests\CADFamiliarTest.cs" />
-    <Compile Include="CADTests\CADExpedientePersonalTest.cs" />
-    <Compile Include="CADTests\VIEWDatosFamiliarTest.cs" />
-    <Compile Include="CADTests\VIEWTBCPeopleTest.cs" />
+    <Compile Include="ADLTests\AADLTest.cs" />
+    <Compile Include="ADLTests\ADLTypeTest.cs" />
+    <Compile Include="ADLTests\Stubs\StubIsql.cs" />
+    <Compile Include="ADLTests\ADLFoodTest.cs" />
+    <Compile Include="ADLTests\ADLEntryFoodTest.cs" />
+    <Compile Include="ADLTests\ADLOutgoingFoodTest.cs" />
+    <Compile Include="ADLTests\ADLPeopleTest.cs" />
+    <Compile Include="ADLTests\ADLTBCTest.cs" />
+    <Compile Include="ADLTests\ADLCrimeTest.cs" />
+    <Compile Include="ADLTests\ADLPhonesTest.cs" />
+    <Compile Include="ADLTests\ADLFamiliarTest.cs" />
+    <Compile Include="ADLTests\ADLPersonalDossierTest.cs" />
+    <Compile Include="ADLTests\VIEWFamiliarDataTest.cs" />
+    <Compile Include="ADLTests\VIEWTBCPeopleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Scripts\InitTest.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GebatCAD\GebatADL.csproj">

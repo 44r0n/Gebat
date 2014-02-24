@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ENUnitTestProject.ENTests
 {
     [TestClass]
-    public class ENTBCTest
+    public class EBTBCTest
     {
         [ClassInitialize()]
         public static void setpasswd(TestContext context)
@@ -21,9 +21,9 @@ namespace ENUnitTestProject.ENTests
         {
             List<int> id = new List<int>();
             id.Add(2);
-            List<string> telfs = new List<string>();
-            telfs.Add("123456789");
-            telfs.Add("234567890");
+            List<string> phones = new List<string>();
+            phones.Add("123456789");
+            phones.Add("234567890");
             EBTBC tbc = (EBTBC)(new EBTBC().Read(id));
             Assert.AreEqual("01086932K", tbc.DNI);
             Assert.AreEqual("Ana", tbc.Name);
@@ -43,8 +43,8 @@ namespace ENUnitTestProject.ENTests
             Assert.AreEqual(false, tbc.Timetable[DayOfWeek.Sunday]);
             Assert.AreEqual(250, tbc.NumJourney);
             Assert.AreEqual("Pelea", tbc.Crime.Name);
-            Assert.AreEqual(telfs[0], tbc.Phones[0]);
-            Assert.AreEqual(telfs[1], tbc.Phones[1]);
+            Assert.AreEqual(phones[0], tbc.Phones[0]);
+            Assert.AreEqual(phones[1], tbc.Phones[1]);
         }
 
         [TestMethod]
@@ -67,9 +67,9 @@ namespace ENUnitTestProject.ENTests
             {
                 Assert.AreEqual(dnis[i], ((EBTBC)general[i]).DNI);
             }
-            List<int> endelito = new List<int>();
-            endelito.Add(1);
-            EBTBC ins = new EBTBC("52835460K", "02/2013", "Manolo", "Hansen", new DateTime(1968,04,30) ,MyGender.Male , "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), (EBCrime)new EBCrime().Read(endelito));
+            List<int> crimes = new List<int>();
+            crimes.Add(1);
+            EBTBC ins = new EBTBC("52835460K", "02/2013", "Manolo", "Hansen", new DateTime(1968,04,30) ,MyGender.Male , "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), (EBCrime)new EBCrime().Read(crimes));
             ins.Save();
             general = new EBTBC().ReadAll();
             dnis.Add(ins.DNI);

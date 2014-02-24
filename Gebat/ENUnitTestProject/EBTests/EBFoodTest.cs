@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ENUnitTestProject.ENTests
 {
     [TestClass]
-    public class ENFoodTest
+    public class EBFoodTest
     {
         [ClassInitialize()]
         public static void stepasswd(TestContext context)
@@ -20,10 +20,10 @@ namespace ENUnitTestProject.ENTests
         {
             List<int> id = new List<int>();
             id.Add(4);
-            EBFood comida = (EBFood)(new EBFood("").Read(id));
-            Assert.AreEqual("Pomes", comida.Name);
-            Assert.AreEqual("Kg", comida.MyType.Name);
-            Assert.AreEqual(2, comida.Quantity);
+            EBFood food = (EBFood)(new EBFood("").Read(id));
+            Assert.AreEqual("Pomes", food.Name);
+            Assert.AreEqual("Kg", food.MyType.Name);
+            Assert.AreEqual(2, food.Quantity);
         }
 
         [TestMethod]

@@ -106,10 +106,10 @@ namespace GebatEN.Classes
         {
             ADLPhones adlphones = new ADLPhones(defaultConnString);
             phones = new List<string>();
-            DataTable telfs = adlphones.SelectWhere("DNI = '" + this.dni + "'");
+            DataTable telfs = adlphones.SelectWhere("Owner = '" + this.dni + "'");
             foreach (DataRow row in telfs.Rows)
             {
-                phones.Add((string)row["Numero"]);
+                phones.Add((string)row["PhoneNumber"]);
             }
         }
 
@@ -362,8 +362,8 @@ namespace GebatEN.Classes
         {
             ADLPhones adlphones = new ADLPhones(defaultConnString);
             DataRow newrow = adlphones.GetVoidRow;
-            newrow["Number"] = number;
-            newrow["DNI"] = this.dni;
+            newrow["PhoneNumber"] = number;
+            newrow["Owner"] = this.dni;
             adlphones.Insert(newrow);
             if (phones == null)
             {
@@ -379,7 +379,7 @@ namespace GebatEN.Classes
         public void DelPhone(string number)
         {
             ADLPhones adlphone = new ADLPhones(defaultConnString);
-            DataTable del = adlphone.SelectWhere("Numero = " + number + " AND DNI = '" + this.dni+"'");
+            DataTable del = adlphone.SelectWhere("PhoneNumber = " + number + " AND Owner = '" + this.dni+"'");
             if (del.Rows.Count == 1)
             {
                 adlphone.Delete(del.Rows[0]);

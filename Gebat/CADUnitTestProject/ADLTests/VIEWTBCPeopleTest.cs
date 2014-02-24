@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CADUnitTestProject.CADTests
 {
     [TestClass]
-    public class VIEWTBCPeopleTest : ACADTest
+    public class VIEWTBCPeopleTest : AADLTest
     {
         protected override DataTable tableFormat
         {
@@ -18,23 +18,23 @@ namespace CADUnitTestProject.CADTests
                 DataTable expected = new DataTable();
                 expected.Columns.Add("Id", typeof(int));
                 expected.Columns.Add("DNI", typeof(string));
-                expected.Columns.Add("Nombre", typeof(string));
-                expected.Columns.Add("Apellidos", typeof(string));
-                expected.Columns.Add("FechaNac", typeof(DateTime));
-                expected.Columns.Add("Sexo", typeof(string));
-                expected.Columns.Add("Ejecutoria", typeof(string));
-                expected.Columns.Add("Juzgado", typeof(string));
-                expected.Columns.Add("FInicio", typeof(DateTime));
-                expected.Columns.Add("FFin", typeof(DateTime));
-                expected.Columns.Add("NumJornadas", typeof(int));
-                expected.Columns.Add("Lunes", typeof(bool));
-                expected.Columns.Add("Martes", typeof(bool));
-                expected.Columns.Add("Miercoles", typeof(bool));
-                expected.Columns.Add("Jueves", typeof(bool));
-                expected.Columns.Add("Viernes", typeof(bool));
-                expected.Columns.Add("Sabado", typeof(bool));
-                expected.Columns.Add("Domingo", typeof(bool));
-                expected.Columns.Add("Delito", typeof(int));
+                expected.Columns.Add("Name", typeof(string));
+                expected.Columns.Add("Surname", typeof(string));
+                expected.Columns.Add("BirthDate", typeof(DateTime));
+                expected.Columns.Add("Gender", typeof(string));
+                expected.Columns.Add("Judgement", typeof(string));
+                expected.Columns.Add("Court", typeof(string));
+                expected.Columns.Add("BeginDate", typeof(DateTime));
+                expected.Columns.Add("FinishDate", typeof(DateTime));
+                expected.Columns.Add("NumJourney", typeof(int));
+                expected.Columns.Add("Monday", typeof(bool));
+                expected.Columns.Add("Tuesday", typeof(bool));
+                expected.Columns.Add("Wednesday", typeof(bool));
+                expected.Columns.Add("Thursday", typeof(bool));
+                expected.Columns.Add("Friday", typeof(bool));
+                expected.Columns.Add("Saturday", typeof(bool));
+                expected.Columns.Add("Sunday", typeof(bool));
+                expected.Columns.Add("Crime", typeof(int));
                 return expected;
             }
         }
@@ -52,45 +52,45 @@ namespace CADUnitTestProject.CADTests
         private void AssertRow(DataRow expected, DataRow actual)
         {
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
-            Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
-            Assert.AreEqual(expected["Apellidos"], actual["Apellidos"]);
-            Assert.AreEqual(expected["FechaNac"], actual["FechaNac"]);
-            Assert.AreEqual(expected["Sexo"], actual["Sexo"]);
-            Assert.AreEqual(expected["Ejecutoria"], actual["Ejecutoria"]);
-            Assert.AreEqual(expected["Juzgado"], actual["Juzgado"]);
-            Assert.AreEqual(expected["FInicio"], actual["FInicio"]);
-            Assert.AreEqual(expected["FFin"], actual["FFin"]);
-            Assert.AreEqual(expected["NumJornadas"], actual["NumJornadas"]);
-            Assert.AreEqual(expected["Lunes"], actual["Lunes"]);
-            Assert.AreEqual(expected["Martes"], actual["Martes"]);
-            Assert.AreEqual(expected["Miercoles"], actual["Miercoles"]);
-            Assert.AreEqual(expected["Jueves"], actual["Jueves"]);
-            Assert.AreEqual(expected["Viernes"], actual["Viernes"]);
-            Assert.AreEqual(expected["Sabado"], actual["Sabado"]);
-            Assert.AreEqual(expected["Domingo"], actual["Domingo"]);
-            Assert.AreEqual(expected["Delito"], actual["Delito"]);
+            Assert.AreEqual(expected["Name"], actual["Name"]);
+            Assert.AreEqual(expected["Surname"], actual["Surname"]);
+            Assert.AreEqual(expected["BirthDate"], actual["BirthDate"]);
+            Assert.AreEqual(expected["Gender"], actual["Gender"]);
+            Assert.AreEqual(expected["Judgement"], actual["Judgement"]);
+            Assert.AreEqual(expected["Court"], actual["Court"]);
+            Assert.AreEqual(expected["BeginDate"], actual["BeginDate"]);
+            Assert.AreEqual(expected["FinishDate"], actual["FinishDate"]);
+            Assert.AreEqual(expected["NumJourney"], actual["NumJourney"]);
+            Assert.AreEqual(expected["Monday"], actual["Monday"]);
+            Assert.AreEqual(expected["Tuesday"], actual["Tuesday"]);
+            Assert.AreEqual(expected["Wednesday"], actual["Wednesday"]);
+            Assert.AreEqual(expected["Thursday"], actual["Thursday"]);
+            Assert.AreEqual(expected["Friday"], actual["Friday"]);
+            Assert.AreEqual(expected["Saturday"], actual["Saturday"]);
+            Assert.AreEqual(expected["Sunday"], actual["Sunday"]);
+            Assert.AreEqual(expected["Crime"], actual["Crime"]);
         }
 
         private DataRow testRow(DataRow voidRow)
         {
             voidRow["DNI"] = "12345678A";
-            voidRow["Nombre"] = "Pepe";
-            voidRow["Apellidos"] = "Olivares";
-            voidRow["FechaNac"] = "1976/04/02";
-            voidRow["Sexo"] = "M";
-            voidRow["Ejecutoria"] = "23/2013";
-            voidRow["Juzgado"] = "Alicante";
-            voidRow["FInicio"] = "2012/11/24";
-            voidRow["FFin"] = "2013/03/09";
-            voidRow["NumJornadas"] = 180;
-            voidRow["Lunes"] = true;
-            voidRow["Martes"] = true;
-            voidRow["Miercoles"] = true;
-            voidRow["Jueves"] = true;
-            voidRow["Viernes"] = true;
-            voidRow["Sabado"] = false;
-            voidRow["Domingo"] = false;
-            voidRow["Delito"] = 1;
+            voidRow["Name"] = "Pepe";
+            voidRow["Surname"] = "Olivares";
+            voidRow["BirthDate"] = "1976/04/02";
+            voidRow["Gender"] = "M";
+            voidRow["Judgement"] = "23/2013";
+            voidRow["Court"] = "Alicante";
+            voidRow["BeginDate"] = "2012/11/24";
+            voidRow["FinishDate"] = "2013/03/09";
+            voidRow["NumJourney"] = 180;
+            voidRow["Monday"] = true;
+            voidRow["Tuesday"] = true;
+            voidRow["Wednesday"] = true;
+            voidRow["Thursday"] = true;
+            voidRow["Friday"] = true;
+            voidRow["Saturday"] = false;
+            voidRow["Sunday"] = false;
+            voidRow["Crime"] = 1;
             return voidRow;
             
         }
@@ -172,7 +172,7 @@ namespace CADUnitTestProject.CADTests
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
             expected.Rows.Add(row);
-            DataTable actual = vtbc.SelectWhere("Juzgado = 'Alicante'");
+            DataTable actual = vtbc.SelectWhere("Court = 'Alicante'");
             for (int i = 0; i < expected.Rows.Count; i++)
             {
                 AssertRow(expected.Rows[i], actual.Rows[i]);
@@ -183,7 +183,7 @@ namespace CADUnitTestProject.CADTests
         [ExpectedException(typeof(InvalidStartRecordException))]
         public void SelectWhereInvalidStart()
         {
-            vtbc.SelectWhere("Juzgado = 'Alicante'", -8);
+            vtbc.SelectWhere("Court = 'Alicante'", -8);
         }
 
         [TestMethod]
@@ -198,7 +198,7 @@ namespace CADUnitTestProject.CADTests
         public void SelectWhereFailConn()
         {
             setFailConn();
-            vtbc.SelectWhere("Juzgado = 'Alicante'");
+            vtbc.SelectWhere("Court = 'Alicante'");
         }
     }
 }

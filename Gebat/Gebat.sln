@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlManager", "SqlManager\Sq
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatADL", "GebatCAD\GebatADL.csproj", "{F9CF59BE-07EC-41E9-90B6-11A03F2F6E10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CADUnitTestProject", "CADUnitTestProject\CADUnitTestProject.csproj", "{6CB4EB2A-5355-4BEE-9DEA-4B8E154ED4A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADLUnitTestProject", "CADUnitTestProject\ADLUnitTestProject.csproj", "{6CB4EB2A-5355-4BEE-9DEA-4B8E154ED4A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatEB", "GebatEN\GebatEB.csproj", "{017DA2FB-2F1F-4037-A234-F2AC68267DEC}"
 EndProject

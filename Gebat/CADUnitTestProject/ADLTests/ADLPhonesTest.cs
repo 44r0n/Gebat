@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CADUnitTestProject.CADTests
 {
     [TestClass]
-    public class CADTelefonosTest : ACADTest
+    public class ADLPhonesTest : AADLTest
     {
         protected override DataTable tableFormat
         {
@@ -15,19 +15,19 @@ namespace CADUnitTestProject.CADTests
             {
                 DataTable expected = new DataTable();
                 expected.Columns.Add("Id", typeof(int));
-                expected.Columns.Add("Numero", typeof(string));
-                expected.Columns.Add("DNI", typeof(string));
+                expected.Columns.Add("PhoneNumber", typeof(string));
+                expected.Columns.Add("Owner", typeof(string));
                 return expected;
             }
         }
 
-        private AADL telefono;
+        private AADL phone;
 
         private void AssertRows(DataRow expected, DataRow actual)
         {
             Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["Numero"], actual["Numero"]);
-            Assert.AreEqual(expected["DNI"], actual["DNI"]);
+            Assert.AreEqual(expected["PhoneNumber"], actual["PhoneNumber"]);
+            Assert.AreEqual(expected["Owner"], actual["Owner"]);
         }
 
         protected override string specificScript
@@ -41,8 +41,8 @@ namespace CADUnitTestProject.CADTests
         private DataRow testRow(DataRow voidRow)
         {
             voidRow["Id"] = 1;
-            voidRow["Numero"] = "123456789";
-            voidRow["DNI"] = "12345678A";
+            voidRow["PhoneNumber"] = "123456789";
+            voidRow["Owner"] = "12345678A";
             return voidRow;
         }
 
@@ -52,7 +52,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            telefono = new ADLPhones(connectionString);
+            phone = new ADLPhones(connectionString);
         }
 
         [TestMethod]
@@ -61,7 +61,7 @@ namespace CADUnitTestProject.CADTests
             DataRow expected = testRow(tableFormat.NewRow());
             List<object> ids = new List<object>();
             ids.Add(1);
-            DataRow actual = telefono.Select(ids);
+            DataRow actual = phone.Select(ids);
             AssertRows(expected, actual);
         }
 
@@ -69,34 +69,34 @@ namespace CADUnitTestProject.CADTests
         public void TestCount()
         {
             int expected = 2;
-            int actual = telefono.Count();
+            int actual = phone.Count();
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
         public void TestLast()
         {
-            DataRow actual = telefono.Last();
+            DataRow actual = phone.Last();
             DataRow expected = tableFormat.NewRow();
             expected["Id"] = 2;
-            expected["Numero"] = "234567890";
-            expected["DNI"] = "12345678A";
+            expected["PhoneNumber"] = "234567890";
+            expected["Owner"] = "12345678A";
             AssertRows(expected, actual);
         }
 
         [TestMethod]
         public void SelectAll()
         {
-            DataTable actual = telefono.SelectAll();
+            DataTable actual = phone.SelectAll();
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
             row["Id"] = 1;
-            row["Numero"] = "123456789";
-            row["DNI"] = "12345678A";
+            row["PhoneNumber"] = "123456789";
+            row["Owner"] = "12345678A";
             DataRow row2 = expected.NewRow();
             row2["Id"] = 2;
-            row2["Numero"] = "234567890";
-            row2["DNI"] = "12345678A";
+            row2["PhoneNumber"] = "234567890";
+            row2["Owner"] = "12345678A";
             for (int i = 0; i < expected.Rows.Count; i++)
             {
                 AssertRows(expected.Rows[i], actual.Rows[i]);
@@ -108,7 +108,7 @@ namespace CADUnitTestProject.CADTests
         {
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
-            DataTable actual = telefono.SelectWhere("Numero = '123456789'");
+            DataTable actual = phone.SelectWhere("PhoneNumber = '123456789'");
             for (int i = 0; i < expected.Rows.Count; i++)
             {
                 AssertRows(expected.Rows[i], actual.Rows[i]);
@@ -118,14 +118,14 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Insert()
         {
-            DataRow ins = telefono.GetVoidRow;
-            ins["Numero"] = "987654321";
-            ins["DNI"] = "12345678A";
+            DataRow ins = phone.GetVoidRow;
+            ins["PhoneNumber"] = "987654321";
+            ins["Owner"] = "12345678A";
             DataRow expected = tableFormat.NewRow();
             expected["Id"] = 3;
-            expected["Numero"] = "987654321";
-            expected["DNI"] = "12345678A";
-            DataRow actual = telefono.Insert(ins);
+            expected["PhoneNumber"] = "987654321";
+            expected["Owner"] = "12345678A";
+            DataRow actual = phone.Insert(ins);
             AssertRows(expected, actual);
         }
 
@@ -134,9 +134,9 @@ namespace CADUnitTestProject.CADTests
         {
             DataRow mod = tableFormat.NewRow();
             mod["Id"] = 2;
-            mod["Numero"] = "978654321";
-            mod["DNI"] = "12345678A";
-            telefono.Update(mod);
+            mod["PhoneNumber"] = "978654321";
+            mod["Owner"] = "12345678A";
+            phone.Update(mod);
         }
 
         [TestMethod]
@@ -144,9 +144,9 @@ namespace CADUnitTestProject.CADTests
         {
             DataRow del = tableFormat.NewRow();
             del["Id"] = 2;
-            del["Numero"] = "234567890";
-            del["DNI"] = "12345678A";
-            telefono.Delete(del);
+            del["PhoneNumber"] = "234567890";
+            del["Owner"] = "12345678A";
+            phone.Delete(del);
         }
     }
 }

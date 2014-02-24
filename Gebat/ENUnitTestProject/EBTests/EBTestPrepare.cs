@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ENUnitTestProject.ENTests
 {
     [TestClass]
-    public class ENTestPrepare
+    public class EBTestPrepare
     {
         static protected string connectionString = "GebatDataConnectionString";
 

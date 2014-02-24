@@ -7,10 +7,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ENUnitTestProject.ENTests
 {
     [TestClass]
-    public class ENTypeTest
+    public class ENDelitoTest
     {
         [ClassInitialize()]
-        public static void stepasswd(TestContext context)
+        public static void setpasswd(TestContext context)
         {
             AADL.Password = "root";
         }
@@ -20,49 +20,49 @@ namespace ENUnitTestProject.ENTests
         {
             List<int> id = new List<int>();
             id.Add(2);
-            EBType tipo = (EBType)(new EBType("").Read(id));
-            Assert.AreEqual("Litros", tipo.Name);
-            Assert.AreEqual(2, tipo.Id[0]);
+            EBCrime crime = (EBCrime)new EBCrime().Read(id);
+            Assert.AreEqual("Pelea", crime.Name);
+            Assert.AreEqual(2, crime.Id[0]);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void ReadNullId()
         {
-            EBType tipo = (EBType)(new EBType("").Read(null));
+            EBCrime crime = (EBCrime)new EBCrime().Read(null);
         }
 
         [TestMethod]
         public void ReadAll_Insert_Delete()
         {
-            List<AEB> general = new EBType("").ReadAll();
-            List<EBType> expected = new List<EBType>();
-            EBType p = new EBType("Kg");
+            List<AEB> general = new EBCrime().ReadAll();
+            List<EBCrime> expected = new List<EBCrime>();
+            EBCrime p = new EBCrime("Robo");
             expected.Add(p);
-            EBType s = new EBType("Litros");
+            EBCrime s = new EBCrime("Pelea");
             expected.Add(s);
-            EBType t = new EBType("Paquetes");
+            EBCrime t = new EBCrime("Otro");
             expected.Add(t);
-            for(int i = 0; i < expected.Count; i++)
+            for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((EBType)general[i]).Name);
+                Assert.AreEqual(expected[i].Name, ((EBCrime)general[i]).Name);
             }
-            EBType ins = new EBType("De prueba");
+            EBCrime ins = new EBCrime("De prueba");
             ins.Save();
-            general = new EBType("").ReadAll();
+            general = new EBCrime().ReadAll();
             expected.Add(ins);
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((EBType)general[i]).Name);
+                Assert.AreEqual(expected[i].Name, ((EBCrime)general[i]).Name);
             }
 
             ins.Delete();
             expected.RemoveAt(3);
 
-            general = new EBType("").ReadAll();
+            general = new EBCrime().ReadAll();
             for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(expected[i].Name, ((EBType)general[i]).Name);
+                Assert.AreEqual(expected[i].Name, ((EBCrime)general[i]).Name);
             }
         }
     }

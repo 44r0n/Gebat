@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CADUnitTestProject.CADTests
 {
     [TestClass]
-    public class VIEWDatosFamiliarTest : ACADTest
+    public class VIEWFamiliarDataTest : AADLTest
     {
 
         private AVIEW vfamiliar;
@@ -21,10 +21,10 @@ namespace CADUnitTestProject.CADTests
                 DataTable expected = new DataTable();
                 expected.Columns.Add("Id",typeof(int));
                 expected.Columns.Add("DNI", typeof(string));
-                expected.Columns.Add("Nombre", typeof(string));
-                expected.Columns.Add("Apellidos", typeof(string));
-                expected.Columns.Add("FechaNac", typeof(DateTime));
-                expected.Columns.Add("Sexo", typeof(string));
+                expected.Columns.Add("Name", typeof(string));
+                expected.Columns.Add("Surname", typeof(string));
+                expected.Columns.Add("BirthDate", typeof(DateTime));
+                expected.Columns.Add("Gender", typeof(string));
                 return expected;
             }
         }
@@ -40,19 +40,19 @@ namespace CADUnitTestProject.CADTests
         private void AssertRow(DataRow expected, DataRow actual)
         {
             Assert.AreEqual(expected["DNI"], actual["DNI"]);
-            Assert.AreEqual(expected["Nombre"], actual["Nombre"]);
-            Assert.AreEqual(expected["Apellidos"], actual["Apellidos"]);
-            Assert.AreEqual(expected["FechaNac"], actual["FechaNac"]);
-            Assert.AreEqual(expected["Sexo"], actual["Sexo"]);
+            Assert.AreEqual(expected["Name"], actual["Name"]);
+            Assert.AreEqual(expected["Surname"], actual["Surname"]);
+            Assert.AreEqual(expected["BirthDate"], actual["BirthDate"]);
+            Assert.AreEqual(expected["Gender"], actual["Gender"]);
         }
 
         private DataRow testRow(DataRow voidRow)
         {
             voidRow["DNI"] = "91071949E";
-            voidRow["Nombre"] = "Jose";
-            voidRow["Apellidos"] = "Logroño";
-            voidRow["FechaNac"] = "1972/12/06";
-            voidRow["Sexo"] = "M";
+            voidRow["Name"] = "Jose";
+            voidRow["Surname"] = "Logroño";
+            voidRow["BirthDate"] = "1972/12/06";
+            voidRow["Gender"] = "M";
             return voidRow;
         }
 

@@ -10,7 +10,7 @@ namespace GebatCAD.Classes
         public ADLFamiliars(string connStringName)
             :base(connStringName)
         {
-            this.tablename = "Familiares";
+            this.tablename = "Familiars";
             this.idFormat.Add("Id");
         }
     }

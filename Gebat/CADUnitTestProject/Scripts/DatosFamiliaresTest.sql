@@ -1,21 +1,21 @@
-CREATE TABLE IF NOT EXISTS Personas 
+CREATE TABLE IF NOT EXISTS People 
 (
   Id int Primary Key AUTO_INCREMENT,
   DNI CHAR(9) Unique,
-  Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL,
-  FechaNac DATE NULL,
-  Sexo CHAR(1) NULL
+  Name VARCHAR(15) NULL,
+  Surname VARCHAR(45) NULL,
+  BirthDate DATE NULL,
+  Gender CHAR(1) NULL
 );
 
-CREATE TABLE IF NOT EXISTS Familiares
+CREATE TABLE IF NOT EXISTS Familiars
 (
 	Id int Primary Key AUTO_INCREMENT,
 	DNI CHAR(9) NOT NULL,
-	CONSTRAINT fk_Familiares_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT fk_Familiars_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
+INSERT INTO People (DNI, Name, Surname, BirthDate, Gender) VALUES
 (
 	'53705134L',
 	'María',
@@ -24,7 +24,7 @@ INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 	'F'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
+INSERT INTO People (DNI, Name, Surname, BirthDate, Gender) VALUES
 (
 	'91071949E',
 	'Jose',
@@ -33,7 +33,7 @@ INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 	'M'
 );
 
-INSERT INTO Personas (DNI, Nombre,Apellidos,FechaNac, Sexo) VALUES
+INSERT INTO People (DNI, Name,Surname,BirthDate, Gender) VALUES
 (
 	'29556003Z',
 	'Jenny',
@@ -42,19 +42,19 @@ INSERT INTO Personas (DNI, Nombre,Apellidos,FechaNac, Sexo) VALUES
 	'F'
 );
 
-INSERT INTO Familiares(DNI) VALUES
+INSERT INTO Familiars(DNI) VALUES
 (
 	'53705134L'
 );
 
-INSERT INTO Familiares(DNI) VALUES
+INSERT INTO Familiars(DNI) VALUES
 (
 	'91071949E'
 );
 
-INSERT INTO Familiares(DNI) VALUES
+INSERT INTO Familiars(DNI) VALUES
 (
 	'29556003Z'
 );
 
-CREATE OR REPLACE VIEW DatosFamiliares as select Familiares.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo FROM Personas inner join Familiares on (Personas.DNI = Familiares.DNI);
+CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender FROM People inner join Familiars on (People.DNI = Familiars.DNI);

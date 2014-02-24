@@ -1,42 +1,42 @@
-CREATE TABLE IF NOT EXISTS ExpedientesPersonales
+CREATE TABLE IF NOT EXISTS PersonalDossier
 (
 	Id int PRIMARY KEY AUTO_INCREMENT,
-	Ingresos INT,
-	Observaciones varchar(255)
+	Income INT,
+	Observations varchar(255)
 );
 
-CREATE TABLE IF NOT EXISTS Personas 
+CREATE TABLE IF NOT EXISTS People 
 (
   Id int Primary Key AUTO_INCREMENT,
   DNI CHAR(9) Unique,
-  Nombre VARCHAR(15) NULL,
-  Apellidos VARCHAR(45) NULL,
-  FechaNac DATE NULL,
-  Sexo CHAR(1) NULL
+  Name VARCHAR(15) NULL,
+  Surname VARCHAR(45) NULL,
+  BirthDate DATE NULL,
+  Gendre CHAR(1) NULL
 );
 
-CREATE TABLE IF NOT EXISTS Familiares
+CREATE TABLE IF NOT EXISTS Familiars
 (
 	Id int Primary Key AUTO_INCREMENT,
 	DNI CHAR(9) NOT NULL,
-	Expediente int,
-	CONSTRAINT fk_Familiares_Personas FOREIGN KEY (DNI) REFERENCES Personas (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT fk_Familiares_Expediente FOREIGN KEY (Expediente) REFERENCES ExpedientesPersonales (Id) ON DELETE SET NULL ON UPDATE CASCADE
+	Dossier int,
+	CONSTRAINT fk_Familiars_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_Familiars_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-INSERT INTO ExpedientesPersonales(Ingresos, Observaciones) VALUES
+INSERT INTO PersonalDossier(Income, Observations) VALUES
 (
 	1000,
 	"Una observación"
 );
 
-INSERT INTO ExpedientesPersonales(Ingresos, Observaciones) VALUES
+INSERT INTO PersonalDossier(Income, Observations) VALUES
 (
 	500,
 	"otra"
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
+INSERT INTO People (DNI, Name, Surname, BirthDate, Gendre) VALUES
 (
 	'53705134L',
 	'María',
@@ -45,7 +45,7 @@ INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 	'F'
 );
 
-INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
+INSERT INTO People (DNI, Name, Surname, BirthDate, Gendre) VALUES
 (
 	'91071949E',
 	'Jose',
@@ -54,7 +54,7 @@ INSERT INTO Personas (DNI, Nombre, Apellidos, FechaNac, Sexo) VALUES
 	'M'
 );
 
-INSERT INTO Personas (DNI, Nombre,Apellidos,FechaNac, Sexo) VALUES
+INSERT INTO People (DNI, Name,Surname,BirthDate, Gendre) VALUES
 (
 	'29556003Z',
 	'Jenny',
@@ -63,19 +63,19 @@ INSERT INTO Personas (DNI, Nombre,Apellidos,FechaNac, Sexo) VALUES
 	'F'
 );
 
-INSERT INTO Familiares(DNI, Expediente) VALUES
+INSERT INTO Familiars(DNI, Dossier) VALUES
 (
 	'53705134L',
 	1
 );
 
-INSERT INTO Familiares(DNI, Expediente) VALUES
+INSERT INTO Familiars(DNI, Dossier) VALUES
 (
 	'91071949E',
 	1
 );
 
-INSERT INTO Familiares(DNI, Expediente) VALUES
+INSERT INTO Familiars(DNI, Dossier) VALUES
 (
 	'29556003Z',
 	2
@@ -83,4 +83,4 @@ INSERT INTO Familiares(DNI, Expediente) VALUES
 
 
 
-CREATE OR REPLACE VIEW DatosFamiliares as select Familiares.Id, Personas.DNI, Nombre, Apellidos, FechaNac, Sexo FROM Personas inner join Familiares on (Personas.DNI = Familiares.DNI);
+CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gendre FROM People inner join Familiars on (People.DNI = Familiars.DNI);

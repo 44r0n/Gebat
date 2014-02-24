@@ -1,15 +1,12 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
 using GebatCAD.Classes;
-using GebatCAD.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CADUnitTestProject.CADTests
 {
     [TestClass]
-    public class CADDelitoTest : ACADTest
+    public class ADLCrimeTest : AADLTest
     {
 
         protected override DataTable tableFormat
@@ -31,7 +28,7 @@ namespace CADUnitTestProject.CADTests
             }
         }
 
-        private AADL delito;
+        private AADL crime;
 
         private void AssertRow(DataRow expected, DataRow actual)
         {
@@ -45,7 +42,7 @@ namespace CADUnitTestProject.CADTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            delito = new ADLCrime(connectionString);
+            crime = new ADLCrime(connectionString);
         }
 
         [TestMethod]
@@ -54,7 +51,7 @@ namespace CADUnitTestProject.CADTests
             string expected = "Robo";
             List<object> ids = new List<object>();
             ids.Add((int)1);
-            DataRow actual = delito.Select(ids);
+            DataRow actual = crime.Select(ids);
             Assert.AreEqual(actual["Name"].ToString(), expected);
         }
 
@@ -72,7 +69,7 @@ namespace CADUnitTestProject.CADTests
         {
             List<object> ids = new List<object>();
             ids.Add(1);
-            DataRow actual = delito.Select(ids);
+            DataRow actual = crime.Select(ids);
             DataTable table = tableFormat;
             DataRow expected = table.NewRow();
             expected["Id"] = 1;
@@ -83,12 +80,12 @@ namespace CADUnitTestProject.CADTests
         [TestMethod]
         public void Insert()
         {
-            DataRow ins = delito.GetVoidRow;
+            DataRow ins = crime.GetVoidRow;
             ins["Name"] = "Cosas";
-            DataRow expected = delito.GetVoidRow;
+            DataRow expected = crime.GetVoidRow;
             expected["Id"] = 2;
             expected["Name"] = "Cosas";
-            DataRow actual = delito.Insert(ins);
+            DataRow actual = crime.Insert(ins);
             AssertRow(expected, actual);
         }
 

@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ENUnitTestProject.ENTests
 {
     [TestClass]
-    public class ENExpedienteTest
+    public class EBDossier
     {
         [ClassInitialize()]
         public static void setpasswd(TestContext context)
