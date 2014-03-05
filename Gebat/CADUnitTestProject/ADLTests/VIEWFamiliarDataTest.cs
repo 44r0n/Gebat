@@ -6,7 +6,7 @@ using GebatCAD.Classes;
 using GebatCAD.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CADUnitTestProject.CADTests
+namespace CADUnitTestProject.ADLTests
 {
     [TestClass]
     public class VIEWFamiliarDataTest : AADLTest

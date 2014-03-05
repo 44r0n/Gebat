@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.Common;
 using MySql.Data.MySqlClient;
 
-namespace CADUnitTestProject.CADTests
+namespace CADUnitTestProject.ADLTests
 {
     public class StubIsql : ISql
     {

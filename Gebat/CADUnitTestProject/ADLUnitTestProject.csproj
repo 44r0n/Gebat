@@ -66,6 +66,7 @@
     <Compile Include="ADLTests\ADLPhonesTest.cs" />
     <Compile Include="ADLTests\ADLFamiliarTest.cs" />
     <Compile Include="ADLTests\ADLPersonalDossierTest.cs" />
+    <Compile Include="ADLTests\ADLConcessionTest.cs" />
     <Compile Include="ADLTests\VIEWFamiliarDataTest.cs" />
     <Compile Include="ADLTests\VIEWTBCPeopleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\CleanDB.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\Concessions.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\DatosFamiliaresTest.sql">

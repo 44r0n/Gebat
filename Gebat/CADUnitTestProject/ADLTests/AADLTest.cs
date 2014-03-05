@@ -5,7 +5,7 @@ using SqlManager;
 using GebatCAD.Classes;
 using System.Configuration;
 
-namespace CADUnitTestProject.CADTests
+namespace CADUnitTestProject.ADLTests
 {
     public abstract class AADLTest
     {

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
 using GebatCAD.Classes;
-using GebatCAD.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CADUnitTestProject.CADTests
+namespace CADUnitTestProject.ADLTests
 {
     [TestClass]
     public class ADLTBCTest : AADLTest

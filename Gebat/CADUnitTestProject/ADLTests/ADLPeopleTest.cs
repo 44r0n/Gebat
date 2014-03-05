@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using GebatCAD.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CADUnitTestProject.CADTests
+namespace CADUnitTestProject.ADLTests
 {
     [TestClass]
     public class ADLPeopleTest : AADLTest
