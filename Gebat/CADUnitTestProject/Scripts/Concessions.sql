@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS People
 CREATE TABLE IF NOT EXISTS PersonalDossier
 (
 	Id int PRIMARY KEY AUTO_INCREMENT,
-	Income INT,
 	Observations varchar(255)
 );
 
@@ -20,6 +19,7 @@ CREATE TABLE IF NOT EXISTS Familiars
 	Id int Primary Key AUTO_INCREMENT,
 	DNI CHAR(9) Unique,
 	Dossier int,
+	Income INT,
 	CONSTRAINT fk_Familiars_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_Familiars_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -34,15 +34,13 @@ CREATE TABLE IF NOT EXISTS Concessions
 	CONSTRAINT fk_Concessions_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-INSERT INTO PersonalDossier(Income, Observations) VALUES
+INSERT INTO PersonalDossier(Observations) VALUES
 (
-	1000,
 	"Una observación"
 );
 
-INSERT INTO PersonalDossier(Income, Observations) VALUES
+INSERT INTO PersonalDossier(Observations) VALUES
 (
-	500,
 	"otra"
 );
 
@@ -73,22 +71,25 @@ INSERT INTO People (DNI, Name,Surname,BirthDate, Gender) VALUES
 	'F'
 );
 
-INSERT INTO Familiars(DNI, Dossier) VALUES
+INSERT INTO Familiars(DNI, Dossier, Income) VALUES
 (
 	'53705134L',
-	1
+	1,
+	750
 );
 
-INSERT INTO Familiars(DNI, Dossier) VALUES
+INSERT INTO Familiars(DNI, Dossier, Income) VALUES
 (
 	'91071949E',
-	1
+	1,
+	250
 );
 
-INSERT INTO Familiars(DNI, Dossier) VALUES
+INSERT INTO Familiars(DNI, Dossier, Income) VALUES
 (
 	'29556003Z',
-	2
+	2,
+	500
 );
 
 INSERT INTO Concessions (Dossier, BeginDate, FinishDate, Notes) VALUES

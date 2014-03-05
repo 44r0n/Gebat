@@ -92,7 +92,6 @@ CREATE TABLE IF NOT EXISTS People
 CREATE TABLE IF NOT EXISTS PersonalDossier
 (
 	Id int PRIMARY KEY AUTO_INCREMENT,
-	Income INT,
 	Observations varchar(255)
 );
 
@@ -101,6 +100,7 @@ CREATE TABLE IF NOT EXISTS Familiars
 	Id int Primary Key AUTO_INCREMENT,
 	DNI CHAR(9) Unique,
 	Dossier int,
+	Income INT,
 	CONSTRAINT fk_Familiars_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_Familiars_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
