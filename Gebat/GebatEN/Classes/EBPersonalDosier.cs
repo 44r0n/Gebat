@@ -13,13 +13,14 @@ namespace GebatEN.Classes
         private List<EBFamiliar> familiars = null;
         private int income = 0;
         private string observations;
+        private List<AEBConcession> concessions = null;
 
         #endregion
 
         #region//Private Methods
 
         /// <summary>
-        /// Carga todos los familiares ligados a un expediente.
+        /// Carga todos los familiares ligados al expediente actual.
         /// </summary>
         private void loadFamiliars()
         {
@@ -32,6 +33,25 @@ namespace GebatEN.Classes
                 this.familiars.Add(fam);
                 this.income += fam.Income;
             }
+        }
+
+        /// <summary>
+        /// Comprueba si la concesión pasada por parámetro no solapa con una concesión previa.
+        /// </summary>
+        /// <param name="newConcession">Concesión a comprobar.</param>
+        /// <returns></returns>
+        private bool checkNewConcession(AEBConcession newConcession)
+        {
+            bool ret = true;
+            foreach (AEBConcession concession in concessions)
+            {
+                if (newConcession.BeginDate < concession.FinishDate)
+                {
+                    ret = false;
+                    break;
+                }
+            }
+            return ret;
         }
 
         #endregion
@@ -116,6 +136,17 @@ namespace GebatEN.Classes
             }
         }
 
+        /// <summary>
+        /// Obtiene las concesiones del expediente.
+        /// </summary>
+        public List<AEBConcession> Concessions
+        {
+            get
+            {
+                return this.concessions;
+            }
+        }
+
         #endregion
 
         #region//Public Methods
@@ -189,6 +220,22 @@ namespace GebatEN.Classes
             familiar.dossier = (int)this.id[0];
             familiar.Save();
             familiars.Add(familiar);
+        }
+
+        /// <summary>
+        /// Añad una concesión nueva al expediente personal, guardando la concesión en la base de datos.
+        /// </summary>
+        /// <param name="concession">Concesión a añadir.</param>
+        public virtual void AddConcession(AEBConcession concession)
+        {
+            //TODO: loadConcessiones();
+            if (!checkNewConcession(concession))
+            {
+                throw new GebatEN.Exceptions.InvalidDateConcessionException("The begin date of the concession cannot be earlier than other concession");
+            }
+            concession.dossier = (int)this.id[0];
+            concession.Save();
+            concessions.Add(concession);
         }
 
         #endregion
