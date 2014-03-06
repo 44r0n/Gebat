@@ -11,7 +11,7 @@ namespace GebatEN.Classes
         #region//Atributes
 
         private List<EBFamiliar> familiars = null;
-        private int income;
+        private int income = 0;
         private string observations;
 
         #endregion
@@ -30,6 +30,7 @@ namespace GebatEN.Classes
                 EBFamiliar fam = new EBFamiliar();
                 fam.FromRow(row);
                 this.familiars.Add(fam);
+                this.income += fam.Income;
             }
         }
 
@@ -49,7 +50,6 @@ namespace GebatEN.Classes
                 {
                     ret["Id"] = (int)this.id[0];
                 }
-                ret["Income"] = this.income;
                 ret["Observations"] = this.observations;
                 return ret;
             }
@@ -65,8 +65,8 @@ namespace GebatEN.Classes
             {
                 this.id = new List<object>();
                 this.id.Add((int)row["Id"]);
-                this.income = (int)row["Income"];
                 this.observations = (string)row["Observations"];
+                this.loadFamiliars();
                 this.saved = true;
             }
             else
@@ -87,10 +87,6 @@ namespace GebatEN.Classes
             get
             {
                 return this.income;
-            }
-            set
-            {
-                this.income = value;
             }
         }
 
@@ -116,10 +112,6 @@ namespace GebatEN.Classes
         {
             get
             {
-                if (this.familiars == null)
-                {
-                    loadFamiliars();
-                }
                 return this.familiars;
             }
         }
@@ -131,13 +123,11 @@ namespace GebatEN.Classes
         /// <summary>
         /// Constructor del expediente.
         /// </summary>
-        /// <param name="Income">Ingresos del expediente.</param>
         /// <param name="Observations">Observaciones sobre el expediente.</param>
-        public EBPersonalDosier(int Income, string Observations)
+        public EBPersonalDosier(string Observations)
             :base()
         {
             adl = new ADLPersonalDossier(defaultConnString);
-            this.income = Income;
             this.observations = Observations;
         }
 

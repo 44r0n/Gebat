@@ -32,14 +32,11 @@
             this.buttonAceptar = new System.Windows.Forms.Button();
             this.textBoxObservaciones = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDownIngresos = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.buttonAddFamiliar = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.listaFamiliares = new GebatWindowComponents.Lists.ListaFamiliares();
             this.listaExpedientes = new GebatWindowComponents.Lists.ListaExpedientes();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownIngresos)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -47,8 +44,6 @@
             this.groupBox1.Controls.Add(this.buttonAceptar);
             this.groupBox1.Controls.Add(this.textBoxObservaciones);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.numericUpDownIngresos);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(228, 263);
@@ -82,22 +77,6 @@
             this.label2.Size = new System.Drawing.Size(84, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Observaciones: ";
-            // 
-            // numericUpDownIngresos
-            // 
-            this.numericUpDownIngresos.Location = new System.Drawing.Point(99, 40);
-            this.numericUpDownIngresos.Name = "numericUpDownIngresos";
-            this.numericUpDownIngresos.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDownIngresos.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 42);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Ingresos: ";
             // 
             // buttonAddFamiliar
             // 
@@ -161,7 +140,6 @@
             this.Load += new System.EventHandler(this.ExpedientePersonal_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownIngresos)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -172,8 +150,6 @@
         private System.Windows.Forms.Button buttonAceptar;
         private System.Windows.Forms.TextBox textBoxObservaciones;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDownIngresos;
-        private System.Windows.Forms.Label label1;
         private GebatWindowComponents.Lists.ListaExpedientes listaExpedientes;
         private GebatWindowComponents.Lists.ListaFamiliares listaFamiliares;
         private System.Windows.Forms.Button buttonAddFamiliar;

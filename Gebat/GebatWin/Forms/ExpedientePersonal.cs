@@ -10,7 +10,6 @@ namespace GebatWin.Forms
         public ExpedientePersonal()
         {
             InitializeComponent();
-            numericUpDownIngresos.Maximum = decimal.MaxValue;
         }
 
         private void ExpedientePersonal_Load(object sender, EventArgs e)
@@ -20,8 +19,7 @@ namespace GebatWin.Forms
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
-            EBPersonalDosier exp = new EBPersonalDosier((int)numericUpDownIngresos.Value, textBoxObservaciones.Text);
-            numericUpDownIngresos.Value = 0;
+            EBPersonalDosier exp = new EBPersonalDosier(textBoxObservaciones.Text);
             textBoxObservaciones.Text = "";
             exp.Save();
             listaExpedientes.Add(exp);

@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AEBConcession.cs" />
     <Compile Include="Classes\AEBPerson.cs" />
     <Compile Include="Classes\EBCrime.cs" />
     <Compile Include="Classes\EBPersonalDosier.cs" />

@@ -12,6 +12,7 @@ namespace GebatEN.Classes
 
         private int idfam = 0;
         internal int dossier = 0;
+        private int income = 0;
 
         #endregion
 
@@ -34,6 +35,7 @@ namespace GebatEN.Classes
                 {
                     ret["Dossier"] = dossier;
                 }
+                ret["Income"] = this.income;
                 return ret;
             }
         }
@@ -46,7 +48,28 @@ namespace GebatEN.Classes
         {
             base.FromRow(row);
             this.idfam = (int)row["Id"];
+            this.dossier = (int)row["Dossier"];
+            this.income = (int)row["Income"];
             this.saved = true;
+        }
+
+        #endregion
+
+        #region//Getters & Setters
+    
+        /// <summary>
+        /// Obtiene y establece el salario medio del familiar.
+        /// </summary>
+        public int Income
+        {
+            get
+            {
+                return income;
+            }
+            set
+            {
+                this.income = value;
+            }
         }
 
         #endregion

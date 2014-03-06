@@ -124,10 +124,6 @@ namespace GebatEN.Classes
         {
             get 
             {
-                if (people == null)
-                {
-                    people = new ADLPeople(defaultConnString);
-                }
                 DataRow ret = people.GetVoidRow;
                 if (this.id != null)
                 {
