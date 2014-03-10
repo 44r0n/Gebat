@@ -37,7 +37,7 @@ namespace CADUnitTestProject.ADLTests
             Assert.AreEqual(expected["Name"], actual["Name"]);
         }
 
-        private AADL type;
+        private ADL type;
 
         [TestInitialize()]
         public void InnitTest()
@@ -45,17 +45,7 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();    
             InitBD(specificScript);
-            type = new ADLType(connectionString);
-        }
-
-        [TestMethod]
-        public void TestSelectOne()
-        {
-            string expected = "Kg";
-            List<object> ids = new List<object>();
-            ids.Add((int)1);
-            DataRow actual = type.Select(ids);
-            Assert.AreEqual(expected, actual["Name"].ToString());
+            type = new ADL(connectionString, "type", "Id");
         }
 
         [TestMethod]
@@ -125,44 +115,10 @@ namespace CADUnitTestProject.ADLTests
         }
 
         [TestMethod]
-        public void Select()
-        {
-            List<object> ids = new List<object>();
-            ids.Add(1);
-            DataRow actual = type.Select(ids);
-            DataTable table = tableFormat;
-            DataRow expected = table.NewRow();
-            expected["Id"] = 1;
-            expected["Name"] = "Kg";
-            AssertRows(expected, actual);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void SelectVoidList()
         {
             type.Select(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidNumberIdException))]
-        public void SelectInvalidNumberId()
-        {
-            List<object> ids = new List<object>();
-            ids.Add("hola");
-            ids.Add(3);
-            type.Select(ids);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectConnFail()
-        {
-            setFailConn();
-            List<object> ids = new List<object>();
-            ids.Add(2);
-            type.Select(ids);
-
         }
 
         [TestMethod]
@@ -173,7 +129,7 @@ namespace CADUnitTestProject.ADLTests
             row["Id"] = 1;
             row["Name"] = "Kg";
             expected.Rows.Add(row);
-            DataTable actual = type.SelectWhere("Name = 'Kg'");
+            DataTable actual = type.Select("SELECT * FROM type WHERE Name = @Name","Kg");
 
             for (int i = 0; i < expected.Rows.Count; i++)
             {
@@ -182,17 +138,10 @@ namespace CADUnitTestProject.ADLTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidStartRecordException))]
-        public void SelectWhereInvalidStart()
-        {
-            type.SelectWhere("Name = 'Kg'", -3);
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(MySqlException))]
         public void SelectWhereInvalidStatement()
         {
-            type.SelectWhere("Name = ; ");
+            type.Select("Name = ; ");
         }
 
         [TestMethod]
@@ -200,27 +149,20 @@ namespace CADUnitTestProject.ADLTests
         public void SelectWhereFailConn()
         {
             setFailConn();
-            type.SelectWhere("Name = 'Kg'");
+            type.Select("SELECT * FROM type WHERE Name = @Name","Kg");
         }
 
         [TestMethod]
         public void Insert()
         {
-            DataRow ins = type.GetVoidRow;
-            ins["Name"] = "Cajas";
-            DataRow expected = type.GetVoidRow;
-            expected["Id"] = 5;
-            expected["Name"] = "Cajas";
-            DataRow actual = type.Insert(ins);
-            AssertRows(expected, actual);
+           Assert.AreEqual(1,type.ExecuteNonQuery("INSERT INTO type (Name) VALUES (@Name)","Cajas"));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void InsertNullRow()
         {
-            DataRow ins = null;
-            type.Insert(ins);
+            type.ExecuteNonQuery(null);
         }
 
         [TestMethod]
@@ -228,26 +170,13 @@ namespace CADUnitTestProject.ADLTests
         public void InsertFailCOnn()
         {
             setFailConn();
-            DataRow ins = type.GetVoidRow;
-            ins["Name"] = "Cajas";
-            type.Insert(ins);
+            type.ExecuteNonQuery("INSERT INTO type (Name) VALUES (@Name)","Cajas");
         }
 
         [TestMethod]
         public void Update()
         {
-            DataRow mod = type.GetVoidRow;
-            mod["Id"] = 1;
-            mod["Name"] = "Cajas";
-            type.Update(mod);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void UpdateNullRow()
-        {
-            DataRow mod = null;
-            type.Update(mod);
+            Assert.AreEqual(1,type.ExecuteNonQuery("UPDATE type SET Name = @Name WHERE Id = @Id","Cajones",2));
         }
 
         [TestMethod]
@@ -255,46 +184,13 @@ namespace CADUnitTestProject.ADLTests
         public void UpdateFailConn()
         {
             setFailConn();
-            DataRow ins = type.GetVoidRow;
-            ins["Id"] = 1;
-            ins["Name"] = "Cajas";
-            type.Update(ins);
+            type.ExecuteNonQuery("UPDATE type SET Name = @Name WHERE Id = @Id","Cajones",2);
         }
 
         [TestMethod]
         public void Delete()
         {
-            DataRow del = type.GetVoidRow;
-            del["Id"] = 1;
-            del["Name"] = "Kg";
-            type.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void DeleteNullRow()
-        {
-            type.Delete(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(IndexOutOfRangeException))]
-        public void DeleteWrongRow()
-        {
-            DataRow del = type.GetVoidRow;
-            del["Name"] = new MySqlConnection();
-            type.Delete(del);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void DeleteFailConn()
-        {
-            setFailConn();
-            DataRow del = type.GetVoidRow;
-            del["Id"] = 1;
-            del["Name"] = "cajas";
-            type.Delete(del);
+            Assert.AreEqual(1,type.ExecuteNonQuery("DELETE FROM type WHERE Id = @Id",4));
         }
     }
 }

@@ -13,13 +13,13 @@ namespace ENUnitTestProject.ENTests
         [ClassInitialize()]
         public static void setpasswd(TestContext context)
         {
-            AADL.Password = "root";
+            ADL.Password = "root";
         }
 
         [TestMethod]
         public void Read()
         {
-            List<int> id = new List<int>();
+            List<object> id = new List<object>();
             id.Add(2);
             List<string> phones = new List<string>();
             phones.Add("123456789");
@@ -67,7 +67,7 @@ namespace ENUnitTestProject.ENTests
             {
                 Assert.AreEqual(dnis[i], ((EBTBC)general[i]).DNI);
             }
-            List<int> crimes = new List<int>();
+            List<object> crimes = new List<object>();
             crimes.Add(1);
             EBTBC ins = new EBTBC("52835460K", "02/2013", "Manolo", "Hansen", new DateTime(1968,04,30) ,MyGender.Male , "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), (EBCrime)new EBCrime().Read(crimes));
             ins.Save();

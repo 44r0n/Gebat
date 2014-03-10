@@ -21,10 +21,17 @@ namespace GebatEN.Classes
         private int numjourney;
         private Dictionary<DayOfWeek, bool> timetable;
         private EBCrime crime;
+        private VIEW tbcp;
 
         #endregion
 
         #region//Private Methods
+
+        private void initADL()
+        {
+            adl = new ADL(defaultConnString, "tbc", "Id");
+            tbcp = new VIEW(defaultConnString, "tbcpeople", "Id");
+        }
 
         private void initDictionary()
         {
@@ -185,6 +192,26 @@ namespace GebatEN.Classes
 
         #endregion
 
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            adl.ExecuteNonQuery("INSERT INTO tbc (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney ,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Crime) VALUES (@DNI, @Judgement, @Court, @BeginDate, @FinishDate, @NumJourney, @Monday, @Tuesday, @Wednesday, @Thursday, @Friday, @Saturday, @Sunday, @Crime)", this.DNI, this.judgement, this.court, this.begindate, this.finishdate, this.numjourney, this.timetable[DayOfWeek.Monday], this.timetable[DayOfWeek.Tuesday], this.timetable[DayOfWeek.Wednesday], this.timetable[DayOfWeek.Thursday], this.timetable[DayOfWeek.Friday], this.timetable[DayOfWeek.Saturday], this.timetable[DayOfWeek.Sunday], (int)this.crime.Id[0]);
+            this.id.Add((int)adl.Last()["Id"]);
+        }
+
+        protected override void update()
+        {
+            adl.ExecuteNonQuery("UPDATE tbc SET DNI = @DNI, Judgement = @Judgement, Court = @Court, BeginDate = @BeginDate, FinishDate = @FinishDate, NumJourney = @NumJourney, Monday = @Monday, Tuesday = @Tuesday, Wednesday = @Wednesday, Thursday = @Thursday, Friday = @Friday, Saturday = @Saturday, Sunday = @Sunday, Crime = @Crime WHERE Id = @Id", this.DNI, this.judgement, this.court, this.begindate, this.finishdate, this.numjourney, this.timetable[DayOfWeek.Monday], this.timetable[DayOfWeek.Tuesday], this.timetable[DayOfWeek.Wednesday], this.timetable[DayOfWeek.Thursday], this.timetable[DayOfWeek.Friday], this.timetable[DayOfWeek.Saturday], this.timetable[DayOfWeek.Sunday], (int)this.crime.Id[0],(int)this.id[0]);
+        }
+
+        protected override void delete()
+        {
+            adl.ExecuteNonQuery("DELETE FROM tbc WHERE Id = @Id", (int)this.id[0]);
+        }
+
+        #endregion
+
         #region//Internal Methods
 
         /// <summary>
@@ -239,7 +266,7 @@ namespace GebatEN.Classes
             this.timetable[DayOfWeek.Sunday] = (bool)row["Sunday"];
             if (row["Crime"] != DBNull.Value)
             {
-                List<int> ids = new List<int>();
+                List<object> ids = new List<object>();
                 ids.Add((int)row["Crime"]);
                 crime = (EBCrime)new EBCrime().Read(ids);
             }
@@ -372,7 +399,7 @@ namespace GebatEN.Classes
         public EBTBC(string DNI, string Judgement, string Name, string Surname, DateTime BirthDate, MyGender Gender ,string Court, DateTime BeginDate, DateTime FinishDate, EBCrime Crime)
             : base(DNI, Name, Surname, BirthDate, Gender)
         {
-            adl = new ADLTBC(defaultConnString);
+            initADL();
             this.judgement = Judgement;
             this.court = Court;
             this.begindate = BeginDate;
@@ -387,7 +414,7 @@ namespace GebatEN.Classes
         public EBTBC()
             : base()
         {
-            adl = new ADLTBC(defaultConnString);
+            initADL();
             this.initDictionary();
         }
 
@@ -396,13 +423,10 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará la persona TBC</param>
         /// <returns>Persona TBC en formato AEN.</returns>
-        public override AEB Read(List<int> id)
+        public override AEB Read(List<object> id)
         {
-            AVIEW tbcp = new VIEWTBCPeople(defaultConnString);
             EBTBC ret = new EBTBC();
-            List<object> param = new List<object>();
-            param.Add((object)id[0]);
-            DataRow row = tbcp.Select(param);
+            DataRow row = tbcp.Select("SELECT * FROM tbcpeople WHERE ID = @Id",(int)id[0]).Rows[0];
             if (row != null)
             {
                 ret.FromRow(row);
@@ -421,7 +445,6 @@ namespace GebatEN.Classes
         public override List<AEB> ReadAll()
         {
             List<AEB> ret = new List<AEB>();
-            VIEWTBCPeople tbcp = new VIEWTBCPeople(defaultConnString);
             DataTable table = tbcp.SelectAll();
             foreach (DataRow rows in table.Rows)
             {
@@ -437,20 +460,19 @@ namespace GebatEN.Classes
         /// </summary>
         public override void Save()
         {
-            ADLPeople per = new ADLPeople(defaultConnString);
             if (!this.saved)
             {
                 if (!alreadyInPerson())
                 {
-                    per.Insert(base.ToRow);
+                    base.insert();
                 }
-                this.FromRow(adl.Insert(this.ToRow));
+                this.insert();
                 this.saved = true;
             }
             else
             {
-                per.Update(base.ToRow);
-                adl.Update(this.ToRow);
+                base.update();
+                this.update();
             }
         }
 
@@ -462,7 +484,7 @@ namespace GebatEN.Classes
         public override List<AEBPerson> ReadByDNI(string dni)
         {
             List<AEBPerson> ret = new List<AEBPerson>();
-            DataTable table = new VIEWTBCPeople(defaultConnString).SelectWhere("DNI = '" + dni + "'");
+            DataTable table = new VIEW(defaultConnString,"tbcpeople","Id").Select("SELECT * FROM tbcpeople WHERE DNI = @DNI",dni);
             foreach (DataRow row in table.Rows)
             {
                 EBTBC newtbc = new EBTBC();

@@ -65,6 +65,8 @@ namespace GebatWin.Forms
             gestionfam.BringToFront();
             buttonAddFamiliar.Enabled = false;
             buttonDelete.Enabled = false;
+            mostrarFamiliares((EBPersonalDosier)listaExpedientes.Selected);
+            listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
         }
     }
 }

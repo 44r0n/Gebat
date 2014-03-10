@@ -12,13 +12,13 @@ namespace ENUnitTestProject.ENTests
         [ClassInitialize()]
         public static void stepasswd(TestContext context)
         {
-            AADL.Password = "root";
+            ADL.Password = "root";
         }
 
         [TestMethod]
         public void Read()
         {
-            List<int> id = new List<int>();
+            List<object> id = new List<object>();
             id.Add(4);
             EBFood food = (EBFood)(new EBFood("").Read(id));
             Assert.AreEqual("Pomes", food.Name);
@@ -38,7 +38,7 @@ namespace ENUnitTestProject.ENTests
         {
             List<AEB> general = new EBFood("").ReadAll();
             List<EBFood> expected = new List<EBFood>();
-            List<int> idtype = new List<int>();
+            List<object> idtype = new List<object>();
             idtype.Add(1);
             EBFood p = new EBFood("Patates",(EBType)(new EBType("").Read(idtype)));
             expected.Add(p);
@@ -77,18 +77,18 @@ namespace ENUnitTestProject.ENTests
         [TestMethod]
         public void Control_Food()
         {
-            List<int> idfood = new List<int>();
+            List<object> idfood = new List<object>();
             idfood.Add(2);
             EBFood f = (EBFood)(new EBFood("").Read(idfood));
             f.Add(3,new DateTime(2012,11,09));
             f.Remove(1, new DateTime(2012, 11, 09));
             Assert.AreEqual(2, f.Quantity);
 
-            List<int> foodin = new List<int>();
+            List<object> foodin = new List<object>();
             foodin.Add(5);
             EBFoodIN fin = (EBFoodIN)(new EBFoodIN().Read(foodin));
             fin.Delete();
-            List<int> foodout = new List<int>();
+            List<object> foodout = new List<object>();
             foodout.Add(4);
             EBFoodOut fout = (EBFoodOut)(new EBFoodOut().Read(foodout));
             fout.Delete();

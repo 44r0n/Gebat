@@ -30,23 +30,26 @@
         {
             this.listaFamiliares = new GebatWindowComponents.Lists.ListaFamiliares();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxDNI = new System.Windows.Forms.TextBox();
-            this.textBoxNombre = new System.Windows.Forms.TextBox();
-            this.textBoxApellidos = new System.Windows.Forms.TextBox();
-            this.dateTimePickerFechaNacimiento = new System.Windows.Forms.DateTimePicker();
-            this.radioButtonHombre = new System.Windows.Forms.RadioButton();
-            this.radioButtonMujer = new System.Windows.Forms.RadioButton();
-            this.buttonAddFamiliar = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonAddFamiliar = new System.Windows.Forms.Button();
+            this.radioButtonMujer = new System.Windows.Forms.RadioButton();
+            this.radioButtonHombre = new System.Windows.Forms.RadioButton();
+            this.dateTimePickerFechaNacimiento = new System.Windows.Forms.DateTimePicker();
+            this.textBoxApellidos = new System.Windows.Forms.TextBox();
+            this.textBoxNombre = new System.Windows.Forms.TextBox();
+            this.textBoxDNI = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.listViewTelfs = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buttonAddTelf = new System.Windows.Forms.Button();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buttonAddTelf = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.numericUpDownIncome = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownIncome)).BeginInit();
             this.SuspendLayout();
             // 
             // listaFamiliares
@@ -64,6 +67,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.numericUpDownIncome);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
@@ -83,64 +88,41 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nuevo familiar";
             // 
-            // label1
+            // label5
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "DNI:";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 160);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(48, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Genero: ";
             // 
-            // textBoxDNI
+            // label4
             // 
-            this.textBoxDNI.Location = new System.Drawing.Point(109, 48);
-            this.textBoxDNI.Name = "textBoxDNI";
-            this.textBoxDNI.Size = new System.Drawing.Size(200, 20);
-            this.textBoxDNI.TabIndex = 1;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 136);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(97, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Fecha nacimiento: ";
             // 
-            // textBoxNombre
+            // label3
             // 
-            this.textBoxNombre.Location = new System.Drawing.Point(109, 75);
-            this.textBoxNombre.Name = "textBoxNombre";
-            this.textBoxNombre.Size = new System.Drawing.Size(200, 20);
-            this.textBoxNombre.TabIndex = 2;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 82);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(55, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Apellidos: ";
             // 
-            // textBoxApellidos
+            // label2
             // 
-            this.textBoxApellidos.Location = new System.Drawing.Point(109, 101);
-            this.textBoxApellidos.Name = "textBoxApellidos";
-            this.textBoxApellidos.Size = new System.Drawing.Size(200, 20);
-            this.textBoxApellidos.TabIndex = 3;
-            // 
-            // dateTimePickerFechaNacimiento
-            // 
-            this.dateTimePickerFechaNacimiento.Location = new System.Drawing.Point(109, 128);
-            this.dateTimePickerFechaNacimiento.Name = "dateTimePickerFechaNacimiento";
-            this.dateTimePickerFechaNacimiento.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePickerFechaNacimiento.TabIndex = 4;
-            // 
-            // radioButtonHombre
-            // 
-            this.radioButtonHombre.AutoSize = true;
-            this.radioButtonHombre.Location = new System.Drawing.Point(109, 156);
-            this.radioButtonHombre.Name = "radioButtonHombre";
-            this.radioButtonHombre.Size = new System.Drawing.Size(62, 17);
-            this.radioButtonHombre.TabIndex = 5;
-            this.radioButtonHombre.TabStop = true;
-            this.radioButtonHombre.Text = "Hombre";
-            this.radioButtonHombre.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonMujer
-            // 
-            this.radioButtonMujer.AutoSize = true;
-            this.radioButtonMujer.Location = new System.Drawing.Point(224, 156);
-            this.radioButtonMujer.Name = "radioButtonMujer";
-            this.radioButtonMujer.Size = new System.Drawing.Size(51, 17);
-            this.radioButtonMujer.TabIndex = 6;
-            this.radioButtonMujer.TabStop = true;
-            this.radioButtonMujer.Text = "Mujer";
-            this.radioButtonMujer.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 55);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Nombre: ";
             // 
             // buttonAddFamiliar
             // 
@@ -152,41 +134,64 @@
             this.buttonAddFamiliar.UseVisualStyleBackColor = true;
             this.buttonAddFamiliar.Click += new System.EventHandler(this.buttonAddFamiliar_Click);
             // 
-            // label2
+            // radioButtonMujer
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 78);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 13);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Nombre: ";
+            this.radioButtonMujer.AutoSize = true;
+            this.radioButtonMujer.Location = new System.Drawing.Point(224, 158);
+            this.radioButtonMujer.Name = "radioButtonMujer";
+            this.radioButtonMujer.Size = new System.Drawing.Size(51, 17);
+            this.radioButtonMujer.TabIndex = 6;
+            this.radioButtonMujer.TabStop = true;
+            this.radioButtonMujer.Text = "Mujer";
+            this.radioButtonMujer.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // radioButtonHombre
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 105);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Apellidos: ";
+            this.radioButtonHombre.AutoSize = true;
+            this.radioButtonHombre.Location = new System.Drawing.Point(109, 158);
+            this.radioButtonHombre.Name = "radioButtonHombre";
+            this.radioButtonHombre.Size = new System.Drawing.Size(62, 17);
+            this.radioButtonHombre.TabIndex = 5;
+            this.radioButtonHombre.TabStop = true;
+            this.radioButtonHombre.Text = "Hombre";
+            this.radioButtonHombre.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // dateTimePickerFechaNacimiento
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 134);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(97, 13);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Fecha nacimiento: ";
+            this.dateTimePickerFechaNacimiento.Location = new System.Drawing.Point(109, 130);
+            this.dateTimePickerFechaNacimiento.Name = "dateTimePickerFechaNacimiento";
+            this.dateTimePickerFechaNacimiento.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerFechaNacimiento.TabIndex = 4;
             // 
-            // label5
+            // textBoxApellidos
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 156);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(37, 13);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Sexo: ";
+            this.textBoxApellidos.Location = new System.Drawing.Point(109, 78);
+            this.textBoxApellidos.Name = "textBoxApellidos";
+            this.textBoxApellidos.Size = new System.Drawing.Size(200, 20);
+            this.textBoxApellidos.TabIndex = 3;
+            // 
+            // textBoxNombre
+            // 
+            this.textBoxNombre.Location = new System.Drawing.Point(109, 52);
+            this.textBoxNombre.Name = "textBoxNombre";
+            this.textBoxNombre.Size = new System.Drawing.Size(200, 20);
+            this.textBoxNombre.TabIndex = 2;
+            // 
+            // textBoxDNI
+            // 
+            this.textBoxDNI.Location = new System.Drawing.Point(109, 25);
+            this.textBoxDNI.Name = "textBoxDNI";
+            this.textBoxDNI.Size = new System.Drawing.Size(200, 20);
+            this.textBoxDNI.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "DNI:";
             // 
             // listViewTelfs
             // 
@@ -206,6 +211,12 @@
             this.columnHeader1.Text = "Nada";
             this.columnHeader1.Width = 0;
             // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Número";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader2.Width = 212;
+            // 
             // buttonAddTelf
             // 
             this.buttonAddTelf.Enabled = false;
@@ -217,11 +228,21 @@
             this.buttonAddTelf.UseVisualStyleBackColor = true;
             this.buttonAddTelf.Click += new System.EventHandler(this.buttonAddTelf_Click);
             // 
-            // columnHeader2
+            // label6
             // 
-            this.columnHeader2.Text = "Número";
-            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader2.Width = 212;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 106);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Ingresos:";
+            // 
+            // numericUpDownIncome
+            // 
+            this.numericUpDownIncome.Location = new System.Drawing.Point(109, 104);
+            this.numericUpDownIncome.Name = "numericUpDownIncome";
+            this.numericUpDownIncome.Size = new System.Drawing.Size(200, 20);
+            this.numericUpDownIncome.TabIndex = 13;
             // 
             // GestionFamiliares
             // 
@@ -236,6 +257,7 @@
             this.Text = "Gestion Familiares";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownIncome)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -260,5 +282,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Button buttonAddTelf;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.NumericUpDown numericUpDownIncome;
+        private System.Windows.Forms.Label label6;
     }
 }

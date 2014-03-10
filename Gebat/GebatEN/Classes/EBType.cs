@@ -35,12 +35,37 @@ namespace GebatEN.Classes
 
         #region//Private Methods
 
+        private void initADL()
+        {
+            adl = new ADL(defaultConnString, "type", "Id");
+        }
+
         private EBType ()
 			:base()
 		{
-			adl = new ADLType (defaultConnString);
+            initADL();
 			name = "";
 		}
+
+        #endregion
+
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            adl.ExecuteNonQuery("INSERT INTO type (Name) VALUES (@Name)", this.name);
+            this.id.Add((int)adl.Last()["Id"]);
+        }
+
+        protected override void update()
+        {
+            adl.ExecuteNonQuery("UPDATE type SET Name = @Name WHERE Id = @Id", this.name, (int)this.id[0]);
+        }
+
+        protected override void delete()
+        {
+            adl.ExecuteNonQuery("DELETE FROM type WHERE Id = @Id", (int)this.id[0]);
+        }
 
         #endregion
 
@@ -84,6 +109,8 @@ namespace GebatEN.Classes
 
         #endregion
 
+        #region//Getters&Setters
+
         /// <summary>
 		/// Obtiene y establece el nombre del tipo.
 		/// </summary>
@@ -100,17 +127,22 @@ namespace GebatEN.Classes
 			}
 		}
 
-		/// <summary>
+        #endregion
+
+        #region//Public Methods
+
+        /// <summary>
 		/// Inicializa el tipo con el nombre.
 		/// </summary>
 		/// <param name="name">Nombre del tipo.</param>
 		public EBType(string name)
+            :base()
 		{
 			if (name == null)
 			{
 				throw new NullReferenceException("The name cannot be null");
 			}
-			adl = new ADLType (defaultConnString);
+            initADL();
 			this.name = name;
 		}
 
@@ -119,15 +151,13 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará el tipo de alimento.</param>
         /// <returns>Tipo de alimento en formatoAEN</returns>
-		public override AEB Read (List<int> id)
+		public override AEB Read (List<object> id)
 		{
 			EBType ret = new EBType();
-			List<object> param = new List<object>();
-			param.Add((object)id[0]);
-			DataRow row = adl.Select(param);
+			DataRow row = adl.Select("SELECT * FROM type WHERE Id = @Id",(int)id[0]).Rows[0];
 			if (row != null)
 			{
-				ret.FromRow(adl.Select(param));
+				ret.FromRow(row);
 			}
 			else
 			{
@@ -151,7 +181,9 @@ namespace GebatEN.Classes
 				ret.Add((EBType)newtype);
 			}
 			return ret;
-		}
-	}
+        }
+
+        #endregion
+    }
 }
 

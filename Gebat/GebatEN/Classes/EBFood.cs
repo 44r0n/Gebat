@@ -38,16 +38,41 @@ namespace GebatEN.Classes
 
 		#region//Private Methods
 
+        private void initADL()
+        {
+            adl = new ADL(defaultConnString, "food", "Id");
+        }
+
 		private EBFood()
 			: base()
 		{
-			adl = new ADLFood(defaultConnString);
+            initADL();
 			name = "";
 		}
 
 		#endregion
 
-		#region//Internal Methods
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            adl.ExecuteNonQuery("INSERT INTO food (Name, QuantityType, Quantity) VALUES (@Name, @QuantityType, @Quantity)", this.name, (int)this.type.Id[0], this.quantity);
+            this.id.Add((int)adl.Last()["Id"]);
+        }
+
+        protected override void update()
+        {
+            adl.ExecuteNonQuery("UPDATE food SET Name = @Name, QuantityType = @QuantityType, Quantity = @Quantity WHERE Id = @Id", this.name, (int)this.type.Id[0], this.quantity, (int)this.id[0]);
+        }
+
+        protected override void delete()
+        {
+            adl.ExecuteNonQuery("DELETE FROM food WHERE Id = @Id", (int)this.id[0]);
+        }
+
+        #endregion
+
+        #region//Internal Methods
 
         /// <summary>
         /// Obtiene el objeto actual en tipo DataRow de forma que corresponde en la base de datos.
@@ -85,9 +110,9 @@ namespace GebatEN.Classes
 				this.name = (string)row["Name"];
 				if (row ["QuantityType"] != DBNull.Value)
 				{
-					List<int> ids = new List<int> ();
+					List<object> ids = new List<object> ();
 					ids.Add ((int)row ["QuantityType"]);
-					type = (EBType)new EBType ("").Read (ids);
+					type = (EBType)new EBType ("").Read(ids);
 				}
                 this.quantity = (int)row["Quantity"];
 				this.saved = true;
@@ -155,7 +180,7 @@ namespace GebatEN.Classes
 			{
 				throw new NullReferenceException("The name cannot be null");
 			}
-			adl = new ADLFood(defaultConnString);
+            initADL();
 			this.name = name;
             this.quantity = 0;
 			this.type = type;
@@ -166,12 +191,10 @@ namespace GebatEN.Classes
 		/// </summary>
 		/// <param name="id">Identificador por el que se buscará el alimento.</param>
 		/// <returns>Alimento en formato AEN.</returns>
-		public override AEB Read(List<int> id)
+		public override AEB Read(List<object> id)
 		{
 			EBFood ret = new EBFood();
-			List<object> param = new List<object>();
-			param.Add((object)id[0]);
-			DataRow row = adl.Select(param);
+			DataRow row = adl.Select("SELECT * FROM food WHERE Id = @Id",(int)id[0]).Rows[0];
 			if (row != null)
 			{
 				ret.FromRow(row);

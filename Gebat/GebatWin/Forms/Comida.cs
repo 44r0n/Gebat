@@ -76,8 +76,6 @@ namespace GebatWin.Forms
             {
                 EBFood newfood = new EBFood(textBoxNuevo.Text, (EBType)comboType.Selected);
                 newfood.Save();
-                /*ENFoodIN foodin = new ENFoodIN(dateTimePicker.Value, (int)numericUpDown.Value, (int)newfood.MyType.Id[0]);
-                foodin.Save();*/
                 newfood.Add((int)numericUpDown.Value, dateTimePicker.Value);
                 comboFood.Add(newfood);
                 LoadComponents();
@@ -85,8 +83,6 @@ namespace GebatWin.Forms
             if (radioButtonExistente.Checked)
             {
                 EBFood selected = (EBFood)comboFood.Selected;
-                /*ENFoodIN foodin = new ENFoodIN(dateTimePicker.Value, (int)numericUpDown.Value, (int)selected.MyType.Id[0]);
-                foodin.Save();*/
                 selected.Add((int)numericUpDown.Value, dateTimePicker.Value);
                 LoadComponents();
             }

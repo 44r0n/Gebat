@@ -17,7 +17,7 @@ namespace CADUnitTestProject.ADLTests
             }
         }
 
-        private AADL familiar;
+        private ADL familiar;
 
         protected override string specificScript
         {
@@ -33,7 +33,7 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            familiar = new ADLFamiliars(connectionString);
+            familiar = new ADL(connectionString, "familiars", "Id");
         }
 
         [TestMethod]

@@ -29,7 +29,7 @@ namespace GebatEN.Classes
 	{
 		protected bool saved;
 		protected List<object> id = null;
-		protected AADL adl;
+		protected ADL adl;
 
         private void nullADL()
         {
@@ -37,6 +37,21 @@ namespace GebatEN.Classes
         }
 
 		#region//Protected Methods
+
+        /// <summary>
+        /// Inserta el objeto actual en la base de datos.
+        /// </summary>
+        protected abstract void insert();
+
+        /// <summary>
+        /// Modifica el objeto actual en la base de datos.
+        /// </summary>
+        protected abstract void update();
+
+        /// <summary>
+        /// Elimina el objeto acutal en la base de datos.
+        /// </summary>
+        protected abstract void delete();
 
         /// <summary>
         /// Obtiene el nombre de cadena de conexión por defecto.
@@ -69,9 +84,9 @@ namespace GebatEN.Classes
 
 		#endregion
 
-		#region//Public Methods
+        #region//Getter&Setters
 
-		/// <summary>
+        /// <summary>
 		/// Obtiene el identificador del objeto en la base de datos. Null si no está en la base de datos.
 		/// </summary>
 		public List<object> Id
@@ -82,12 +97,16 @@ namespace GebatEN.Classes
 			}
 		}
 
-		/// <summary>
+        #endregion
+
+        #region//Public Methods
+
+        /// <summary>
 		/// Constructor.
 		/// </summary>
 		public AEB()
 		{
-			adl = null;
+            this.id = new List<object>();
 			saved = false;
 		}
 
@@ -102,12 +121,12 @@ namespace GebatEN.Classes
 			}
 			if (!saved)
 			{
-				this.FromRow(adl.Insert(ToRow));
+                this.insert();
 				this.saved = true;
 			}
 			else
 			{
-				adl.Update(ToRow);
+                this.update();
 			}
 		}
 
@@ -123,7 +142,7 @@ namespace GebatEN.Classes
 
 			if (saved)
 			{
-				adl.Delete(ToRow);
+                this.delete();
 				saved = false;
 			}
 		}
@@ -133,7 +152,7 @@ namespace GebatEN.Classes
 		/// </summary>
 		/// <param name="id">Identificador a buscar.</param>
 		/// <returns>El objeto de tipo ENGeneral.</returns>
-		public abstract AEB Read(List<int> id);
+		public abstract AEB Read(List<object> id);
 
 		/// <summary>
 		/// Devuelve todos los registros de la base de datos.

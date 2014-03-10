@@ -36,8 +36,8 @@ namespace GebatWin
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            AADL.Password = maskedTextBoxPassword.Text;
-            if (AADL.AttemptConnection("GebatDataConnectionString"))
+            ADL.Password = maskedTextBoxPassword.Text;
+            if (ADL.AttemptConnection("GebatDataConnectionString"))
             {
                 Principal prin = new Principal(maskedTextBoxPassword.Text);
                 prin.Show();

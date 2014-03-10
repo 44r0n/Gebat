@@ -39,7 +39,7 @@ namespace ENUnitTestProject.ENTests
 
         static protected void SetPasswd()
         {
-            AADL.Password = "root";
+            ADL.Password = "root";
         }
 
         [AssemblyInitialize()]

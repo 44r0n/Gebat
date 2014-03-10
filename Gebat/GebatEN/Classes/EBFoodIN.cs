@@ -16,6 +16,35 @@ namespace GebatEN.Classes
 
         #endregion
 
+        #region//Private Methods
+
+        private void initADL()
+        {
+            adl = new ADL(defaultConnString, "entryfood", "Id");
+        }
+
+        #endregion
+
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            adl.ExecuteNonQuery("INSERT INTO entryfood (FoodType, QuantityIn, DateTime) VALUES (@FoodType, @QuantityIn, @DateTime)", this.type, this.quantity, this.date);
+            this.id.Add((int)adl.Last()["Id"]);
+        }
+
+        protected override void update()
+        {
+            adl.ExecuteNonQuery("UPDATE entryfood SET FoodType = @FoodType, QuantityIn = @QuantityIn, DateTime = @DateTime WHERE Id = @Id", this.type, this.quantity, this.date, (int)this.id[0]);
+        }
+
+        protected override void delete()
+        {
+            adl.ExecuteNonQuery("DELETE FROM entryfood WHERE Id = @Id", (int)this.id[0]);
+        }
+
+        #endregion
+
         #region//Internal Methods
 
         /// <summary>
@@ -102,10 +131,7 @@ namespace GebatEN.Classes
             {
                 if (this.name == null)
                 {
-                    ADLFood food = new ADLFood(defaultConnString);
-                    List<object> param = new List<object>();
-                    param.Add(this.type);
-                    DataRow row = food.Select(param);
+                    DataRow row = adl.Select("SELECT Name FROM food WHERE Id = @Id",this.type).Rows[0];
                     this.name = (string)row["Name"];
                 }
                 return this.name;
@@ -125,7 +151,7 @@ namespace GebatEN.Classes
         public EBFoodIN(DateTime Date, int Quantity,int Type)
             : base()
         {
-            adl = new ADLEntryFood(defaultConnString);
+            initADL();
             this.quantity = Quantity;
             this.date = Date;
             this.type = Type;
@@ -137,7 +163,7 @@ namespace GebatEN.Classes
         public EBFoodIN()
             : base()
         {
-            adl = new ADLEntryFood(defaultConnString);
+            initADL();
         }
 
         /// <summary>
@@ -145,12 +171,10 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará la entrada.</param>
         /// <returns>Entrada en formato AEN.</returns>
-        public override AEB Read(List<int> id)
+        public override AEB Read(List<object> id)
         {
             EBFoodIN ret = new EBFoodIN();
-            List<object> param = new List<object>();
-            param.Add((object)id[0]);
-            DataRow row = adl.Select(param);
+            DataRow row = adl.Select("SELECT * FROM entryfood WHERE Id = @Id", (int)id[0]).Rows[0];
             if (row != null)
             {
                 ret.FromRow(row);

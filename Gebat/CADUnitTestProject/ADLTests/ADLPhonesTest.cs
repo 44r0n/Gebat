@@ -21,7 +21,7 @@ namespace CADUnitTestProject.ADLTests
             }
         }
 
-        private AADL phone;
+        private ADL phone;
 
         private void AssertRows(DataRow expected, DataRow actual)
         {
@@ -52,17 +52,7 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            phone = new ADLPhones(connectionString);
-        }
-
-        [TestMethod]
-        public void TestSelectOne()
-        {
-            DataRow expected = testRow(tableFormat.NewRow());
-            List<object> ids = new List<object>();
-            ids.Add(1);
-            DataRow actual = phone.Select(ids);
-            AssertRows(expected, actual);
+            phone = new ADL(connectionString, "phones", "Id");
         }
 
         [TestMethod]
@@ -108,45 +98,11 @@ namespace CADUnitTestProject.ADLTests
         {
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
-            DataTable actual = phone.SelectWhere("PhoneNumber = '123456789'");
+            DataTable actual = phone.Select("SELECT * FROM phones WHERE PhoneNumber = @Number","123456789");
             for (int i = 0; i < expected.Rows.Count; i++)
             {
                 AssertRows(expected.Rows[i], actual.Rows[i]);
             }
-        }
-
-        [TestMethod]
-        public void Insert()
-        {
-            DataRow ins = phone.GetVoidRow;
-            ins["PhoneNumber"] = "987654321";
-            ins["Owner"] = "12345678A";
-            DataRow expected = tableFormat.NewRow();
-            expected["Id"] = 3;
-            expected["PhoneNumber"] = "987654321";
-            expected["Owner"] = "12345678A";
-            DataRow actual = phone.Insert(ins);
-            AssertRows(expected, actual);
-        }
-
-        [TestMethod]
-        public void Update()
-        {
-            DataRow mod = tableFormat.NewRow();
-            mod["Id"] = 2;
-            mod["PhoneNumber"] = "978654321";
-            mod["Owner"] = "12345678A";
-            phone.Update(mod);
-        }
-
-        [TestMethod]
-        public void Delete()
-        {
-            DataRow del = tableFormat.NewRow();
-            del["Id"] = 2;
-            del["PhoneNumber"] = "234567890";
-            del["Owner"] = "12345678A";
-            phone.Delete(del);
         }
     }
 }

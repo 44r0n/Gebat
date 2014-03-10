@@ -47,7 +47,7 @@ namespace CADUnitTestProject.ADLTests
             }
         }
 
-        private AVIEW vtbc;
+        private VIEW vtbc;
 
         private void AssertRow(DataRow expected, DataRow actual)
         {
@@ -101,17 +101,7 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            vtbc = new VIEWTBCPeople(connectionString);
-        }
-
-        [TestMethod]
-        public void TestSelectOne()
-        {
-            DataRow expected = testRow(tableFormat.NewRow());
-            List<object> ids = new List<object>();
-            ids.Add(1);
-            DataRow actual = vtbc.Select(ids);
-            AssertRow(expected, actual);
+            vtbc = new VIEW(connectionString, "tbcpeople", "Id");
         }
 
         [TestMethod]
@@ -172,33 +162,11 @@ namespace CADUnitTestProject.ADLTests
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
             expected.Rows.Add(row);
-            DataTable actual = vtbc.SelectWhere("Court = 'Alicante'");
+            DataTable actual = vtbc.Select("SELECT * FROM tbcpeople WHERE Court = @Court","Alicante");
             for (int i = 0; i < expected.Rows.Count; i++)
             {
                 AssertRow(expected.Rows[i], actual.Rows[i]);
             }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidStartRecordException))]
-        public void SelectWhereInvalidStart()
-        {
-            vtbc.SelectWhere("Court = 'Alicante'", -8);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereInvalidStatement()
-        {
-            vtbc.SelectWhere("``´´");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MySqlException))]
-        public void SelectWhereFailConn()
-        {
-            setFailConn();
-            vtbc.SelectWhere("Court = 'Alicante'");
         }
     }
 }

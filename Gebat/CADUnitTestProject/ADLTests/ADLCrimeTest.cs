@@ -28,7 +28,7 @@ namespace CADUnitTestProject.ADLTests
             }
         }
 
-        private AADL crime;
+        private ADL crime;
 
         private void AssertRow(DataRow expected, DataRow actual)
         {
@@ -42,71 +42,43 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            crime = new ADLCrime(connectionString);
+            crime = new ADL(connectionString, "crimes", "Id");
         }
 
         [TestMethod]
-        public void TestSelectOne()
+        public void Select()
         {
             string expected = "Robo";
-            List<object> ids = new List<object>();
-            ids.Add((int)1);
-            DataRow actual = crime.Select(ids);
+            DataTable tabla = crime.Select("Select * FROM crimes WHERE Id = @Id",1);
+            DataRow actual = tabla.Rows[0];
             Assert.AreEqual(actual["Name"].ToString(), expected);
         }
 
         [TestMethod]
         public void TestCount()
         {
-            int expected = 1;
-            AADL food = new ADLCrime(connectionString);
-            int actual = food.Count();
+            int expected = 2;
+            int actual = crime.Count();
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void Select()
+        public void ExectuteNonQuery()
         {
-            List<object> ids = new List<object>();
-            ids.Add(1);
-            DataRow actual = crime.Select(ids);
-            DataTable table = tableFormat;
-            DataRow expected = table.NewRow();
-            expected["Id"] = 1;
-            expected["Name"] = "Robo";
-            AssertRow(expected, actual);
-        }
-
-        [TestMethod]
-        public void Insert()
-        {
-            DataRow ins = crime.GetVoidRow;
-            ins["Name"] = "Cosas";
-            DataRow expected = crime.GetVoidRow;
-            expected["Id"] = 2;
-            expected["Name"] = "Cosas";
-            DataRow actual = crime.Insert(ins);
-            AssertRow(expected, actual);
+            int rows = crime.ExecuteNonQuery("INSERT INTO crimes (Name) VALUES (@Name)", "Cosas");
+            Assert.AreEqual(1, rows);
         }
 
         [TestMethod]
         public void Update()
         {
-            AADL food = new ADLCrime(connectionString);
-            DataRow mod = food.GetVoidRow;
-            mod["Id"] = 1;
-            mod["Name"] = "Cajas";
-            food.Update(mod);
+            Assert.AreEqual(1,crime.ExecuteNonQuery("UPDATE crimes SET Name = @Name WHERE Id = @Id","Cajas",2));
         }
 
         [TestMethod]
         public void Delete()
         {
-            AADL food = new ADLCrime(connectionString);
-            DataRow del = food.GetVoidRow;
-            del["Id"] = 1;
-            del["Name"] = "Robo";
-            food.Delete(del);
+            Assert.AreEqual(1,crime.ExecuteNonQuery("DELETE FROM crimes WHERE Id = @Id",2));
         }
     }
 }

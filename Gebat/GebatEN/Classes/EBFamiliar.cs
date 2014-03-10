@@ -13,6 +13,37 @@ namespace GebatEN.Classes
         private int idfam = 0;
         internal int dossier = 0;
         private int income = 0;
+        private VIEW vfam;
+
+        #endregion
+
+        #region//Private Methods
+
+        private void initADL()
+        {
+            adl = new ADL(defaultConnString, "familiars", "Id");
+            vfam = new VIEW(defaultConnString, "familiardata", "Id");
+        }
+
+        #endregion
+
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            adl.ExecuteNonQuery("INSERT INTO familiars (DNI, Dossier, Income) VALUES (@DNI, @Dossier, @Income)", this.DNI, this.dossier, this.income);
+            this.id.Add((int)adl.Last()["Id"]);
+        }
+
+        protected override void update()
+        {
+            adl.ExecuteNonQuery("UPDATE familiars SET DNI = @DNI, Dossier = @Dossier, Income = @Income WHERE Id = @Id", this.DNI, this.dossier, this.income, (int)this.id[0]);
+        }
+
+        protected override void delete()
+        {
+            adl.ExecuteNonQuery("DELETE FROM familiars WHERE Id = @Id", (int)this.id[0]);
+        }
 
         #endregion
 
@@ -84,10 +115,12 @@ namespace GebatEN.Classes
         /// <param name="Surname">Apellidos de la persona.</param>
         /// <param name="BirthDate">Fecha de nacimiento de la persona.</param>
         /// <param name="Gender">Genero de la persona.</param>
-        public EBFamiliar(string DNI, string Name, string Surname, DateTime BirthDate, MyGender Gender)
+        public EBFamiliar(string DNI, string Name, string Surname, DateTime BirthDate, MyGender Gender, int Dossier, int Income)
             : base(DNI, Name, Surname, BirthDate, Gender)
         {
-            adl = new ADLFamiliars(defaultConnString);
+            initADL();
+            this.dossier = Dossier;
+            this.income = Income;
         }
 
         /// <summary>
@@ -96,7 +129,7 @@ namespace GebatEN.Classes
         public EBFamiliar()
             :base()
         {
-            adl = new ADLPeople(defaultConnString);
+            initADL();
         }
 
         /// <summary>
@@ -104,13 +137,10 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará el familiar.</param>
         /// <returns>Familiar en formato AEN.</returns>
-        public override AEB Read(List<int> id)
+        public override AEB Read(List<object> id)
         {
-            AVIEW vfam = new VIEWFamiliarData(defaultConnString);
             EBFamiliar ret = new EBFamiliar();
-            List<object> param = new List<object>();
-            param.Add(id[0]);
-            DataRow row = vfam.Select(param);
+            DataRow row = vfam.Select("SELECT * FROM familiardata WHERE Id = @Id",(int)id[0]).Rows[0];
             if (row != null)
             {
                 ret.FromRow(row);
@@ -129,8 +159,7 @@ namespace GebatEN.Classes
         public override List<AEB> ReadAll()
         {
             List<AEB> ret = new List<AEB>();
-            VIEWFamiliarData tfam = new VIEWFamiliarData(defaultConnString);
-            DataTable table = tfam.SelectAll();
+            DataTable table = vfam.SelectAll();
             foreach (DataRow rows in table.Rows)
             {
                 EBFamiliar newfamiliar = new EBFamiliar();
@@ -145,20 +174,19 @@ namespace GebatEN.Classes
         /// </summary>
         public override void Save()
         {
-            ADLPeople per = new ADLPeople(defaultConnString);
             if (!this.saved)
             {
                 if (!alreadyInPerson())
                 {
-                    per.Insert(base.ToRow);
+                    base.insert();
                 }
-                this.FromRow(adl.Insert(this.ToRow));
+                this.insert();
                 this.saved = true;
             }
             else
             {
-                per.Update(base.ToRow);
-                adl.Update(this.ToRow);
+                base.update();
+                this.update();
             }
         }
 
@@ -170,7 +198,7 @@ namespace GebatEN.Classes
         public override List<AEBPerson> ReadByDNI(string dni)
         {
             List<AEBPerson> ret = new List<AEBPerson>();
-            DataTable table = new VIEWFamiliarData(defaultConnString).SelectWhere("DNI = '" + dni + "'");
+            DataTable table = adl.Select("SELECT * FROM familiardata WHERE DNI = @DNI", dni);
             foreach (DataRow row in table.Rows)
             {
                 EBFamiliar newfamiliar = new EBFamiliar();

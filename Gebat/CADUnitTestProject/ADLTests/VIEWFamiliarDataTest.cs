@@ -12,7 +12,7 @@ namespace CADUnitTestProject.ADLTests
     public class VIEWFamiliarDataTest : AADLTest
     {
 
-        private AVIEW vfamiliar;
+        private VIEW vfamiliar;
 
         protected override DataTable tableFormat
         {
@@ -62,17 +62,7 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            vfamiliar = new VIEWFamiliarData(connectionString);
-        }
-
-        [TestMethod]
-        public void TestSelectOne()
-        {
-            DataRow expected = testRow(tableFormat.NewRow());
-            List<object> ids = new List<object>();
-            ids.Add(2);
-            DataRow actual = vfamiliar.Select(ids);
-            AssertRow(expected, actual);
+            vfamiliar = new VIEW(connectionString, "familiardata", "Id");
         }
 
         [TestMethod]

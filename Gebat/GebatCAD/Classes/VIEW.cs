@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using GebatCAD.Exceptions;
 using System.Data.Common;
 using SqlManager;
 
 namespace GebatCAD.Classes
 {
-    public abstract class AVIEW
+    public class VIEW
     {
         static protected string password = string.Empty;
         protected string tablename;
@@ -22,6 +24,7 @@ namespace GebatCAD.Classes
         static protected DbConnection uniqueconn = null;
         static protected ISql ssql = null;
         private bool passEstablished;
+        protected const string pattern = "\\@[A-z]*[0-9]*"; 
 
         #region //Protected Methods
 
@@ -55,42 +58,12 @@ namespace GebatCAD.Classes
         }
 
         /// <summary>
-        /// Busca una fila pasada por parámetro en la base de datos.
-        /// </summary>
-        /// <param name="row">Fila a buscar en la base de datos.</param>
-        /// <returns></returns>
-        protected string rowToQuery(DataRow row)
-        {
-            string query = "SELECT * FROM " + this.TableName + " WHERE ";
-            for (int i = 0; i < idFormat.Count; i++)
-            {
-                query += idFormat[i] + " = '" + row[idFormat[i]] + "' ";
-                if (i != idFormat.Count - 1)
-                {
-                    query += "AND ";
-                }
-            }
-            return query;
-        }
-
-        /// <summary>
         /// Ejecuta ina sql Scalar.
         /// </summary>
         /// <param name="sql">Query a ejecutar.</param>
         /// <returns>Valor entero devuelto por el Scalar.</returns>
-        protected int ExecuteScalar(string query)
+        protected int executeScalar(DbCommand command)
         {
-            DbCommand command;
-            if (uniqueconn == null)
-            {
-                connect();
-                command = sql.Command(query, conn);
-            }
-            else
-            {
-                command = ssql.Command(query, uniqueconn);
-            }
-
             int ret = Convert.ToInt32(command.ExecuteScalar());
             if (uniqueconn == null)
             {
@@ -104,30 +77,76 @@ namespace GebatCAD.Classes
         /// </summary>
         /// <param name="query">Query a ejecutar.</param>
         /// <returns>DataTable con los resultados.</returns>
-        protected DataTable ExecuteQuery(string query)
+        protected DataTable executeQuery(DbCommand query)
         {
             DbDataAdapter adapter;
             if (uniqueconn == null)
             {
                 connect();
 
-                adapter = sql.Adapter(query, conn);
+                adapter = sql.Adapter(query);
             }
             else
             {
-                adapter = ssql.Adapter(query, uniqueconn);
+                adapter = ssql.Adapter(query);
             }
 
             DataSet dSet = new DataSet();
             adapter.Fill(dSet, this.tablename);
             DataTable dTable = dSet.Tables[this.tablename];
-            rowReturned = true;
-            voidRow = dTable.NewRow();
+            if (!rowReturned)
+            {
+                rowReturned = true;
+                voidRow = dTable.NewRow();
+            }
             if (uniqueconn == null)
             {
                 disconnect();
             }
             return dTable;
+        }
+    
+        /// <summary>
+        /// Crea el comando a partir de una query y de los parámetros en forma de @param.
+        /// </summary>
+        /// <param name="query">Query a ejecutar.</param>
+        /// <param name="values">Parámetros</param>
+        /// <returns>Commando resultante creado.</returns>
+        protected DbCommand createCommand(string query, params object[] values)
+        {
+            if (query == null)
+            {
+                throw new ArgumentNullException("The query cannot be null.");
+            }
+            DbCommand command;
+            if (uniqueconn == null)
+            {
+                connect();
+
+                command = sql.Command(query, conn);
+            }
+            else
+            {
+                command = ssql.Command(query, uniqueconn);
+            }
+
+            MatchCollection col = Regex.Matches(query, pattern);
+            if (uniqueconn == null)
+            {
+                for (int i = 0; i < col.Count; i++)
+                {
+                    command.Parameters.Add(sql.Parameter(col[i].ToString(), values[i]));
+                }
+            }
+            else
+            {
+                for (int i = 0; i < col.Count; i++)
+                {
+                    command.Parameters.Add(ssql.Parameter(col[i].ToString(), values[i]));
+                }
+            }
+
+            return command;
         }
 
         #endregion
@@ -138,14 +157,18 @@ namespace GebatCAD.Classes
         /// Constructor.
         /// </summary>
         /// <param name="connStringName">Nombre de la connectionString que está definida en el archivo de configuración de la aplicación.</param>
-        public AVIEW(string connStringName)
+        public VIEW(string connStringName, string tableName, params string[] ids)
         {
             sqlConnectionString = ConfigurationManager.ConnectionStrings[connStringName].ConnectionString;
             sqlprovider = ConfigurationManager.ConnectionStrings[connStringName].ProviderName;
             rowReturned = false;
             idFormat = new List<string>();
-            tablename = null;
+            tablename = tableName;
             passEstablished = false;
+            foreach (string newid in ids)
+            {
+                this.idFormat.Add(newid);
+            }
         }
 
         /// <summary>
@@ -231,8 +254,9 @@ namespace GebatCAD.Classes
         /// <returns>Número de registros en la tabla.</returns>
         public virtual int Count()
         {
-            string sql = "SELECT COUNT(*) FROM " + this.tablename;
-            return ExecuteScalar(sql);
+            string sqlCount = "SELECT COUNT(*) FROM " + this.tablename;
+            DbCommand command = createCommand(sqlCount);
+            return executeScalar(command);
         }
 
         /// <summary>
@@ -262,32 +286,8 @@ namespace GebatCAD.Classes
         public DataTable SelectAll()
         {
             string query = "SELECT * FROM " + tablename;
-            DbDataAdapter adapter;
-            if (uniqueconn == null)
-            {
-                connect();
-
-                adapter = sql.Adapter(query, conn);
-            }
-            else
-            {
-                adapter = ssql.Adapter(query, uniqueconn);
-            }
-            DataTable datatable = new DataTable();
-            DataSet dataset = new DataSet();
-
-            adapter.Fill(dataset, tablename);
-            datatable = dataset.Tables[tablename];
-
-
-            voidRow = datatable.NewRow();
-            rowReturned = true;
-    
-            if (uniqueconn == null)
-            {
-                disconnect();
-            }    
-
+            DbCommand command = createCommand(query);
+            DataTable datatable = executeQuery(command);
             return datatable;
         }
 
@@ -298,10 +298,10 @@ namespace GebatCAD.Classes
         /// <returns>La última fila de la tabla.</returns>
         public virtual DataRow Last()
         {
-            string sql = "SELECT * FROM " + this.tablename + " Order by ";
+            string sqlLast = "SELECT * FROM " + this.tablename + " Order by ";
             if (this.idFormat.Count == 1)
             {
-                sql += this.idFormat[0];
+                sqlLast += this.idFormat[0];
             }
             else
             {
@@ -309,57 +309,17 @@ namespace GebatCAD.Classes
                 {
                     if (i == idFormat.Count - 1)
                     {
-                        sql += this.idFormat[i];
+                        sqlLast += this.idFormat[i];
                     }
                     else
                     {
-                        sql += this.idFormat[i] + ", ";
+                        sqlLast += this.idFormat[i] + ", ";
                     }
                 }
             }
-            sql += " desc limit 1";
-            return ExecuteQuery(sql).Rows[0];
-        }
-
-        /// <summary>
-        /// Devuelve un DataRow con el registro indicado en el id. El formato de este id dependerá del IdFormat. En caso de que no lo encuentre devuelve null.
-        /// </summary>
-        /// <param name="id">Lista con los identificadores de la tabla, solo uno en casod de campo simple.</param>
-        /// <returns>Devuelve una fila de la base de datos.</returns>
-        public virtual DataRow Select(List<object> id)
-        {
-            if (id.Count != this.idFormat.Count)
-            {
-                throw new InvalidNumberIdException("Invalid number of id");
-            }
-            string query = "SELECT * FROM " + this.TableName + " WHERE ";
-            for (int i = 0; i < id.Count; i++)
-            {
-                query += this.idFormat[i] + " = " + id[i].ToString() + " ";
-                if (i != id.Count - 1)
-                {
-                    query += "AND ";
-                }
-            }
-
-            //connect();
-            DataTable dTable = ExecuteQuery(query);
-            rowReturned = true;
-            voidRow = dTable.NewRow();
-                
-            if (uniqueconn == null)
-            {
-                disconnect();
-            }
-                
-            if (dTable.Rows.Count == 1)
-            {
-                return dTable.Rows[0];
-            }
-            else
-            {
-                return null;
-            }
+            sqlLast += " desc limit 1";
+            DbCommand command = createCommand(sqlLast);
+            return executeQuery(command).Rows[0];
         }
 
         /// <summary>
@@ -368,14 +328,8 @@ namespace GebatCAD.Classes
         public virtual DataTable First()
         {
             string query = "SELECT * FROM " + this.tablename + " limit 1";
-            DataTable dTable = ExecuteQuery(query);
-            rowReturned = true;
-            voidRow = dTable.NewRow();
-
-            if (uniqueconn == null)
-            {
-                disconnect();
-            }
+            DbCommand command = createCommand(query);            
+            DataTable dTable = executeQuery(command);
 
             if (dTable.Rows.Count == 1)
             {
@@ -388,54 +342,15 @@ namespace GebatCAD.Classes
         }
 
         /// <summary>
-        /// Devuelve un DataTable con una ejecucion de la base de datos con la clausula where pasada por parámetro.
+        /// Ejecuta la select pasada por parámetro.
         /// </summary>
-        /// <param name="whereStatement">Clausula where, deberá estar bien formada.</param>
-        /// <param name="startRecord">Registro por el que se empezará a llenar la tabla.</param>
-        /// <param name="maxRecord">Numero máximo de registros que se devolverá.</param>
-        /// <returns>DaTatable con los datos de la base de datos.</returns>
-        public virtual DataTable SelectWhere(string whereStatement, int startRecord = 0, int maxRecords = -1)
+        /// <param name="query">Query a ejecutar con parámetros.</param>
+        /// <param name="values">Valores de los parámetros.</param>
+        /// <returns>DataTable resultante de ejecutar la query.</returns>
+        public virtual DataTable Select(string query, params object[] values)
         {
-            if (startRecord < 0)
-            {
-                throw new InvalidStartRecordException("Start record cannot be negative");
-            }
-
-            string query = "SELECT * FROM " + this.TableName + " WHERE " + whereStatement;
-            DbDataAdapter adapter;
-
-            if (uniqueconn == null)
-            {
-                connect();
-                adapter = sql.Adapter(query, conn);
-            }
-            else
-            {
-                adapter = ssql.Adapter(query, uniqueconn);
-            }
-
-            DataTable dt = new DataTable();
-            DataSet ds = new DataSet();
-
-            if (maxRecords < 0)
-            {
-                adapter.Fill(ds, this.TableName);
-                dt = ds.Tables[this.TableName];
-            }
-            else
-            {
-                adapter.Fill(startRecord, maxRecords, dt);
-            }
-
-            rowReturned = true;
-            voidRow = dt.NewRow();
-
-            if (uniqueconn == null)
-            {
-                disconnect();
-            }
-
-            return dt;
+            DbCommand command = createCommand(query,values);
+            return executeQuery(command);
         }
         #endregion
     }

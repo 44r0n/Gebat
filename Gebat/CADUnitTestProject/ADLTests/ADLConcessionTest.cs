@@ -23,7 +23,7 @@ namespace CADUnitTestProject.ADLTests
             }
         }
 
-        private AADL concession;
+        private ADL concession;
 
         protected override string specificScript
         {
@@ -39,7 +39,7 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            concession = new ADLConcessions(connectionString);
+            concession = new ADL(connectionString, "concessions", "Id");
         }
 
         [TestMethod]
@@ -51,6 +51,13 @@ namespace CADUnitTestProject.ADLTests
             expected["Id"] = 3;
             Assert.AreEqual(expected["Dossier"], actual["Dossier"]);
             Assert.AreEqual(expected["Id"], actual["Id"]);
+        }
+
+        [TestMethod]
+        public void Select()
+        {   
+            DataTable tabla = concession.Select("Select * From concessions Where Id = @Id", 1);
+            Assert.AreEqual(1, tabla.Rows.Count);
         }
     }
 }

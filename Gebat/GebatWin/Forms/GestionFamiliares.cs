@@ -15,30 +15,45 @@ namespace GebatWin.Forms
             InitializeComponent();
             this.expediente = expediente;
             mostrarFamiliares();
+            numericUpDownIncome.Maximum = int.MaxValue;
         }
 
         private void mostrarFamiliares()
         {
             listaFamiliares.Clean();
-            foreach (EBFamiliar fam in expediente.Familiars)
+            if (expediente.Familiars != null)
             {
-                listaFamiliares.Add(fam);
+                foreach (EBFamiliar fam in expediente.Familiars)
+                {
+                    listaFamiliares.Add(fam);
+                }
             }
+        }
+
+        private void clearForm()
+        {
+            textBoxDNI.Text = "";
+            textBoxNombre.Text = "";
+            textBoxApellidos.Text = "";
+            radioButtonHombre.Checked = false;
+            radioButtonMujer.Checked = false;
+            numericUpDownIncome.Value = 0;
         }
 
         private void buttonAddFamiliar_Click(object sender, EventArgs e)
         {
             if (radioButtonHombre.Checked)
             {
-                expediente.AddFamiliar(new EBFamiliar(textBoxDNI.Text,textBoxNombre.Text,textBoxApellidos.Text,dateTimePickerFechaNacimiento.Value,MyGender.Male));
+                expediente.AddFamiliar(new EBFamiliar(textBoxDNI.Text,textBoxNombre.Text,textBoxApellidos.Text,dateTimePickerFechaNacimiento.Value,MyGender.Male,(int)this.expediente.Id[0],(int)numericUpDownIncome.Value));
             }
 
             if (radioButtonMujer.Checked)
             {
-                expediente.AddFamiliar(new EBFamiliar(textBoxDNI.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNacimiento.Value, MyGender.Female));
+                expediente.AddFamiliar(new EBFamiliar(textBoxDNI.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNacimiento.Value, MyGender.Female, (int)this.expediente.Id[0], (int)numericUpDownIncome.Value));
             }
 
             mostrarFamiliares();
+            clearForm();
         }
 
         private void showTelfs(AEBPerson persona)

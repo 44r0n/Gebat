@@ -16,14 +16,14 @@ namespace GebatWin
         public Principal(string contraseña)
         {
             InitializeComponent();
-            AADL.Password = contraseña;
-            AADL.Connect("GebatDataConnectionString");
+            ADL.Password = contraseña;
+            ADL.Connect("GebatDataConnectionString");
             
         }
 
         private void Principal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            AADL.Disconnect();
+            ADL.Disconnect();
             Application.Exit();
         }
 

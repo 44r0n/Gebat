@@ -13,7 +13,16 @@ namespace GebatEN.Classes
         private DateTime beginDate;
         private DateTime finishDate;
         private string notes;
-        private ADLConcessions concesion;
+        private ADL concesion;
+
+        #endregion
+
+        #region//Private Methods
+
+        private void initADL()
+        {
+            concesion = new ADL(defaultConnString, "concessions", "Id");
+        }
 
         #endregion
 
@@ -26,10 +35,6 @@ namespace GebatEN.Classes
         {
             get 
             {
-                if (concesion == null)
-                {
-                    concesion = new ADLConcessions(defaultConnString);
-                }
                 DataRow ret = concesion.GetVoidRow;
                 if (this.id != null)
                 {
@@ -51,7 +56,7 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                DataRow conrow = concesion.SelectWhere("Id = '" + row["BaseId"] + "'").Rows[0];
+                DataRow conrow = concesion.Select("SELECT * FROM concessions WHERE Id = @Id", (int)row["BaseId"]).Rows[0];
                 this.id.Add(conrow["Id"]);
                 this.dossier = (int)conrow["Dossier"];
                 this.beginDate = (DateTime)conrow["BeginDate"];
@@ -126,7 +131,7 @@ namespace GebatEN.Classes
         public AEBConcession(DateTime beginDate, DateTime finishDate, string notes)
             : base()
         {
-            concesion = new ADLConcessions(defaultConnString);
+            initADL();
             this.beginDate = beginDate;
             this.finishDate = finishDate;
             this.notes = notes;
@@ -136,9 +141,9 @@ namespace GebatEN.Classes
         /// Constructor por defecto.
         /// </summary>
         public AEBConcession()
+            :base()
         {
-            concesion = new ADLConcessions(defaultConnString);
-            this.id = new List<object>();
+            initADL();
         }
 
         #endregion

@@ -13,13 +13,13 @@ namespace ENUnitTestProject.ENTests
         [ClassInitialize()]
         public static void setpasswd(TestContext context)
         {
-            AADL.Password = "root";
+            ADL.Password = "root";
         }
 
         [TestMethod]
         public void Read()
         {
-            List<int> id = new List<int>();
+            List<object> id = new List<object>();
             id.Add(2);
             List<string> phones = new List<string>();
             EBFamiliar fam = (EBFamiliar)(new EBFamiliar().Read(id));
@@ -33,7 +33,7 @@ namespace ENUnitTestProject.ENTests
         [TestMethod]
         public void Save()
         {
-            EBFamiliar newfamiliar = new EBFamiliar("42919826D", "Paco", "Mendoza", new DateTime(1978, 04, 18), MyGender.Male);
+            EBFamiliar newfamiliar = new EBFamiliar("42919826D", "Paco", "Mendoza", new DateTime(1978, 04, 18), MyGender.Male,2,200);
             newfamiliar.Save();
         }
     }

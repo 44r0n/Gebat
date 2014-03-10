@@ -8,3 +8,8 @@ INSERT INTO Crimes (Name) VALUES
 (
 	'Robo'
 );
+
+INSERT INTO Crimes (Name) VALUES
+(
+	'Trafico'
+);

@@ -16,13 +16,12 @@ namespace CADUnitTestProject.ADLTests
             get 
             {
                 DataTable expected = new DataTable();
-                expected.Columns.Add("Income", typeof(int));
                 expected.Columns.Add("Observations", typeof(string));
                 return expected;
             }
         }
 
-        private AADL dossier;
+        private ADL dossier;
 
         protected override string specificScript
         {
@@ -38,7 +37,7 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            dossier = new ADLPersonalDossier(connectionString);
+            dossier = new ADL(connectionString, "personaldossier", "Id");
         }
 
         [TestMethod]
@@ -46,8 +45,8 @@ namespace CADUnitTestProject.ADLTests
         {
             DataRow actual = dossier.Last();
             DataRow expected = tableFormat.NewRow();
-            expected["Income"] = 500;
-            Assert.AreEqual(expected["Income"], actual["Income"]);
+            expected["Observations"] = "otra";
+            Assert.AreEqual(expected["Observations"], actual["Observations"]);
         }
     }
 }

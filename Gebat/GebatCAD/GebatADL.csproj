@@ -35,25 +35,12 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ADLConcessions.cs" />
-    <Compile Include="Classes\AVIEW.cs" />
-    <Compile Include="Classes\ADLCrime.cs" />
-    <Compile Include="Classes\ADLEntryFood.cs" />
-    <Compile Include="Classes\ADLPersonalDossier.cs" />
-    <Compile Include="Classes\ADLFamiliars.cs" />
-    <Compile Include="Classes\ADLOutgoingFood.cs" />
-    <Compile Include="Classes\ADLPeople.cs" />
-    <Compile Include="Classes\ADLTBC.cs" />
-    <Compile Include="Classes\ADLPhones.cs" />
-    <Compile Include="Classes\VIEWFamiliarData.cs" />
-    <Compile Include="Classes\VIEWTBCPeople.cs" />
+    <Compile Include="Classes\VIEW.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\InvalidNumberIdException.cs" />
     <Compile Include="Exceptions\InvalidStartRecordException.cs" />
     <Compile Include="Exceptions\NullTableNameException.cs" />
-    <Compile Include="Classes\AADL.cs" />
-    <Compile Include="Classes\ADLFood.cs" />
-    <Compile Include="Classes\ADLType.cs" />
+    <Compile Include="Classes\ADL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

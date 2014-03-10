@@ -12,13 +12,13 @@ namespace ENUnitTestProject.ENTests
         [ClassInitialize()]
         public static void setpasswd(TestContext context)
         {
-            AADL.Password = "root";
+            ADL.Password = "root";
         }
 
         [TestMethod]
         public void Read()
         {
-            List<int> id = new List<int>();
+            List<object> id = new List<object>();
             id.Add(2);
             EBCrime crime = (EBCrime)new EBCrime().Read(id);
             Assert.AreEqual("Pelea", crime.Name);

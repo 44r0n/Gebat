@@ -49,11 +49,26 @@ namespace SqlManager
 		/// <param name="connection">Connexión a la base de datos.</param>
 		DbDataAdapter Adapter(string sqlQuery, DbConnection connection);
 
+        /// <summary>
+        /// Devuelve un DbAdapter con el comando a ejecutar.
+        /// </summary>
+        /// <param name="command">Commando a ejecutar.</param>
+        /// <returns></returns>
+        DbDataAdapter Adapter(DbCommand command);
+
 		/// <summary>
 		/// Devuelve un DbCommandBuilder con el adaptador pasado por parámetro.
 		/// </summary>
 		/// <param name="adapter">DbDataAdapter para construir el CommandBuilder.</param>
 		DbCommandBuilder Builder (DbDataAdapter adapter);
+
+        /// <summary>
+        /// Devuelve un DbParameter con el nombre y el valor indicados.
+        /// </summary>
+        /// <param name="name">Nombre del parámetro.</param>
+        /// <param name="value">Valor del parámetro.</param>
+        /// <returns>DbParameter construido.</returns>
+        DbParameter Parameter(string name, object value);
 	}
 }
 

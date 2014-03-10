@@ -22,7 +22,7 @@ namespace CADUnitTestProject.ADLTests
             }
         }
 
-        private AADL entry;
+        private ADL entry;
 
         private void AssertRow(DataRow expected, DataRow actual)
         {
@@ -46,28 +46,13 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            entry = new ADLEntryFood(connectionString);
-        }
-
-        [TestMethod]
-        public void TestSelectOne()
-        {
-            DataRow expected = tableFormat.NewRow();
-            expected["Id"] = 1;
-            expected["FoodType"] = 1;
-            expected["QuantityIn"] = 1;
-            expected["DateTime"] = "2012/11/20";
-            List<object> ids = new List<object>();
-            ids.Add((int)1);
-            DataRow actual = entry.Select(ids);
-            AssertRow(expected, actual);
+            entry = new ADL(connectionString, "entryfood", "Id");
         }
 
         [TestMethod]
         public void TestCount()
         {
             int expected = 4;
-            AADL entry = new ADLEntryFood(connectionString);
             int actual = entry.Count();
             Assert.AreEqual(expected, actual);
         }
@@ -75,7 +60,6 @@ namespace CADUnitTestProject.ADLTests
         [TestMethod]
         public void TestLast()
         {
-            AADL entry = new ADLEntryFood(connectionString);
             DataRow actual = entry.Last();
             DataRow expected = tableFormat.NewRow();
             expected["Id"] = 4;
@@ -88,7 +72,6 @@ namespace CADUnitTestProject.ADLTests
         [TestMethod]
         public void SelectAll()
         {
-            AADL entry = new ADLEntryFood(connectionString);
             DataTable actual = entry.SelectAll();
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
@@ -124,7 +107,6 @@ namespace CADUnitTestProject.ADLTests
         [TestMethod]
         public void SelectWhere()
         {
-            AADL entry = new ADLEntryFood(connectionString);
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
             row["Id"] = 1;
@@ -132,54 +114,12 @@ namespace CADUnitTestProject.ADLTests
             row["QuantityIn"] = 1;
             row["DateTime"] = "2012/11/20";
             expected.Rows.Add(row);
-            DataTable actual = entry.SelectWhere("DateTime = '2012/11/20'");
+            DataTable actual = entry.Select("Select * FROM entryfood Where DateTime = @DateTime","2012/11/20");
 
             for (int i = 0; i < expected.Rows.Count; i++)
             {
                 AssertRow(expected.Rows[i], actual.Rows[i]);
             }
-        }
-
-        [TestMethod]
-        public void Insert()
-        {
-            AADL entry = new ADLEntryFood(connectionString);
-            DataRow ins = entry.GetVoidRow;
-            ins["FoodType"] = 2;
-            ins["QuantityIn"] = 3;
-            ins["DateTime"] = "2012/11/24";
-            DataRow expected = tableFormat.NewRow();
-            expected["Id"] = 5;
-            expected["FoodType"] = 2;
-            expected["QuantityIn"] = 3;
-            expected["DateTime"] = "2012/11/24";
-            DataRow actual = entry.Insert(ins);
-            AssertRow(expected, actual);
-
-        }
-
-        [TestMethod]
-        public void Update()
-        {
-            AADL entry = new ADLEntryFood(connectionString);
-            DataRow mod = tableFormat.NewRow();
-            mod["Id"] = 2;
-            mod["FoodType"] = 2;
-            mod["QuantityIn"] = 3;
-            mod["DateTime"] = "2012/11/24";
-            entry.Update(mod);
-        }
-
-        [TestMethod]
-        public void Delete()
-        {
-            AADL entry = new ADLEntryFood(connectionString);
-            DataRow del = tableFormat.NewRow();
-            del["Id"] = 4;
-            del["FoodType"] = 1;
-            del["QuantityIn"] = 3;
-            del["DateTime"] = "2012/11/23";
-            entry.Delete(del);
         }
     }
 }

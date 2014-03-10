@@ -24,7 +24,7 @@ namespace CADUnitTestProject.ADLTests
             }
         }
 
-        private AADL person;
+        private ADL person;
 
         private void AssertRows(DataRow expected, DataRow actual)
         {
@@ -59,17 +59,7 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            person = new ADLPeople(connectionString);
-        }
-
-        [TestMethod]
-        public void TestSelectOne()
-        {
-            DataRow expected = testRow(tableFormat.NewRow());
-            List<object> ids = new List<object>();
-            ids.Add(1);
-            DataRow actual = person.Select(ids);
-            AssertRows(expected, actual);
+            person = new ADL(connectionString, "people", "Id");
         }
 
         [TestMethod]
@@ -123,56 +113,11 @@ namespace CADUnitTestProject.ADLTests
         {
             DataTable expected = tableFormat;
             DataRow row = testRow(expected.NewRow());
-            DataTable actual = person.SelectWhere("Name = 'Pepe'");
+            DataTable actual = person.Select("SELECT * FROM people WHERE Name = @Name","Pepe");
             for (int i = 0; i < expected.Rows.Count; i++)
             {
                 AssertRows(expected.Rows[i], actual.Rows[i]);
             }
-        }
-
-        [TestMethod]
-        public void Insert()
-        {
-            DataRow ins = person.GetVoidRow;
-            ins["DNI"] = "34567890C";
-            ins["Name"] = "Antonio";
-            ins["Surname"] = "García";
-            ins["BirthDate"] = "1982/03/12";
-            ins["Gender"] = "M";
-            DataRow expected = tableFormat.NewRow();
-            expected["DNI"] = "34567890C";
-            expected["Name"] = "Antonio";
-            expected["Surname"] = "García";
-            expected["BirthDate"] = "1982/03/12";
-            expected["Gender"] = "M";
-            DataRow actual = person.Insert(ins);
-            AssertRows(expected, actual);
-        }
-
-        [TestMethod]
-        public void Update()
-        {
-            DataRow mod = tableFormat.NewRow();
-            mod["Id"] = 2;
-            mod["DNI"] = "23456789B";
-            mod["Name"] = "María";
-            mod["Surname"] = "Entrepinares";
-            mod["BirthDate"] = "1954/02/02";
-            mod["Gender"] = "F";
-            person.Update(mod);
-        }
-
-        [TestMethod]
-        public void Delete()
-        {
-            DataRow del = tableFormat.NewRow();
-            del["Id"] = 1;
-            del["DNI"] = "12345678A";
-            del["Name"] = "Pepe";
-            del["Surname"] = "Olivares";
-            del["BirthDate"] = "1976/04/02";
-            del["Gender"] = "M";
-            person.Delete(del);
         }
     }
 }

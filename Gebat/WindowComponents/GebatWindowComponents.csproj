@@ -81,7 +81,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\GebatEN\GebatEB.csproj">
       <Project>{017da2fb-2f1f-4037-a234-f2ac68267dec}</Project>

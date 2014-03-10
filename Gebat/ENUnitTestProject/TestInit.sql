@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS Phones;
 DROP TABLE IF EXISTS TBC;
 DROP TABLE IF EXISTS Crimes;
+DROP TABLE IF EXISTS Concessions;
 DROP TABLE IF EXISTS Familiars;
 DROP TABLE IF EXISTS People;
 DROP TABLE IF EXISTS PersonalDossier;
@@ -42,38 +43,32 @@ CREATE TABLE IF NOT EXISTS OutgoingFood
 	CONSTRAINT fk_OutgoingFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
+
 CREATE TRIGGER addfood AFTER INSERT ON EntryFood
-FOR EACH ROW 
+FOR EACH ROW
 BEGIN
-	UPDATE Food SET Quantity = Quantity + NEW.QuantityIn WHERE (Id = NEW.FoodType);
+UPDATE Food SET Quantity = Quantity + NEW.QuantityIn WHERE (Id = NEW.FoodType);
 END;
 
 CREATE TRIGGER subfood AFTER INSERT ON OutGoingFood
-FOR EACH ROW 
+FOR EACH ROW
 BEGIN
-	UPDATE Food SET Quantity = Quantity - NEW.QuantityOut WHERE (Id = NEW.FoodType);
+UPDATE Food SET Quantity = Quantity - NEW.QuantityOut WHERE (Id = NEW.FoodType);
 END;
 
 CREATE TRIGGER subfoodin BEFORE DELETE ON EntryFood
-FOR EACH ROW 
+FOR EACH ROW
 BEGIN
-	UPDATE Food SET Quantity = Quantity - OLD.QuantityIN WHERE Id = OLD.FoodType;
+UPDATE Food SET Quantity = Quantity - OLD.QuantityIN WHERE Id = OLD.FoodType;
 END;
 
 CREATE TRIGGER addfoodout BEFORE DELETE ON OutGoingFood
-FOR EACH ROW 
+FOR EACH ROW
 BEGIN
-	UPDATE Food SET Quantity = Quantity + OLD.QuantityOut WHERE Id = OLD.FoodType;
+UPDATE Food SET Quantity = Quantity + OLD.QuantityOut WHERE Id = OLD.FoodType;
 END;
 
-CREATE TABLE IF NOT EXISTS PersonalDossier
-(
-	Id int PRIMARY KEY AUTO_INCREMENT,
-	Income INT,
-	Observations varchar(255)
-);
-
-CREATE TABLE IF NOT EXISTS People 
+CREATE TABLE IF NOT EXISTS People
 (
   Id int Primary Key AUTO_INCREMENT,
   DNI CHAR(9) Unique,
@@ -83,13 +78,30 @@ CREATE TABLE IF NOT EXISTS People
   Gender CHAR(1) NULL
 );
 
+CREATE TABLE IF NOT EXISTS PersonalDossier
+(
+	Id int PRIMARY KEY AUTO_INCREMENT,
+	Observations varchar(255)
+);
+
 CREATE TABLE IF NOT EXISTS Familiars
 (
 	Id int Primary Key AUTO_INCREMENT,
-	DNI CHAR(9) NOT NULL,
+	DNI CHAR(9) Unique,
 	Dossier int,
+	Income INT,
 	CONSTRAINT fk_Familiars_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_Familiars_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Concessions
+(
+	Id int Primary Key AUTO_INCREMENT,
+	Dossier INT,
+	BeginDate DATE NULL,
+	FinishDate DATE NULL,
+	Notes VARCHAR(150),
+	CONSTRAINT fk_Concessions_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Crimes
@@ -128,9 +140,9 @@ CREATE TABLE IF NOT EXISTS Phones
 	CONSTRAINT fk_Phones_People FOREIGN KEY (Owner) REFERENCES People(DNI) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday,Saturday, Sunday, Crime from People inner join TBC on (People.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Crime from People inner join TBC on (People.DNI = TBC.DNI);
 
-CREATE OR REPLACE VIEW DatosFamiliars as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender FROM People inner join Familiars on (People.DNI = Familiars.DNI);
+CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender, Dossier, Income FROM People inner join Familiars on (People.DNI = Familiars.DNI);
 
 INSERT INTO Type (Name) VALUES
 (
@@ -243,15 +255,13 @@ INSERT INTO Crimes (Name) VALUES
 	"Otro"
 );
 
-INSERT INTO PersonalDossier(Income, Observations) VALUES
+INSERT INTO PersonalDossier(Observations) VALUES
 (
-	1000,
 	"Una observación"
 );
 
-INSERT INTO PersonalDossier(Income, Observations) VALUES
+INSERT INTO PersonalDossier(Observations) VALUES
 (
-	500,
 	"otra"
 );
 
@@ -384,20 +394,23 @@ INSERT INTO Phones (PhoneNumber, Owner) VALUES
 	'01086932K'
 );
 
-INSERT INTO Familiars(DNI, Dossier) VALUES
+INSERT INTO Familiars(DNI, Dossier,Income) VALUES
 (
 	'53705134L',
-	1
+	1,
+	500
 );
 
-INSERT INTO Familiars(DNI, Dossier) VALUES
+INSERT INTO Familiars(DNI, Dossier, Income) VALUES
 (
 	'91071949E',
-	1
+	1,
+	500
 );
 
-INSERT INTO Familiars(DNI, Dossier) VALUES
+INSERT INTO Familiars(DNI, Dossier,Income) VALUES
 (
 	'29556003Z',
-	2
+	2,
+	400
 );

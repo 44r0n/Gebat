@@ -32,7 +32,7 @@ namespace CADUnitTestProject.ADLTests
             }
         }
 
-        private AADL food;
+        private ADL food;
 
         private void AssertRow(DataRow expected, DataRow actual)
         {
@@ -47,24 +47,13 @@ namespace CADUnitTestProject.ADLTests
             ResetConn();
             SetPasswd();
             InitBD(specificScript);
-            food = new ADLFood(connectionString);
-        }
-
-        [TestMethod]
-        public void TestSelectOne()
-        {
-            string expected = "Patates";
-            List<object> ids = new List<object>();
-            ids.Add((int)1);
-            DataRow actual = food.Select(ids);
-            Assert.AreEqual(expected, (string)actual["Name"]);
+            food = new ADL(connectionString, "food", "Id");
         }
 
         [TestMethod]
         public void TestCount()
         {
             int expected = 3;
-            AADL food = new ADLFood(connectionString);
             int actual = food.Count();
             Assert.AreEqual(expected, actual);
         }
@@ -72,7 +61,6 @@ namespace CADUnitTestProject.ADLTests
         [TestMethod]
         public void TestLast()
         {
-            AADL food = new ADLFood(connectionString);
             DataRow actual = food.Last();
             DataRow expected = food.GetVoidRow;
             expected["Id"] = 4;
@@ -85,7 +73,6 @@ namespace CADUnitTestProject.ADLTests
         [TestMethod]
         public void SelectAll()
         {
-            AADL food = new ADLFood(connectionString);
             DataTable actual = food.SelectAll();
             DataTable expected = this.tableFormat;
             DataRow row = expected.NewRow();
@@ -115,23 +102,19 @@ namespace CADUnitTestProject.ADLTests
         [TestMethod]
         public void Select()
         {
-            AADL food = new ADLFood(connectionString);
-            List<object> ids = new List<object>();
-            ids.Add(1);
-            DataRow actual = food.Select(ids);
+            DataTable tabler = food.Select("SELECT * FROM food WHERE Id = @Id",1);
             DataTable table = tableFormat;
             DataRow expected = table.NewRow();
             expected["Id"] = 1;
             expected["Name"] = "Patates";
             expected["QuantityType"] = 1;
             expected["Quantity"] = 4;
-            AssertRow(expected, actual);
+            AssertRow(expected, tabler.Rows[0]);
         }
 
         [TestMethod]
         public void SelectWhere()
         {
-            AADL food = new ADLFood(connectionString);
             DataTable expected = tableFormat;
             DataRow row = expected.NewRow();
             row["Id"] = 1;
@@ -139,46 +122,12 @@ namespace CADUnitTestProject.ADLTests
             row["QuantityType"] = 1;
             row["Quantity"] = 4;
             expected.Rows.Add(row);
-            DataTable actual = food.SelectWhere("Name = 'Patates'");
+            DataTable actual = food.Select("Select * FROM food WHERE Name = @Name", "Patates");
 
             for (int i = 0; i < expected.Rows.Count; i++)
             {
                 AssertRow(expected.Rows[i], actual.Rows[i]);
             }
-        }
-
-        [TestMethod]
-        public void Insert()
-        {
-            AADL food = new ADLFood(connectionString);
-            DataRow ins = food.GetVoidRow;
-            ins["Name"] = "Peres";
-            DataRow expected = food.GetVoidRow;
-            expected["Id"] = 5;
-            expected["Name"] = "Peres";
-            DataRow actual = food.Insert(ins);
-            Assert.AreEqual(expected["Id"], actual["Id"]);
-            Assert.AreEqual(expected["Name"], actual["Name"]);
-        }
-
-        [TestMethod]
-        public void Update()
-        {
-            AADL food = new ADLFood(connectionString);
-            DataRow mod = food.GetVoidRow;
-            mod["Id"] = 1;
-            mod["Name"] = "Peres";
-            food.Update(mod);
-        }
-
-        [TestMethod]
-        public void Delete()
-        {
-            AADL food = new ADLFood(connectionString);
-            DataRow del = food.GetVoidRow;
-            del["Id"] = 1;
-            del["Name"] = "Patates";
-            food.Delete(del);
         }
     }
 }

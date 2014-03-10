@@ -153,4 +153,4 @@ CREATE TABLE IF NOT EXISTS Phones
 
 CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Crime from People inner join TBC on (People.DNI = TBC.DNI);
 
-CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender FROM People inner join Familiars on (People.DNI = Familiars.DNI);
+CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender, Dossier, Income FROM People inner join Familiars on (People.DNI = Familiars.DNI);

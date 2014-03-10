@@ -11,17 +11,25 @@ namespace GebatEN.Classes
 
         #region//Atributes
 
-        private ADLPeople people;
+        private ADL people;
+        private ADL adlphones;
         private string dni;
         private string surname;
         private string name;
         private DateTime birthDate;
         private MyGender gender;
         private List<string> phones = null;
+        private int personid = 0;
 
         #endregion
 
         #region//Private Methods
+
+        private void initADL()
+        {
+            people = new ADL(defaultConnString, "people", "Id");
+            adlphones = new ADL(defaultConnString, "phones", "Id");
+        }
 
         /// <summary> Tabla de asignación. </summary>
         private const string connection = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -104,13 +112,46 @@ namespace GebatEN.Classes
         /// </summary>
         private void loadPhones()
         {
-            ADLPhones adlphones = new ADLPhones(defaultConnString);
             phones = new List<string>();
-            DataTable telfs = adlphones.SelectWhere("Owner = '" + this.dni + "'");
+            DataTable telfs = adlphones.Select("SELECT * FROM phones WHERE Owner = @Owner", this.dni);
             foreach (DataRow row in telfs.Rows)
             {
                 phones.Add((string)row["PhoneNumber"]);
             }
+        }
+
+        #endregion
+
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            if(this.gender == MyGender.Male)
+            {
+                adl.ExecuteNonQuery("INSERT INTO people (DNI, Name, Surname, BirthDate, Gender) VALUES (@DNI, @Name, @Surname, @BirthDate, @Gender)", this.dni, this.name, this.surname, this.birthDate, "M");
+            }
+            else
+            {
+                adl.ExecuteNonQuery("INSERT INTO people (DNI, Name, Surname, BirthDate, Gender) VALUES (@DNI, @Name, @Surname, @BirthDate, @Gender)", this.dni, this.name, this.surname, this.birthDate, "F");
+            }
+            personid = (int) new ADL(defaultConnString,"people","Id").Last()["Id"];
+        }
+
+        protected override void update()
+        {
+            if (this.gender == MyGender.Male)
+            {
+                adl.ExecuteNonQuery("UPDATE people SET DNI = @DNI, Name = @Name, Surname = @Surname, BirthDate = @BirthDate, Gender = @Gender WHERE Id = @Id", this.dni, this.name, this.surname, this.birthDate, "M", personid);
+            }
+            else
+            {
+                adl.ExecuteNonQuery("UPDATE people SET DNI = @DNI, Name = @Name, Surname = @Surname, BirthDate = @BirthDate, Gender = @Gender WHERE Id = @Id", this.dni, this.name, this.surname, this.birthDate, "F", personid);
+            }
+        }
+
+        protected override void delete()
+        {
+            adl.ExecuteNonQuery("DELETE FROM people WHERE Id = @Id", personid);
         }
 
         #endregion
@@ -127,7 +168,7 @@ namespace GebatEN.Classes
                 DataRow ret = people.GetVoidRow;
                 if (this.id != null)
                 {
-                    ret["Id"] = (int)this.id[0];
+                    ret["Id"] = personid;
                 }
                 ret["DNI"] = (string)this.dni;
                 ret["Name"] = this.name;
@@ -154,8 +195,8 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                DataRow perrow = people.SelectWhere("DNI = '" + row["DNI"] + "'").Rows[0];
-                this.id.Add(perrow["Id"]);
+                DataRow perrow = people.Select("SELECT * FROM people WHERE DNI = @DNI", (string)row["DNI"]).Rows[0];
+                personid = (int)perrow["Id"];
                 this.dni = (string)perrow["DNI"];
                 this.name = (string)perrow["Name"];
                 this.surname = (string)perrow["Surname"];
@@ -184,7 +225,7 @@ namespace GebatEN.Classes
         /// <returns>True si está guardada en la tabla, false en caso contrario.</returns>
         protected bool alreadyInPerson()
         {
-            if (new ADLPeople(defaultConnString).SelectWhere("DNI = '" + this.DNI + "'").Rows.Count == 1)
+            if (new ADL(defaultConnString,"people","Id").Select("SELECT * FROM people WHERE DNI = @DNI",this.DNI).Rows.Count == 1)
             {
                 return true;
             }
@@ -325,8 +366,7 @@ namespace GebatEN.Classes
         public AEBPerson(string DNI, string Name, string Surname, DateTime BirthDate, MyGender Gender)
             :base()
         {
-            people = new ADLPeople(defaultConnString);
-            //this.id = new List<object>(); -> ni se te ocurra descomentar esta línea.
+            initADL();
             this.DNI = DNI;
             this.name = Name;
             this.surname = Surname;
@@ -338,9 +378,9 @@ namespace GebatEN.Classes
         /// Constructor por defecto. No asigna ningún dato.
         /// </summary>
         public AEBPerson()
+            :base()
         {
-            people = new ADLPeople(defaultConnString);
-            this.id = new List<object>();
+            initADL();
         }
 
         /// <summary>
@@ -356,11 +396,7 @@ namespace GebatEN.Classes
         /// <param name="number">Nuevo numero de telefono.</param>
         public void AddPhone(string number)
         {
-            ADLPhones adlphones = new ADLPhones(defaultConnString);
-            DataRow newrow = adlphones.GetVoidRow;
-            newrow["PhoneNumber"] = number;
-            newrow["Owner"] = this.dni;
-            adlphones.Insert(newrow);
+            adlphones.ExecuteNonQuery("INSERT INTO phones (PhoneNumber, Owner) VALUES (@PhoneNumber, @Owner)", number, this.dni);
             if (phones == null)
             {
                 phones = new List<string>();
@@ -374,11 +410,10 @@ namespace GebatEN.Classes
         /// <param name="number">Número de teléfono a eliminar.</param>
         public void DelPhone(string number)
         {
-            ADLPhones adlphone = new ADLPhones(defaultConnString);
-            DataTable del = adlphone.SelectWhere("PhoneNumber = " + number + " AND Owner = '" + this.dni+"'");
+            DataTable del = adlphones.Select("SELECT * FROM phones WHERE PhoneNumber = @PhoneNumber AND Owner = @Owner", number,this.dni);
             if (del.Rows.Count == 1)
             {
-                adlphone.Delete(del.Rows[0]);
+                adlphones.ExecuteNonQuery("DELETE FROM phones WHERE Id = @Id",(int)del.Rows[0]["Id"]);
                 phones.Remove(number);
             }
         }

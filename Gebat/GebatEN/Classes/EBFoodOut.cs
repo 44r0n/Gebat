@@ -16,6 +16,15 @@ namespace GebatEN.Classes
 
         #endregion
 
+        #region//Private Methods
+
+        private void initADL()
+        {
+            adl = new ADL(defaultConnString, "outgoingfood", "Id");
+        }
+
+        #endregion
+
         #region//Internal Methods
 
         /// <summary>
@@ -55,6 +64,26 @@ namespace GebatEN.Classes
                     type = (int)row["FoodType"];
                 }
             }
+        }
+
+        #endregion
+
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            adl.ExecuteNonQuery("INSERT INTO outgoingfood (FoodType, QuantityOut, DateTime) VALUES (@Type, @Quantity, @Date)", this.type, this.quantity, this.date);
+            this.id.Add(adl.Last());
+        }
+
+        protected override void update()
+        {
+            adl.ExecuteNonQuery("UPDATE outgoingfood SET FoodType = @Type, QuantityOut = @Quantity, DateTime = @Date WHERE Id = @Id",this.type,this.quantity,this.date,(int)this.id[0]);
+        }
+
+        protected override void delete()
+        {
+            adl.ExecuteNonQuery("DELETE FROM outgoingfoos WHERE Id = @Id", (int)this.id[0]);
         }
 
         #endregion
@@ -103,10 +132,7 @@ namespace GebatEN.Classes
             {
                 if (this.name == null)
                 {
-                    ADLFood food = new ADLFood(defaultConnString);
-                    List<object> param = new List<object>();
-                    param.Add(this.type);
-                    DataRow fila = food.Select(param);
+                    DataRow fila = adl.Select("SELECT Name FROM food WHERE Id = @Id",this.type).Rows[0];
                     this.name = (string)fila["Name"];
                 }
                 return this.name;
@@ -126,7 +152,7 @@ namespace GebatEN.Classes
         public EBFoodOut(DateTime Date, int Quantity, int Type)
             :base()
         {
-            adl = new ADLOutgoingFood(defaultConnString);
+            initADL();
             this.quantity = Quantity;
             this.date = Date;
             this.type = Type;
@@ -138,7 +164,7 @@ namespace GebatEN.Classes
         public EBFoodOut()
             : base()
         {
-            adl = new ADLOutgoingFood(defaultConnString);
+            initADL();
         }
 
         /// <summary>
@@ -146,12 +172,10 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará la salida de alimentos</param>
         /// <returns>Salida en formato AEN.</returns>
-        public override AEB Read(List<int> id)
+        public override AEB Read(List<object>id)
         {
             EBFoodOut ret = new EBFoodOut();
-            List<object> param = new List<object>();
-            param.Add((object)id[0]);
-            DataRow row = adl.Select(param);
+            DataRow row = adl.Select("SELECT * FROM outgoingfood WHERE Id = @Id",(int)id[0]).Rows[0];
             if(row != null)
             {
                 ret.FromRow(row);

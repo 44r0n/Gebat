@@ -93,6 +93,42 @@ namespace SqlManager
             return adapter;
 		}
 
+        public DbDataAdapter Adapter(DbCommand command)
+        {
+            DbDataAdapter adapter = null;
+            switch (provider)
+            {
+                case "System.Data.SqlClient":
+                    adapter = new SqlDataAdapter((SqlCommand)command);
+                    break;
+                case "MySql.Data.MySqlClient":
+                    adapter = new MySqlDataAdapter((MySqlCommand)command);
+                    break;
+                default:
+                    providerNotSupported();
+                    break;
+            }
+            return adapter;
+        }
+
+        public DbParameter Parameter(string name, object param)
+        {
+            DbParameter ret = null;
+            switch (provider)
+            {
+                case "System.Data.SqlClient":
+                    ret = new SqlParameter(name, param);
+                    break;
+                case "MySql.Data.MySqlClient":
+                    ret = new MySqlParameter(name, param);
+                    break;
+                default:
+                    providerNotSupported();
+                    break;
+            }
+            return ret;
+        }
+
 		public DbCommandBuilder Builder (DbDataAdapter adapter)
 		{
             DbCommandBuilder builder = null;

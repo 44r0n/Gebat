@@ -13,6 +13,35 @@ namespace GebatEN.Classes
 
         #endregion
 
+        #region//Private Methods
+
+        private void initADL()
+        {
+            adl = new ADL(defaultConnString, "crimes", "Id");
+        }
+
+        #endregion
+
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            adl.ExecuteNonQuery("INSERT INTO crimes (Name) VALUES (@Name)", this.name);
+            this.id.Add((int)adl.Last()["Id"]);
+        }
+
+        protected override void update()
+        {
+            adl.ExecuteNonQuery("UPDATE crimes SET Name = @Name WHERE Id = @Id", this.name, (int)this.id[0]);
+        }
+
+        protected override void delete()
+        {
+            adl.ExecuteNonQuery("DELETE FROM crimes WHERE Id = @Id", (int)this.id[0]);
+        }
+
+        #endregion
+
         #region//Internal Methods
 
         /// <summary>
@@ -79,21 +108,23 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="name">Nombre del delito.</param>
         public EBCrime(string name)
+            :base()
         {
             if (name == null)
             {
                 throw new NullReferenceException("The name cannot be null");
             }
             this.name = name;
-            adl = new ADLCrime(defaultConnString);
+            initADL();
         }
 
         /// <summary>
         /// Constructor por defecto.
         /// </summary>
         public EBCrime()
+            :base()
         {
-            adl = new ADLCrime(defaultConnString);
+            initADL();
         }
 
         /// <summary>
@@ -101,12 +132,10 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por el que se buscará el delito</param>
         /// <returns>Delito en formato AEN.</returns>
-        public override AEB Read(List<int> id)
+        public override AEB Read(List<object> id)
         {
             EBCrime ret = new EBCrime();
-            List<object> param = new List<object>();
-            param.Add((object)id[0]);
-            DataRow row = adl.Select(param);
+            DataRow row = adl.Select("SELECT * FROM crimes WHERE Id = @Id",(int)id[0]).Rows[0];
             if (row != null)
             {
                 ret.FromRow(row);

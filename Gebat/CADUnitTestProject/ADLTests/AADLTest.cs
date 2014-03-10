@@ -72,7 +72,7 @@ namespace CADUnitTestProject.ADLTests
 
         protected void SetPasswd()
         {
-            AADL.Password = "root";
+            ADL.Password = "root";
         }
     }
 }

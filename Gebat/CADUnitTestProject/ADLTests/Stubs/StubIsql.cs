@@ -40,10 +40,21 @@ namespace CADUnitTestProject.ADLTests
             return ret;
         }
 
+        public DbDataAdapter Adapter(DbCommand command)
+        {
+            DbDataAdapter ret = new MySqlDataAdapter((MySqlCommand)command);
+            return ret;
+        }
+
         public DbCommandBuilder Builder(DbDataAdapter adapter)
         {
             DbCommandBuilder ret = new MySqlCommandBuilder((MySqlDataAdapter)adapter);
             return ret;
+        }
+
+        public DbParameter Parameter(string name, object value)
+        {
+            return new MySqlParameter(name, value);
         }
     }
 }

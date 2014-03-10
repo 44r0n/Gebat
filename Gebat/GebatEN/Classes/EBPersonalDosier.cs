@@ -10,29 +10,38 @@ namespace GebatEN.Classes
     {
         #region//Atributes
 
-        private List<EBFamiliar> familiars = null;
+        private List<EBFamiliar> familiars;
         private int income = 0;
         private string observations;
-        private List<AEBConcession> concessions = null;
+        private List<AEBConcession> concessions;
+        private bool familiarsLoaded = false;
 
         #endregion
 
         #region//Private Methods
+
+        private void initADL()
+        {
+            adl = new ADL(defaultConnString, "personaldossier", "Id");
+        }
 
         /// <summary>
         /// Carga todos los familiares ligados al expediente actual.
         /// </summary>
         private void loadFamiliars()
         {
-            this.familiars = new List<EBFamiliar>();
-            ADLFamiliars adlfam = new ADLFamiliars(defaultConnString);
-            foreach (DataRow row in adlfam.SelectWhere("Dossier = " + (int)this.id[0]).Rows)
+            if (!familiarsLoaded)
             {
-                EBFamiliar fam = new EBFamiliar();
-                fam.FromRow(row);
-                this.familiars.Add(fam);
-                this.income += fam.Income;
+                this.familiars = new List<EBFamiliar>();
+                foreach (DataRow row in adl.Select("SELECT * FROM familiars WHERE Dossier = @Dossier", (int)this.id[0]).Rows)
+                {
+                    EBFamiliar fam = new EBFamiliar();
+                    fam.FromRow(row);
+                    this.familiars.Add(fam);
+                    this.income += fam.Income;
+                }
             }
+            familiarsLoaded = true;
         }
 
         /// <summary>
@@ -52,6 +61,26 @@ namespace GebatEN.Classes
                 }
             }
             return ret;
+        }
+
+        #endregion
+
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            adl.ExecuteNonQuery("INSERT INTO personaldossier (Observations) VALUES (@Observations)", this.observations);
+            this.id.Add((int)adl.Last()["Id"]);
+        }
+
+        protected override void update()
+        {
+            adl.ExecuteNonQuery("UDPATE personaldossier SET Observations = @Observations WHERE Id = @Id", this.observations, (int)this.id[0]);
+        }
+
+        protected override void delete()
+        {
+            adl.ExecuteNonQuery("DELETE FROM personaldossier WHERE Id = @Id", (int)this.id[0]);
         }
 
         #endregion
@@ -158,8 +187,10 @@ namespace GebatEN.Classes
         public EBPersonalDosier(string Observations)
             :base()
         {
-            adl = new ADLPersonalDossier(defaultConnString);
+            initADL();
             this.observations = Observations;
+            familiars = new List<EBFamiliar>();
+            concessions = new List<AEBConcession>();
         }
 
         /// <summary>
@@ -168,7 +199,9 @@ namespace GebatEN.Classes
         public EBPersonalDosier()
             :base()
         {
-            adl = new ADLPersonalDossier(defaultConnString);
+            initADL();
+            familiars = new List<EBFamiliar>();
+            concessions = new List<AEBConcession>();
         }
 
         /// <summary>
@@ -176,12 +209,10 @@ namespace GebatEN.Classes
         /// </summary>
         /// <param name="id">Identificador por le que se buscará el expediente.</param>
         /// <returns>Expediente en formato AEN.</returns>
-        public override AEB Read(List<int> id)
+        public override AEB Read(List<object> id)
         {
             EBPersonalDosier ret = new EBPersonalDosier();
-            List<object> param = new List<object>();
-            param.Add(id[0]);
-            DataRow row = adl.Select(param);
+            DataRow row = adl.Select("SELECT * FROM personaldossier WHERE Id = @Id",(int)id[0]).Rows[0];
             if (row != null)
             {
                 ret.FromRow(row);
@@ -218,6 +249,7 @@ namespace GebatEN.Classes
         {
             loadFamiliars();
             familiar.dossier = (int)this.id[0];
+            this.income += familiar.Income;
             familiar.Save();
             familiars.Add(familiar);
         }
