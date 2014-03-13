@@ -55,20 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ADLTests\AADLTest.cs" />
-    <Compile Include="ADLTests\ADLTypeTest.cs" />
-    <Compile Include="ADLTests\Stubs\StubIsql.cs" />
-    <Compile Include="ADLTests\ADLFoodTest.cs" />
-    <Compile Include="ADLTests\ADLEntryFoodTest.cs" />
-    <Compile Include="ADLTests\ADLOutgoingFoodTest.cs" />
-    <Compile Include="ADLTests\ADLPeopleTest.cs" />
-    <Compile Include="ADLTests\ADLTBCTest.cs" />
-    <Compile Include="ADLTests\ADLCrimeTest.cs" />
-    <Compile Include="ADLTests\ADLPhonesTest.cs" />
-    <Compile Include="ADLTests\ADLFamiliarTest.cs" />
-    <Compile Include="ADLTests\ADLPersonalDossierTest.cs" />
-    <Compile Include="ADLTests\ADLConcessionTest.cs" />
-    <Compile Include="ADLTests\VIEWFamiliarDataTest.cs" />
-    <Compile Include="ADLTests\VIEWTBCPeopleTest.cs" />
+    <Compile Include="ADLTests\Stubs\ADLStub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,10 +65,6 @@
     <ProjectReference Include="..\GebatCAD\GebatADL.csproj">
       <Project>{f9cf59be-07ec-41e9-90b6-11a03f2f6e10}</Project>
       <Name>GebatADL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SqlManager\SqlManager.csproj">
-      <Project>{269e7c8b-ab29-4d57-8ef5-78aa6041b71d}</Project>
-      <Name>SqlManager</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

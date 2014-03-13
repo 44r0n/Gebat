@@ -2,7 +2,6 @@
 using System.IO;
 using System.Data;
 using System.Data.Common;
-using SqlManager;
 using System.Collections.Generic;
 using GebatCAD.Classes;
 using System.Configuration;
@@ -14,13 +13,14 @@ namespace ENUnitTestProject.ENTests
     public class EBTestPrepare
     {
         static protected string connectionString = "GebatDataConnectionString";
+        static protected string provider;
 
         static protected void InitBD(string fileScript)
         {
             string connString = ConfigurationManager.ConnectionStrings[connectionString].ConnectionString;
             connString += "Password=root";
-            string provider = ConfigurationManager.ConnectionStrings[connectionString].ProviderName;
-            ISql manager = FactorySql.Create(provider);
+            provider = ConfigurationManager.ConnectionStrings[connectionString].ProviderName;
+            SqlManager manager = new SqlManager(provider);
             FileInfo file = new FileInfo(fileScript);
             StreamReader lector = file.OpenText();
             string script = lector.ReadToEnd();
@@ -32,11 +32,6 @@ namespace ENUnitTestProject.ENTests
             conn.Close();
         }
 
-        static protected void ResetConn()
-        {
-            FactorySql.ResetManager();
-        }
-
         static protected void SetPasswd()
         {
             ADL.Password = "root";
@@ -45,7 +40,6 @@ namespace ENUnitTestProject.ENTests
         [AssemblyInitialize()]
         public static void InitTests(TestContext context)
         {
-            ResetConn();
             SetPasswd();
             InitBD("TestInit.sql");
         }

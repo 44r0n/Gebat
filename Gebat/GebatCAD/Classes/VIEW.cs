@@ -6,23 +6,22 @@ using System.Data;
 using System.Data.SqlClient;
 using GebatCAD.Exceptions;
 using System.Data.Common;
-using SqlManager;
 
 namespace GebatCAD.Classes
 {
     public class VIEW
     {
         static protected string password = string.Empty;
+        static protected DbConnection uniqueconn = null;
+        static protected SqlManager ssql = null;
         protected string tablename;
         protected bool rowReturned;
         protected DataRow voidRow;
-        private string sqlConnectionString;
-        private string sqlprovider;
-        protected ISql sql = null;
+        protected string sqlConnectionString;
+        protected string sqlprovider;
+        protected SqlManager sql = null;
         protected List<string> idFormat;
         protected DbConnection conn = null;
-        static protected DbConnection uniqueconn = null;
-        static protected ISql ssql = null;
         private bool passEstablished;
         protected const string pattern = "\\@[A-z]*[0-9]*"; 
 
@@ -35,7 +34,7 @@ namespace GebatCAD.Classes
         {
             if (sql == null)
             {
-                sql = FactorySql.Create(sqlprovider);
+                sql = this.Manager;
             }
             if (password != string.Empty && !passEstablished)
             {
@@ -194,7 +193,7 @@ namespace GebatCAD.Classes
             {
                 string trysqlConnectionString = ConfigurationManager.ConnectionStrings[connStringName].ConnectionString;
                 string trysqlprovider = ConfigurationManager.ConnectionStrings[connStringName].ProviderName;
-                ISql tryisql = FactorySql.Create(trysqlprovider);
+                SqlManager tryisql = new SqlManager(trysqlprovider);
 
                 if (password != string.Empty)
                 {
@@ -224,7 +223,7 @@ namespace GebatCAD.Classes
             {
                 string sqlConnString = ConfigurationManager.ConnectionStrings[connStringName].ConnectionString;
                 string sqlProvider = ConfigurationManager.ConnectionStrings[connStringName].ProviderName;
-                ssql = FactorySql.Create(sqlProvider);
+                ssql = new SqlManager(sqlProvider);
 
                 if (password != string.Empty)
                 {
@@ -283,7 +282,7 @@ namespace GebatCAD.Classes
         /// <param name="startRecord">Registro por el que se empezará a llenar la tabla.</param>
         /// <param name="maxRecord">Numero máximo de registros que se devolverá.</param>
         /// <returns>DataTable con los datos de la base de datos.</returns>
-        public DataTable SelectAll()
+        public virtual DataTable SelectAll()
         {
             string query = "SELECT * FROM " + tablename;
             DbCommand command = createCommand(query);
@@ -351,6 +350,18 @@ namespace GebatCAD.Classes
         {
             DbCommand command = createCommand(query,values);
             return executeQuery(command);
+        }
+
+        /// <summary>
+        /// Obtiene el un Manager nuevo.
+        /// </summary>
+        public virtual SqlManager Manager
+        {
+            get
+            {
+                SqlManager ret = new SqlManager(sqlprovider);
+                return ret;
+            }
         }
         #endregion
     }

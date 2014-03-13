@@ -24,7 +24,6 @@ using System.Configuration;
 using System.Data;
 using GebatCAD.Exceptions;
 using System.Data.Common;
-using SqlManager;
 using System.Text.RegularExpressions;
 
 namespace GebatCAD.Classes

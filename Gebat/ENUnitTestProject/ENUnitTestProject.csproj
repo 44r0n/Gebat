@@ -76,10 +76,6 @@
       <Project>{017da2fb-2f1f-4037-a234-f2ac68267dec}</Project>
       <Name>GebatEB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SqlManager\SqlManager.csproj">
-      <Project>{269e7c8b-ab29-4d57-8ef5-78aa6041b71d}</Project>
-      <Name>SqlManager</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
