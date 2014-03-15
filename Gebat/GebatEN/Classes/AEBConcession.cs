@@ -30,8 +30,16 @@ namespace GebatEN.Classes
 
         protected override void insert()
         {
-            concesion.ExecuteNonQuery("INSERT INTO concessions (Dossier, BeginDate, FinishDate, Notes) VALUES (@Dossier, @BeginDate, @FinishDate, @Notes)", dossier, beginDate, finishDate, notes);
-            this.id.Add((int)concesion.Last()["Id"]);
+            if (finishDate != new DateTime())
+            {
+                concesion.ExecuteNonQuery("INSERT INTO concessions (Dossier, BeginDate, FinishDate, Notes) VALUES (@Dossier, @BeginDate, @FinishDate, @Notes)", dossier, beginDate, finishDate, notes);
+                this.id.Add((int)concesion.Last()["Id"]);
+            }
+            else
+            {
+                concesion.ExecuteNonQuery("INSERT INTO concessions (Dossier, BeginDate, Notes) VALUES (@Dossier, @BeginDate, @Notes)", dossier, beginDate, notes);
+                this.id.Add((int)concesion.Last()["Id"]);
+            }
         }
 
         protected override void update()
@@ -80,7 +88,10 @@ namespace GebatEN.Classes
                 this.id.Add(conrow["Id"]);
                 this.dossier = (int)conrow["Dossier"];
                 this.beginDate = (DateTime)conrow["BeginDate"];
-                this.finishDate = (DateTime)conrow["FinishDate"];
+                if (conrow["FinishDate"] != DBNull.Value)
+                {
+                    this.finishDate = (DateTime)conrow["FinishDate"];
+                }
                 this.notes = (string)conrow["Notes"];
             }
             else

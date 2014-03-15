@@ -52,6 +52,9 @@
     <Compile Include="Combos\ComboType.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Lists\ListaConcesiones.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Lists\ListaDelito.cs">
       <SubType>Component</SubType>
     </Compile>

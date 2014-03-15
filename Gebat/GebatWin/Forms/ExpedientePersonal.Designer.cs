@@ -34,8 +34,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.buttonAddFamiliar = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
+            this.listaConcesiones1 = new GebatWindowComponents.Lists.ListaConcesiones();
             this.listaFamiliares = new GebatWindowComponents.Lists.ListaFamiliares();
             this.listaExpedientes = new GebatWindowComponents.Lists.ListaExpedientes();
+            this.buttonAddConcessions = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,6 +102,18 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.button2_Click);
             // 
+            // listaConcesiones1
+            // 
+            this.listaConcesiones1.FullRowSelect = true;
+            this.listaConcesiones1.GridLines = true;
+            this.listaConcesiones1.Location = new System.Drawing.Point(888, 53);
+            this.listaConcesiones1.MultiSelect = false;
+            this.listaConcesiones1.Name = "listaConcesiones1";
+            this.listaConcesiones1.Size = new System.Drawing.Size(406, 355);
+            this.listaConcesiones1.TabIndex = 5;
+            this.listaConcesiones1.UseCompatibleStateImageBehavior = false;
+            this.listaConcesiones1.View = System.Windows.Forms.View.Details;
+            // 
             // listaFamiliares
             // 
             this.listaFamiliares.FullRowSelect = true;
@@ -125,11 +139,24 @@
             this.listaExpedientes.View = System.Windows.Forms.View.Details;
             this.listaExpedientes.SelectedIndexChanged += new System.EventHandler(this.listaExpedientes_SelectedIndexChanged);
             // 
+            // buttonAddConcessions
+            // 
+            this.buttonAddConcessions.Enabled = false;
+            this.buttonAddConcessions.Location = new System.Drawing.Point(888, 414);
+            this.buttonAddConcessions.Name = "buttonAddConcessions";
+            this.buttonAddConcessions.Size = new System.Drawing.Size(111, 23);
+            this.buttonAddConcessions.TabIndex = 6;
+            this.buttonAddConcessions.Text = "Añadir Concesiones";
+            this.buttonAddConcessions.UseVisualStyleBackColor = true;
+            this.buttonAddConcessions.Click += new System.EventHandler(this.buttonAddConcessions_Click);
+            // 
             // ExpedientePersonal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(918, 499);
+            this.ClientSize = new System.Drawing.Size(1305, 484);
+            this.Controls.Add(this.buttonAddConcessions);
+            this.Controls.Add(this.listaConcesiones1);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonAddFamiliar);
             this.Controls.Add(this.listaFamiliares);
@@ -154,5 +181,7 @@
         private GebatWindowComponents.Lists.ListaFamiliares listaFamiliares;
         private System.Windows.Forms.Button buttonAddFamiliar;
         private System.Windows.Forms.Button buttonDelete;
+        private GebatWindowComponents.Lists.ListaConcesiones listaConcesiones1;
+        private System.Windows.Forms.Button buttonAddConcessions;
     }
 }

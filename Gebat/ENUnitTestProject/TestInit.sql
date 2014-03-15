@@ -444,8 +444,15 @@ INSERT INTO Concessions (Dossier, BeginDate, FinishDate, Notes) VALUES
 (
 	2,
 	'2014/01/02',
-	'2014/10/22',
+	'2014/07/02',
 	'Tercero'
+);
+
+INSERT INTO Concessions (Dossier, BeginDate, Notes) VALUES
+(
+	2,
+	'2014/07/03',
+	'NullFinishDateConcession'
 );
 
 INSERT INTO Fresco (Concession) VALUES

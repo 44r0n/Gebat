@@ -184,6 +184,7 @@ namespace GebatEN.Classes
         {
             get
             {
+                loadFamiliars();
                 return this.familiars;
             }
         }
@@ -195,6 +196,7 @@ namespace GebatEN.Classes
         {
             get
             {
+                loadConcessions();
                 return this.concessions;
             }
         }

@@ -38,8 +38,6 @@
             this.delitosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tBCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expedientesPersonalesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.concesionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.frescoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,8 +90,7 @@
             this.comidaToolStripMenuItem,
             this.delitosToolStripMenuItem,
             this.tBCToolStripMenuItem,
-            this.expedientesPersonalesToolStripMenuItem,
-            this.concesionesToolStripMenuItem});
+            this.expedientesPersonalesToolStripMenuItem});
             this.gestionarToolStripMenuItem.Name = "gestionarToolStripMenuItem";
             this.gestionarToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.gestionarToolStripMenuItem.Text = "Gestionar";
@@ -126,20 +123,6 @@
             this.expedientesPersonalesToolStripMenuItem.Text = "Expedientes Personales";
             this.expedientesPersonalesToolStripMenuItem.Click += new System.EventHandler(this.expedientesPersonalesToolStripMenuItem_Click);
             // 
-            // concesionesToolStripMenuItem
-            // 
-            this.concesionesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.frescoToolStripMenuItem});
-            this.concesionesToolStripMenuItem.Name = "concesionesToolStripMenuItem";
-            this.concesionesToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.concesionesToolStripMenuItem.Text = "Concesiones";
-            // 
-            // frescoToolStripMenuItem
-            // 
-            this.frescoToolStripMenuItem.Name = "frescoToolStripMenuItem";
-            this.frescoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.frescoToolStripMenuItem.Text = "Fresco";
-            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -171,7 +154,5 @@
         private System.Windows.Forms.ToolStripMenuItem tBCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem delitosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expedientesPersonalesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem concesionesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem frescoToolStripMenuItem;
     }
 }

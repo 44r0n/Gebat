@@ -32,17 +32,21 @@ namespace GebatWin.Forms
             listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
             buttonDelete.Enabled = false;
             buttonAddFamiliar.Enabled = false;
+            buttonAddConcessions.Enabled = false;
         }
 
         private void listaExpedientes_SelectedIndexChanged(object sender, EventArgs e)
         {
             buttonDelete.Enabled = true;
             buttonAddFamiliar.Enabled = true;
+            buttonAddConcessions.Enabled = true;
             listaFamiliares.Clean();
+            listaConcesiones1.Clean();
             EBPersonalDosier exp = (EBPersonalDosier)listaExpedientes.Selected;
             if (exp != null)
             {
-                mostrarFamiliares(exp);   
+                mostrarFamiliares(exp);
+                mostrarConcesiones(exp);
             }
         }
 
@@ -56,6 +60,19 @@ namespace GebatWin.Forms
                     listaFamiliares.Add(fam);
                 }
             }
+            listaExpedientes.Show();
+        }
+
+        private void mostrarConcesiones(EBPersonalDosier expediente)
+        {
+            if (expediente.Concessions != null)
+            {
+                foreach (AEBConcession con in expediente.Concessions)
+                {
+                    listaConcesiones1.Add((AEB)con);
+                }
+            }
+            listaConcesiones1.Show();
         }
 
         private void buttonAddFamiliar_Click(object sender, EventArgs e)
@@ -65,8 +82,22 @@ namespace GebatWin.Forms
             gestionfam.BringToFront();
             buttonAddFamiliar.Enabled = false;
             buttonDelete.Enabled = false;
+            buttonAddConcessions.Enabled = false;
+            listaFamiliares.Clean();
             mostrarFamiliares((EBPersonalDosier)listaExpedientes.Selected);
-            listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
+            //listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
+        }
+
+        private void buttonAddConcessions_Click(object sender, EventArgs e)
+        {
+            Fresco frescoform = new Fresco((EBPersonalDosier)listaExpedientes.Selected);
+            frescoform.ShowDialog();
+            frescoform.BringToFront();
+            buttonAddFamiliar.Enabled = false;
+            buttonDelete.Enabled = false;
+            buttonAddConcessions.Enabled = false;
+            listaConcesiones1.Clean();
+            mostrarConcesiones((EBPersonalDosier)listaExpedientes.Selected);
         }
     }
 }
