@@ -60,6 +60,7 @@
     <Compile Include="EBTests\EBCrimeTest.cs" />
     <Compile Include="EBTests\EBFamiliarTest.cs" />
     <Compile Include="EBTests\EBDossierTest.cs" />
+    <Compile Include="EBTests\ENFrescoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

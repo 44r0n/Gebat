@@ -41,6 +41,7 @@
     <Compile Include="Classes\AEBConcession.cs" />
     <Compile Include="Classes\AEBPerson.cs" />
     <Compile Include="Classes\EBCrime.cs" />
+    <Compile Include="Classes\EBFresco.cs" />
     <Compile Include="Classes\EBPersonalDosier.cs" />
     <Compile Include="Classes\EBFamiliar.cs" />
     <Compile Include="Classes\EBFoodIN.cs" />

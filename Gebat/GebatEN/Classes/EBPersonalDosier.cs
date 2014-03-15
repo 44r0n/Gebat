@@ -11,10 +11,11 @@ namespace GebatEN.Classes
         #region//Atributes
 
         private List<EBFamiliar> familiars;
+        private bool familiarsLoaded = false;
         private int income = 0;
         private string observations;
         private List<AEBConcession> concessions;
-        private bool familiarsLoaded = false;
+        private bool concessionsLoaded = false;
 
         #endregion
 
@@ -32,7 +33,6 @@ namespace GebatEN.Classes
         {
             if (!familiarsLoaded)
             {
-                this.familiars = new List<EBFamiliar>();
                 foreach (DataRow row in adl.Select("SELECT * FROM familiars WHERE Dossier = @Dossier", (int)this.id[0]).Rows)
                 {
                     EBFamiliar fam = new EBFamiliar();
@@ -40,8 +40,31 @@ namespace GebatEN.Classes
                     this.familiars.Add(fam);
                     this.income += fam.Income;
                 }
+                familiarsLoaded = true;
             }
-            familiarsLoaded = true;
+        }
+
+        /// <summary>
+        /// Carga todas las concesiones otorgadas  al expediente actual.
+        /// </summary>
+        private void loadConcessions()
+        {
+            if (!concessionsLoaded)
+            {
+                ADL aconcession = new ADL(defaultConnString, "concessions", "Id");
+                DataTable table = aconcession.SelectAll();
+                foreach (DataRow rows in table.Rows)
+                { 
+                    if(EBFresco.IsFresco((int)rows["Id"]))
+                    {
+                        List<object> ids = new List<object>();
+                        ids.Add((int)rows["Id"]);
+                        EBFresco nuevo = (EBFresco) new EBFresco().Read(ids);
+                        concessions.Add(nuevo);
+                    }
+                }
+                concessionsLoaded = true;
+            }
         }
 
         /// <summary>
@@ -260,7 +283,7 @@ namespace GebatEN.Classes
         /// <param name="concession">Concesión a añadir.</param>
         public virtual void AddConcession(AEBConcession concession)
         {
-            //TODO: loadConcessiones();
+            loadConcessions();
             if (!checkNewConcession(concession))
             {
                 throw new GebatEN.Exceptions.InvalidDateConcessionException("The begin date of the concession cannot be earlier than other concession");

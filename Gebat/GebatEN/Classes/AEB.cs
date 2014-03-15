@@ -56,7 +56,7 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene el nombre de cadena de conexión por defecto.
         /// </summary>
-        protected string defaultConnString
+        protected static string defaultConnString
         {
             get
             {

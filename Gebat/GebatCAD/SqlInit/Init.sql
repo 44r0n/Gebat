@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS Phones;
 DROP TABLE IF EXISTS TBC;
 DROP TABLE IF EXISTS Crimes;
+DROP TABLE IF EXISTS Fresco;
 DROP TABLE IF EXISTS Concessions;
 DROP TABLE IF EXISTS Familiars;
 DROP TABLE IF EXISTS People;
@@ -115,6 +116,12 @@ CREATE TABLE IF NOT EXISTS Concessions
 	CONSTRAINT fk_Concessions_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS Fresco
+(
+	Concession Int Unique,
+	CONSTRAINT fk_Fresco_Concessions FOREIGN KEY (Concession) REFERENCES Concessions (Id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS Crimes
 (
 	Id int Primary Key AUTO_INCREMENT,
@@ -154,3 +161,5 @@ CREATE TABLE IF NOT EXISTS Phones
 CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Crime from People inner join TBC on (People.DNI = TBC.DNI);
 
 CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender, Dossier, Income FROM People inner join Familiars on (People.DNI = Familiars.DNI);
+
+CREATE OR REPLACE VIEW FrescoData as select Concessions.Id, Dossier, BeginDate, FinishDate, Notes FROM Concessions inner join Fresco on (Concessions.Id = Fresco.Concession);

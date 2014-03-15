@@ -26,6 +26,26 @@ namespace GebatEN.Classes
 
         #endregion
 
+        #region//Protected Methods
+
+        protected override void insert()
+        {
+            concesion.ExecuteNonQuery("INSERT INTO concessions (Dossier, BeginDate, FinishDate, Notes) VALUES (@Dossier, @BeginDate, @FinishDate, @Notes)", dossier, beginDate, finishDate, notes);
+            this.id.Add((int)concesion.Last()["Id"]);
+        }
+
+        protected override void update()
+        {
+            concesion.ExecuteNonQuery("UPDATE concessions SET Dossier = @Dossier, BeginDate = @BeginDate, FinishDate = @FinishDate, Notes = @Notes WHERE Id = @Id", dossier, beginDate, finishDate, notes, (int)this.id[0]);
+        }
+
+        protected override void delete()
+        {
+            concesion.ExecuteNonQuery("DELETE FROM concessions WHERE Id = @Id",(int)this.id[0]);
+        }
+
+        #endregion
+
         #region//Internal Methods
 
         /// <summary>
@@ -56,7 +76,7 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                DataRow conrow = concesion.Select("SELECT * FROM concessions WHERE Id = @Id", (int)row["BaseId"]).Rows[0];
+                DataRow conrow = concesion.Select("SELECT * FROM concessions WHERE Id = @Id", (int)row["Id"]).Rows[0];
                 this.id.Add(conrow["Id"]);
                 this.dossier = (int)conrow["Dossier"];
                 this.beginDate = (DateTime)conrow["BeginDate"];
