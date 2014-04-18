@@ -39,7 +39,27 @@ namespace GebatEN.Classes
 
         #region//Internal Methods
 
+        /// <summary>
+        /// Obtiene el objeto actual en tipo DataRow de forma que corresponde en la base de datos.
+        /// </summary>
+        internal override DataRow ToRow
+        {
+            get
+            {
+                DataRow ret = adl.GetVoidRow;
+                ret["Concession"] = (int)this.id[0];
+                return ret;
+            }
+        }
 
+        /// <summary>
+        /// Asigna al objeto actual los datos contenientes en el DataRow
+        /// </summary>
+        /// <param name="row">Fila con los datos.</param>
+        internal override void FromRow(DataRow row)
+        {
+            base.FromRow(row);
+        }
 
         #endregion
 
@@ -142,14 +162,7 @@ namespace GebatEN.Classes
         {
             VIEW vfresco = new VIEW(defaultConnString, "fresco", "Concession");
             DataTable table = vfresco.Select("SELECT * FROM fresco WHERE Concession = @Concession", id);
-            if (table.Rows.Count == 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return table.Rows.Count == 1;
         }
 
         #endregion

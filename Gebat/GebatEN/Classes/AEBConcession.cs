@@ -9,6 +9,7 @@ namespace GebatEN.Classes
     {
         #region//Atributes
 
+        protected bool checkdate;
         internal int dossier = 0;
         private DateTime beginDate;
         private DateTime finishDate;
@@ -22,6 +23,9 @@ namespace GebatEN.Classes
         private void initADL()
         {
             concesion = new ADL(defaultConnString, "concessions", "Id");
+            beginDate = new DateTime();
+            finishDate = new DateTime();
+            checkdate = false;
         }
 
         #endregion
@@ -100,6 +104,22 @@ namespace GebatEN.Classes
             }
         }
 
+        /// <summary>
+        /// Establece el modo de comprobación de fechas. Usado para comprobar el tiempo de sanción de salida de Fega.
+        /// </summary>
+        internal void CheckModeON()
+        {
+            checkdate = true;
+        }
+
+        /// <summary>
+        /// Establece el modo de fecha normal.
+        /// </summary>
+        internal void CheckModeOff()
+        {
+            checkdate = false;
+        }
+
         #endregion
 
         #region//Gettes & Setters
@@ -122,7 +142,7 @@ namespace GebatEN.Classes
         /// <summary>
         /// Obtiene y establece la fecha final de la concesión.
         /// </summary>
-        public DateTime FinishDate
+        public virtual DateTime FinishDate
         {
             get
             {

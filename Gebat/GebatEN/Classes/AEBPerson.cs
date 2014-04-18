@@ -194,7 +194,7 @@ namespace GebatEN.Classes
         {
             if (row != null)
             {
-                this.id = new List<object>();
+                //this.id = new List<object>();
                 DataRow perrow = people.Select("SELECT * FROM people WHERE DNI = @DNI", (string)row["DNI"]).Rows[0];
                 personid = (int)perrow["Id"];
                 this.dni = (string)perrow["DNI"];

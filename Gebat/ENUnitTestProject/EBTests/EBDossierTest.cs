@@ -50,19 +50,25 @@ namespace ENUnitTestProject.ENTests
             Assert.AreEqual(3, actual.Count);
             Assert.AreEqual(1, (int)actual[0].Id[0]);
             Assert.AreEqual(2, (int)actual[1].Id[0]);
-            Assert.AreEqual(5, (int)actual[2].Id[0]);
+            Assert.AreEqual(7, (int)actual[2].Id[0]);
         }
 
         [TestMethod]
         public void AddNullFinishDateConcession()
         {
             EBFresco nuevo = new EBFresco();
-            nuevo.BeginDate = new DateTime(2014, 10, 23);
+            nuevo.BeginDate = new DateTime(2015, 1, 23);
             nuevo.Notes = "test null finishDate";
             List<object> id = new List<object>();
             id.Add(1);
             EBPersonalDosier exp = (EBPersonalDosier)(new EBPersonalDosier().Read(id));
             exp.AddConcession(nuevo);
+        }
+
+        [TestMethod]
+        public void AddFega()
+        {
+
         }
     }
 }

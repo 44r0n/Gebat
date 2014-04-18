@@ -64,7 +64,7 @@ namespace GebatEN.Classes
         /// <summary>
         /// Asigna al objeto actual los datos contenientes en el DataRow.
         /// </summary>
-        /// <param name="row"></param>
+        /// <param name="row">Fila a convertir</param>
         internal override void FromRow(DataRow row)
         {
             if (row != null)

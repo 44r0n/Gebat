@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS Crimes;
 DROP TABLE IF EXISTS Fega;
 DROP TABLE IF EXISTS Fresco;
 DROP TABLE IF EXISTS Concessions;
-DROP TABLE IF EXISTS States;
 DROP TABLE IF EXISTS Familiars;
 DROP TABLE IF EXISTS People;
 DROP TABLE IF EXISTS PersonalDossier;
@@ -108,12 +107,6 @@ CREATE TABLE IF NOT EXISTS Familiars
 	CONSTRAINT fk_Familiars_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS States
-(
-	Id int Primary Key AUTO_INCREMENT,
-	Name varchar(25)
-);
-
 CREATE TABLE IF NOT EXISTS Concessions
 (
 	Id int Primary Key AUTO_INCREMENT,
@@ -133,9 +126,8 @@ CREATE TABLE IF NOT EXISTS Fresco
 CREATE TABLE IF NOT EXISTS Fega
 (
 	Concession Int Unique,
-	State Int,
-	CONSTRAINT fk_Fega_Concessions FOREIGN KEY (Concession) REFERENCES Concessions (Id) ON DELETE SET NULL ON UPDATE CASCADE,
-	CONSTRAINT fk_FEGA_Sate FOREIGN KEY (State) REFERENCES States (Id) ON DELETE SET NULL ON UPDATE CASCADE
+	State varchar(10),
+	CONSTRAINT fk_Fega_Concessions FOREIGN KEY (Concession) REFERENCES Concessions (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Crimes
@@ -179,3 +171,5 @@ CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, Bi
 CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender, Dossier, Income FROM People inner join Familiars on (People.DNI = Familiars.DNI);
 
 CREATE OR REPLACE VIEW FrescoData as select Concessions.Id, Dossier, BeginDate, FinishDate, Notes FROM Concessions inner join Fresco on (Concessions.Id = Fresco.Concession);
+
+CREATE OR REPLACE VIEW FegaData as select Concessions.Id, Dossier, BeginDate, FinishDate, Notes, State FROM Concessions inner join Fega on (Concessions.Id = Fega.Concession);

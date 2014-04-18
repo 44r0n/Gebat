@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS Phones;
 DROP TABLE IF EXISTS TBC;
 DROP TABLE IF EXISTS Crimes;
+DROP TABLE IF EXISTS Fega;
 DROP TABLE IF EXISTS Fresco;
 DROP TABLE IF EXISTS Concessions;
 DROP TABLE IF EXISTS Familiars;
@@ -44,29 +45,28 @@ CREATE TABLE IF NOT EXISTS OutgoingFood
 	CONSTRAINT fk_OutgoingFood_Food FOREIGN KEY (FoodType) REFERENCES Food (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
-
 CREATE TRIGGER addfood AFTER INSERT ON EntryFood
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
-UPDATE Food SET Quantity = Quantity + NEW.QuantityIn WHERE (Id = NEW.FoodType);
+	UPDATE Food SET Quantity = Quantity + NEW.QuantityIn WHERE (Id = NEW.FoodType);
 END;
 
 CREATE TRIGGER subfood AFTER INSERT ON OutGoingFood
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
-UPDATE Food SET Quantity = Quantity - NEW.QuantityOut WHERE (Id = NEW.FoodType);
+	UPDATE Food SET Quantity = Quantity - NEW.QuantityOut WHERE (Id = NEW.FoodType);
 END;
 
 CREATE TRIGGER subfoodin BEFORE DELETE ON EntryFood
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
-UPDATE Food SET Quantity = Quantity - OLD.QuantityIN WHERE Id = OLD.FoodType;
+	UPDATE Food SET Quantity = Quantity - OLD.QuantityIN WHERE Id = OLD.FoodType;
 END;
 
 CREATE TRIGGER addfoodout BEFORE DELETE ON OutGoingFood
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
-UPDATE Food SET Quantity = Quantity + OLD.QuantityOut WHERE Id = OLD.FoodType;
+	UPDATE Food SET Quantity = Quantity + OLD.QuantityOut WHERE Id = OLD.FoodType;
 END;
 
 CREATE TABLE IF NOT EXISTS People
@@ -109,6 +109,13 @@ CREATE TABLE IF NOT EXISTS Fresco
 (
 	Concession Int Unique,
 	CONSTRAINT fk_Fresco_Concessions FOREIGN KEY (Concession) REFERENCES Concessions (Id) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Fega
+(
+	Concession Int Unique,
+	State varchar(10),
+	CONSTRAINT fk_Fega_Concessions FOREIGN KEY (Concession) REFERENCES Concessions (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Crimes
@@ -274,6 +281,11 @@ INSERT INTO PersonalDossier(Observations) VALUES
 	"otra"
 );
 
+INSERT INTO PersonalDossier(Observations) VALUES
+(
+	"obs"
+);
+
 INSERT INTO People (DNI, Name, Surname, BirthDate, Gender) VALUES
 (
 	'54508005Y',
@@ -335,6 +347,15 @@ INSERT INTO People (DNI, Name,Surname,BirthDate, Gender) VALUES
 	'Pecco',
 	'2000/02/14',
 	'F'
+);
+
+INSERT INTO People(DNI, Name, Surname, BirthDate, Gender) VALUES
+(
+	'12345678A',
+	'Vicente',
+	'Ponce',
+	'1987/04/26',
+	'M'
 );
 
 INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday,Crime) VALUES
@@ -424,6 +445,13 @@ INSERT INTO Familiars(DNI, Dossier,Income) VALUES
 	400
 );
 
+INSERT INTO Familiars(DNI, Dossier, Income) VALUES
+(
+	'12345678A',
+	3,
+	250
+);
+
 INSERT INTO Concessions (Dossier, BeginDate, FinishDate, Notes) VALUES
 (
 	1,
@@ -455,6 +483,22 @@ INSERT INTO Concessions (Dossier, BeginDate, Notes) VALUES
 	'NullFinishDateConcession'
 );
 
+INSERT INTO Concessions (Dossier, BeginDate, FinishDate, Notes) VALUES
+(
+	3,
+	'2012/05/11',
+	'2012/08/11',
+	'Un fresco'
+);
+
+INSERT INTO Concessions (Dossier, BeginDate, FinishDate, Notes) VALUES
+(
+	3,
+	'2012/08/11',
+	'2012/11/11',
+	'Fega'
+);
+
 INSERT INTO Fresco (Concession) VALUES
 (
 	1
@@ -463,4 +507,14 @@ INSERT INTO Fresco (Concession) VALUES
 INSERT INTO Fresco (Concession) VALUES
 (
 	2
+);
+
+INSERT INTO Fega (Concession) VALUES
+(
+	5
+);
+
+INSERT INTO Fega (Concession) VALUES
+(
+	6
 );

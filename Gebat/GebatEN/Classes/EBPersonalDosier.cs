@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using GebatCAD.Classes;
 using GebatEN.Enums;
+using GebatEN.Exceptions;
 
 namespace GebatEN.Classes
 {
@@ -77,11 +78,13 @@ namespace GebatEN.Classes
             bool ret = true;
             foreach (AEBConcession concession in concessions)
             {
+                concession.CheckModeON();
                 if (newConcession.BeginDate < concession.FinishDate)
                 {
                     ret = false;
                     break;
                 }
+                concession.CheckModeOff();
             }
             return ret;
         }
@@ -288,7 +291,7 @@ namespace GebatEN.Classes
             loadConcessions();
             if (!checkNewConcession(concession))
             {
-                throw new GebatEN.Exceptions.InvalidDateConcessionException("The begin date of the concession cannot be earlier than other concession");
+                throw new InvalidDateConcessionException("The begin date cannot be earlier than other begin date.");
             }
             concession.dossier = (int)this.id[0];
             concession.Save();
