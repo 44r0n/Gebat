@@ -120,14 +120,14 @@ CREATE TABLE IF NOT EXISTS Concessions
 CREATE TABLE IF NOT EXISTS Fresco
 (
 	Concession Int Unique,
-	CONSTRAINT fk_Fresco_Concessions FOREIGN KEY (Concession) REFERENCES Concessions (Id) ON DELETE SET NULL ON UPDATE CASCADE
+	CONSTRAINT fk_Fresco_Concessions FOREIGN KEY (Concession) REFERENCES Concessions (Id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Fega
 (
 	Concession Int Unique,
 	State varchar(10),
-	CONSTRAINT fk_Fega_Concessions FOREIGN KEY (Concession) REFERENCES Concessions (Id) ON DELETE SET NULL ON UPDATE CASCADE
+	CONSTRAINT fk_Fega_Concessions FOREIGN KEY (Concession) REFERENCES Concessions (Id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Crimes

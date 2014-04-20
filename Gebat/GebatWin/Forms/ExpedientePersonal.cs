@@ -12,6 +12,16 @@ namespace GebatWin.Forms
             InitializeComponent();
         }
 
+        private void DisableButtons()
+        {
+            buttonDelete.Enabled = false;
+            buttonAddFamiliar.Enabled = false;
+            buttonAddConcessions.Enabled = false;
+            buttonChangeState.Enabled = false;
+            buttonDeleteFamiliar.Enabled = false;
+            buttonDelConcesion.Enabled = false;
+        }
+
         private void ExpedientePersonal_Load(object sender, EventArgs e)
         {
             listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
@@ -30,9 +40,7 @@ namespace GebatWin.Forms
             AEB exp = listaExpedientes.Selected;
             exp.Delete();
             listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
-            buttonDelete.Enabled = false;
-            buttonAddFamiliar.Enabled = false;
-            buttonAddConcessions.Enabled = false;
+            DisableButtons();
         }
 
         private void listaExpedientes_SelectedIndexChanged(object sender, EventArgs e)
@@ -48,6 +56,54 @@ namespace GebatWin.Forms
                 mostrarFamiliares(exp);
                 mostrarConcesiones(exp);
             }
+        }
+
+        private void listaFamiliares_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            buttonDeleteFamiliar.Enabled = true;
+        }
+
+        private void listaConcesiones1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AEBConcession con = (AEBConcession)listaConcesiones1.Selected;
+            if (con != null)
+            {
+                if (con.GetType() == typeof(EBFega))
+                {
+                    buttonChangeState.Enabled = true;
+                }
+                else
+                {
+                    buttonChangeState.Enabled = false;
+                }
+                buttonDelConcesion.Enabled = true;
+            }
+        }
+
+        private void buttonDeleteFamiliar_Click(object sender, EventArgs e)
+        {
+            EBFamiliar fam = (EBFamiliar)listaFamiliares.Selected;
+            if (fam != null)
+            {
+                fam.Delete();
+                listaFamiliares.Refrescar(fam.ReadAll());
+            }
+            buttonDeleteFamiliar.Enabled = false;
+        }
+
+        private void buttonDelConcesion_Click(object sender, EventArgs e)
+        {
+            AEBConcession con = (AEBConcession)listaConcesiones1.Selected;
+            if (con != null)
+            {
+                con.Delete();
+                EBPersonalDosier exp = (EBPersonalDosier)listaExpedientes.Selected;
+                if (exp != null)
+                {
+                    mostrarConcesiones(exp);
+                }
+            }
+            buttonDelConcesion.Enabled = false;
         }
 
         private void mostrarFamiliares(EBPersonalDosier expediente)
@@ -67,6 +123,7 @@ namespace GebatWin.Forms
         {
             if (expediente.Concessions != null)
             {
+                listaConcesiones1.Clean();
                 foreach (AEBConcession con in expediente.Concessions)
                 {
                     listaConcesiones1.Add((AEB)con);
@@ -80,9 +137,7 @@ namespace GebatWin.Forms
             GestionFamiliares gestionfam = new GestionFamiliares((EBPersonalDosier)listaExpedientes.Selected);
             gestionfam.ShowDialog();
             gestionfam.BringToFront();
-            buttonAddFamiliar.Enabled = false;
-            buttonDelete.Enabled = false;
-            buttonAddConcessions.Enabled = false;
+            DisableButtons();
             listaFamiliares.Clean();
             mostrarFamiliares((EBPersonalDosier)listaExpedientes.Selected);
             //listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
@@ -90,12 +145,20 @@ namespace GebatWin.Forms
 
         private void buttonAddConcessions_Click(object sender, EventArgs e)
         {
-            Fresco frescoform = new Fresco((EBPersonalDosier)listaExpedientes.Selected);
+            Concesiones frescoform = new Concesiones((EBPersonalDosier)listaExpedientes.Selected);
             frescoform.ShowDialog();
             frescoform.BringToFront();
-            buttonAddFamiliar.Enabled = false;
-            buttonDelete.Enabled = false;
-            buttonAddConcessions.Enabled = false;
+            DisableButtons();
+            listaConcesiones1.Clean();
+            mostrarConcesiones((EBPersonalDosier)listaExpedientes.Selected);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ChangeState changeform = new ChangeState((EBFega)listaConcesiones1.Selected);
+            changeform.ShowDialog();
+            changeform.BringToFront();
+            DisableButtons();
             listaConcesiones1.Clean();
             mostrarConcesiones((EBPersonalDosier)listaExpedientes.Selected);
         }

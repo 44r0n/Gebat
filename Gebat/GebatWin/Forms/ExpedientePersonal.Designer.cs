@@ -34,10 +34,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.buttonAddFamiliar = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonAddConcessions = new System.Windows.Forms.Button();
+            this.buttonChangeState = new System.Windows.Forms.Button();
             this.listaConcesiones1 = new GebatWindowComponents.Lists.ListaConcesiones();
             this.listaFamiliares = new GebatWindowComponents.Lists.ListaFamiliares();
             this.listaExpedientes = new GebatWindowComponents.Lists.ListaExpedientes();
-            this.buttonAddConcessions = new System.Windows.Forms.Button();
+            this.buttonDeleteFamiliar = new System.Windows.Forms.Button();
+            this.buttonDelConcesion = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,6 +105,28 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.button2_Click);
             // 
+            // buttonAddConcessions
+            // 
+            this.buttonAddConcessions.Enabled = false;
+            this.buttonAddConcessions.Location = new System.Drawing.Point(888, 414);
+            this.buttonAddConcessions.Name = "buttonAddConcessions";
+            this.buttonAddConcessions.Size = new System.Drawing.Size(111, 23);
+            this.buttonAddConcessions.TabIndex = 6;
+            this.buttonAddConcessions.Text = "Añadir Concesiones";
+            this.buttonAddConcessions.UseVisualStyleBackColor = true;
+            this.buttonAddConcessions.Click += new System.EventHandler(this.buttonAddConcessions_Click);
+            // 
+            // buttonChangeState
+            // 
+            this.buttonChangeState.Enabled = false;
+            this.buttonChangeState.Location = new System.Drawing.Point(1005, 414);
+            this.buttonChangeState.Name = "buttonChangeState";
+            this.buttonChangeState.Size = new System.Drawing.Size(89, 23);
+            this.buttonChangeState.TabIndex = 7;
+            this.buttonChangeState.Text = "Cambiar Estado";
+            this.buttonChangeState.UseVisualStyleBackColor = true;
+            this.buttonChangeState.Click += new System.EventHandler(this.button1_Click);
+            // 
             // listaConcesiones1
             // 
             this.listaConcesiones1.FullRowSelect = true;
@@ -113,6 +138,7 @@
             this.listaConcesiones1.TabIndex = 5;
             this.listaConcesiones1.UseCompatibleStateImageBehavior = false;
             this.listaConcesiones1.View = System.Windows.Forms.View.Details;
+            this.listaConcesiones1.SelectedIndexChanged += new System.EventHandler(this.listaConcesiones1_SelectedIndexChanged);
             // 
             // listaFamiliares
             // 
@@ -125,6 +151,7 @@
             this.listaFamiliares.TabIndex = 2;
             this.listaFamiliares.UseCompatibleStateImageBehavior = false;
             this.listaFamiliares.View = System.Windows.Forms.View.Details;
+            this.listaFamiliares.SelectedIndexChanged += new System.EventHandler(this.listaFamiliares_SelectedIndexChanged);
             // 
             // listaExpedientes
             // 
@@ -139,22 +166,36 @@
             this.listaExpedientes.View = System.Windows.Forms.View.Details;
             this.listaExpedientes.SelectedIndexChanged += new System.EventHandler(this.listaExpedientes_SelectedIndexChanged);
             // 
-            // buttonAddConcessions
+            // buttonDeleteFamiliar
             // 
-            this.buttonAddConcessions.Enabled = false;
-            this.buttonAddConcessions.Location = new System.Drawing.Point(888, 414);
-            this.buttonAddConcessions.Name = "buttonAddConcessions";
-            this.buttonAddConcessions.Size = new System.Drawing.Size(111, 23);
-            this.buttonAddConcessions.TabIndex = 6;
-            this.buttonAddConcessions.Text = "Añadir Concesiones";
-            this.buttonAddConcessions.UseVisualStyleBackColor = true;
-            this.buttonAddConcessions.Click += new System.EventHandler(this.buttonAddConcessions_Click);
+            this.buttonDeleteFamiliar.Enabled = false;
+            this.buttonDeleteFamiliar.Location = new System.Drawing.Point(673, 414);
+            this.buttonDeleteFamiliar.Name = "buttonDeleteFamiliar";
+            this.buttonDeleteFamiliar.Size = new System.Drawing.Size(89, 23);
+            this.buttonDeleteFamiliar.TabIndex = 8;
+            this.buttonDeleteFamiliar.Text = "Eliminar Familiar";
+            this.buttonDeleteFamiliar.UseVisualStyleBackColor = true;
+            this.buttonDeleteFamiliar.Click += new System.EventHandler(this.buttonDeleteFamiliar_Click);
+            // 
+            // buttonDelConcesion
+            // 
+            this.buttonDelConcesion.Enabled = false;
+            this.buttonDelConcesion.Location = new System.Drawing.Point(1100, 414);
+            this.buttonDelConcesion.Name = "buttonDelConcesion";
+            this.buttonDelConcesion.Size = new System.Drawing.Size(104, 23);
+            this.buttonDelConcesion.TabIndex = 9;
+            this.buttonDelConcesion.Text = "Eliminar Concesión";
+            this.buttonDelConcesion.UseVisualStyleBackColor = true;
+            this.buttonDelConcesion.Click += new System.EventHandler(this.buttonDelConcesion_Click);
             // 
             // ExpedientePersonal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1305, 484);
+            this.Controls.Add(this.buttonDelConcesion);
+            this.Controls.Add(this.buttonDeleteFamiliar);
+            this.Controls.Add(this.buttonChangeState);
             this.Controls.Add(this.buttonAddConcessions);
             this.Controls.Add(this.listaConcesiones1);
             this.Controls.Add(this.buttonDelete);
@@ -183,5 +224,8 @@
         private System.Windows.Forms.Button buttonDelete;
         private GebatWindowComponents.Lists.ListaConcesiones listaConcesiones1;
         private System.Windows.Forms.Button buttonAddConcessions;
+        private System.Windows.Forms.Button buttonChangeState;
+        private System.Windows.Forms.Button buttonDeleteFamiliar;
+        private System.Windows.Forms.Button buttonDelConcesion;
     }
 }

@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GebatEN.Classes;
+using GebatEN.Enums;
 
 namespace GebatWin.Forms
 {
-    public partial class Fresco : Form
+    public partial class Concesiones : Form
     {
         private EBPersonalDosier dossier;
-        public Fresco(EBPersonalDosier dossier)
+        public Concesiones(EBPersonalDosier dossier)
         {
             InitializeComponent();
             this.dossier = dossier;
@@ -33,6 +34,8 @@ namespace GebatWin.Forms
             dateTimePickerFinish.Value = today;
             setListaConcesiones();
             textBoxObservations.Text = "";
+            comboBoxState.SelectedItem = comboBoxState.Items[0];
+            checkBoxFega_CheckedChanged(this, null);
         }
 
         private void setListaConcesiones()
@@ -45,7 +48,7 @@ namespace GebatWin.Forms
             listaConcesiones1.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addFresco()
         {
             EBFresco fresco = new EBFresco();
             fresco.BeginDate = dateTimePickerBegin.Value;
@@ -55,12 +58,53 @@ namespace GebatWin.Forms
             }
             fresco.Notes = textBoxObservations.Text;
             dossier.AddConcession(fresco);
+        }
+
+        private void addFega()
+        {
+            EBFega fega = new EBFega();
+            fega.BeginDate = dateTimePickerBegin.Value;
+            if (dateTimePickerFinish.Enabled)
+            {
+                fega.FinishDate = dateTimePickerFinish.Value;
+            }
+            fega.Notes = textBoxObservations.Text;
+            switch (comboBoxState.SelectedIndex)
+            {
+                case 0:
+                    fega.State = FegaStates.Awaiting;
+                    break;
+                case 1:
+                    fega.State = FegaStates.Suspended;
+                    break;
+                case 2:
+                    fega.State = FegaStates.Aproved;
+                    break;
+            }
+            dossier.AddConcession(fega);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (checkBoxFega.Checked)
+            {
+                addFega();
+            }
+            else
+            {
+                addFresco();
+            }
             initValues();
         }
 
         private void checkBoxFinishDate_CheckedChanged(object sender, EventArgs e)
         {
             dateTimePickerFinish.Enabled = checkBoxFinishDate.Checked;
+        }
+
+        private void checkBoxFega_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxState.Enabled = checkBoxFega.Checked;
         }
     }
 }

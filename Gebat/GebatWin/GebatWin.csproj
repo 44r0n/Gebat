@@ -56,6 +56,12 @@
     <Compile Include="Forms\Cantidades.Designer.cs">
       <DependentUpon>Cantidades.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ChangeState.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangeState.Designer.cs">
+      <DependentUpon>ChangeState.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Comida.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,11 +80,11 @@
     <Compile Include="Forms\ExpedientePersonal.Designer.cs">
       <DependentUpon>ExpedientePersonal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Fresco.cs">
+    <Compile Include="Forms\Concesiones.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Fresco.Designer.cs">
-      <DependentUpon>Fresco.cs</DependentUpon>
+    <Compile Include="Forms\Concesiones.Designer.cs">
+      <DependentUpon>Concesiones.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\GestionFamiliares.cs">
       <SubType>Form</SubType>
@@ -112,6 +118,9 @@
     <EmbeddedResource Include="Forms\Cantidades.resx">
       <DependentUpon>Cantidades.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangeState.resx">
+      <DependentUpon>ChangeState.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Comida.resx">
       <DependentUpon>Comida.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,8 +130,8 @@
     <EmbeddedResource Include="Forms\ExpedientePersonal.resx">
       <DependentUpon>ExpedientePersonal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Fresco.resx">
-      <DependentUpon>Fresco.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Concesiones.resx">
+      <DependentUpon>Concesiones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GestionFamiliares.resx">
       <DependentUpon>GestionFamiliares.cs</DependentUpon>

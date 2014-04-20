@@ -102,6 +102,7 @@ namespace GebatEN.Classes
             {
                 throw new NullReferenceException("Cannot convert from row, the row is null");
             }
+            this.saved = true;
         }
 
         /// <summary>

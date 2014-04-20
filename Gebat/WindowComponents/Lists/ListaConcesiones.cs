@@ -2,11 +2,18 @@
 using System.Windows.Forms;
 using GebatEN.Classes;
 using System;
+using GebatEN.Enums;
 
 namespace GebatWindowComponents.Lists
 {
     public class ListaConcesiones:ListaGeneral
     {
+
+        #region
+
+        private bool isFega;
+
+        #endregion
 
         #region//Private Methods
 
@@ -16,7 +23,15 @@ namespace GebatWindowComponents.Lists
             if (newItem.GetType() == typeof(EBFresco))
             {
                 item.SubItems.Add("Fresco");
+                isFega = false;
             }
+
+            if (newItem.GetType() == typeof(EBFega))
+            {
+                item.SubItems.Add("Fega");
+                isFega = true;
+            }
+
             item.SubItems.Add(newItem.BeginDate.ToShortDateString());
             if (newItem.FinishDate != new DateTime())
             {
@@ -26,8 +41,28 @@ namespace GebatWindowComponents.Lists
             {
                 item.SubItems.Add("");
             }
-            //TODO -> identificar tipo FEGA
-            item.SubItems.Add("");
+
+            if (isFega)
+            {
+                if (((EBFega)newItem).State == FegaStates.Aproved)
+                {
+                    item.SubItems.Add("Aprovado");
+                }
+
+                if (((EBFega)newItem).State == FegaStates.Awaiting)
+                {
+                    item.SubItems.Add("Esperando");
+                }
+
+                if (((EBFega)newItem).State == FegaStates.Suspended)
+                {
+                    item.SubItems.Add("Suspendido");
+                }
+            }
+            else
+            {
+                item.SubItems.Add("");
+            }
             item.SubItems.Add(newItem.Notes);
             Items.Add(item);
         }
