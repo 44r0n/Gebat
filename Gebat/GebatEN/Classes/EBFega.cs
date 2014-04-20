@@ -12,7 +12,7 @@ namespace GebatEN.Classes
         #region//Atributes
 
         private FegaStates state;
-        private VIEW vfega;
+        protected VIEW vfega;
 
         #endregion
 
@@ -103,7 +103,7 @@ namespace GebatEN.Classes
                 }
                 else
                 {
-                    if (DateTime.Today >= FinishDate)
+                    if (DateTime.Today >= finishDate)
                     {
                         return base.FinishDate.AddMonths(6);
                     }

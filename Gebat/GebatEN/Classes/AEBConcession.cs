@@ -11,9 +11,9 @@ namespace GebatEN.Classes
 
         protected bool checkdate;
         internal int dossier = 0;
-        private DateTime beginDate;
-        private DateTime finishDate;
-        private string notes;
+        protected DateTime beginDate;
+        protected DateTime finishDate;
+        protected string notes;
         private ADL concesion;
 
         #endregion

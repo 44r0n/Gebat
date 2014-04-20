@@ -160,6 +160,8 @@ CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Su
 
 CREATE OR REPLACE VIEW FrescoData as select Concessions.Id, Dossier, BeginDate, FinishDate, Notes FROM Concessions inner join Fresco on (Concessions.Id = Fresco.Concession);
 
+CREATE OR REPLACE VIEW FegaData as select Concessions.Id, Dossier, BeginDate, FinishDate, Notes, State FROM Concessions inner join Fega on (Concessions.Id = Fega.Concession);
+
 INSERT INTO Type (Name) VALUES
 (
 	'Kg'
@@ -284,6 +286,11 @@ INSERT INTO PersonalDossier(Observations) VALUES
 INSERT INTO PersonalDossier(Observations) VALUES
 (
 	"obs"
+);
+
+INSERT INTO PersonalDOssier(Observations) VALUES
+(
+	"Other"
 );
 
 INSERT INTO People (DNI, Name, Surname, BirthDate, Gender) VALUES
@@ -499,6 +506,22 @@ INSERT INTO Concessions (Dossier, BeginDate, FinishDate, Notes) VALUES
 	'Fega'
 );
 
+INSERT INTO Concessions (Dossier, BeginDate, FinishDate, Notes) VALUES
+(
+	4,
+	'2012/05/09',
+	'2012/08/09',
+	'Fresco'
+);
+
+INSERT INTO Concessions (Dossier, BeginDate, FinishDate, Notes) VALUES
+(
+	4,
+	'2012/08/09',
+	'2012/11/09',
+	'Fega'
+);
+
 INSERT INTO Fresco (Concession) VALUES
 (
 	1
@@ -509,12 +532,24 @@ INSERT INTO Fresco (Concession) VALUES
 	2
 );
 
-INSERT INTO Fega (Concession) VALUES
+INSERT INTO Fresco (Concession) VALUES
 (
 	5
 );
 
-INSERT INTO Fega (Concession) VALUES
+INSERT INTO Fega (Concession,State) VALUES
 (
-	6
+	6,
+	'Awaiting'
+);
+
+INSERT INTO Fresco (Concession) VALUES
+(
+	7
+);
+
+INSERT INTO Fega (Concession, State) VALUES
+(
+	8,
+	'Awaiting'
 );

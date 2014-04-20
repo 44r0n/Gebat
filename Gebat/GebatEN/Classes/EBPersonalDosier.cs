@@ -14,8 +14,8 @@ namespace GebatEN.Classes
         private List<EBFamiliar> familiars;
         private bool familiarsLoaded = false;
         private int income = 0;
-        private string observations;
-        private List<AEBConcession> concessions;
+        protected string observations;
+        protected List<AEBConcession> concessions;
         private bool concessionsLoaded = false;
 
         #endregion
@@ -42,29 +42,6 @@ namespace GebatEN.Classes
                     this.income += fam.Income;
                 }
                 familiarsLoaded = true;
-            }
-        }
-
-        /// <summary>
-        /// Carga todas las concesiones otorgadas  al expediente actual.
-        /// </summary>
-        private void loadConcessions()
-        {
-            if (!concessionsLoaded)
-            {
-                ADL aconcession = new ADL(defaultConnString, "concessions", "Id");
-                DataTable table = aconcession.SelectAll();
-                foreach (DataRow rows in table.Rows)
-                { 
-                    if(EBFresco.IsFresco((int)rows["Id"]))
-                    {
-                        List<object> ids = new List<object>();
-                        ids.Add((int)rows["Id"]);
-                        EBFresco nuevo = (EBFresco) new EBFresco().Read(ids);
-                        concessions.Add(nuevo);
-                    }
-                }
-                concessionsLoaded = true;
             }
         }
 
@@ -107,6 +84,37 @@ namespace GebatEN.Classes
         protected override void delete()
         {
             adl.ExecuteNonQuery("DELETE FROM personaldossier WHERE Id = @Id", (int)this.id[0]);
+        }
+
+        /// <summary>
+        /// Carga todas las concesiones otorgadas  al expediente actual.
+        /// </summary>
+        protected virtual void loadConcessions()
+        {
+            if (!concessionsLoaded)
+            {
+                ADL aconcession = new ADL(defaultConnString, "concessions", "Id");
+                DataTable table = aconcession.Select("SELECT * FROM concessions WHERE Dossier = @Dossier", (int)id[0]);
+                foreach (DataRow rows in table.Rows)
+                {
+                    if (EBFresco.IsFresco((int)rows["Id"]))
+                    {
+                        List<object> ids = new List<object>();
+                        ids.Add((int)rows["Id"]);
+                        EBFresco nuevo = (EBFresco)new EBFresco().Read(ids);
+                        concessions.Add(nuevo);
+                    }
+
+                    if (EBFega.IsFega((int)rows["Id"]))
+                    {
+                        List<object> ids = new List<object>();
+                        ids.Add((int)rows["Id"]);
+                        EBFega nuevo = (EBFega)new EBFega().Read(ids);
+                        concessions.Add(nuevo);
+                    }
+                }
+                concessionsLoaded = true;
+            }
         }
 
         #endregion
