@@ -96,10 +96,10 @@ namespace GebatWin.Forms
             AEBConcession con = (AEBConcession)listaConcesiones1.Selected;
             if (con != null)
             {
-                con.Delete();
                 EBPersonalDosier exp = (EBPersonalDosier)listaExpedientes.Selected;
                 if (exp != null)
                 {
+                    exp.DeleteConcession(con);
                     mostrarConcesiones(exp);
                 }
             }

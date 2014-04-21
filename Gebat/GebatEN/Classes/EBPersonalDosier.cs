@@ -290,6 +290,14 @@ namespace GebatEN.Classes
             familiars.Add(familiar);
         }
 
+        public void DeleteFamiliar(EBFamiliar familiar)
+        {
+            loadFamiliars();
+            familiars.Remove(familiar);
+            familiar.Delete();
+            
+        }
+
         /// <summary>
         /// Añad una concesión nueva al expediente personal, guardando la concesión en la base de datos.
         /// </summary>
@@ -304,6 +312,13 @@ namespace GebatEN.Classes
             concession.dossier = (int)this.id[0];
             concession.Save();
             concessions.Add(concession);
+        }
+
+        public void DeleteConcession(AEBConcession concession)
+        {
+            loadConcessions();
+            concessions.Remove(concession);
+            concession.Delete();
         }
 
         #endregion
