@@ -35,6 +35,7 @@
             this.radioButtonHombre = new System.Windows.Forms.RadioButton();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.comboDelito = new GebatWindowComponents.Combos.ComboDelito();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.checkBoxDomingo = new System.Windows.Forms.CheckBox();
@@ -70,7 +71,6 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonAddTelf = new System.Windows.Forms.Button();
-            this.comboDelito = new GebatWindowComponents.Combos.ComboDelito();
             this.listaTBC = new GebatWindowComponents.Lists.ListaTBC();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJornadas)).BeginInit();
@@ -173,6 +173,14 @@
             this.label11.Size = new System.Drawing.Size(37, 13);
             this.label11.TabIndex = 26;
             this.label11.Text = "Delito:";
+            // 
+            // comboDelito
+            // 
+            this.comboDelito.FormattingEnabled = true;
+            this.comboDelito.Location = new System.Drawing.Point(112, 563);
+            this.comboDelito.Name = "comboDelito";
+            this.comboDelito.Size = new System.Drawing.Size(121, 21);
+            this.comboDelito.TabIndex = 25;
             // 
             // label10
             // 
@@ -494,14 +502,6 @@
             this.buttonAddTelf.Text = "Gestionar Telefono";
             this.buttonAddTelf.UseVisualStyleBackColor = true;
             this.buttonAddTelf.Click += new System.EventHandler(this.buttonAddTelf_Click);
-            // 
-            // comboDelito
-            // 
-            this.comboDelito.FormattingEnabled = true;
-            this.comboDelito.Location = new System.Drawing.Point(112, 563);
-            this.comboDelito.Name = "comboDelito";
-            this.comboDelito.Size = new System.Drawing.Size(121, 21);
-            this.comboDelito.TabIndex = 25;
             // 
             // listaTBC
             // 
