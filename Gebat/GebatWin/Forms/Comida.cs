@@ -22,10 +22,10 @@ namespace GebatWin.Forms
         {            
             comboType.Refrescar(new EBType("").ReadAll());
             listaFoodIN.Refrescar(new EBFoodIN().ReadAll());
-            comboFoodSalida.Refrescar(new EBFood("").ReadAll());
-            comboFood.Refrescar(new EBFood("").ReadAll());
+            comboFoodSalida.Refrescar(new EBFood("",false).ReadAll());
+            comboFood.Refrescar(new EBFood("",false).ReadAll());
             listaFoodOut.Refrescar(new EBFoodOut().ReadAll());
-            listaFood.Refrescar(new EBFood("").ReadAll());
+            listaFood.Refrescar(new EBFood("",false).ReadAll());
         }
 
         #region//Control Radio
@@ -74,7 +74,7 @@ namespace GebatWin.Forms
         {
             if (radioButtonNuevo.Checked)
             {
-                EBFood newfood = new EBFood(textBoxNuevo.Text, (EBType)comboType.Selected);
+                EBFood newfood = new EBFood(textBoxNuevo.Text, checkBoxFega.Checked,(EBType)comboType.Selected);
                 newfood.Save();
                 newfood.Add((int)numericUpDown.Value, dateTimePicker.Value);
                 comboFood.Add(newfood);

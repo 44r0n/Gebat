@@ -24,8 +24,11 @@ CREATE TABLE IF NOT EXISTS Food
 	Name varchar(20) not null,
 	QuantityType int,
 	Quantity int DEFAULT 0,
+	Fega tinyint not null,
 	CONSTRAINT fk_Food_Type FOREIGN KEY (QuantityType) REFERENCES Type (Id) ON UPDATE SET NULL ON DELETE SET NULL
 );
+
+CREATE INDEX fegafood ON Food (Fega);
 
 CREATE TABLE IF NOT EXISTS EntryFood
 (

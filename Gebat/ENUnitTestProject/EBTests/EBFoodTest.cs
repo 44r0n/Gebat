@@ -20,31 +20,32 @@ namespace ENUnitTestProject.ENTests
         {
             List<object> id = new List<object>();
             id.Add(4);
-            EBFood food = (EBFood)(new EBFood("").Read(id));
+            EBFood food = (EBFood)(new EBFood("", false).Read(id));
             Assert.AreEqual("Pomes", food.Name);
             Assert.AreEqual("Kg", food.MyType.Name);
             Assert.AreEqual(2, food.Quantity);
+            Assert.AreEqual(false, food.Fega);
         }
 
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void ReadNullId()
         {
-            new EBFood("").Read(null);
+            new EBFood("", false).Read(null);
         }
 
         [TestMethod]
         public void ReadAll_Insert_Delete()
         {
-            List<AEB> general = new EBFood("").ReadAll();
+            List<AEB> general = new EBFood("",false).ReadAll();
             List<EBFood> expected = new List<EBFood>();
             List<object> idtype = new List<object>();
             idtype.Add(1);
-            EBFood p = new EBFood("Patates",(EBType)(new EBType("").Read(idtype)));
+            EBFood p = new EBFood("Patates",true,(EBType)(new EBType("").Read(idtype)));
             expected.Add(p);
-            EBFood s = new EBFood("Tomates",(EBType)(new EBType("").Read(idtype)));
+            EBFood s = new EBFood("Tomates",false,(EBType)(new EBType("").Read(idtype)));
             expected.Add(s);
-            EBFood t = new EBFood("Pomes", (EBType)(new EBType("").Read(idtype)));
+            EBFood t = new EBFood("Pomes", false ,(EBType)(new EBType("").Read(idtype)));
             expected.Add(t);
 
             for (int i = 0; i < expected.Count; i++)
@@ -53,9 +54,9 @@ namespace ENUnitTestProject.ENTests
                 Assert.AreEqual(expected[i].MyType.Name, ((EBFood)general[i]).MyType.Name);
             }
 
-            EBFood ins = new EBFood("Testing", (EBType)(new EBType("").Read(idtype)));
+            EBFood ins = new EBFood("Testing", false ,(EBType)(new EBType("").Read(idtype)));
             ins.Save();
-            general = new EBFood("").ReadAll();
+            general = new EBFood("",false).ReadAll();
             expected.Add(ins);
             for (int i = 0; i < expected.Count; i++)
             {
@@ -66,7 +67,7 @@ namespace ENUnitTestProject.ENTests
             ins.Delete();
             expected.RemoveAt(3);
 
-            general = new EBFood("").ReadAll();
+            general = new EBFood("",false).ReadAll();
             for (int i = 0; i < expected.Count; i++)
             {
                 Assert.AreEqual(expected[i].Name, ((EBFood)general[i]).Name);
@@ -79,7 +80,7 @@ namespace ENUnitTestProject.ENTests
         {
             List<object> idfood = new List<object>();
             idfood.Add(2);
-            EBFood f = (EBFood)(new EBFood("").Read(idfood));
+            EBFood f = (EBFood)(new EBFood("",false).Read(idfood));
             f.Add(3,new DateTime(2012,11,09));
             f.Remove(1, new DateTime(2012, 11, 09));
             Assert.AreEqual(2, f.Quantity);

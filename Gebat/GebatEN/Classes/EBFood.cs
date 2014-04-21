@@ -32,7 +32,7 @@ namespace GebatEN.Classes
 		private string name;
 		private EBType type;
         private int quantity;
-        
+        private bool fega;
 
 		#endregion
 
@@ -56,13 +56,13 @@ namespace GebatEN.Classes
 
         protected override void insert()
         {
-            adl.ExecuteNonQuery("INSERT INTO food (Name, QuantityType, Quantity) VALUES (@Name, @QuantityType, @Quantity)", this.name, (int)this.type.Id[0], this.quantity);
+            adl.ExecuteNonQuery("INSERT INTO food (Name, QuantityType, Quantity, Fega) VALUES (@Name, @QuantityType, @Quantity, @Fega)", this.name, (int)this.type.Id[0], this.quantity, this.fega);
             this.id.Add((int)adl.Last()["Id"]);
         }
 
         protected override void update()
         {
-            adl.ExecuteNonQuery("UPDATE food SET Name = @Name, QuantityType = @QuantityType, Quantity = @Quantity WHERE Id = @Id", this.name, (int)this.type.Id[0], this.quantity, (int)this.id[0]);
+            adl.ExecuteNonQuery("UPDATE food SET Name = @Name, QuantityType = @QuantityType, Quantity = @Quantity Fega = @Fega WHERE Id = @Id", this.name, (int)this.type.Id[0], this.quantity, this.fega, (int)this.id[0]);
         }
 
         protected override void delete()
@@ -93,6 +93,7 @@ namespace GebatEN.Classes
 					ret ["QuantityType"] = (int)type.Id[0];
 				}
                 ret["Quantity"] = quantity;
+                ret["Fega"] = fega;
 				return ret;
 			}
 		}
@@ -115,6 +116,7 @@ namespace GebatEN.Classes
 					type = (EBType)new EBType ("").Read(ids);
 				}
                 this.quantity = (int)row["Quantity"];
+                this.fega = Convert.ToBoolean((sbyte)row["Fega"]);
 				this.saved = true;
 			}
 			else
@@ -164,6 +166,18 @@ namespace GebatEN.Classes
 			}
 		}
 
+        public bool Fega
+        {
+            get
+            {
+                return fega;
+            }
+            set
+            {
+                fega = value;
+            }
+        }
+
 		#endregion
 
 		#region//Public Methods
@@ -173,7 +187,8 @@ namespace GebatEN.Classes
 		/// </summary>
 		/// <param name="name">Nombre del alimento.</param>
 		/// <param name="quantity">Cantidad del alimento.</param>
-		public EBFood(string name, EBType type = null)
+        /// <param name="fega">Indica si el alimento pertenece al programa fega.</param>
+		public EBFood(string name, bool fega, EBType type = null)
 			: base()
 		{
 			if (name == null)
@@ -184,6 +199,7 @@ namespace GebatEN.Classes
 			this.name = name;
             this.quantity = 0;
 			this.type = type;
+            this.fega = fega;
 		}
 
 		/// <summary>
