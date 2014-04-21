@@ -18,6 +18,8 @@ namespace GebatEN.Classes
         private string court;
         private DateTime begindate;
         private DateTime finishdate;
+        private TimeSpan beginhour;
+        private TimeSpan finishhour;
         private int numjourney;
         private Dictionary<DayOfWeek, bool> timetable;
         private EBCrime crime;
@@ -196,7 +198,7 @@ namespace GebatEN.Classes
 
         protected override void insert()
         {
-            adl.ExecuteNonQuery("INSERT INTO tbc (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney ,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Crime) VALUES (@DNI, @Judgement, @Court, @BeginDate, @FinishDate, @NumJourney, @Monday, @Tuesday, @Wednesday, @Thursday, @Friday, @Saturday, @Sunday, @Crime)", this.DNI, this.judgement, this.court, this.begindate, this.finishdate, this.numjourney, this.timetable[DayOfWeek.Monday], this.timetable[DayOfWeek.Tuesday], this.timetable[DayOfWeek.Wednesday], this.timetable[DayOfWeek.Thursday], this.timetable[DayOfWeek.Friday], this.timetable[DayOfWeek.Saturday], this.timetable[DayOfWeek.Sunday], (int)this.crime.Id[0]);
+            adl.ExecuteNonQuery("INSERT INTO tbc (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney ,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour, Crime) VALUES (@DNI, @Judgement, @Court, @BeginDate, @FinishDate, @NumJourney, @Monday, @Tuesday, @Wednesday, @Thursday, @Friday, @Saturday, @Sunday, @BeginHour, @FinishHour, @Crime)", this.DNI, this.judgement, this.court, this.begindate, this.finishdate, this.numjourney, this.timetable[DayOfWeek.Monday], this.timetable[DayOfWeek.Tuesday], this.timetable[DayOfWeek.Wednesday], this.timetable[DayOfWeek.Thursday], this.timetable[DayOfWeek.Friday], this.timetable[DayOfWeek.Saturday], this.timetable[DayOfWeek.Sunday], this.beginhour, this.finishhour, (int)this.crime.Id[0]);
             this.id.Add((int)adl.Last()["Id"]);
         }
 
@@ -231,6 +233,8 @@ namespace GebatEN.Classes
                 ret["Court"] = this.court;
                 ret["BeginDate"] = this.begindate;
                 ret["FinishDate"] = this.finishdate;
+                ret["BeginHour"] = this.beginhour;
+                ret["FinishHour"] = this.finishhour;
                 ret["NumJourney"] = this.numjourney;
                 ret["Monday"] = this.timetable[DayOfWeek.Monday];
                 ret["Tuesday"] = this.timetable[DayOfWeek.Tuesday];
@@ -256,6 +260,8 @@ namespace GebatEN.Classes
             this.court = (string)row["Court"];
             this.begindate = (DateTime)row["BeginDate"];
             this.finishdate = (DateTime)row["FinishDate"];
+            this.beginhour = (TimeSpan)row["BeginHour"];
+            this.finishhour = (TimeSpan)row["FinishHour"];
             this.numjourney = (int)row["NumJourney"];
             this.timetable[DayOfWeek.Monday] = (bool)row["Monday"];
             this.timetable[DayOfWeek.Tuesday] = (bool)row["Tuesday"];
@@ -319,6 +325,36 @@ namespace GebatEN.Classes
             set
             {
                 this.begindate = value;
+            }
+        }
+
+        /// <summary>
+        /// Obtiene y establece la hora de inicio.
+        /// </summary>
+        public TimeSpan BeginHour
+        {
+            get
+            {
+                return this.beginhour;
+            }
+            set
+            {
+                this.beginhour = value;
+            }
+        }
+
+        /// <summary>
+        /// Obtiene y establece la hora de finalización.
+        /// </summary>
+        public TimeSpan FinishHour
+        {
+            get
+            {
+                return this.finishhour;
+            }
+            set
+            {
+                this.finishhour = value;
             }
         }
 
@@ -396,7 +432,9 @@ namespace GebatEN.Classes
         /// <param name="Court">Juzagod de TBC.</param>
         /// <param name="BeginDate">Fecha de inicio de cumplimiento.</param>
         /// <param name="FinishDate">Fecha final de cumplimiento.</param>
-        public EBTBC(string DNI, string Judgement, string Name, string Surname, DateTime BirthDate, MyGender Gender ,string Court, DateTime BeginDate, DateTime FinishDate, EBCrime Crime)
+        /// <param name="BeginHour">Hora de inicio del cumplimiento.</param>
+        /// <paparam name="FinishHour">Hora de finalización del cumplimiento.</paparam>
+        public EBTBC(string DNI, string Judgement, string Name, string Surname, DateTime BirthDate, MyGender Gender, string Court, DateTime BeginDate, DateTime FinishDate, TimeSpan BeginHour, TimeSpan FinishHour, EBCrime Crime)
             : base(DNI, Name, Surname, BirthDate, Gender)
         {
             initADL();
@@ -406,6 +444,8 @@ namespace GebatEN.Classes
             this.finishdate = FinishDate;
             this.initDictionary();
             this.crime = Crime;
+            this.beginhour = BeginHour;
+            this.finishhour = FinishHour;
         }
 
         /// <summary>

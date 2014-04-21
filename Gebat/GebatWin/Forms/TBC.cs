@@ -23,11 +23,11 @@ namespace GebatWin.Forms
             EBTBC tbc;
             if(radioButtonHombre.Checked)
             {
-                tbc = new EBTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNac.Value, MyGender.Male, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, (EBCrime)comboDelito.Selected);
+                tbc = new EBTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNac.Value, MyGender.Male, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, dateTimePickerBeginHour.Value.TimeOfDay, dateTimePickerFinishHour.Value.TimeOfDay,(EBCrime)comboDelito.Selected);
             }
             else
             {
-                tbc = new EBTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNac.Value ,MyGender.Female, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, (EBCrime)comboDelito.Selected);
+                tbc = new EBTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNac.Value, MyGender.Female, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, dateTimePickerBeginHour.Value.TimeOfDay, dateTimePickerFinishHour.Value.TimeOfDay, (EBCrime)comboDelito.Selected);
             }
             tbc.NumJourney = (int)numericUpDownJornadas.Value;
             tbc.Timetable[DayOfWeek.Monday] = checkBoxLunes.Checked;

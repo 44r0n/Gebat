@@ -69,7 +69,7 @@ namespace ENUnitTestProject.ENTests
             }
             List<object> crimes = new List<object>();
             crimes.Add(1);
-            EBTBC ins = new EBTBC("52835460K", "02/2013", "Manolo", "Hansen", new DateTime(1968,04,30) ,MyGender.Male , "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), (EBCrime)new EBCrime().Read(crimes));
+            EBTBC ins = new EBTBC("52835460K", "02/2013", "Manolo", "Hansen", new DateTime(1968, 04, 30), MyGender.Male, "Albacete", new DateTime(2013, 02, 15), new DateTime(2013, 08, 31), new TimeSpan(9,0,0),new TimeSpan(15,30,0), (EBCrime)new EBCrime().Read(crimes));
             ins.Save();
             general = new EBTBC().ReadAll();
             dnis.Add(ins.DNI);

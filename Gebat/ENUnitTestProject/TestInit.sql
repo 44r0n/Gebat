@@ -140,6 +140,8 @@ CREATE TABLE IF NOT EXISTS TBC
   Friday BOOLEAN DEFAULT FALSE,
   Saturday BOOLEAN DEFAULT FALSE,
   Sunday BOOLEAN DEFAULT FALSE,
+  BeginHour Time,
+  FinishHour Time,
   Crime int NOT NULL,
   Unique (DNI, Judgement),
   CONSTRAINT fk_TBC_Crimes FOREIGN KEY (Crime) REFERENCES Crimes (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -154,7 +156,7 @@ CREATE TABLE IF NOT EXISTS Phones
 	CONSTRAINT fk_Phones_People FOREIGN KEY (Owner) REFERENCES People(DNI) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Crime from People inner join TBC on (People.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour,Crime from People inner join TBC on (People.DNI = TBC.DNI);
 
 CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender, Dossier, Income FROM People inner join Familiars on (People.DNI = Familiars.DNI);
 
@@ -365,7 +367,7 @@ INSERT INTO People(DNI, Name, Surname, BirthDate, Gender) VALUES
 	'M'
 );
 
-INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday,Crime) VALUES
+INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour, Crime) VALUES
 (
 	'54508005Y',
 	'23/2013',
@@ -380,10 +382,12 @@ INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday
 	TRUE,
 	FALSE,
 	FALSE,
+	'9:00:00',
+	'15:30:00',
 	1
 );
 
-INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday,Crime) VALUES
+INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour, Crime) VALUES
 (
 	'01086932K',
 	'1/98',
@@ -398,10 +402,12 @@ INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday
 	TRUE,
 	FALSE,
 	FALSE,
+	'9:00:00',
+	'15:30:00',
 	2
 );
 
-INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday,Crime) VALUES
+INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour, Crime) VALUES
 (
 	'01086932K',
 	'93/2012',
@@ -416,6 +422,8 @@ INSERT INTO TBC (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney,Monday
 	TRUE,
 	FALSE,
 	FALSE,
+	'9:00:00',
+	'15:30:00',
 	1
 );
 
