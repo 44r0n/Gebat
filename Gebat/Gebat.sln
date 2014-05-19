@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatWin", "GebatWin\GebatW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GebatWindowComponents", "WindowComponents\GebatWindowComponents.csproj", "{5410EC23-112F-4D26-895E-8C7DCD70DA1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cripto", "Cripto\Cripto.csproj", "{37AAF946-9896-4BDA-BAA8-EE3763627C7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CriptoUnitTest", "CriptoUnitTest\CriptoUnitTest.csproj", "{CBE7519A-8596-46E5-A9AA-24E2C60E2B3C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,14 @@ Global
 		{5410EC23-112F-4D26-895E-8C7DCD70DA1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5410EC23-112F-4D26-895E-8C7DCD70DA1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5410EC23-112F-4D26-895E-8C7DCD70DA1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37AAF946-9896-4BDA-BAA8-EE3763627C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37AAF946-9896-4BDA-BAA8-EE3763627C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37AAF946-9896-4BDA-BAA8-EE3763627C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37AAF946-9896-4BDA-BAA8-EE3763627C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBE7519A-8596-46E5-A9AA-24E2C60E2B3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBE7519A-8596-46E5-A9AA-24E2C60E2B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBE7519A-8596-46E5-A9AA-24E2C60E2B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBE7519A-8596-46E5-A9AA-24E2C60E2B3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
