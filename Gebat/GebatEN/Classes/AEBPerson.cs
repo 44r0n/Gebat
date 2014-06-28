@@ -18,8 +18,7 @@ namespace GebatEN.Classes
         private string name;
         private DateTime birthDate;
         private MyGender gender;
-        private List<string> phones = null;
-        private int personid = 0;
+        private List<string> phones = null;       
 
         #endregion
 
@@ -126,32 +125,33 @@ namespace GebatEN.Classes
 
         protected override void insert()
         {
+            
             if(this.gender == MyGender.Male)
             {
-                adl.ExecuteNonQuery("INSERT INTO people (DNI, Name, Surname, BirthDate, Gender) VALUES (@DNI, @Name, @Surname, @BirthDate, @Gender)", this.dni, this.name, this.surname, this.birthDate, "M");
+                adl.ExecuteNonQuery("INSERT INTO people (DNI, Name, Surname, BirthDate, Gender) VALUES (@DNI, @Name, @Surname, @BirthDate, @Gender)", GetCipher.Encrypt(this.dni), GetCipher.Encrypt(this.name), GetCipher.Encrypt(this.surname), GetCipher.Encrypt(this.birthDate.ToShortDateString()), GetCipher.Encrypt("M"));
             }
             else
             {
-                adl.ExecuteNonQuery("INSERT INTO people (DNI, Name, Surname, BirthDate, Gender) VALUES (@DNI, @Name, @Surname, @BirthDate, @Gender)", this.dni, this.name, this.surname, this.birthDate, "F");
+                adl.ExecuteNonQuery("INSERT INTO people (DNI, Name, Surname, BirthDate, Gender) VALUES (@DNI, @Name, @Surname, @BirthDate, @Gender)", GetCipher.Encrypt(this.dni), GetCipher.Encrypt(this.name), GetCipher.Encrypt(this.surname), GetCipher.Encrypt(this.birthDate.ToShortDateString()), GetCipher.Encrypt("F"));
             }
-            personid = (int) new ADL(defaultConnString,"people","Id").Last()["Id"];
+            this.id.Add((int) new ADL(defaultConnString,"people","Id").Last()["Id"]);
         }
 
         protected override void update()
         {
             if (this.gender == MyGender.Male)
             {
-                adl.ExecuteNonQuery("UPDATE people SET DNI = @DNI, Name = @Name, Surname = @Surname, BirthDate = @BirthDate, Gender = @Gender WHERE Id = @Id", this.dni, this.name, this.surname, this.birthDate, "M", personid);
+                adl.ExecuteNonQuery("UPDATE people SET DNI = @DNI, Name = @Name, Surname = @Surname, BirthDate = @BirthDate, Gender = @Gender WHERE Id = @Id", GetCipher.Encrypt(this.dni), GetCipher.Encrypt(this.name), GetCipher.Encrypt(this.surname), GetCipher.Encrypt(this.birthDate.ToShortDateString()), GetCipher.Encrypt("M"), this.id[0]);
             }
             else
             {
-                adl.ExecuteNonQuery("UPDATE people SET DNI = @DNI, Name = @Name, Surname = @Surname, BirthDate = @BirthDate, Gender = @Gender WHERE Id = @Id", this.dni, this.name, this.surname, this.birthDate, "F", personid);
+                adl.ExecuteNonQuery("UPDATE people SET DNI = @DNI, Name = @Name, Surname = @Surname, BirthDate = @BirthDate, Gender = @Gender WHERE Id = @Id", GetCipher.Encrypt(this.dni), GetCipher.Encrypt(this.name), GetCipher.Encrypt(this.surname), GetCipher.Encrypt(this.birthDate.ToShortDateString()), GetCipher.Encrypt("F"), this.id[0]);
             }
         }
 
         protected override void delete()
         {
-            adl.ExecuteNonQuery("DELETE FROM people WHERE Id = @Id", personid);
+            adl.ExecuteNonQuery("DELETE FROM people WHERE Id = @Id", this.id[0]);
         }
 
         #endregion
@@ -168,19 +168,19 @@ namespace GebatEN.Classes
                 DataRow ret = people.GetVoidRow;
                 if (this.id != null)
                 {
-                    ret["Id"] = personid;
+                    ret["Id"] = this.id[0];
                 }
-                ret["DNI"] = (string)this.dni;
-                ret["Name"] = this.name;
-                ret["Surname"] = this.surname;
-                ret["BirthDate"] = this.birthDate;
+                ret["DNI"] = GetCipher.Encrypt((string)this.dni);
+                ret["Name"] = GetCipher.Encrypt(this.name);
+                ret["Surname"] = GetCipher.Encrypt(this.surname);
+                ret["BirthDate"] = GetCipher.Encrypt(this.birthDate.ToShortDateString());
                 if (this.gender == MyGender.Male)
                 {
-                    ret["Gender"] = "M";
+                    ret["Gender"] = GetCipher.Encrypt("M");
                 }
                 else
                 {
-                    ret["Gender"] = "F";
+                    ret["Gender"] = GetCipher.Encrypt("F");
                 }
                 return ret;
             }
@@ -194,14 +194,14 @@ namespace GebatEN.Classes
         {
             if (row != null)
             {
-                //this.id = new List<object>();
-                DataRow perrow = people.Select("SELECT * FROM people WHERE DNI = @DNI", (string)row["DNI"]).Rows[0];
-                personid = (int)perrow["Id"];
-                this.dni = (string)perrow["DNI"];
-                this.name = (string)perrow["Name"];
-                this.surname = (string)perrow["Surname"];
-                this.birthDate = (DateTime)perrow["BirthDate"];
-                switch ((string)perrow["Gender"])
+                this.id = new List<object>();
+                DataRow perrow = people.Select("SELECT * FROM people WHERE DNI = @DNI", row["DNI"]).Rows[0];
+                this.id.Add((int)perrow["Id"]);
+                this.dni = GetCipher.Decrypt((string)perrow["DNI"]);
+                this.name = GetCipher.Decrypt((string)perrow["Name"]);
+                this.surname = GetCipher.Decrypt((string)perrow["Surname"]);
+                this.birthDate = Convert.ToDateTime(GetCipher.Decrypt((string)perrow["BirthDate"]));
+                switch (GetCipher.Decrypt((string)perrow["Gender"]))
                 {
                     case "M":
                         this.gender = MyGender.Male;
@@ -225,7 +225,7 @@ namespace GebatEN.Classes
         /// <returns>True si está guardada en la tabla, false en caso contrario.</returns>
         protected bool alreadyInPerson()
         {
-            if (new ADL(defaultConnString,"people","Id").Select("SELECT * FROM people WHERE DNI = @DNI",this.DNI).Rows.Count == 1)
+            if (new ADL(defaultConnString,"people","Id").Select("SELECT * FROM people WHERE DNI = @DNI", GetCipher.Encrypt(this.DNI)).Rows.Count == 1)
             {
                 return true;
             }
@@ -396,7 +396,7 @@ namespace GebatEN.Classes
         /// <param name="number">Nuevo numero de telefono.</param>
         public void AddPhone(string number)
         {
-            adlphones.ExecuteNonQuery("INSERT INTO phones (PhoneNumber, Owner) VALUES (@PhoneNumber, @Owner)", number, this.dni);
+            adlphones.ExecuteNonQuery("INSERT INTO phones (PhoneNumber, Owner) VALUES (@PhoneNumber, @Owner)", GetCipher.Encrypt(number), this.id[0]);
             if (phones == null)
             {
                 phones = new List<string>();
@@ -410,7 +410,7 @@ namespace GebatEN.Classes
         /// <param name="number">Número de teléfono a eliminar.</param>
         public void DelPhone(string number)
         {
-            DataTable del = adlphones.Select("SELECT * FROM phones WHERE PhoneNumber = @PhoneNumber AND Owner = @Owner", number,this.dni);
+            DataTable del = adlphones.Select("SELECT * FROM phones WHERE PhoneNumber = @PhoneNumber AND Owner = @Owner", GetCipher.Encrypt(number),this.id[0]);
             if (del.Rows.Count == 1)
             {
                 adlphones.ExecuteNonQuery("DELETE FROM phones WHERE Id = @Id",(int)del.Rows[0]["Id"]);

@@ -72,13 +72,13 @@ namespace GebatEN.Classes
 
         protected override void insert()
         {
-            adl.ExecuteNonQuery("INSERT INTO personaldossier (Observations) VALUES (@Observations)", this.observations);
+            adl.ExecuteNonQuery("INSERT INTO personaldossier (Observations) VALUES (@Observations)", GetCipher.Encrypt(this.observations));
             this.id.Add((int)adl.Last()["Id"]);
         }
 
         protected override void update()
         {
-            adl.ExecuteNonQuery("UDPATE personaldossier SET Observations = @Observations WHERE Id = @Id", this.observations, (int)this.id[0]);
+            adl.ExecuteNonQuery("UDPATE personaldossier SET Observations = @Observations WHERE Id = @Id", GetCipher.Encrypt(this.observations), (int)this.id[0]);
         }
 
         protected override void delete()
@@ -133,7 +133,7 @@ namespace GebatEN.Classes
                 {
                     ret["Id"] = (int)this.id[0];
                 }
-                ret["Observations"] = this.observations;
+                ret["Observations"] = GetCipher.Encrypt(this.observations);
                 return ret;
             }
         }
@@ -148,7 +148,7 @@ namespace GebatEN.Classes
             {
                 this.id = new List<object>();
                 this.id.Add((int)row["Id"]);
-                this.observations = (string)row["Observations"];
+                this.observations = GetCipher.Decrypt((string)row["Observations"]);
                 this.loadFamiliars();
                 this.saved = true;
             }

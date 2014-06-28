@@ -87,11 +87,11 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS People
 (
   Id int Primary Key AUTO_INCREMENT,
-  DNI CHAR(9) Unique,
-  Name VARCHAR(15) NULL,
-  Surname VARCHAR(45) NULL,
-  BirthDate DATE NULL,
-  Gender CHAR(1) NULL
+  DNI VARCHAR(255) Unique,
+  Name VARCHAR(255) NULL,
+  Surname VARCHAR(255) NULL,
+  BirthDate VARCHAR(255) NULL,
+  Gender VARCHAR(255) NULL
 );
 
 CREATE TABLE IF NOT EXISTS PersonalDossier
@@ -103,10 +103,10 @@ CREATE TABLE IF NOT EXISTS PersonalDossier
 CREATE TABLE IF NOT EXISTS Familiars
 (
 	Id int Primary Key AUTO_INCREMENT,
-	DNI CHAR(9) Unique,
+	Id_Person int Unique,
 	Dossier int,
-	Income INT,
-	CONSTRAINT fk_Familiars_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE CASCADE ON UPDATE CASCADE,
+	Income varchar(255),
+	CONSTRAINT fk_Familiars_People FOREIGN KEY (Id_Person) REFERENCES People (Id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_Familiars_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
@@ -114,8 +114,8 @@ CREATE TABLE IF NOT EXISTS Concessions
 (
 	Id int Primary Key AUTO_INCREMENT,
 	Dossier INT,
-	BeginDate DATE NULL,
-	FinishDate DATE NULL,
+	BeginDate varchar(255) NULL,
+	FinishDate varchar(255) NULL,
 	Notes VARCHAR(150),
 	CONSTRAINT fk_Concessions_Dossier FOREIGN KEY (Dossier) REFERENCES PersonalDossier (Id) ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -142,11 +142,11 @@ CREATE TABLE IF NOT EXISTS Crimes
 CREATE TABLE IF NOT EXISTS TBC 
 (
   Id int PRIMARY KEY AUTO_INCREMENT,
-  DNI CHAR(9) NOT NULL,
-  Judgement VARCHAR(10) NOT NULL,
-  Court VARCHAR(45) NULL,
-  BeginDate DATE NULL,
-  FinishDate DATE NULL,
+  Id_Person int NOT NULL,
+  Judgement VARCHAR(255) NOT NULL,
+  Court VARCHAR(255) NULL,
+  BeginDate varchar(255) NULL,
+  FinishDate varchar(255) NULL,
   NumJourney INT,
   Monday BOOLEAN DEFAULT FALSE,
   Tuesday BOOLEAN DEFAULT FALSE,
@@ -158,22 +158,22 @@ CREATE TABLE IF NOT EXISTS TBC
   BeginHour TIME,
   FinishHour TIME,
   Crime int NOT NULL,
-  Unique (DNI, Judgement),
+  Unique (Id_Person, Judgement),
   CONSTRAINT fk_TBC_Crimes FOREIGN KEY (Crime) REFERENCES Crimes (Id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT fk_TBC_People FOREIGN KEY (DNI) REFERENCES People (DNI) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT fk_TBC_People FOREIGN KEY (Id_Person) REFERENCES People (Id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Phones
 (
 	Id int PRIMARY KEY AUTO_INCREMENT,
-	PhoneNumber CHAR(9) NOT NULL,
-	Owner CHAR(9) NOT NULL,
-	CONSTRAINT fk_Phones_People FOREIGN KEY (Owner) REFERENCES People(DNI) ON DELETE CASCADE ON UPDATE CASCADE
+	PhoneNumber varchar(255) NOT NULL,
+	Owner int NOT NULL,
+	CONSTRAINT fk_Phones_People FOREIGN KEY (Owner) REFERENCES People(Id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour,Crime from People inner join TBC on (People.DNI = TBC.DNI);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour,Crime from People inner join TBC on (People.Id = TBC.Id_Person);
 
-CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender, Dossier, Income FROM People inner join Familiars on (People.DNI = Familiars.DNI);
+CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender, Dossier, Income FROM People inner join Familiars on (People.Id = Familiars.Id_Person);
 
 CREATE OR REPLACE VIEW FrescoData as select Concessions.Id, Dossier, BeginDate, FinishDate, Notes FROM Concessions inner join Fresco on (Concessions.Id = Fresco.Concession);
 

@@ -59,6 +59,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Cripto\Cripto.csproj">
+      <Project>{37aaf946-9896-4bda-baa8-ee3763627c7b}</Project>
+      <Name>Cripto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GebatCAD\GebatADL.csproj">
       <Project>{F9CF59BE-07EC-41E9-90B6-11A03F2F6E10}</Project>
       <Name>GebatADL</Name>

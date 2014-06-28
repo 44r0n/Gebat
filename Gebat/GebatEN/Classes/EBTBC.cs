@@ -198,18 +198,18 @@ namespace GebatEN.Classes
 
         protected override void insert()
         {
-            adl.ExecuteNonQuery("INSERT INTO tbc (DNI, Judgement, Court, BeginDate, FinishDate, NumJourney ,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour, Crime) VALUES (@DNI, @Judgement, @Court, @BeginDate, @FinishDate, @NumJourney, @Monday, @Tuesday, @Wednesday, @Thursday, @Friday, @Saturday, @Sunday, @BeginHour, @FinishHour, @Crime)", this.DNI, this.judgement, this.court, this.begindate, this.finishdate, this.numjourney, this.timetable[DayOfWeek.Monday], this.timetable[DayOfWeek.Tuesday], this.timetable[DayOfWeek.Wednesday], this.timetable[DayOfWeek.Thursday], this.timetable[DayOfWeek.Friday], this.timetable[DayOfWeek.Saturday], this.timetable[DayOfWeek.Sunday], this.beginhour, this.finishhour, (int)this.crime.Id[0]);
+            adl.ExecuteNonQuery("INSERT INTO tbc (Id_Person, Judgement, Court, BeginDate, FinishDate, NumJourney ,Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour, Crime) VALUES (@Id_Person, @Judgement, @Court, @BeginDate, @FinishDate, @NumJourney, @Monday, @Tuesday, @Wednesday, @Thursday, @Friday, @Saturday, @Sunday, @BeginHour, @FinishHour, @Crime)", this.id[0], GetCipher.Encrypt(this.judgement), GetCipher.Encrypt(this.court), GetCipher.Encrypt(this.begindate.ToShortDateString()), GetCipher.Encrypt(this.finishdate.ToShortDateString()), this.numjourney, this.timetable[DayOfWeek.Monday], this.timetable[DayOfWeek.Tuesday], this.timetable[DayOfWeek.Wednesday], this.timetable[DayOfWeek.Thursday], this.timetable[DayOfWeek.Friday], this.timetable[DayOfWeek.Saturday], this.timetable[DayOfWeek.Sunday], this.beginhour, this.finishhour, (int)this.crime.Id[0]);
             this.id.Add((int)adl.Last()["Id"]);
         }
 
         protected override void update()
         {
-            adl.ExecuteNonQuery("UPDATE tbc SET DNI = @DNI, Judgement = @Judgement, Court = @Court, BeginDate = @BeginDate, FinishDate = @FinishDate, NumJourney = @NumJourney, Monday = @Monday, Tuesday = @Tuesday, Wednesday = @Wednesday, Thursday = @Thursday, Friday = @Friday, Saturday = @Saturday, Sunday = @Sunday, Crime = @Crime WHERE Id = @Id", this.DNI, this.judgement, this.court, this.begindate, this.finishdate, this.numjourney, this.timetable[DayOfWeek.Monday], this.timetable[DayOfWeek.Tuesday], this.timetable[DayOfWeek.Wednesday], this.timetable[DayOfWeek.Thursday], this.timetable[DayOfWeek.Friday], this.timetable[DayOfWeek.Saturday], this.timetable[DayOfWeek.Sunday], (int)this.crime.Id[0],(int)this.id[0]);
+            adl.ExecuteNonQuery("UPDATE tbc SET Id_Person = @Id_Person, Judgement = @Judgement, Court = @Court, BeginDate = @BeginDate, FinishDate = @FinishDate, NumJourney = @NumJourney, Monday = @Monday, Tuesday = @Tuesday, Wednesday = @Wednesday, Thursday = @Thursday, Friday = @Friday, Saturday = @Saturday, Sunday = @Sunday, Crime = @Crime WHERE Id = @Id", this.id[0], GetCipher.Encrypt(this.judgement), GetCipher.Encrypt(this.court), GetCipher.Encrypt(this.begindate.ToShortDateString()), GetCipher.Encrypt(this.finishdate.ToShortDateString()), this.numjourney, this.timetable[DayOfWeek.Monday], this.timetable[DayOfWeek.Tuesday], this.timetable[DayOfWeek.Wednesday], this.timetable[DayOfWeek.Thursday], this.timetable[DayOfWeek.Friday], this.timetable[DayOfWeek.Saturday], this.timetable[DayOfWeek.Sunday], (int)this.crime.Id[0], (int)this.id[0]);
         }
 
         protected override void delete()
         {
-            adl.ExecuteNonQuery("DELETE FROM tbc WHERE Id = @Id", (int)this.id[0]);
+            adl.ExecuteNonQuery("DELETE FROM tbc WHERE Id = @Id", idtbc);
         }
 
         #endregion
@@ -231,8 +231,8 @@ namespace GebatEN.Classes
                 ret["DNI"] = this.DNI;
                 ret["Judgement"] = this.judgement;
                 ret["Court"] = this.court;
-                ret["BeginDate"] = this.begindate;
-                ret["FinishDate"] = this.finishdate;
+                ret["BeginDate"] = GetCipher.Encrypt(this.begindate.ToShortDateString());
+                ret["FinishDate"] = GetCipher.Encrypt(this.finishdate.ToShortDateString());
                 ret["BeginHour"] = this.beginhour;
                 ret["FinishHour"] = this.finishhour;
                 ret["NumJourney"] = this.numjourney;
@@ -258,8 +258,8 @@ namespace GebatEN.Classes
             this.judgement = (string)row["Judgement"];
             this.idtbc = (int)row["Id"];
             this.court = (string)row["Court"];
-            this.begindate = (DateTime)row["BeginDate"];
-            this.finishdate = (DateTime)row["FinishDate"];
+            this.begindate = Convert.ToDateTime(GetCipher.Decrypt((string)row["BeginDate"]));
+            this.finishdate = Convert.ToDateTime(GetCipher.Decrypt((string)row["FinishDate"]));
             this.beginhour = (TimeSpan)row["BeginHour"];
             this.finishhour = (TimeSpan)row["FinishHour"];
             this.numjourney = (int)row["NumJourney"];

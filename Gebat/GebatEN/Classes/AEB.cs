@@ -22,21 +22,42 @@ using System;
 using System.Collections.Generic;
 using GebatCAD.Classes;
 using System.Data;
+using Cripto.Util;
 
 namespace GebatEN.Classes
 {
 	public abstract class AEB
 	{
+        private static Cipher cipher = null;
 		protected bool saved;
 		protected List<object> id = null;
 		protected ADL adl;
+
+        #region//Private Methods
 
         private void nullADL()
         {
             throw new NullReferenceException("The adl cannot be null");
         }
 
-		#region//Protected Methods
+        #endregion
+
+        #region//Protected Methods
+
+        /// <summary>
+        /// Obtiene un cifrador.
+        /// </summary>
+        protected static Cipher GetCipher
+        {
+            get
+            {
+                if (cipher == null)
+                {
+                    cipher = new Cipher("contra1", "salt1", "contras2", "salte2");
+                }
+                return cipher;
+            }
+        }
 
         /// <summary>
         /// Inserta el objeto actual en la base de datos.

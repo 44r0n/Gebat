@@ -31,13 +31,13 @@ namespace GebatEN.Classes
 
         protected override void insert()
         {
-            adl.ExecuteNonQuery("INSERT INTO familiars (DNI, Dossier, Income) VALUES (@DNI, @Dossier, @Income)", this.DNI, this.dossier, this.income);
+            adl.ExecuteNonQuery("INSERT INTO familiars (Id_Person, Dossier, Income) VALUES (@DNI, @Dossier, @Income)", this.id[0], this.dossier, GetCipher.Encrypt(this.income.ToString()));
             this.id.Add((int)adl.Last()["Id"]);
         }
 
         protected override void update()
         {
-            adl.ExecuteNonQuery("UPDATE familiars SET DNI = @DNI, Dossier = @Dossier, Income = @Income WHERE Id = @Id", this.DNI, this.dossier, this.income, (int)this.id[0]);
+            adl.ExecuteNonQuery("UPDATE familiars SET  Dossier = @Dossier, Income = @Income WHERE Id = @Id", this.dossier, GetCipher.Encrypt(this.income.ToString()), (int)this.id[0]);
         }
 
         protected override void delete()
@@ -61,12 +61,12 @@ namespace GebatEN.Classes
                 {
                     ret["Id"] = this.idfam;
                 }
-                ret["DNI"] = this.DNI;
+                ret["Id_Person"] = this.id[0];
                 if (dossier != 0)
                 {
                     ret["Dossier"] = dossier;
                 }
-                ret["Income"] = this.income;
+                ret["Income"] = GetCipher.Encrypt(this.income.ToString());
                 return ret;
             }
         }
@@ -80,7 +80,7 @@ namespace GebatEN.Classes
             base.FromRow(row);
             this.idfam = (int)row["Id"];
             this.dossier = (int)row["Dossier"];
-            this.income = (int)row["Income"];
+            this.income = Convert.ToInt32(GetCipher.Decrypt((string)row["Income"]));
             this.saved = true;
         }
 
@@ -198,7 +198,7 @@ namespace GebatEN.Classes
         public override List<AEBPerson> ReadByDNI(string dni)
         {
             List<AEBPerson> ret = new List<AEBPerson>();
-            DataTable table = adl.Select("SELECT * FROM familiardata WHERE DNI = @DNI", dni);
+            DataTable table = adl.Select("SELECT * FROM familiardata WHERE DNI = @DNI", GetCipher.Encrypt(dni));
             foreach (DataRow row in table.Rows)
             {
                 EBFamiliar newfamiliar = new EBFamiliar();

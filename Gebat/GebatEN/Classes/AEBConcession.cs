@@ -36,19 +36,19 @@ namespace GebatEN.Classes
         {
             if (finishDate != new DateTime())
             {
-                concesion.ExecuteNonQuery("INSERT INTO concessions (Dossier, BeginDate, FinishDate, Notes) VALUES (@Dossier, @BeginDate, @FinishDate, @Notes)", dossier, beginDate, finishDate, notes);
+                concesion.ExecuteNonQuery("INSERT INTO concessions (Dossier, BeginDate, FinishDate, Notes) VALUES (@Dossier, @BeginDate, @FinishDate, @Notes)", dossier, GetCipher.Encrypt(beginDate.ToShortDateString()), GetCipher.Encrypt(finishDate.ToShortDateString()), notes);
                 this.id.Add((int)concesion.Last()["Id"]);
             }
             else
             {
-                concesion.ExecuteNonQuery("INSERT INTO concessions (Dossier, BeginDate, Notes) VALUES (@Dossier, @BeginDate, @Notes)", dossier, beginDate, notes);
+                concesion.ExecuteNonQuery("INSERT INTO concessions (Dossier, BeginDate, Notes) VALUES (@Dossier, @BeginDate, @Notes)", dossier, GetCipher.Encrypt(beginDate.ToShortDateString()), notes);
                 this.id.Add((int)concesion.Last()["Id"]);
             }
         }
 
         protected override void update()
         {
-            concesion.ExecuteNonQuery("UPDATE concessions SET Dossier = @Dossier, BeginDate = @BeginDate, FinishDate = @FinishDate, Notes = @Notes WHERE Id = @Id", dossier, beginDate, finishDate, notes, (int)this.id[0]);
+            concesion.ExecuteNonQuery("UPDATE concessions SET Dossier = @Dossier, BeginDate = @BeginDate, FinishDate = @FinishDate, Notes = @Notes WHERE Id = @Id", dossier, GetCipher.Encrypt(beginDate.ToShortDateString()), GetCipher.Encrypt(finishDate.ToShortDateString()), notes, (int)this.id[0]);
         }
 
         protected override void delete()
@@ -72,8 +72,8 @@ namespace GebatEN.Classes
                 {
                     ret["Id"] = (int)this.id[0];
                 }
-                ret["BeginDate"] = this.beginDate;
-                ret["FinishDate"] = this.finishDate;
+                ret["BeginDate"] = GetCipher.Encrypt(this.beginDate.ToShortDateString());
+                ret["FinishDate"] = GetCipher.Encrypt(this.finishDate.ToShortDateString());
                 ret["Notes"] = this.notes;
                 return ret;
             }
@@ -91,10 +91,10 @@ namespace GebatEN.Classes
                 DataRow conrow = concesion.Select("SELECT * FROM concessions WHERE Id = @Id", (int)row["Id"]).Rows[0];
                 this.id.Add(conrow["Id"]);
                 this.dossier = (int)conrow["Dossier"];
-                this.beginDate = (DateTime)conrow["BeginDate"];
+                this.beginDate = Convert.ToDateTime(GetCipher.Decrypt((string)conrow["BeginDate"]));
                 if (conrow["FinishDate"] != DBNull.Value)
                 {
-                    this.finishDate = (DateTime)conrow["FinishDate"];
+                    this.finishDate = Convert.ToDateTime(GetCipher.Decrypt((string)conrow["FinishDate"]));
                 }
                 this.notes = (string)conrow["Notes"];
             }
