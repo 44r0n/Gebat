@@ -4,6 +4,7 @@ using GebatEN.Enums;
 using GebatCAD.Classes;
 using System.Data;
 using System.Collections.Generic;
+using Cripto.Util;
 
 namespace ENUnitTestProject.Stubs
 {
@@ -19,10 +20,10 @@ namespace ENUnitTestProject.Stubs
             DataRow conrow = adl.Select("SELECT * FROM concessions WHERE Id = @Id", (int)row["Id"]).Rows[0];
             this.id.Add(conrow["Id"]);
             this.dossier = (int)conrow["Dossier"];
-            this.beginDate = (DateTime)conrow["BeginDate"];
+            this.beginDate = Convert.ToDateTime(GetCipher.Decrypt((string)conrow["BeginDate"]));
             if (conrow["FinishDate"] != DBNull.Value)
             {
-                this.finishDate = (DateTime)conrow["FinishDate"];
+                this.finishDate = Convert.ToDateTime(GetCipher.Decrypt((string)conrow["FinishDate"]));
             }
             this.notes = (string)conrow["Notes"];
         }

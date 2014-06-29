@@ -112,10 +112,10 @@ namespace GebatEN.Classes
         private void loadPhones()
         {
             phones = new List<string>();
-            DataTable telfs = adlphones.Select("SELECT * FROM phones WHERE Owner = @Owner", this.dni);
+            DataTable telfs = adlphones.Select("SELECT * FROM phones WHERE Owner = @Owner", this.id[0]);
             foreach (DataRow row in telfs.Rows)
             {
-                phones.Add((string)row["PhoneNumber"]);
+                phones.Add(GetCipher.Decrypt((string)row["PhoneNumber"]));
             }
         }
 
@@ -195,7 +195,7 @@ namespace GebatEN.Classes
             if (row != null)
             {
                 this.id = new List<object>();
-                DataRow perrow = people.Select("SELECT * FROM people WHERE DNI = @DNI", row["DNI"]).Rows[0];
+                DataRow perrow = people.Select("SELECT * FROM people WHERE Id = @Id", row["Id_Person"]).Rows[0];
                 this.id.Add((int)perrow["Id"]);
                 this.dni = GetCipher.Decrypt((string)perrow["DNI"]);
                 this.name = GetCipher.Decrypt((string)perrow["Name"]);

@@ -71,6 +71,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cripto\Cripto.csproj">
+      <Project>{37aaf946-9896-4bda-baa8-ee3763627c7b}</Project>
+      <Name>Cripto</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GebatCAD\GebatADL.csproj">
       <Project>{f9cf59be-07ec-41e9-90b6-11a03f2f6e10}</Project>
       <Name>GebatADL</Name>

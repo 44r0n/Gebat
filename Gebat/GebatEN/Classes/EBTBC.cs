@@ -255,9 +255,9 @@ namespace GebatEN.Classes
         internal override void FromRow(DataRow row)
         {
             base.FromRow(row);
-            this.judgement = (string)row["Judgement"];
+            this.judgement = GetCipher.Decrypt((string)row["Judgement"]);
             this.idtbc = (int)row["Id"];
-            this.court = (string)row["Court"];
+            this.court = GetCipher.Decrypt((string)row["Court"]);
             this.begindate = Convert.ToDateTime(GetCipher.Decrypt((string)row["BeginDate"]));
             this.finishdate = Convert.ToDateTime(GetCipher.Decrypt((string)row["FinishDate"]));
             this.beginhour = (TimeSpan)row["BeginHour"];

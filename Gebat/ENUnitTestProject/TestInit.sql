@@ -160,9 +160,9 @@ CREATE TABLE IF NOT EXISTS Phones
 	CONSTRAINT fk_Phones_People FOREIGN KEY (Owner) REFERENCES People(Id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour,Crime from People inner join TBC on (People.Id = TBC.Id_Person);
+CREATE OR REPLACE VIEW TBCPeople as select TBC.Id, TBC.Id_Person, People.DNI, Name, Surname, BirthDate, Gender ,Judgement, Court, BeginDate, FinishDate, NumJourney, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, BeginHour, FinishHour,Crime from People inner join TBC on (People.Id = TBC.Id_Person);
 
-CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, People.DNI, Name, Surname, BirthDate, Gender, Dossier, Income FROM People inner join Familiars on (People.Id = Familiars.Id_Person);
+CREATE OR REPLACE VIEW FamiliarData as select Familiars.Id, Familiars.Id_Person, People.DNI, Name, Surname, BirthDate, Gender, Dossier, Income FROM People inner join Familiars on (People.Id = Familiars.Id_Person);
 
 CREATE OR REPLACE VIEW FrescoData as select Concessions.Id, Dossier, BeginDate, FinishDate, Notes FROM Concessions inner join Fresco on (Concessions.Id = Fresco.Concession);
 
