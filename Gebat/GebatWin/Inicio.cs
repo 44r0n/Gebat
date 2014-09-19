@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using GebatCAD.Classes;
+using GebatModel;
 
 namespace GebatWin
 {
@@ -36,7 +36,7 @@ namespace GebatWin
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            ADL.Password = maskedTextBoxPassword.Text;
+            /*ADL.Password = maskedTextBoxPassword.Text;
             if (ADL.AttemptConnection("GebatDataConnectionString"))
             {
                 Principal prin = new Principal(maskedTextBoxPassword.Text);
@@ -47,7 +47,13 @@ namespace GebatWin
             else
             {
                 MessageBox.Show("Imposible conectar.", "Aviso", MessageBoxButtons.OK);
-            }
+            }*/
+            /*AdminRepository adminr = new AdminRepository();
+            Admin administrador = new Admin();
+            administrador.Username = "Username";
+            administrador.Password = "contra";
+            adminr.AddAdmin(administrador);
+            Admin getad = adminr.GetAdmin("Username", "contra");*/
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using GebatEN.Classes;
+//using GebatEN.Classes;
 
 namespace GebatWin.Forms
 {
@@ -24,28 +24,28 @@ namespace GebatWin.Forms
 
         private void ExpedientePersonal_Load(object sender, EventArgs e)
         {
-            listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
+            //listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
         }
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
-            EBPersonalDosier exp = new EBPersonalDosier(textBoxObservaciones.Text);
+            /*EBPersonalDosier exp = new EBPersonalDosier(textBoxObservaciones.Text);
             textBoxObservaciones.Text = "";
             exp.Save();
-            listaExpedientes.Add(exp);
+            listaExpedientes.Add(exp);*/
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            AEB exp = listaExpedientes.Selected;
+            /*AEB exp = listaExpedientes.Selected;
             exp.Delete();
             listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
-            DisableButtons();
+            DisableButtons();*/
         }
 
         private void listaExpedientes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            buttonDelete.Enabled = true;
+            /*buttonDelete.Enabled = true;
             buttonAddFamiliar.Enabled = true;
             buttonAddConcessions.Enabled = true;
             listaFamiliares.Clean();
@@ -55,7 +55,7 @@ namespace GebatWin.Forms
             {
                 mostrarFamiliares(exp);
                 mostrarConcesiones(exp);
-            }
+            }*/
         }
 
         private void listaFamiliares_SelectedIndexChanged(object sender, EventArgs e)
@@ -65,7 +65,7 @@ namespace GebatWin.Forms
 
         private void listaConcesiones1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            AEBConcession con = (AEBConcession)listaConcesiones1.Selected;
+            /*AEBConcession con = (AEBConcession)listaConcesiones1.Selected;
             if (con != null)
             {
                 if (con.GetType() == typeof(EBFega))
@@ -77,23 +77,23 @@ namespace GebatWin.Forms
                     buttonChangeState.Enabled = false;
                 }
                 buttonDelConcesion.Enabled = true;
-            }
+            }*/
         }
 
         private void buttonDeleteFamiliar_Click(object sender, EventArgs e)
         {
-            EBFamiliar fam = (EBFamiliar)listaFamiliares.Selected;
+            /*EBFamiliar fam = (EBFamiliar)listaFamiliares.Selected;
             if (fam != null)
             {
                 fam.Delete();
                 listaFamiliares.Refrescar(fam.ReadAll());
             }
-            buttonDeleteFamiliar.Enabled = false;
+            buttonDeleteFamiliar.Enabled = false;*/
         }
 
         private void buttonDelConcesion_Click(object sender, EventArgs e)
         {
-            AEBConcession con = (AEBConcession)listaConcesiones1.Selected;
+            /*AEBConcession con = (AEBConcession)listaConcesiones1.Selected;
             if (con != null)
             {
                 EBPersonalDosier exp = (EBPersonalDosier)listaExpedientes.Selected;
@@ -103,12 +103,12 @@ namespace GebatWin.Forms
                     mostrarConcesiones(exp);
                 }
             }
-            buttonDelConcesion.Enabled = false;
+            buttonDelConcesion.Enabled = false;*/
         }
 
-        private void mostrarFamiliares(EBPersonalDosier expediente)
+        private void mostrarFamiliares(/*EBPersonalDosier expediente*/)
         {
-            List<EBFamiliar> fams = expediente.Familiars;
+            /*List<EBFamiliar> fams = expediente.Familiars;
             if (fams != null)
             {
                 foreach (EBFamiliar fam in fams)
@@ -116,12 +116,12 @@ namespace GebatWin.Forms
                     listaFamiliares.Add(fam);
                 }
             }
-            listaExpedientes.Show();
+            listaExpedientes.Show();*/
         }
 
-        private void mostrarConcesiones(EBPersonalDosier expediente)
+        private void mostrarConcesiones(/*EBPersonalDosier expediente*/)
         {
-            if (expediente.Concessions != null)
+            /*if (expediente.Concessions != null)
             {
                 listaConcesiones1.Clean();
                 foreach (AEBConcession con in expediente.Concessions)
@@ -129,38 +129,38 @@ namespace GebatWin.Forms
                     listaConcesiones1.Add((AEB)con);
                 }
             }
-            listaConcesiones1.Show();
+            listaConcesiones1.Show();*/
         }
 
         private void buttonAddFamiliar_Click(object sender, EventArgs e)
         {
-            GestionFamiliares gestionfam = new GestionFamiliares((EBPersonalDosier)listaExpedientes.Selected);
+           /* GestionFamiliares gestionfam = new GestionFamiliares((EBPersonalDosier)listaExpedientes.Selected);
             gestionfam.ShowDialog();
             gestionfam.BringToFront();
             DisableButtons();
             listaFamiliares.Clean();
-            mostrarFamiliares((EBPersonalDosier)listaExpedientes.Selected);
+            mostrarFamiliares((EBPersonalDosier)listaExpedientes.Selected);*/
             //listaExpedientes.Refrescar(new EBPersonalDosier().ReadAll());
         }
 
         private void buttonAddConcessions_Click(object sender, EventArgs e)
         {
-            Concesiones frescoform = new Concesiones((EBPersonalDosier)listaExpedientes.Selected);
+            /*Concesiones frescoform = new Concesiones((EBPersonalDosier)listaExpedientes.Selected);
             frescoform.ShowDialog();
             frescoform.BringToFront();
             DisableButtons();
             listaConcesiones1.Clean();
-            mostrarConcesiones((EBPersonalDosier)listaExpedientes.Selected);
+            mostrarConcesiones((EBPersonalDosier)listaExpedientes.Selected);*/
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ChangeState changeform = new ChangeState((EBFega)listaConcesiones1.Selected);
+            /*ChangeState changeform = new ChangeState((EBFega)listaConcesiones1.Selected);
             changeform.ShowDialog();
             changeform.BringToFront();
             DisableButtons();
             listaConcesiones1.Clean();
-            mostrarConcesiones((EBPersonalDosier)listaExpedientes.Selected);
+            mostrarConcesiones((EBPersonalDosier)listaExpedientes.Selected);*/
         }
     }
 }

@@ -60,8 +60,17 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,6 +81,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Combos\ComboBoxGeneral.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Combos\ComboDelito.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Combos\ComboFood.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Combos\ComboType.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\AddTelfs.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +153,36 @@
     <Compile Include="Inicio.Designer.cs">
       <DependentUpon>Inicio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lists\ListaConcesiones.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaDelito.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaExpedientes.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaFamiliares.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaFood.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaFoodIN.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaFoodOut.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaGeneral.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaTBC.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lists\ListaTypes.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Principal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,7 +233,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="GebatWin_ClaveTemporal.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -195,20 +246,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GebatCAD\GebatADL.csproj">
-      <Project>{f9cf59be-07ec-41e9-90b6-11a03f2f6e10}</Project>
-      <Name>GebatADL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GebatEN\GebatEB.csproj">
-      <Project>{017da2fb-2f1f-4037-a234-f2ac68267dec}</Project>
-      <Name>GebatEB</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WindowComponents\GebatWindowComponents.csproj">
-      <Project>{5410ec23-112f-4d26-895e-8c7dcd70da1b}</Project>
-      <Name>GebatWindowComponents</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -226,6 +263,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GebatModel\GebatModel.csproj">
+      <Project>{a1deeaf4-7757-4701-b465-612af65eb7bf}</Project>
+      <Name>GebatModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

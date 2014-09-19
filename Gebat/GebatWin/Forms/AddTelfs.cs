@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Windows.Forms;
-using GebatEN.Classes;
-using GebatEN.Enums;
 
 namespace GebatWin.Forms
 {
     public partial class AddTelfs : Form
     {
-        private AEBPerson persona;
+        //private AEBPerson persona;
 
-        public AddTelfs(AEBPerson persona)
+        public AddTelfs(/*AEBPerson persona*/)
         {
             InitializeComponent();
-            this.Text = "Añadir teléfono a " + persona.Name;
-            this.persona = persona;
+            /*this.Text = "Añadir teléfono a " + persona.Name;
+            this.persona = persona;*/
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -27,15 +25,15 @@ namespace GebatWin.Forms
 
         private void buttonAddTelf_Click(object sender, EventArgs e)
         {
-            this.persona.AddPhone(textBoxTelf.Text);
+            /*this.persona.AddPhone(textBoxTelf.Text);
             textBoxTelf.Text = "";
             textBoxTelf.Focus();
-            showTelfs();
+            showTelfs();*/
         }
 
         private void showTelfs()
         {
-            listViewTelfs.Items.Clear();
+            /*listViewTelfs.Items.Clear();
             int i = 0;
             foreach (string telf in persona.Phones)
             {
@@ -43,14 +41,14 @@ namespace GebatWin.Forms
                 item.SubItems.Add(telf);
                 listViewTelfs.Items.Add(item);
                 i++;
-            }
+            }*/
         }
 
         private void buttonDelTelf_Click(object sender, EventArgs e)
         {
 
-            persona.DelPhone(listViewTelfs.Items[listViewTelfs.SelectedIndices[0]].SubItems[1].Text);
-            showTelfs();
+           /* persona.DelPhone(listViewTelfs.Items[listViewTelfs.SelectedIndices[0]].SubItems[1].Text);
+            showTelfs();*/
         }
 
         private void AddTelfs_Load(object sender, EventArgs e)

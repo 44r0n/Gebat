@@ -18,13 +18,13 @@ namespace FormEncriptador
             InitializeComponent();
         }
 
-        private Cipher cipher = new Cipher("contra1", "salt1", "contras2", "salte2");
+        //private Cipher cipher = new Cipher("contra1", "salt1", "contras2", "salte2");
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string ciphered = cipher.Encrypt(textBox1.Text);
+            /*string ciphered = cipher.Encrypt(textBox1.Text);
             Clipboard.SetDataObject(ciphered);
-            MessageBox.Show("Copiado al portapapeles", "Copiado", MessageBoxButtons.OK);
+            MessageBox.Show("Copiado al portapapeles", "Copiado", MessageBoxButtons.OK);*/
         }
     }
 }

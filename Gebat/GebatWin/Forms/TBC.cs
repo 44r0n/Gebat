@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using GebatEN.Classes;
-using GebatEN.Enums;
 
 namespace GebatWin.Forms
 {
@@ -14,13 +12,13 @@ namespace GebatWin.Forms
 
         private void TBC_Load(object sender, EventArgs e)
         {
-            listaTBC.Refrescar(new EBTBC().ReadAll());
-            comboDelito.Refrescar(new EBCrime().ReadAll());
+            /*listaTBC.Refrescar(new EBTBC().ReadAll());
+            comboDelito.Refrescar(new EBCrime().ReadAll());*/
         }
 
         private void buttonInsert_Click(object sender, EventArgs e)
         {
-            EBTBC tbc;
+           /* EBTBC tbc;
             if(radioButtonHombre.Checked)
             {
                 tbc = new EBTBC(textBoxDNI.Text, textBoxEjecutoria.Text, textBoxNombre.Text, textBoxApellidos.Text, dateTimePickerFechaNac.Value, MyGender.Male, textBoxJuzgado.Text, dateTimePickerInicio.Value, dateTimePickerFin.Value, dateTimePickerBeginHour.Value.TimeOfDay, dateTimePickerFinishHour.Value.TimeOfDay,(EBCrime)comboDelito.Selected);
@@ -53,7 +51,7 @@ namespace GebatWin.Forms
             checkBoxDomingo.Checked = false;
             dateTimePickerFin.Value = DateTime.Today;
             dateTimePickerInicio.Value = DateTime.Today;
-            textBoxDNI.Focus();
+            textBoxDNI.Focus();*/
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -63,17 +61,17 @@ namespace GebatWin.Forms
 
         private void listaTBC_SelectedIndexChanged(object sender, EventArgs e)
         {
-            buttonDelete.Enabled = true;
+            /*buttonDelete.Enabled = true;
             buttonInicio.Enabled = true;
             buttonFin.Enabled = true;
             buttonFirmas.Enabled = true;
             buttonAddTelf.Enabled = true;
-            showTelfs((AEBPerson)listaTBC.Selected);
+            showTelfs((AEBPerson)listaTBC.Selected);*/
         }
 
-        private void showTelfs(AEBPerson persona)
+        private void showTelfs(/*AEBPerson persona*/)
         {
-            listViewTelfs.Items.Clear();
+            /*listViewTelfs.Items.Clear();
             if (persona != null)
             {
                 int i = 0;
@@ -84,20 +82,20 @@ namespace GebatWin.Forms
                     listViewTelfs.Items.Add(item);
                     i++;
                 }
-            }
+            }*/
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            AEB tbc = listaTBC.Selected;
+            /*AEB tbc = listaTBC.Selected;
             tbc.Delete();
             listaTBC.Refrescar(new EBTBC().ReadAll());
-            buttonDelete.Enabled = false;
+            buttonDelete.Enabled = false;*/
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            EBTBC tbc = (EBTBC)listaTBC.Selected;
+            /*EBTBC tbc = (EBTBC)listaTBC.Selected;
             SaveFileDialog savedialog = new SaveFileDialog();
             savedialog.Filter = "Archivo PDF|*.pdf";
             savedialog.FileName = "Firmas de " + tbc.Name + " " + tbc.DNI + ".pdf";
@@ -108,12 +106,12 @@ namespace GebatWin.Forms
             {
                 tbc.SignaturesToPDF(savedialog.FileName);
                 System.Diagnostics.Process.Start(savedialog.FileName);
-            }
+            }*/
         }
 
         private void buttonInicio_Click(object sender, EventArgs e)
         {
-            EBTBC tbc = (EBTBC)listaTBC.Selected;
+            /*EBTBC tbc = (EBTBC)listaTBC.Selected;
             SaveFileDialog savedialog = new SaveFileDialog();
             savedialog.FileName = "Inicio de " + tbc.Name + " " + tbc.DNI + ".pdf";
             savedialog.Filter = "Archivo PDF|*.pdf";
@@ -124,12 +122,12 @@ namespace GebatWin.Forms
             {
                 tbc.BeginSentenceToPDF(savedialog.FileName);
                 System.Diagnostics.Process.Start(savedialog.FileName);
-            }
+            }*/
         }
 
         private void buttonFin_Click(object sender, EventArgs e)
         {
-            EBTBC tbc = (EBTBC)listaTBC.Selected;
+            /*EBTBC tbc = (EBTBC)listaTBC.Selected;
             SaveFileDialog savedialog = new SaveFileDialog();
             savedialog.FileName = "Fin de de " + tbc.Name + " " + tbc.DNI + ".pdf";
             savedialog.Filter = "Archivo PDF|*.pdf";
@@ -140,16 +138,16 @@ namespace GebatWin.Forms
             {
                 tbc.FinishSentenceToPDF(savedialog.FileName);
                 System.Diagnostics.Process.Start(savedialog.FileName);
-            }
+            }*/
         }
 
         private void buttonAddTelf_Click(object sender, EventArgs e)
         {
-            AEBPerson selected = (AEBPerson)listaTBC.Selected;
+            /*AEBPerson selected = (AEBPerson)listaTBC.Selected;
             AddTelfs addTelfsForm = new AddTelfs(selected);
             addTelfsForm.ShowDialog();
             addTelfsForm.BringToFront();
-            showTelfs(selected);
+            showTelfs(selected);*/
         }
     }
 }

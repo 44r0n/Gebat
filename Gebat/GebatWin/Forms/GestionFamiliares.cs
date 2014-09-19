@@ -1,33 +1,31 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using GebatEN.Classes;
-using GebatEN.Enums;
 
 namespace GebatWin.Forms
 {
     public partial class GestionFamiliares : Form
     {
-        private EBPersonalDosier expediente;
+       // private EBPersonalDosier expediente;
 
-        public GestionFamiliares(EBPersonalDosier expediente)
+        public GestionFamiliares(/*EBPersonalDosier expediente*/)
         {
             InitializeComponent();
-            this.expediente = expediente;
+            /*this.expediente = expediente;
             mostrarFamiliares();
-            numericUpDownIncome.Maximum = int.MaxValue;
+            numericUpDownIncome.Maximum = int.MaxValue;*/
         }
 
         private void mostrarFamiliares()
         {
-            listaFamiliares.Clean();
+            /*listaFamiliares.Clean();
             if (expediente.Familiars != null)
             {
                 foreach (EBFamiliar fam in expediente.Familiars)
                 {
                     listaFamiliares.Add(fam);
                 }
-            }
+            }*/
         }
 
         private void clearForm()
@@ -42,7 +40,7 @@ namespace GebatWin.Forms
 
         private void buttonAddFamiliar_Click(object sender, EventArgs e)
         {
-            if (radioButtonHombre.Checked)
+            /*if (radioButtonHombre.Checked)
             {
                 expediente.AddFamiliar(new EBFamiliar(textBoxDNI.Text,textBoxNombre.Text,textBoxApellidos.Text,dateTimePickerFechaNacimiento.Value,MyGender.Male,(int)this.expediente.Id[0],(int)numericUpDownIncome.Value));
             }
@@ -53,12 +51,12 @@ namespace GebatWin.Forms
             }
 
             mostrarFamiliares();
-            clearForm();
+            clearForm();*/
         }
 
-        private void showTelfs(AEBPerson persona)
+        private void showTelfs(/*AEBPerson persona*/)
         {
-            listViewTelfs.Items.Clear();
+            /*listViewTelfs.Items.Clear();
             if (persona != null)
             {
                 int i = 0;
@@ -69,22 +67,22 @@ namespace GebatWin.Forms
                     listViewTelfs.Items.Add(item);
                     i++;
                 }
-            }
+            }*/
         }
 
         private void listaFamiliares_SelectedIndexChanged(object sender, EventArgs e)
         {
-            buttonAddTelf.Enabled = true;
-            showTelfs((AEBPerson)listaFamiliares.Selected);
+            /*buttonAddTelf.Enabled = true;
+            showTelfs((AEBPerson)listaFamiliares.Selected);*/
         }
 
         private void buttonAddTelf_Click(object sender, EventArgs e)
         {
-            AEBPerson selected = (AEBPerson)listaFamiliares.Selected;
+            /*AEBPerson selected = (AEBPerson)listaFamiliares.Selected;
             AddTelfs addTelfsForm = new AddTelfs(selected);
             addTelfsForm.ShowDialog();
             addTelfsForm.BringToFront();
-            showTelfs(selected);
+            showTelfs(selected);*/
         }
     }
 }

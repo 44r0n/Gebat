@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GebatCAD.Classes;
 
 namespace GebatWin
 {
@@ -16,15 +15,15 @@ namespace GebatWin
         public Principal(string contraseña)
         {
             InitializeComponent();
-            ADL.Password = contraseña;
-            ADL.Connect("GebatDataConnectionString");
+            /*ADL.Password = contraseña;
+            ADL.Connect("GebatDataConnectionString");*/
             
         }
 
         private void Principal_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ADL.Disconnect();
-            Application.Exit();
+            /*ADL.Disconnect();
+            Application.Exit();*/
         }
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)

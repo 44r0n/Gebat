@@ -9,14 +9,14 @@ namespace Cripto.Util
     {
         #region//Attributes
 
-        private string[] passs;
-        private string[] salts;
+        private static string[] passs;
+        private static string[] salts;
 
         #endregion
 
         #region//Pivate Methods
 
-        private string Encrypt<T>(string value, string password, string salt)
+        private static string Encrypt<T>(string value, string password, string salt)
             where T : SymmetricAlgorithm, new()
         {
             DeriveBytes rgb = new Rfc2898DeriveBytes(password, Encoding.Unicode.GetBytes(salt));
@@ -40,7 +40,7 @@ namespace Cripto.Util
             }
         }
 
-        private String Decrypt<T>(String ciphered, string password, string salt)
+        private static String Decrypt<T>(String ciphered, string password, string salt)
             where T : SymmetricAlgorithm, new()
         {
             DeriveBytes rgb = new Rfc2898DeriveBytes(password, Encoding.Unicode.GetBytes(salt));
@@ -67,7 +67,7 @@ namespace Cripto.Util
         #region//Public Methods
 
         /// <summary>
-        /// Constructor del cifrador, encripta y desencripta con 3 rondas.
+        /// Establece las contraseñas.
         /// </summary>
         /// <param name="pass1">Contraseña de la primera ronda.</param>
         /// <param name="salt1">Sal de la primera ronda</param>
@@ -75,7 +75,7 @@ namespace Cripto.Util
         /// <param name="salt2">Sal de la segunda ronda.</param>
         /// <param name="pass3">Contraseña de la tercera ronda.</param>
         /// <param name="salt3">Sal de la tercera ronda.</param>
-        public Cipher(string pass1, string salt1, string pass2, string salt2)
+        public static void SetPassWords(string pass1, string salt1, string pass2, string salt2)
         {
             passs = new string[2];
             salts = new string[2];
@@ -89,8 +89,8 @@ namespace Cripto.Util
         /// Método para encriptar el texto entrante, produce una salida encriptada.
         /// </summary>
         /// <param name="toCrypt">Texto a encriptar.</param>
-        /// <returns></returns>
-        public string Encrypt(string toCrypt)
+        /// <returns>Texto encriptado</returns>
+        public static string Encrypt(string toCrypt)
         {
             string cifrado = Encrypt<TripleDESCryptoServiceProvider>(toCrypt, passs[0], salts[0]);
             cifrado = Encrypt<RijndaelManaged>(cifrado, passs[1], salts[1]);
@@ -101,8 +101,8 @@ namespace Cripto.Util
         /// Método para desencriptar el texto entrante, produce la salida desencriptada.
         /// </summary>
         /// <param name="toDecrypt">Texto a desencriptar.</param>
-        /// <returns></returns>
-        public string Decrypt(string toDecrypt)
+        /// <returns>Texto desencriptado.</returns>
+        public static string Decrypt(string toDecrypt)
         {
             string descifrado = Decrypt<RijndaelManaged>(toDecrypt, passs[1], salts[1]);
             descifrado = Decrypt<TripleDESCryptoServiceProvider>(descifrado, passs[0], salts[0]);

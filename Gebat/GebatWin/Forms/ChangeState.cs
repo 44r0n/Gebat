@@ -7,24 +7,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GebatEN.Classes;
-using GebatEN.Enums;
+/*using GebatEN.Classes;
+using GebatEN.Enums;*/
 
 namespace GebatWin.Forms
 {
     public partial class ChangeState : Form
     {
-        EBFega fega;
+        //EBFega fega;
 
-        public ChangeState(EBFega fega)
+        public ChangeState(/*EBFega fega*/)
         {
             InitializeComponent();
-            this.fega = fega;
+            //this.fega = fega;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            switch (comboBoxState.SelectedIndex)
+            /*switch (comboBoxState.SelectedIndex)
             {
                 case 0:
                     fega.State = FegaStates.Awaiting;
@@ -37,7 +37,7 @@ namespace GebatWin.Forms
                     break;
             }
             fega.Save();
-            this.Close();
+            this.Close();*/
         }
     }
 }

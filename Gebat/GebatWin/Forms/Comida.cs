@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using GebatEN.Classes;
 
 namespace GebatWin.Forms
 {
@@ -20,12 +19,12 @@ namespace GebatWin.Forms
 
         private void LoadComponents()
         {            
-            comboType.Refrescar(new EBType("").ReadAll());
+            /*comboType.Refrescar(new EBType("").ReadAll());
             listaFoodIN.Refrescar(new EBFoodIN().ReadAll());
             comboFoodSalida.Refrescar(new EBFood("",false).ReadAll());
             comboFood.Refrescar(new EBFood("",false).ReadAll());
             listaFoodOut.Refrescar(new EBFoodOut().ReadAll());
-            listaFood.Refrescar(new EBFood("",false).ReadAll());
+            listaFood.Refrescar(new EBFood("",false).ReadAll());*/
         }
 
         #region//Control Radio
@@ -72,7 +71,7 @@ namespace GebatWin.Forms
 
         private void buttonInsert_Click(object sender, EventArgs e)
         {
-            if (radioButtonNuevo.Checked)
+           /* if (radioButtonNuevo.Checked)
             {
                 EBFood newfood = new EBFood(textBoxNuevo.Text, checkBoxFega.Checked,(EBType)comboType.Selected);
                 newfood.Save();
@@ -94,12 +93,12 @@ namespace GebatWin.Forms
             numericUpDown.Value = 0;
             comboType.SelectedIndex = -1;
             comboType.Text = "";
-            dateTimePicker.Value = DateTime.Today;
+            dateTimePicker.Value = DateTime.Today;*/
         }
 
         private void comboFoodSalida_SelectedIndexChanged(object sender, EventArgs e)
         {
-            numericUpDownSalida.Maximum = ((EBFood)comboFoodSalida.Selected).Quantity;
+           // numericUpDownSalida.Maximum = ((EBFood)comboFoodSalida.Selected).Quantity;
         }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
@@ -111,12 +110,12 @@ namespace GebatWin.Forms
 
         private void buttonSalida_Click(object sender, EventArgs e)
         {
-            EBFood salida = (EBFood)comboFoodSalida.Selected;
+            /*EBFood salida = (EBFood)comboFoodSalida.Selected;
             salida.Remove((int)numericUpDownSalida.Value, dateTimePickerSalida.Value);
             LoadComponents();
             comboFoodSalida.SelectedIndex = -1;
             comboFoodSalida.Text = "";
-            numericUpDownSalida.Value = 0;
+            numericUpDownSalida.Value = 0;*/
         }
     }
 }

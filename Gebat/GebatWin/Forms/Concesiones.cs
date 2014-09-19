@@ -7,18 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GebatEN.Classes;
-using GebatEN.Enums;
 
 namespace GebatWin.Forms
 {
     public partial class Concesiones : Form
     {
-        private EBPersonalDosier dossier;
-        public Concesiones(EBPersonalDosier dossier)
+        //private EBPersonalDosier dossier;
+        public Concesiones(/*EBPersonalDosier dossier*/)
         {
             InitializeComponent();
-            this.dossier = dossier;
+            //this.dossier = dossier;
         }
 
         private void Fresco_Load(object sender, EventArgs e)
@@ -40,29 +38,29 @@ namespace GebatWin.Forms
 
         private void setListaConcesiones()
         {
-            listaConcesiones1.Clean();
+            /*listaConcesiones1.Clean();
             foreach (AEBConcession con in dossier.Concessions)
             {
                 listaConcesiones1.Add((AEB)con);
             }
-            listaConcesiones1.Show();
+            listaConcesiones1.Show();*/
         }
 
         private void addFresco()
         {
-            EBFresco fresco = new EBFresco();
+           /* EBFresco fresco = new EBFresco();
             fresco.BeginDate = dateTimePickerBegin.Value;
             if (dateTimePickerFinish.Enabled)
             {
                 fresco.FinishDate = dateTimePickerFinish.Value;
             }
             fresco.Notes = textBoxObservations.Text;
-            dossier.AddConcession(fresco);
+            dossier.AddConcession(fresco);*/
         }
 
         private void addFega()
         {
-            EBFega fega = new EBFega();
+            /*EBFega fega = new EBFega();
             fega.BeginDate = dateTimePickerBegin.Value;
             if (dateTimePickerFinish.Enabled)
             {
@@ -81,7 +79,7 @@ namespace GebatWin.Forms
                     fega.State = FegaStates.Aproved;
                     break;
             }
-            dossier.AddConcession(fega);
+            dossier.AddConcession(fega);*/
         }
 
         private void button1_Click(object sender, EventArgs e)
