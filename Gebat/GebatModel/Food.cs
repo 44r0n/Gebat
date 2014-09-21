@@ -17,6 +17,7 @@ namespace GebatModel
         public Food()
         {
             this.EntryFood = new HashSet<EntryFood>();
+            this.OutgoingFood = new HashSet<OutgoingFood>();
         }
     
         public int IdFood { get; private set; }
@@ -26,5 +27,6 @@ namespace GebatModel
     
         public virtual Type Type { get; set; }
         public virtual ICollection<EntryFood> EntryFood { get; private set; }
+        public virtual ICollection<OutgoingFood> OutgoingFood { get; set; }
     }
 }

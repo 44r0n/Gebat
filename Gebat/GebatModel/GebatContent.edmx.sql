@@ -2,11 +2,14 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/19/2014 16:51:24
+-- Date Created: 09/21/2014 19:22:07
 -- Generated from EDMX file: D:\Proyectos\Gebat\Gebat\GebatModel\GebatContent.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
+GO
+USE [GebatDataBase];
+GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
 
@@ -75,6 +78,15 @@ CREATE TABLE [dbo].[EntryFood] (
 );
 GO
 
+-- Creating table 'OutgoingFood'
+CREATE TABLE [dbo].[OutgoingFood] (
+    [IdOutgoingFood] int IDENTITY(1,1) NOT NULL,
+    [Quantity] int  NOT NULL,
+    [Date] datetime  NOT NULL,
+    [FoodIdFood] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -101,6 +113,12 @@ GO
 ALTER TABLE [dbo].[EntryFood]
 ADD CONSTRAINT [PK_EntryFood]
     PRIMARY KEY CLUSTERED ([IdEntryFood] ASC);
+GO
+
+-- Creating primary key on [IdOutgoingFood] in table 'OutgoingFood'
+ALTER TABLE [dbo].[OutgoingFood]
+ADD CONSTRAINT [PK_OutgoingFood]
+    PRIMARY KEY CLUSTERED ([IdOutgoingFood] ASC);
 GO
 
 -- --------------------------------------------------
@@ -134,6 +152,21 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_FoodEntryFood'
 CREATE INDEX [IX_FK_FoodEntryFood]
 ON [dbo].[EntryFood]
+    ([FoodIdFood]);
+GO
+
+-- Creating foreign key on [FoodIdFood] in table 'OutgoingFood'
+ALTER TABLE [dbo].[OutgoingFood]
+ADD CONSTRAINT [FK_FoodOutgoingFood]
+    FOREIGN KEY ([FoodIdFood])
+    REFERENCES [dbo].[Food]
+        ([IdFood])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_FoodOutgoingFood'
+CREATE INDEX [IX_FK_FoodOutgoingFood]
+ON [dbo].[OutgoingFood]
     ([FoodIdFood]);
 GO
 

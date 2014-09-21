@@ -67,11 +67,9 @@
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
     <Compile Include="Classes\AdminRepository.cs" />
-    <Compile Include="Classes\EntryFoodRepository.cs" />
     <Compile Include="Classes\FoodRepository.cs" />
     <Compile Include="Classes\Interfaces\BaseRepository.cs" />
     <Compile Include="Classes\Interfaces\IAdminRepository.cs" />
-    <Compile Include="Classes\Interfaces\IEntryFoodRepository.cs" />
     <Compile Include="Classes\Interfaces\IFoodRepository.cs" />
     <Compile Include="Classes\Interfaces\ITypeRepository.cs" />
     <Compile Include="Classes\Partials\Food.cs" />
@@ -97,6 +95,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GebatContent.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="OutgoingFood.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Type.cs">

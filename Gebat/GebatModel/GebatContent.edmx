@@ -10,6 +10,7 @@
     <EntitySet Name="Type" EntityType="GebatDataBaseModel.Store.Type" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Food" EntityType="GebatDataBaseModel.Store.Food" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="EntryFood" EntityType="GebatDataBaseModel.Store.EntryFood" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OutgoingFood" EntityType="GebatDataBaseModel.Store.OutgoingFood" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="TypeFood" Association="GebatDataBaseModel.Store.TypeFood">
       <End Role="Type" EntitySet="Type" />
       <End Role="Food" EntitySet="Food" />
@@ -17,6 +18,10 @@
     <AssociationSet Name="FoodEntryFood" Association="GebatDataBaseModel.Store.FoodEntryFood">
       <End Role="Food" EntitySet="Food" />
       <End Role="EntryFood" EntitySet="EntryFood" />
+    </AssociationSet>
+    <AssociationSet Name="FoodOutgoingFood" Association="GebatDataBaseModel.Store.FoodOutgoingFood">
+      <End Role="Food" EntitySet="Food" />
+      <End Role="OutgoingFood" EntitySet="OutgoingFood" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Admin">
@@ -52,6 +57,15 @@
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="FoodIdFood" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="OutgoingFood">
+    <Key>
+      <PropertyRef Name="IdOutgoingFood" />
+    </Key>
+    <Property Name="IdOutgoingFood" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="FoodIdFood" Type="int" Nullable="false" />
+  </EntityType>
   <Association Name="TypeFood">
     <End Role="Type" Type="GebatDataBaseModel.Store.Type" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -74,6 +88,18 @@
         <PropertyRef Name="IdFood" />
       </Principal>
       <Dependent Role="EntryFood">
+        <PropertyRef Name="FoodIdFood" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FoodOutgoingFood">
+    <End Role="Food" Type="GebatDataBaseModel.Store.Food" Multiplicity="1" />
+    <End Role="OutgoingFood" Type="GebatDataBaseModel.Store.OutgoingFood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="IdFood" />
+      </Principal>
+      <Dependent Role="OutgoingFood">
         <PropertyRef Name="FoodIdFood" />
       </Dependent>
     </ReferentialConstraint>
@@ -103,6 +129,11 @@
             <End Role="Food" EntitySet="Food" />
             <End Role="EntryFood" EntitySet="EntryFood" />
           </AssociationSet>
+          <EntitySet Name="OutgoingFood" EntityType="GebatDataBaseModel.OutgoingFood" />
+          <AssociationSet Name="FoodOutgoingFood" Association="GebatDataBaseModel.FoodOutgoingFood">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="OutgoingFood" EntitySet="OutgoingFood" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Type">
           <Key>
@@ -121,6 +152,7 @@
           <NavigationProperty Name="Type" Relationship="GebatDataBaseModel.TypeFood" FromRole="Food" ToRole="Type" />
           <Property Name="TypeIdType" Type="Int32" Nullable="false" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" a:SetterAccess="Private" />
           <NavigationProperty Name="EntryFood" Relationship="GebatDataBaseModel.FoodEntryFood" FromRole="Food" ToRole="EntryFood" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <NavigationProperty Name="OutgoingFood" Relationship="GebatDataBaseModel.FoodOutgoingFood" FromRole="Food" ToRole="OutgoingFood" />
         </EntityType>
         <Association Name="TypeFood">
           <End Type="GebatDataBaseModel.Type" Role="Type" Multiplicity="1" >
@@ -155,6 +187,27 @@
               <PropertyRef Name="IdFood" />
             </Principal>
             <Dependent Role="EntryFood">
+              <PropertyRef Name="FoodIdFood" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OutgoingFood">
+          <Key>
+            <PropertyRef Name="IdOutgoingFood" />
+          </Key>
+          <Property Name="IdOutgoingFood" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="Date" Type="DateTime" Nullable="false" a:SetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="FoodIdFood" Type="Int32" Nullable="false" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        </EntityType>
+        <Association Name="FoodOutgoingFood">
+          <End Type="GebatDataBaseModel.Food" Role="Food" Multiplicity="1" />
+          <End Type="GebatDataBaseModel.OutgoingFood" Role="OutgoingFood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="IdFood" />
+            </Principal>
+            <Dependent Role="OutgoingFood">
               <PropertyRef Name="FoodIdFood" />
             </Dependent>
           </ReferentialConstraint>
@@ -196,6 +249,16 @@
       <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.EntryFood)">
         <MappingFragment StoreEntitySet="EntryFood">
           <ScalarProperty Name="IdEntryFood" ColumnName="IdEntryFood" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="FoodIdFood" ColumnName="FoodIdFood" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OutgoingFood">
+      <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.OutgoingFood)">
+        <MappingFragment StoreEntitySet="OutgoingFood">
+          <ScalarProperty Name="IdOutgoingFood" ColumnName="IdOutgoingFood" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="FoodIdFood" ColumnName="FoodIdFood" />

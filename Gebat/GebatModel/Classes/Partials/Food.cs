@@ -8,20 +8,10 @@ namespace GebatModel
 {
     public partial class Food
     {
-        IEntryFoodRepository entryfoodrepo = new EntryFoodRepository();
+        //TODO: asegura que es así.
+        private static DateTime today = DateTime.MinValue;
 
-        //TODO: refactor here
-        public void AddQuantity(int quantity)
-        {
-            this.Quantity += quantity;
-            EntryFood entry = new EntryFood();
-            entry.Quantity = quantity;
-            entry.Date = DateTime.Now;
-            entry.FoodIdFood = this.IdFood;
-            entryfoodrepo.AddEntry(entry);
-        }
-
-        public void AddQuantity(int quantity, DateTime date)
+        private void addQuantity(int quantity, DateTime date)
         {
             this.Quantity += quantity;
             EntryFood entry = new EntryFood();
@@ -29,12 +19,56 @@ namespace GebatModel
             entry.Date = date;
             entry.FoodIdFood = this.IdFood;
             this.EntryFood.Add(entry);
-            entryfoodrepo.AddEntry(entry);
+        }
+
+        private void removeQuantity(int quantity, DateTime date)
+        {
+            this.Quantity -= quantity;
+            OutgoingFood outgoing = new OutgoingFood();
+            outgoing.Quantity = quantity;
+            outgoing.Date = date;
+            outgoing.FoodIdFood = this.IdFood;
+            this.OutgoingFood.Add(outgoing);
+        }
+
+        public static void SetToday(DateTime date)
+        {
+            today = date;
+        }
+
+        public void AddQuantity(int quantity)
+        {
+            //TODO: refactor this.
+            if(today == DateTime.MinValue)
+            {
+                this.addQuantity(quantity, DateTime.Now);
+            }
+            else
+            {
+                this.addQuantity(quantity, today);
+            }
+        }
+
+        public void AddQuantity(int quantity, DateTime date)
+        {
+            this.addQuantity(quantity, date);
         }
 
         public void RemoveQuantity(int quantity)
         {
-            this.Quantity -= quantity;
+            if(today == DateTime.MinValue)
+            {
+                this.removeQuantity(quantity, DateTime.Now);
+            }
+            else
+            {
+                this.removeQuantity(quantity, today);
+            }
+        }
+
+        public void RemoveQuantity(int quantity, DateTime date)
+        {
+            this.removeQuantity(quantity, date);
         }
     }
 }
