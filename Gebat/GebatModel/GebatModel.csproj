@@ -67,13 +67,18 @@
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
     <Compile Include="Classes\AdminRepository.cs" />
+    <Compile Include="Classes\EntryFoodRepository.cs" />
     <Compile Include="Classes\FoodRepository.cs" />
     <Compile Include="Classes\Interfaces\BaseRepository.cs" />
     <Compile Include="Classes\Interfaces\IAdminRepository.cs" />
+    <Compile Include="Classes\Interfaces\IEntryFoodRepository.cs" />
     <Compile Include="Classes\Interfaces\IFoodRepository.cs" />
     <Compile Include="Classes\Interfaces\ITypeRepository.cs" />
     <Compile Include="Classes\Partials\Food.cs" />
     <Compile Include="Classes\TypeRepository.cs" />
+    <Compile Include="EntryFood.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
+    </Compile>
     <Compile Include="Exceptions\AdminException.cs" />
     <Compile Include="Food.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>

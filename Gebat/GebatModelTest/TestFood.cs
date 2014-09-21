@@ -23,6 +23,8 @@ namespace GebatModelTest
         [TestCleanup]
         public void Clean()
         {
+            EntryFoodStub stubentry = new EntryFoodStub();
+            stubentry.ClearEntries();
             TypeRepoStub stubtype = new TypeRepoStub();
             stubtype.ClearType();
             FoodRepoStub stub = new FoodRepoStub();
@@ -79,6 +81,7 @@ namespace GebatModelTest
             food.AddQuantity(3);
             food.RemoveQuantity(1);
             foodrepo.UpdateFood(food);
+            food = foodrepo.SearchFood("Arro")[0];
             Assert.AreEqual(2, food.Quantity);
         }
     }

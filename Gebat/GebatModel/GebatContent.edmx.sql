@@ -2,14 +2,11 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/19/2014 12:04:31
+-- Date Created: 09/19/2014 16:51:24
 -- Generated from EDMX file: D:\Proyectos\Gebat\Gebat\GebatModel\GebatContent.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
-GO
-USE [GebatDataBase];
-GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
 
@@ -19,6 +16,9 @@ GO
 
 IF OBJECT_ID(N'[dbo].[FK_TypeFood]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Food] DROP CONSTRAINT [FK_TypeFood];
+GO
+IF OBJECT_ID(N'[dbo].[FK_FoodEntryFood]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[EntryFood] DROP CONSTRAINT [FK_FoodEntryFood];
 GO
 
 -- --------------------------------------------------
@@ -33,6 +33,9 @@ IF OBJECT_ID(N'[dbo].[Type]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Food]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Food];
+GO
+IF OBJECT_ID(N'[dbo].[EntryFood]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EntryFood];
 GO
 
 -- --------------------------------------------------
@@ -63,6 +66,15 @@ CREATE TABLE [dbo].[Food] (
 );
 GO
 
+-- Creating table 'EntryFood'
+CREATE TABLE [dbo].[EntryFood] (
+    [IdEntryFood] int IDENTITY(1,1) NOT NULL,
+    [Quantity] int  NOT NULL,
+    [Date] datetime  NOT NULL,
+    [FoodIdFood] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -85,6 +97,12 @@ ADD CONSTRAINT [PK_Food]
     PRIMARY KEY CLUSTERED ([IdFood] ASC);
 GO
 
+-- Creating primary key on [IdEntryFood] in table 'EntryFood'
+ALTER TABLE [dbo].[EntryFood]
+ADD CONSTRAINT [PK_EntryFood]
+    PRIMARY KEY CLUSTERED ([IdEntryFood] ASC);
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
@@ -102,6 +120,21 @@ GO
 CREATE INDEX [IX_FK_TypeFood]
 ON [dbo].[Food]
     ([TypeIdType]);
+GO
+
+-- Creating foreign key on [FoodIdFood] in table 'EntryFood'
+ALTER TABLE [dbo].[EntryFood]
+ADD CONSTRAINT [FK_FoodEntryFood]
+    FOREIGN KEY ([FoodIdFood])
+    REFERENCES [dbo].[Food]
+        ([IdFood])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_FoodEntryFood'
+CREATE INDEX [IX_FK_FoodEntryFood]
+ON [dbo].[EntryFood]
+    ([FoodIdFood]);
 GO
 
 -- --------------------------------------------------

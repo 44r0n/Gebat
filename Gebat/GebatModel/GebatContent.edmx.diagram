@@ -9,6 +9,8 @@
         <EntityTypeShape EntityType="GebatDataBaseModel.Type" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="GebatDataBaseModel.Food" Width="1.5" PointX="6" PointY="0.625" />
         <AssociationConnector Association="GebatDataBaseModel.TypeFood" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.EntryFood" Width="1.5" PointX="9.75" PointY="4.125" />
+        <AssociationConnector Association="GebatDataBaseModel.FoodEntryFood" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

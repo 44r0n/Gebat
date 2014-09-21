@@ -12,19 +12,11 @@ namespace GebatModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Food
+    public partial class EntryFood
     {
-        public Food()
-        {
-            this.EntryFood = new HashSet<EntryFood>();
-        }
-    
-        public int IdFood { get; private set; }
-        public string Name { get; set; }
-        public int Quantity { get; private set; }
-        private int TypeIdType { get; set; }
-    
-        public virtual Type Type { get; set; }
-        public virtual ICollection<EntryFood> EntryFood { get; private set; }
+        public int IdEntryFood { get; set; }
+        public int Quantity { get; internal set; }
+        public System.DateTime Date { get; internal set; }
+        public int FoodIdFood { get; internal set; }
     }
 }

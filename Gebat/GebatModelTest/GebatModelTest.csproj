@@ -64,11 +64,13 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stubs\AdminRepoStub.cs" />
+    <Compile Include="Stubs\EntryFoodStub.cs" />
     <Compile Include="Stubs\FoodRepoStub.cs" />
     <Compile Include="Stubs\TypeRepoStub.cs" />
     <Compile Include="TestAdmin.cs" />
     <Compile Include="TestType.cs" />
     <Compile Include="TestFood.cs" />
+    <Compile Include="TestEntryFood.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GebatModel\GebatModel.csproj">

@@ -28,5 +28,6 @@ namespace GebatModel
         public virtual DbSet<Admin> Admin { get; set; }
         public virtual DbSet<Type> Type { get; set; }
         public virtual DbSet<Food> Food { get; set; }
+        public virtual DbSet<EntryFood> EntryFood { get; set; }
     }
 }

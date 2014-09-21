@@ -32,7 +32,7 @@ namespace GebatModel
         /// Searches the Type in the database with the given name.
         /// </summary>
         /// <param name="name">Name of the type.</param>
-        /// <returns>List of Types with the given name or null.</returns>
+        /// <returns>List of Types with the given name.</returns>
         List<Type> SearchType(string name);
     }
 }
