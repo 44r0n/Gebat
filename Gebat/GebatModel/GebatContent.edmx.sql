@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/21/2014 19:22:07
+-- Date Created: 09/23/2014 18:53:22
 -- Generated from EDMX file: D:\Proyectos\Gebat\Gebat\GebatModel\GebatContent.edmx
 -- --------------------------------------------------
 
@@ -23,6 +23,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_FoodEntryFood]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[EntryFood] DROP CONSTRAINT [FK_FoodEntryFood];
 GO
+IF OBJECT_ID(N'[dbo].[FK_FoodOutgoingFood]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OutgoingFood] DROP CONSTRAINT [FK_FoodOutgoingFood];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -39,6 +42,9 @@ IF OBJECT_ID(N'[dbo].[Food]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[EntryFood]', 'U') IS NOT NULL
     DROP TABLE [dbo].[EntryFood];
+GO
+IF OBJECT_ID(N'[dbo].[OutgoingFood]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OutgoingFood];
 GO
 
 -- --------------------------------------------------
@@ -87,6 +93,15 @@ CREATE TABLE [dbo].[OutgoingFood] (
 );
 GO
 
+-- Creating table 'Concession'
+CREATE TABLE [dbo].[Concession] (
+    [IdConcession] int IDENTITY(1,1) NOT NULL,
+    [BeginDate] datetime  NOT NULL,
+    [FinishDate] datetime  NOT NULL,
+    [Observations] nvarchar(max)  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -119,6 +134,12 @@ GO
 ALTER TABLE [dbo].[OutgoingFood]
 ADD CONSTRAINT [PK_OutgoingFood]
     PRIMARY KEY CLUSTERED ([IdOutgoingFood] ASC);
+GO
+
+-- Creating primary key on [IdConcession] in table 'Concession'
+ALTER TABLE [dbo].[Concession]
+ADD CONSTRAINT [PK_Concession]
+    PRIMARY KEY CLUSTERED ([IdConcession] ASC);
 GO
 
 -- --------------------------------------------------

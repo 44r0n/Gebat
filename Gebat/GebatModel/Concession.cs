@@ -12,11 +12,11 @@ namespace GebatModel
     using System;
     using System.Collections.Generic;
     
-    public partial class EntryFood
+    public partial class Concession
     {
-        public int IdEntryFood { get; set; }
-        public int Quantity { get; internal set; }
-        public System.DateTime Date { get; internal set; }
-        internal int FoodIdFood { private get; set; }
+        public int IdConcession { get; private set; }
+        public System.DateTime BeginDate { get; set; }
+        public System.DateTime FinishDate { get; set; }
+        public string Observations { get; set; }
     }
 }

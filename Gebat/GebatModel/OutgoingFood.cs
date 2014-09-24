@@ -17,6 +17,6 @@ namespace GebatModel
         public int IdOutgoingFood { get; set; }
         public int Quantity { get; internal set; }
         public System.DateTime Date { get; internal set; }
-        public int FoodIdFood { get; set; }
+        internal int FoodIdFood { private get; set; }
     }
 }

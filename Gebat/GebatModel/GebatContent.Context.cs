@@ -30,5 +30,6 @@ namespace GebatModel
         public virtual DbSet<Food> Food { get; set; }
         public virtual DbSet<EntryFood> EntryFood { get; set; }
         public virtual DbSet<OutgoingFood> OutgoingFood { get; set; }
+        public virtual DbSet<Concession> Concession { get; set; }
     }
 }
