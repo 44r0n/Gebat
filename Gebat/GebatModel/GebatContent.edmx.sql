@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/23/2014 18:53:22
+-- Date Created: 09/25/2014 19:54:56
 -- Generated from EDMX file: D:\Proyectos\Gebat\Gebat\GebatModel\GebatContent.edmx
 -- --------------------------------------------------
 
@@ -45,6 +45,9 @@ IF OBJECT_ID(N'[dbo].[EntryFood]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[OutgoingFood]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OutgoingFood];
+GO
+IF OBJECT_ID(N'[dbo].[Concession]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Concession];
 GO
 
 -- --------------------------------------------------
@@ -98,7 +101,15 @@ CREATE TABLE [dbo].[Concession] (
     [IdConcession] int IDENTITY(1,1) NOT NULL,
     [BeginDate] datetime  NOT NULL,
     [FinishDate] datetime  NOT NULL,
-    [Observations] nvarchar(max)  NOT NULL
+    [Observations] nvarchar(max)  NOT NULL,
+    [Type_IdConcessionType] int  NOT NULL
+);
+GO
+
+-- Creating table 'ConcessionType'
+CREATE TABLE [dbo].[ConcessionType] (
+    [IdConcessionType] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -140,6 +151,12 @@ GO
 ALTER TABLE [dbo].[Concession]
 ADD CONSTRAINT [PK_Concession]
     PRIMARY KEY CLUSTERED ([IdConcession] ASC);
+GO
+
+-- Creating primary key on [IdConcessionType] in table 'ConcessionType'
+ALTER TABLE [dbo].[ConcessionType]
+ADD CONSTRAINT [PK_ConcessionType]
+    PRIMARY KEY CLUSTERED ([IdConcessionType] ASC);
 GO
 
 -- --------------------------------------------------
@@ -189,6 +206,21 @@ GO
 CREATE INDEX [IX_FK_FoodOutgoingFood]
 ON [dbo].[OutgoingFood]
     ([FoodIdFood]);
+GO
+
+-- Creating foreign key on [Type_IdConcessionType] in table 'Concession'
+ALTER TABLE [dbo].[Concession]
+ADD CONSTRAINT [FK_ConcessionConcessionType]
+    FOREIGN KEY ([Type_IdConcessionType])
+    REFERENCES [dbo].[ConcessionType]
+        ([IdConcessionType])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ConcessionConcessionType'
+CREATE INDEX [IX_FK_ConcessionConcessionType]
+ON [dbo].[Concession]
+    ([Type_IdConcessionType]);
 GO
 
 -- --------------------------------------------------

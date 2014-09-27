@@ -12,13 +12,10 @@ namespace GebatModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Concession
+    public partial class DateRestriction
     {
-        public int IdConcession { get; private set; }
-        public System.DateTime BeginDate { get; set; }
-        public System.DateTime FinishDate { get; set; }
-        public string Observations { get; set; }
-    
-        public virtual ConcessionType Type { get; set; }
+        public int IdDateRestriction { get; private set; }
+        public bool Concatenable { get; set; }
+        public int Interval { get; set; }
     }
 }

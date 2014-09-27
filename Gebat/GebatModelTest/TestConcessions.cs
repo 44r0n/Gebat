@@ -9,6 +9,21 @@ namespace GebatModelTest
     {
         private IConcessionRepository repoconcesion;
 
+        private Concession defaultConcession
+        {
+            get
+            {
+                ConcessionType type = new ConcessionType();
+                type.Name = "testconcession";
+                Concession concession = new Concession();
+                concession.BeginDate = new DateTime(2014,9,24);
+                concession.FinishDate = concession.BeginDate.AddMonths(3);
+                concession.Observations = "Observaciones";
+                concession.Type = type;
+                return concession;
+            }
+        }
+
         [TestInitialize]
         public void Init()
         {
@@ -25,22 +40,17 @@ namespace GebatModelTest
         [TestMethod]
         public void AddConcession()
         {
-            Concession concession = new Concession();
-            concession.BeginDate = DateTime.Today;
-            concession.FinishDate = DateTime.Today.AddMonths(3);
-            concession.Observations = "Observaciones";
+            Concession concession = this.defaultConcession;
             repoconcesion.AddConcession(concession);
             Assert.AreEqual(1, repoconcesion.GetAllConcessions().Count);
             Assert.AreEqual("Observaciones", repoconcesion.GetAllConcessions()[0].Observations);
+            Assert.AreEqual("testconcession",repoconcesion.GetAllConcessions()[0].Type.Name);
         }
 
         [TestMethod]
         public void UpdateConcession()
         {
-            Concession concession = new Concession();
-            concession.BeginDate = DateTime.Today;
-            concession.FinishDate = DateTime.Today.AddMonths(3);
-            concession.Observations = "Observaciones";
+            Concession concession = this.defaultConcession;
             repoconcesion.AddConcession(concession);
             concession = repoconcesion.GetAllConcessions()[0];
             concession.Observations = "Cambio de observaciones";
@@ -52,10 +62,7 @@ namespace GebatModelTest
         [TestMethod]
         public void DeleteConcession()
         {
-            Concession concession = new Concession();
-            concession.BeginDate = DateTime.Today;
-            concession.FinishDate = DateTime.Today.AddMonths(3);
-            concession.Observations = "Observaciones";
+            Concession concession = this.defaultConcession;
             repoconcesion.AddConcession(concession);
             concession = repoconcesion.GetAllConcessions()[0];
             repoconcesion.DeleteConcession(concession);

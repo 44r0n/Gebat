@@ -12,6 +12,7 @@
     <EntitySet Name="EntryFood" EntityType="GebatDataBaseModel.Store.EntryFood" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OutgoingFood" EntityType="GebatDataBaseModel.Store.OutgoingFood" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Concession" EntityType="GebatDataBaseModel.Store.Concession" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ConcessionType" EntityType="GebatDataBaseModel.Store.ConcessionType" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="TypeFood" Association="GebatDataBaseModel.Store.TypeFood">
       <End Role="Type" EntitySet="Type" />
       <End Role="Food" EntitySet="Food" />
@@ -23,6 +24,10 @@
     <AssociationSet Name="FoodOutgoingFood" Association="GebatDataBaseModel.Store.FoodOutgoingFood">
       <End Role="Food" EntitySet="Food" />
       <End Role="OutgoingFood" EntitySet="OutgoingFood" />
+    </AssociationSet>
+    <AssociationSet Name="ConcessionConcessionType" Association="GebatDataBaseModel.Store.ConcessionConcessionType">
+      <End Role="Concession" EntitySet="Concession" />
+      <End Role="ConcessionType" EntitySet="ConcessionType" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Admin">
@@ -75,6 +80,14 @@
     <Property Name="BeginDate" Type="datetime" Nullable="false" />
     <Property Name="FinishDate" Type="datetime" Nullable="false" />
     <Property Name="Observations" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type_IdConcessionType" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ConcessionType">
+    <Key>
+      <PropertyRef Name="IdConcessionType" />
+    </Key>
+    <Property Name="IdConcessionType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="TypeFood">
     <End Role="Type" Type="GebatDataBaseModel.Store.Type" Multiplicity="1">
@@ -114,6 +127,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ConcessionConcessionType">
+    <End Role="Concession" Type="GebatDataBaseModel.Store.Concession" Multiplicity="*" />
+    <End Role="ConcessionType" Type="GebatDataBaseModel.Store.ConcessionType" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ConcessionType">
+        <PropertyRef Name="IdConcessionType" />
+      </Principal>
+      <Dependent Role="Concession">
+        <PropertyRef Name="Type_IdConcessionType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -145,6 +170,12 @@
             <End Role="OutgoingFood" EntitySet="OutgoingFood" />
           </AssociationSet>
           <EntitySet Name="Concession" EntityType="GebatDataBaseModel.Concession" />
+          <EntitySet Name="ConcessionType" EntityType="GebatDataBaseModel.ConcessionType" />
+          <AssociationSet Name="ConcessionConcessionType" Association="GebatDataBaseModel.ConcessionConcessionType">
+            <End Role="Concession" EntitySet="Concession" />
+            <End Role="ConcessionType" EntitySet="ConcessionType" />
+          </AssociationSet>
+          <EntitySet Name="DateRestriction" EntityType="GebatDataBaseModel.DateRestriction" />
         </EntityContainer>
         <EntityType Name="Type">
           <Key>
@@ -231,6 +262,26 @@
           <Property Name="BeginDate" Type="DateTime" Nullable="false" />
           <Property Name="FinishDate" Type="DateTime" Nullable="false" />
           <Property Name="Observations" Type="String" Nullable="false" />
+          <NavigationProperty Name="Type" Relationship="GebatDataBaseModel.ConcessionConcessionType" FromRole="Concession" ToRole="ConcessionType" />
+        </EntityType>
+        <EntityType Name="ConcessionType">
+          <Key>
+            <PropertyRef Name="IdConcessionType" />
+          </Key>
+          <Property Name="IdConcessionType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="Name" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="ConcessionConcessionType">
+          <End Type="GebatDataBaseModel.Concession" Role="Concession" Multiplicity="*" />
+          <End Type="GebatDataBaseModel.ConcessionType" Role="ConcessionType" Multiplicity="1" />
+        </Association>
+        <EntityType Name="DateRestriction">
+          <Key>
+            <PropertyRef Name="IdDateRestriction" />
+          </Key>
+          <Property Name="IdDateRestriction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="Concatenable" Type="Boolean" Nullable="false" />
+          <Property Name="Interval" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -295,6 +346,22 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ConcessionType">
+      <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.ConcessionType)">
+        <MappingFragment StoreEntitySet="ConcessionType">
+          <ScalarProperty Name="IdConcessionType" ColumnName="IdConcessionType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ConcessionConcessionType" TypeName="GebatDataBaseModel.ConcessionConcessionType" StoreEntitySet="Concession">
+      <EndProperty Name="ConcessionType">
+        <ScalarProperty Name="IdConcessionType" ColumnName="Type_IdConcessionType" />
+      </EndProperty>
+      <EndProperty Name="Concession">
+        <ScalarProperty Name="IdConcession" ColumnName="IdConcession" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

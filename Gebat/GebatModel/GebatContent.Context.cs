@@ -31,5 +31,7 @@ namespace GebatModel
         public virtual DbSet<EntryFood> EntryFood { get; set; }
         public virtual DbSet<OutgoingFood> OutgoingFood { get; set; }
         public virtual DbSet<Concession> Concession { get; set; }
+        public virtual DbSet<ConcessionType> ConcessionType { get; set; }
+        public virtual DbSet<DateRestriction> DateRestriction { get; set; }
     }
 }

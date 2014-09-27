@@ -9,11 +9,14 @@
         <EntityTypeShape EntityType="GebatDataBaseModel.Type" Width="1.5" PointX="3.5" PointY="1.375" IsExpanded="false" />
         <EntityTypeShape EntityType="GebatDataBaseModel.Food" Width="1.5" PointX="6" PointY="0.625" IsExpanded="true" />
         <AssociationConnector Association="GebatDataBaseModel.TypeFood" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.EntryFood" Width="1.5" PointX="7.375" PointY="3.625" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.EntryFood" Width="1.5" PointX="7.375" PointY="3.625" IsExpanded="false" />
         <AssociationConnector Association="GebatDataBaseModel.FoodEntryFood" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.OutgoingFood" Width="1.5" PointX="4.5" PointY="3.625" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.OutgoingFood" Width="1.5" PointX="4.5" PointY="3.625" IsExpanded="false" />
         <AssociationConnector Association="GebatDataBaseModel.FoodOutgoingFood" />
         <EntityTypeShape EntityType="GebatDataBaseModel.Concession" Width="1.5" PointX="9.5" PointY="1.375" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.ConcessionType" Width="1.5" PointX="12.125" PointY="1.125" />
+        <AssociationConnector Association="GebatDataBaseModel.ConcessionConcessionType" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.DateRestriction" Width="1.5" PointX="14.375" PointY="1.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

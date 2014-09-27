@@ -68,15 +68,23 @@
     </Compile>
     <Compile Include="Classes\AdminRepository.cs" />
     <Compile Include="Classes\ConcessionRepository.cs" />
+    <Compile Include="Classes\ConcessionTypeRepository.cs" />
     <Compile Include="Classes\FoodRepository.cs" />
     <Compile Include="Classes\Interfaces\BaseRepository.cs" />
     <Compile Include="Classes\Interfaces\IAdminRepository.cs" />
     <Compile Include="Classes\Interfaces\IConcessionRepository.cs" />
+    <Compile Include="Classes\Interfaces\IConcessionTypeRepository.cs" />
     <Compile Include="Classes\Interfaces\IFoodRepository.cs" />
+    <Compile Include="Classes\Interfaces\IRestriction.cs" />
     <Compile Include="Classes\Interfaces\ITypeRepository.cs" />
+    <Compile Include="Classes\Partials\ConcessionType.cs" />
+    <Compile Include="Classes\Partials\DateRestriction.cs" />
     <Compile Include="Classes\Partials\Food.cs" />
     <Compile Include="Classes\TypeRepository.cs" />
     <Compile Include="Concession.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConcessionType.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
     <Compile Include="EntryFood.cs">

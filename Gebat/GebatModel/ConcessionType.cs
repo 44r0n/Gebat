@@ -12,13 +12,9 @@ namespace GebatModel
     using System;
     using System.Collections.Generic;
     
-    public partial class Concession
+    public partial class ConcessionType
     {
-        public int IdConcession { get; private set; }
-        public System.DateTime BeginDate { get; set; }
-        public System.DateTime FinishDate { get; set; }
-        public string Observations { get; set; }
-    
-        public virtual ConcessionType Type { get; set; }
+        public int IdConcessionType { get; private set; }
+        public string Name { get; set; }
     }
 }
