@@ -65,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stubs\AdminRepoStub.cs" />
     <Compile Include="Stubs\ConcessionRepoStub.cs" />
+    <Compile Include="Stubs\DateRestrictionStub.cs" />
     <Compile Include="Stubs\EntryFoodStub.cs" />
     <Compile Include="Stubs\FoodRepoStub.cs" />
     <Compile Include="Stubs\OutgoingFoodStub.cs" />

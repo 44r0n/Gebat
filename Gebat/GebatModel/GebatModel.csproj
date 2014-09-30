@@ -87,6 +87,9 @@
     <Compile Include="ConcessionType.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
+    <Compile Include="DateRestriction.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntryFood.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>

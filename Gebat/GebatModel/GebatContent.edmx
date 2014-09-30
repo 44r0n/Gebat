@@ -13,6 +13,7 @@
     <EntitySet Name="OutgoingFood" EntityType="GebatDataBaseModel.Store.OutgoingFood" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Concession" EntityType="GebatDataBaseModel.Store.Concession" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ConcessionType" EntityType="GebatDataBaseModel.Store.ConcessionType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DateRestriction" EntityType="GebatDataBaseModel.Store.DateRestriction" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="TypeFood" Association="GebatDataBaseModel.Store.TypeFood">
       <End Role="Type" EntitySet="Type" />
       <End Role="Food" EntitySet="Food" />
@@ -28,6 +29,10 @@
     <AssociationSet Name="ConcessionConcessionType" Association="GebatDataBaseModel.Store.ConcessionConcessionType">
       <End Role="Concession" EntitySet="Concession" />
       <End Role="ConcessionType" EntitySet="ConcessionType" />
+    </AssociationSet>
+    <AssociationSet Name="ConcessionTypeDateRestriction" Association="GebatDataBaseModel.Store.ConcessionTypeDateRestriction">
+      <End Role="ConcessionType" EntitySet="ConcessionType" />
+      <End Role="DateRestriction" EntitySet="DateRestriction" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Admin">
@@ -88,6 +93,15 @@
     </Key>
     <Property Name="IdConcessionType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateRestriction_IdDateRestriction" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="DateRestriction">
+    <Key>
+      <PropertyRef Name="IdDateRestriction" />
+    </Key>
+    <Property Name="IdDateRestriction" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Concatenable" Type="bit" Nullable="false" />
+    <Property Name="Interval" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="TypeFood">
     <End Role="Type" Type="GebatDataBaseModel.Store.Type" Multiplicity="1">
@@ -139,6 +153,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ConcessionTypeDateRestriction">
+    <End Role="ConcessionType" Type="GebatDataBaseModel.Store.ConcessionType" Multiplicity="*" />
+    <End Role="DateRestriction" Type="GebatDataBaseModel.Store.DateRestriction" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="DateRestriction">
+        <PropertyRef Name="IdDateRestriction" />
+      </Principal>
+      <Dependent Role="ConcessionType">
+        <PropertyRef Name="DateRestriction_IdDateRestriction" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -176,6 +202,10 @@
             <End Role="ConcessionType" EntitySet="ConcessionType" />
           </AssociationSet>
           <EntitySet Name="DateRestriction" EntityType="GebatDataBaseModel.DateRestriction" />
+          <AssociationSet Name="ConcessionTypeDateRestriction" Association="GebatDataBaseModel.ConcessionTypeDateRestriction">
+            <End Role="ConcessionType" EntitySet="ConcessionType" />
+            <End Role="DateRestriction" EntitySet="DateRestriction" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Type">
           <Key>
@@ -270,6 +300,7 @@
           </Key>
           <Property Name="IdConcessionType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="DateRestriction" Relationship="GebatDataBaseModel.ConcessionTypeDateRestriction" FromRole="ConcessionType" ToRole="DateRestriction" />
         </EntityType>
         <Association Name="ConcessionConcessionType">
           <End Type="GebatDataBaseModel.Concession" Role="Concession" Multiplicity="*" />
@@ -283,6 +314,10 @@
           <Property Name="Concatenable" Type="Boolean" Nullable="false" />
           <Property Name="Interval" Type="Int32" Nullable="false" />
         </EntityType>
+        <Association Name="ConcessionTypeDateRestriction">
+          <End Type="GebatDataBaseModel.ConcessionType" Role="ConcessionType" Multiplicity="*" />
+          <End Type="GebatDataBaseModel.DateRestriction" Role="DateRestriction" Multiplicity="0..1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -354,6 +389,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DateRestriction">
+      <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.DateRestriction)">
+        <MappingFragment StoreEntitySet="DateRestriction">
+          <ScalarProperty Name="IdDateRestriction" ColumnName="IdDateRestriction" />
+          <ScalarProperty Name="Concatenable" ColumnName="Concatenable" />
+          <ScalarProperty Name="Interval" ColumnName="Interval" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="ConcessionConcessionType" TypeName="GebatDataBaseModel.ConcessionConcessionType" StoreEntitySet="Concession">
       <EndProperty Name="ConcessionType">
         <ScalarProperty Name="IdConcessionType" ColumnName="Type_IdConcessionType" />
@@ -361,6 +405,15 @@
       <EndProperty Name="Concession">
         <ScalarProperty Name="IdConcession" ColumnName="IdConcession" />
       </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ConcessionTypeDateRestriction" TypeName="GebatDataBaseModel.ConcessionTypeDateRestriction" StoreEntitySet="ConcessionType">
+      <EndProperty Name="DateRestriction">
+        <ScalarProperty Name="IdDateRestriction" ColumnName="DateRestriction_IdDateRestriction" />
+      </EndProperty>
+      <EndProperty Name="ConcessionType">
+        <ScalarProperty Name="IdConcessionType" ColumnName="IdConcessionType" />
+      </EndProperty>
+      <Condition ColumnName="DateRestriction_IdDateRestriction" IsNull="false" />
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>

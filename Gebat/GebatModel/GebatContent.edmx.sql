@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/25/2014 19:54:56
+-- Date Created: 09/30/2014 19:07:19
 -- Generated from EDMX file: D:\Proyectos\Gebat\Gebat\GebatModel\GebatContent.edmx
 -- --------------------------------------------------
 
@@ -26,6 +26,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_FoodOutgoingFood]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OutgoingFood] DROP CONSTRAINT [FK_FoodOutgoingFood];
 GO
+IF OBJECT_ID(N'[dbo].[FK_ConcessionConcessionType]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Concession] DROP CONSTRAINT [FK_ConcessionConcessionType];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ConcessionTypeDateRestriction]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ConcessionType] DROP CONSTRAINT [FK_ConcessionTypeDateRestriction];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -48,6 +54,12 @@ IF OBJECT_ID(N'[dbo].[OutgoingFood]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Concession]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Concession];
+GO
+IF OBJECT_ID(N'[dbo].[ConcessionType]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ConcessionType];
+GO
+IF OBJECT_ID(N'[dbo].[DateRestriction]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[DateRestriction];
 GO
 
 -- --------------------------------------------------
@@ -109,7 +121,16 @@ GO
 -- Creating table 'ConcessionType'
 CREATE TABLE [dbo].[ConcessionType] (
     [IdConcessionType] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(max)  NOT NULL
+    [Name] nvarchar(max)  NOT NULL,
+    [DateRestriction_IdDateRestriction] int  NULL
+);
+GO
+
+-- Creating table 'DateRestriction'
+CREATE TABLE [dbo].[DateRestriction] (
+    [IdDateRestriction] int IDENTITY(1,1) NOT NULL,
+    [Concatenable] bit  NOT NULL,
+    [Interval] int  NOT NULL
 );
 GO
 
@@ -157,6 +178,12 @@ GO
 ALTER TABLE [dbo].[ConcessionType]
 ADD CONSTRAINT [PK_ConcessionType]
     PRIMARY KEY CLUSTERED ([IdConcessionType] ASC);
+GO
+
+-- Creating primary key on [IdDateRestriction] in table 'DateRestriction'
+ALTER TABLE [dbo].[DateRestriction]
+ADD CONSTRAINT [PK_DateRestriction]
+    PRIMARY KEY CLUSTERED ([IdDateRestriction] ASC);
 GO
 
 -- --------------------------------------------------
@@ -221,6 +248,21 @@ GO
 CREATE INDEX [IX_FK_ConcessionConcessionType]
 ON [dbo].[Concession]
     ([Type_IdConcessionType]);
+GO
+
+-- Creating foreign key on [DateRestriction_IdDateRestriction] in table 'ConcessionType'
+ALTER TABLE [dbo].[ConcessionType]
+ADD CONSTRAINT [FK_ConcessionTypeDateRestriction]
+    FOREIGN KEY ([DateRestriction_IdDateRestriction])
+    REFERENCES [dbo].[DateRestriction]
+        ([IdDateRestriction])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ConcessionTypeDateRestriction'
+CREATE INDEX [IX_FK_ConcessionTypeDateRestriction]
+ON [dbo].[ConcessionType]
+    ([DateRestriction_IdDateRestriction]);
 GO
 
 -- --------------------------------------------------

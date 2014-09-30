@@ -16,5 +16,7 @@ namespace GebatModel
     {
         public int IdConcessionType { get; private set; }
         public string Name { get; set; }
+    
+        public virtual DateRestriction DateRestriction { get; set; }
     }
 }
