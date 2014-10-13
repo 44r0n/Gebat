@@ -6,18 +6,23 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c5d80a1c29cf4deca0ee3737fa84cc93" Name="Diagram1">
         <EntityTypeShape EntityType="GebatDataBaseModel.Admin" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="false" FillColor="Maroon" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.Type" Width="1.5" PointX="3.5" PointY="1.375" IsExpanded="false" FillColor="192, 64, 0" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.Food" Width="1.5" PointX="6" PointY="0.625" IsExpanded="true" FillColor="192, 64, 0" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.Type" Width="1.5" PointX="2.5" PointY="4.875" IsExpanded="false" FillColor="192, 64, 0" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.Food" Width="1.5" PointX="5" PointY="4.125" IsExpanded="true" FillColor="192, 64, 0" />
         <AssociationConnector Association="GebatDataBaseModel.TypeFood" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.EntryFood" Width="1.5" PointX="7.375" PointY="3.625" IsExpanded="false" FillColor="192, 64, 0" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.EntryFood" Width="1.5" PointX="6.375" PointY="7.125" IsExpanded="false" FillColor="192, 64, 0" />
         <AssociationConnector Association="GebatDataBaseModel.FoodEntryFood" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.OutgoingFood" Width="1.5" PointX="4.5" PointY="3.625" IsExpanded="false" FillColor="192, 64, 0" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.OutgoingFood" Width="1.5" PointX="3.5" PointY="7.125" IsExpanded="false" FillColor="192, 64, 0" />
         <AssociationConnector Association="GebatDataBaseModel.FoodOutgoingFood" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.Concession" Width="1.5" PointX="9.5" PointY="1.375" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.ConcessionType" Width="1.5" PointX="12.125" PointY="1.125" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.Concession" Width="1.5" PointX="10" PointY="7.125" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.ConcessionType" Width="1.5" PointX="12.5" PointY="7.125" />
         <AssociationConnector Association="GebatDataBaseModel.ConcessionConcessionType" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.DateRestriction" Width="1.5" PointX="14.5" PointY="1.125" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.DateRestriction" Width="1.5" PointX="14.875" PointY="7.125" />
         <AssociationConnector Association="GebatDataBaseModel.ConcessionTypeDateRestriction" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.Person" Width="1.5" PointX="9.75" PointY="0.5" FillColor="Green" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.Familiar" Width="1.5" PointX="7.875" PointY="3.25" FillColor="Green" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.PersonalDossier" Width="1.5" PointX="10" PointY="5" />
+        <AssociationConnector Association="GebatDataBaseModel.PersonalDossierFamiliar" />
+        <InheritanceConnector EntityType="GebatDataBaseModel.Familiar" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

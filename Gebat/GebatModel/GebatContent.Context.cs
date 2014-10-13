@@ -33,5 +33,7 @@ namespace GebatModel
         public virtual DbSet<Concession> Concession { get; set; }
         public virtual DbSet<ConcessionType> ConcessionType { get; set; }
         public virtual DbSet<DateRestriction> DateRestriction { get; set; }
+        public virtual DbSet<PersonalDossier> PersonalDossier { get; set; }
+        public virtual DbSet<Person> Person { get; set; }
     }
 }

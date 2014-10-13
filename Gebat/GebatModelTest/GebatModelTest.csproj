@@ -66,7 +66,9 @@
     <Compile Include="Stubs\AdminRepoStub.cs" />
     <Compile Include="Stubs\ConcessionRepoStub.cs" />
     <Compile Include="Stubs\DateRestrictionStub.cs" />
+    <Compile Include="Stubs\DossierStub.cs" />
     <Compile Include="Stubs\EntryFoodStub.cs" />
+    <Compile Include="Stubs\FamiliarRepoStub.cs" />
     <Compile Include="Stubs\FoodRepoStub.cs" />
     <Compile Include="Stubs\OutgoingFoodStub.cs" />
     <Compile Include="Stubs\TypeRepoStub.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="TestFood.cs" />
     <Compile Include="TestConcessions.cs" />
     <Compile Include="TestConcessionType.cs" />
+    <Compile Include="TestFamiliar.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GebatModel\GebatModel.csproj">

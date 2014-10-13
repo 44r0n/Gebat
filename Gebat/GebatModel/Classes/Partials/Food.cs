@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GebatModel
 {
@@ -36,6 +32,10 @@ namespace GebatModel
             today = date;
         }
 
+        /// <summary>
+        /// Adds a quantity of food.
+        /// </summary>
+        /// <param name="quantity">Quantity of food to add.</param>
         public void AddQuantity(int quantity)
         {
             //TODO: refactor this.
@@ -49,11 +49,20 @@ namespace GebatModel
             }
         }
 
+        /// <summary>
+        /// Adds a quantity of food.
+        /// </summary>
+        /// <param name="quantity">Quantity of food to add.</param>
+        /// <param name="date">Date of the adition of food.</param>
         public void AddQuantity(int quantity, DateTime date)
         {
             this.addQuantity(quantity, date);
         }
 
+        /// <summary>
+        /// Removes a quantity of food.
+        /// </summary>
+        /// <param name="quantity">Quantity of food to remove.</param>
         public void RemoveQuantity(int quantity)
         {
             if(today == DateTime.MinValue)
@@ -66,6 +75,11 @@ namespace GebatModel
             }
         }
 
+        /// <summary>
+        /// Removes a quantity of food.
+        /// </summary>
+        /// <param name="quantity">Quantity of fodd to remove.</param>
+        /// <param name="date">Date of the output of food.</param>
         public void RemoveQuantity(int quantity, DateTime date)
         {
             this.removeQuantity(quantity, date);

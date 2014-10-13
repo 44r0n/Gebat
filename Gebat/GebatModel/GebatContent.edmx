@@ -14,6 +14,9 @@
     <EntitySet Name="Concession" EntityType="GebatDataBaseModel.Store.Concession" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ConcessionType" EntityType="GebatDataBaseModel.Store.ConcessionType" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DateRestriction" EntityType="GebatDataBaseModel.Store.DateRestriction" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PersonalDossier" EntityType="GebatDataBaseModel.Store.PersonalDossier" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Person" EntityType="GebatDataBaseModel.Store.Person" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Person_Familiar" EntityType="GebatDataBaseModel.Store.Person_Familiar" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="TypeFood" Association="GebatDataBaseModel.Store.TypeFood">
       <End Role="Type" EntitySet="Type" />
       <End Role="Food" EntitySet="Food" />
@@ -33,6 +36,14 @@
     <AssociationSet Name="ConcessionTypeDateRestriction" Association="GebatDataBaseModel.Store.ConcessionTypeDateRestriction">
       <End Role="ConcessionType" EntitySet="ConcessionType" />
       <End Role="DateRestriction" EntitySet="DateRestriction" />
+    </AssociationSet>
+    <AssociationSet Name="PersonalDossierFamiliar" Association="GebatDataBaseModel.Store.PersonalDossierFamiliar">
+      <End Role="PersonalDossier" EntitySet="PersonalDossier" />
+      <End Role="Familiar" EntitySet="Person_Familiar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Familiar_inherits_Person" Association="GebatDataBaseModel.Store.FK_Familiar_inherits_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="Familiar" EntitySet="Person_Familiar" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Admin">
@@ -103,6 +114,33 @@
     <Property Name="Concatenable" Type="bit" Nullable="false" />
     <Property Name="Interval" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="PersonalDossier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Observations" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="IdPerson" />
+    </Key>
+    <Property Name="IdPerson" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DNI" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BirthDate" Type="datetime" Nullable="false" />
+    <Property Name="Gender" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Person_Familiar">
+    <Key>
+      <PropertyRef Name="IdPerson" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Income" Type="int" Nullable="false" />
+    <Property Name="PersonalDossierId" Type="int" Nullable="false" />
+    <Property Name="IdPerson" Type="int" Nullable="false" />
+  </EntityType>
   <Association Name="TypeFood">
     <End Role="Type" Type="GebatDataBaseModel.Store.Type" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -165,6 +203,32 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="PersonalDossierFamiliar">
+    <End Role="PersonalDossier" Type="GebatDataBaseModel.Store.PersonalDossier" Multiplicity="1" />
+    <End Role="Familiar" Type="GebatDataBaseModel.Store.Person_Familiar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PersonalDossier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Familiar">
+        <PropertyRef Name="PersonalDossierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Familiar_inherits_Person">
+    <End Role="Person" Type="GebatDataBaseModel.Store.Person" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Familiar" Type="GebatDataBaseModel.Store.Person_Familiar" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="IdPerson" />
+      </Principal>
+      <Dependent Role="Familiar">
+        <PropertyRef Name="IdPerson" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -206,6 +270,12 @@
             <End Role="ConcessionType" EntitySet="ConcessionType" />
             <End Role="DateRestriction" EntitySet="DateRestriction" />
           </AssociationSet>
+          <EntitySet Name="PersonalDossier" EntityType="GebatDataBaseModel.PersonalDossier" />
+          <AssociationSet Name="PersonalDossierFamiliar" Association="GebatDataBaseModel.PersonalDossierFamiliar">
+            <End Role="PersonalDossier" EntitySet="PersonalDossier" />
+            <End Role="Familiar" EntitySet="Person" />
+          </AssociationSet>
+          <EntitySet Name="Person" EntityType="GebatDataBaseModel.Person" />
         </EntityContainer>
         <EntityType Name="Type">
           <Key>
@@ -318,6 +388,49 @@
           <End Type="GebatDataBaseModel.ConcessionType" Role="ConcessionType" Multiplicity="*" />
           <End Type="GebatDataBaseModel.DateRestriction" Role="DateRestriction" Multiplicity="0..1" />
         </Association>
+        <EntityType Name="Person" Abstract="true">
+          <Key>
+            <PropertyRef Name="IdPerson" />
+          </Key>
+          <Property Name="IdPerson" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Surname" Type="String" Nullable="false" />
+          <Property Name="DNI" Type="String" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" />
+          <Property Name="Gender" Type="GebatDataBaseModel.Gender" Nullable="false" />
+        </EntityType>
+        <EnumType Name="Gender" >
+          <Member Name="Man" />
+          <Member Name="Woman" />
+        </EnumType>
+        <EntityType Name="Familiar" BaseType="GebatDataBaseModel.Person" Abstract="false">
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="Income" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PersonalDossier" Relationship="GebatDataBaseModel.PersonalDossierFamiliar" FromRole="Familiar" ToRole="PersonalDossier" />
+          <Property Name="PersonalDossierId" Type="Int32" Nullable="false" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" />
+        </EntityType>
+        <EntityType Name="PersonalDossier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Observations" Type="String" Nullable="false" />
+          <NavigationProperty Name="Familiar" Relationship="GebatDataBaseModel.PersonalDossierFamiliar" FromRole="PersonalDossier" ToRole="Familiar" />
+        </EntityType>
+        <Association Name="PersonalDossierFamiliar">
+          <End Type="GebatDataBaseModel.PersonalDossier" Role="PersonalDossier" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="GebatDataBaseModel.Familiar" Role="Familiar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalDossier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Familiar">
+              <PropertyRef Name="PersonalDossierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -395,6 +508,34 @@
           <ScalarProperty Name="IdDateRestriction" ColumnName="IdDateRestriction" />
           <ScalarProperty Name="Concatenable" ColumnName="Concatenable" />
           <ScalarProperty Name="Interval" ColumnName="Interval" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonalDossier">
+      <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.PersonalDossier)">
+        <MappingFragment StoreEntitySet="PersonalDossier">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Observations" ColumnName="Observations" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Person">
+      <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.Person)">
+        <MappingFragment StoreEntitySet="Person">
+          <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.Familiar)">
+        <MappingFragment StoreEntitySet="Person_Familiar">
+          <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Income" ColumnName="Income" />
+          <ScalarProperty Name="PersonalDossierId" ColumnName="PersonalDossierId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -69,17 +69,22 @@
     <Compile Include="Classes\AdminRepository.cs" />
     <Compile Include="Classes\ConcessionRepository.cs" />
     <Compile Include="Classes\ConcessionTypeRepository.cs" />
+    <Compile Include="Classes\FamiliarRespository.cs" />
     <Compile Include="Classes\FoodRepository.cs" />
     <Compile Include="Classes\Interfaces\BaseRepository.cs" />
     <Compile Include="Classes\Interfaces\IAdminRepository.cs" />
     <Compile Include="Classes\Interfaces\IConcessionRepository.cs" />
     <Compile Include="Classes\Interfaces\IConcessionTypeRepository.cs" />
+    <Compile Include="Classes\Interfaces\IFamiliarRespository.cs" />
     <Compile Include="Classes\Interfaces\IFoodRepository.cs" />
+    <Compile Include="Classes\Interfaces\IPersonalDossierRepository.cs" />
     <Compile Include="Classes\Interfaces\IRestriction.cs" />
     <Compile Include="Classes\Interfaces\ITypeRepository.cs" />
     <Compile Include="Classes\Partials\ConcessionType.cs" />
     <Compile Include="Classes\Partials\DateRestriction.cs" />
     <Compile Include="Classes\Partials\Food.cs" />
+    <Compile Include="Classes\Partials\PersonalDossier.cs" />
+    <Compile Include="Classes\PersonalDossierRepository.cs" />
     <Compile Include="Classes\TypeRepository.cs" />
     <Compile Include="Concession.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
@@ -94,6 +99,9 @@
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\AdminException.cs" />
+    <Compile Include="Familiar.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
+    </Compile>
     <Compile Include="Food.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
@@ -112,7 +120,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GebatContent.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Gender.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
+    </Compile>
     <Compile Include="OutgoingFood.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Person.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalDossier.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

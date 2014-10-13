@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/30/2014 19:07:19
+-- Date Created: 10/08/2014 13:09:22
 -- Generated from EDMX file: D:\Proyectos\Gebat\Gebat\GebatModel\GebatContent.edmx
 -- --------------------------------------------------
 
@@ -32,6 +32,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ConcessionTypeDateRestriction]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ConcessionType] DROP CONSTRAINT [FK_ConcessionTypeDateRestriction];
 GO
+IF OBJECT_ID(N'[dbo].[FK_PersonalDossierFamiliar]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Person_Familiar] DROP CONSTRAINT [FK_PersonalDossierFamiliar];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Familiar_inherits_Person]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Person_Familiar] DROP CONSTRAINT [FK_Familiar_inherits_Person];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -60,6 +66,15 @@ IF OBJECT_ID(N'[dbo].[ConcessionType]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[DateRestriction]', 'U') IS NOT NULL
     DROP TABLE [dbo].[DateRestriction];
+GO
+IF OBJECT_ID(N'[dbo].[PersonalDossier]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PersonalDossier];
+GO
+IF OBJECT_ID(N'[dbo].[Person]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Person];
+GO
+IF OBJECT_ID(N'[dbo].[Person_Familiar]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Person_Familiar];
 GO
 
 -- --------------------------------------------------
@@ -134,6 +149,33 @@ CREATE TABLE [dbo].[DateRestriction] (
 );
 GO
 
+-- Creating table 'PersonalDossier'
+CREATE TABLE [dbo].[PersonalDossier] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Observations] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'Person'
+CREATE TABLE [dbo].[Person] (
+    [IdPerson] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Surname] nvarchar(max)  NOT NULL,
+    [DNI] nvarchar(max)  NOT NULL,
+    [BirthDate] datetime  NOT NULL,
+    [Gender] int  NOT NULL
+);
+GO
+
+-- Creating table 'Person_Familiar'
+CREATE TABLE [dbo].[Person_Familiar] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Income] int  NOT NULL,
+    [PersonalDossierId] int  NOT NULL,
+    [IdPerson] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -184,6 +226,24 @@ GO
 ALTER TABLE [dbo].[DateRestriction]
 ADD CONSTRAINT [PK_DateRestriction]
     PRIMARY KEY CLUSTERED ([IdDateRestriction] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PersonalDossier'
+ALTER TABLE [dbo].[PersonalDossier]
+ADD CONSTRAINT [PK_PersonalDossier]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [IdPerson] in table 'Person'
+ALTER TABLE [dbo].[Person]
+ADD CONSTRAINT [PK_Person]
+    PRIMARY KEY CLUSTERED ([IdPerson] ASC);
+GO
+
+-- Creating primary key on [IdPerson] in table 'Person_Familiar'
+ALTER TABLE [dbo].[Person_Familiar]
+ADD CONSTRAINT [PK_Person_Familiar]
+    PRIMARY KEY CLUSTERED ([IdPerson] ASC);
 GO
 
 -- --------------------------------------------------
@@ -263,6 +323,30 @@ GO
 CREATE INDEX [IX_FK_ConcessionTypeDateRestriction]
 ON [dbo].[ConcessionType]
     ([DateRestriction_IdDateRestriction]);
+GO
+
+-- Creating foreign key on [PersonalDossierId] in table 'Person_Familiar'
+ALTER TABLE [dbo].[Person_Familiar]
+ADD CONSTRAINT [FK_PersonalDossierFamiliar]
+    FOREIGN KEY ([PersonalDossierId])
+    REFERENCES [dbo].[PersonalDossier]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PersonalDossierFamiliar'
+CREATE INDEX [IX_FK_PersonalDossierFamiliar]
+ON [dbo].[Person_Familiar]
+    ([PersonalDossierId]);
+GO
+
+-- Creating foreign key on [IdPerson] in table 'Person_Familiar'
+ALTER TABLE [dbo].[Person_Familiar]
+ADD CONSTRAINT [FK_Familiar_inherits_Person]
+    FOREIGN KEY ([IdPerson])
+    REFERENCES [dbo].[Person]
+        ([IdPerson])
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- --------------------------------------------------
