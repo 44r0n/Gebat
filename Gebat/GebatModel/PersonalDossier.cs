@@ -17,11 +17,13 @@ namespace GebatModel
         public PersonalDossier()
         {
             this.Familiar = new HashSet<Familiar>();
+            this.Concessions = new HashSet<Concession>();
         }
     
         public int Id { get; set; }
         public string Observations { get; set; }
     
         public virtual ICollection<Familiar> Familiar { get; set; }
+        public virtual ICollection<Concession> Concessions { get; set; }
     }
 }

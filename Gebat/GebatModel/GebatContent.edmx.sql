@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/08/2014 13:09:22
+-- Date Created: 10/16/2014 22:45:01
 -- Generated from EDMX file: D:\Proyectos\Gebat\Gebat\GebatModel\GebatContent.edmx
 -- --------------------------------------------------
 
@@ -34,6 +34,9 @@ IF OBJECT_ID(N'[dbo].[FK_ConcessionTypeDateRestriction]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_PersonalDossierFamiliar]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Person_Familiar] DROP CONSTRAINT [FK_PersonalDossierFamiliar];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PersonalDossierConcession]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Concession] DROP CONSTRAINT [FK_PersonalDossierConcession];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Familiar_inherits_Person]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Person_Familiar] DROP CONSTRAINT [FK_Familiar_inherits_Person];
@@ -129,6 +132,7 @@ CREATE TABLE [dbo].[Concession] (
     [BeginDate] datetime  NOT NULL,
     [FinishDate] datetime  NOT NULL,
     [Observations] nvarchar(max)  NOT NULL,
+    [PersonalDossierId] int  NOT NULL,
     [Type_IdConcessionType] int  NOT NULL
 );
 GO
@@ -301,7 +305,7 @@ ADD CONSTRAINT [FK_ConcessionConcessionType]
     FOREIGN KEY ([Type_IdConcessionType])
     REFERENCES [dbo].[ConcessionType]
         ([IdConcessionType])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_ConcessionConcessionType'
@@ -331,12 +335,27 @@ ADD CONSTRAINT [FK_PersonalDossierFamiliar]
     FOREIGN KEY ([PersonalDossierId])
     REFERENCES [dbo].[PersonalDossier]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_PersonalDossierFamiliar'
 CREATE INDEX [IX_FK_PersonalDossierFamiliar]
 ON [dbo].[Person_Familiar]
+    ([PersonalDossierId]);
+GO
+
+-- Creating foreign key on [PersonalDossierId] in table 'Concession'
+ALTER TABLE [dbo].[Concession]
+ADD CONSTRAINT [FK_PersonalDossierConcession]
+    FOREIGN KEY ([PersonalDossierId])
+    REFERENCES [dbo].[PersonalDossier]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PersonalDossierConcession'
+CREATE INDEX [IX_FK_PersonalDossierConcession]
+ON [dbo].[Concession]
     ([PersonalDossierId]);
 GO
 

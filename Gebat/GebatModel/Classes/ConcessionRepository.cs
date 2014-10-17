@@ -15,15 +15,6 @@ namespace GebatModel
         }
 
         /// <summary>
-        /// Adds a concession into the database.
-        /// </summary>
-        /// <param name="concession">COncession to add to the database.</param>
-        public void AddConcession(Concession concession)
-        {
-            this.Add(concession);   
-        }
-
-        /// <summary>
         /// Updates a concession from the database.
         /// </summary>
         /// <param name="concession">Concession to update from the database.</param>

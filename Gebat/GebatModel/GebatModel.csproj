@@ -99,6 +99,8 @@
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\AdminException.cs" />
+    <Compile Include="Exceptions\MinimumConcessionsException.cs" />
+    <Compile Include="Exceptions\MinimumFamiliarConcession.cs" />
     <Compile Include="Familiar.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>

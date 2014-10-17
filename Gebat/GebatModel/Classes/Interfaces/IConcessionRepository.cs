@@ -11,12 +11,6 @@ namespace GebatModel
         List<Concession> GetAllConcessions();
 
         /// <summary>
-        /// Adds a concession into the database.
-        /// </summary>
-        /// <param name="concession">COncession to add to the database.</param>
-        void AddConcession(Concession concession);
-
-        /// <summary>
         /// Updates a concession from the database.
         /// </summary>
         /// <param name="concession">Concession to update from the database.</param>

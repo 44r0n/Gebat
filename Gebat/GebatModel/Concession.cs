@@ -18,6 +18,7 @@ namespace GebatModel
         public System.DateTime BeginDate { get; set; }
         public System.DateTime FinishDate { get; set; }
         public string Observations { get; set; }
+        private int PersonalDossierId { get; set; }
     
         public virtual ConcessionType Type { get; set; }
     }

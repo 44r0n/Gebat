@@ -11,12 +11,6 @@ namespace GebatModel
         List<Familiar> GetAllFamiliars();
 
         /// <summary>
-        /// Adds a familiar into the database.
-        /// </summary>
-        /// <param name="familiar">Familiar to add to the database.</param>
-        void AddFamiliar(Familiar familiar);
-
-        /// <summary>
         /// Updates a familiar in the database.
         /// </summary>
         /// <param name="familiar">Familiar to update in the database.</param>

@@ -7,6 +7,7 @@ namespace GebatModelTest
         public void ClearConcession()
         {
             GebatDataBaseEntities context = new GebatDataBaseEntities();
+            context.Database.ExecuteSqlCommand("DELETE FROM ConcessionType");
             context.Database.ExecuteSqlCommand("DELETE FROM Concession");
         }
     }

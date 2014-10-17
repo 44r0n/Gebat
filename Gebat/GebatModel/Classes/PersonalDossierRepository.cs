@@ -20,6 +20,14 @@ namespace GebatModel
         /// <param name="dossier">PersonalDossier to add to the database.</param>
         public void AddDossier(PersonalDossier dossier)
         {
+            if(dossier.Concessions.Count == 0)
+            {
+                throw new MinimumConcessionsException("There must be at last one concession attached to a dossier.");
+            }
+            if(dossier.Familiar.Count == 0)
+            {
+                throw new MinimumFamiliarConcession("There must be at last one familiar attached to a dossier.");
+            }
             this.Add(dossier);
         }
 

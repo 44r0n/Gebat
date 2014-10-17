@@ -15,15 +15,6 @@ namespace GebatModel
         }
 
         /// <summary>
-        /// Adds a familiar into the database.
-        /// </summary>
-        /// <param name="familiar">Familiar to add to the database.</param>
-        public void AddFamiliar(Familiar familiar)
-        {
-            this.Add(familiar);
-        }
-
-        /// <summary>
         /// Updates a familiar in the database.
         /// </summary>
         /// <param name="familiar">Familiar to update in the database.</param>

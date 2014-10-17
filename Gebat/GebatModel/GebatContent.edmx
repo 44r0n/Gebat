@@ -41,6 +41,10 @@
       <End Role="PersonalDossier" EntitySet="PersonalDossier" />
       <End Role="Familiar" EntitySet="Person_Familiar" />
     </AssociationSet>
+    <AssociationSet Name="PersonalDossierConcession" Association="GebatDataBaseModel.Store.PersonalDossierConcession">
+      <End Role="PersonalDossier" EntitySet="PersonalDossier" />
+      <End Role="Concession" EntitySet="Concession" />
+    </AssociationSet>
     <AssociationSet Name="FK_Familiar_inherits_Person" Association="GebatDataBaseModel.Store.FK_Familiar_inherits_Person">
       <End Role="Person" EntitySet="Person" />
       <End Role="Familiar" EntitySet="Person_Familiar" />
@@ -96,6 +100,7 @@
     <Property Name="BeginDate" Type="datetime" Nullable="false" />
     <Property Name="FinishDate" Type="datetime" Nullable="false" />
     <Property Name="Observations" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PersonalDossierId" Type="int" Nullable="false" />
     <Property Name="Type_IdConcessionType" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ConcessionType">
@@ -181,7 +186,9 @@
   </Association>
   <Association Name="ConcessionConcessionType">
     <End Role="Concession" Type="GebatDataBaseModel.Store.Concession" Multiplicity="*" />
-    <End Role="ConcessionType" Type="GebatDataBaseModel.Store.ConcessionType" Multiplicity="1" />
+    <End Role="ConcessionType" Type="GebatDataBaseModel.Store.ConcessionType" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <ReferentialConstraint>
       <Principal Role="ConcessionType">
         <PropertyRef Name="IdConcessionType" />
@@ -204,13 +211,27 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="PersonalDossierFamiliar">
-    <End Role="PersonalDossier" Type="GebatDataBaseModel.Store.PersonalDossier" Multiplicity="1" />
+    <End Role="PersonalDossier" Type="GebatDataBaseModel.Store.PersonalDossier" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Familiar" Type="GebatDataBaseModel.Store.Person_Familiar" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PersonalDossier">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Familiar">
+        <PropertyRef Name="PersonalDossierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PersonalDossierConcession">
+    <End Role="PersonalDossier" Type="GebatDataBaseModel.Store.PersonalDossier" Multiplicity="1" />
+    <End Role="Concession" Type="GebatDataBaseModel.Store.Concession" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PersonalDossier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Concession">
         <PropertyRef Name="PersonalDossierId" />
       </Dependent>
     </ReferentialConstraint>
@@ -276,6 +297,10 @@
             <End Role="Familiar" EntitySet="Person" />
           </AssociationSet>
           <EntitySet Name="Person" EntityType="GebatDataBaseModel.Person" />
+          <AssociationSet Name="PersonalDossierConcession" Association="GebatDataBaseModel.PersonalDossierConcession">
+            <End Role="PersonalDossier" EntitySet="PersonalDossier" />
+            <End Role="Concession" EntitySet="Concession" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Type">
           <Key>
@@ -363,6 +388,7 @@
           <Property Name="FinishDate" Type="DateTime" Nullable="false" />
           <Property Name="Observations" Type="String" Nullable="false" />
           <NavigationProperty Name="Type" Relationship="GebatDataBaseModel.ConcessionConcessionType" FromRole="Concession" ToRole="ConcessionType" />
+          <Property Name="PersonalDossierId" Type="Int32" Nullable="false" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" />
         </EntityType>
         <EntityType Name="ConcessionType">
           <Key>
@@ -374,7 +400,9 @@
         </EntityType>
         <Association Name="ConcessionConcessionType">
           <End Type="GebatDataBaseModel.Concession" Role="Concession" Multiplicity="*" />
-          <End Type="GebatDataBaseModel.ConcessionType" Role="ConcessionType" Multiplicity="1" />
+          <End Type="GebatDataBaseModel.ConcessionType" Role="ConcessionType" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
         </Association>
         <EntityType Name="DateRestriction">
           <Key>
@@ -416,6 +444,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Observations" Type="String" Nullable="false" />
           <NavigationProperty Name="Familiar" Relationship="GebatDataBaseModel.PersonalDossierFamiliar" FromRole="PersonalDossier" ToRole="Familiar" />
+          <NavigationProperty Name="Concessions" Relationship="GebatDataBaseModel.PersonalDossierConcession" FromRole="PersonalDossier" ToRole="Concession" />
         </EntityType>
         <Association Name="PersonalDossierFamiliar">
           <End Type="GebatDataBaseModel.PersonalDossier" Role="PersonalDossier" Multiplicity="1" >
@@ -427,6 +456,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Familiar">
+              <PropertyRef Name="PersonalDossierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PersonalDossierConcession">
+          <End Type="GebatDataBaseModel.PersonalDossier" Role="PersonalDossier" Multiplicity="1" />
+          <End Type="GebatDataBaseModel.Concession" Role="Concession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalDossier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Concession">
               <PropertyRef Name="PersonalDossierId" />
             </Dependent>
           </ReferentialConstraint>
@@ -491,6 +532,7 @@
           <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
           <ScalarProperty Name="FinishDate" ColumnName="FinishDate" />
           <ScalarProperty Name="Observations" ColumnName="Observations" />
+          <ScalarProperty Name="PersonalDossierId" ColumnName="PersonalDossierId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
