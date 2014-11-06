@@ -6,6 +6,22 @@ namespace GebatModel
 {
     public class AdminRepository : BaseRepository , IAdminRepository
     {
+        private const string adminExceptionMessage = "There must exist at last one admin.";
+
+        #region//Private Methods
+        
+        private void checkLastAdmin()
+        {
+            if(GetAllAdmins().Count == 1)
+            {
+                throw new AdminException(adminExceptionMessage);
+            }
+        }
+
+        #endregion
+
+        #region//Public Methods
+
         /// <summary>
         /// Gets all the admins of the database.
         /// </summary>
@@ -31,14 +47,8 @@ namespace GebatModel
         /// <param name="admin">Admin to delete from the databse.</param>
         public void DeleteAdmin(Admin admin)
         {
-            if(GetAllAdmins().Count != 1)
-            {
-                this.Delete(admin);
-            }
-            else
-            {
-                throw new AdminException("There must exist at last one admin.");
-            }
+            checkLastAdmin();
+            this.Delete(admin);
         }
 
         /// <summary>
@@ -49,15 +59,17 @@ namespace GebatModel
         /// <returns>Admin with the given Username and Password or null.</returns>
         public Admin GetAdmin(string username, string password)
         {
-            var res = this.GetAll<Admin>().Where(t => t.Username == username).ToList();
-            if(res.Count() == 1)
+            var admins = this.GetAll<Admin>().Where(admin => admin.Username == username).ToList();
+            if(admins.Count() == 1)
             {
-                if(Hasher.ValidatePassword(password,res[0].Password))
+                if(Hasher.ValidatePassword(password,admins[0].Password))
                 {
-                    return res[0];
+                    return admins[0];
                 }
             }
             return null;
         }
+
+        #endregion
     }
 }

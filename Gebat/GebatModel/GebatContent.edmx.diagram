@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="GebatDataBaseModel.Concession" Width="1.5" PointX="9.875" PointY="8.125" />
         <EntityTypeShape EntityType="GebatDataBaseModel.ConcessionType" Width="1.5" PointX="12.625" PointY="8.25" />
         <AssociationConnector Association="GebatDataBaseModel.ConcessionConcessionType" />
-        <EntityTypeShape EntityType="GebatDataBaseModel.DateRestriction" Width="1.5" PointX="14.875" PointY="7.125" />
+        <EntityTypeShape EntityType="GebatDataBaseModel.DateRestriction" Width="1.5" PointX="15" PointY="8.125" />
         <AssociationConnector Association="GebatDataBaseModel.ConcessionTypeDateRestriction" />
         <EntityTypeShape EntityType="GebatDataBaseModel.Person" Width="1.5" PointX="9.75" PointY="0.5" FillColor="Green" />
         <EntityTypeShape EntityType="GebatDataBaseModel.Familiar" Width="1.5" PointX="7.875" PointY="3.25" FillColor="Green" />

@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LLCryptoLib">
-      <HintPath>C:\Users\media\Documents\cripto\LLCryptoLib_20_1024_Academy\Library\DotNet\LLCryptoLib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

@@ -48,7 +48,7 @@ namespace GebatModel
         /// <returns>List of Food with the given name.</returns>
         public List<Food> SearchFood(string name)
         {
-            return this.GetAll<Food>().Where(t => t.Name.Contains(name)).ToList();
+            return this.GetAll<Food>().Where(food => food.Name.Contains(name)).ToList();
         }
     }
 }

@@ -48,7 +48,7 @@ namespace GebatModel
         /// <returns>List of Types with the given name or null.</returns>
         public List<Type> SearchType(string name)
         {
-            return this.GetAll<Type>().Where(t => t.Name.Contains(name)).ToList();
+            return this.GetAll<Type>().Where(type => type.Name.Contains(name)).ToList();
         }
     }
 }

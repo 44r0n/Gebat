@@ -48,7 +48,7 @@ namespace GebatModel
         /// <returns>List of ConcessionType with the given name.</returns>
         public List<ConcessionType> SearchConcessionType(string name)
         {
-            return this.GetAll<ConcessionType>().Where(t => t.Name.Contains(name)).ToList();
+            return this.GetAll<ConcessionType>().Where(concession => concession.Name.Contains(name)).ToList();
         }
     }
 }

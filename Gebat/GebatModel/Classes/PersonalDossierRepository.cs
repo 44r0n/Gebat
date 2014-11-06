@@ -5,6 +5,24 @@ namespace GebatModel
 {
     public class PersonalDossierRepository : BaseRepository , IPersonalDossierRepository
     {
+        #region//Private Methods
+
+        private void checkDossier(PersonalDossier dossier)
+        {
+            if (dossier.Concessions.Count == 0)
+            {
+                throw new MinimumConcessionsException("There must be at last one concession attached to a dossier.");
+            }
+            if (dossier.Familiar.Count == 0)
+            {
+                throw new MinimumFamiliarConcession("There must be at last one familiar attached to a dossier.");
+            }
+        }
+
+        #endregion
+
+        #region
+
         /// <summary>
         /// Gets all the PersonalDossiers from the database.
         /// </summary>
@@ -20,14 +38,7 @@ namespace GebatModel
         /// <param name="dossier">PersonalDossier to add to the database.</param>
         public void AddDossier(PersonalDossier dossier)
         {
-            if(dossier.Concessions.Count == 0)
-            {
-                throw new MinimumConcessionsException("There must be at last one concession attached to a dossier.");
-            }
-            if(dossier.Familiar.Count == 0)
-            {
-                throw new MinimumFamiliarConcession("There must be at last one familiar attached to a dossier.");
-            }
+            checkDossier(dossier);
             this.Add(dossier);
         }
 
@@ -48,5 +59,7 @@ namespace GebatModel
         {
             this.Delete(dossier);
         }
+
+        #endregion
     }
 }

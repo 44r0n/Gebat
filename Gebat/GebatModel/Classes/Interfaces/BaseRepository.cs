@@ -6,8 +6,13 @@ namespace GebatModel
 {
     public abstract class BaseRepository
     {
-        
-        private GebatDataBaseEntities context = new GebatDataBaseEntities();
+        #region//Private Methods
+
+        private GebatDataBaseEntities entities = new GebatDataBaseEntities();
+
+        #endregion
+
+        #region//Protected Methods
 
         /// <summary>
         /// Returns a colection of IQueayable of a TEntity from the database.
@@ -17,7 +22,7 @@ namespace GebatModel
         protected virtual IQueryable<TEntity> GetAll<TEntity>()
             where TEntity : class
         {
-            var setter = context.Set<TEntity>();
+            var setter = entities.Set<TEntity>();
             return setter.AsQueryable();
         }
 
@@ -29,16 +34,9 @@ namespace GebatModel
         protected virtual void Add<TEntity>(TEntity entity)
             where TEntity : class
         {
-            var setter = context.Set<TEntity>();
+            var setter = entities.Set<TEntity>();
             setter.Add(entity);
-            try
-            {
-                context.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+            entities.SaveChanges();
         }
 
         /// <summary>
@@ -49,10 +47,10 @@ namespace GebatModel
         protected virtual void Update<TEntity>(TEntity entity)
             where TEntity : class
         {
-            var setter = context.Set<TEntity>();
+            var setter = entities.Set<TEntity>();
             setter.Attach(entity);
-            context.Entry(entity).State = EntityState.Modified;
-            context.SaveChanges();
+            entities.Entry(entity).State = EntityState.Modified;
+            entities.SaveChanges();
         }
 
         /// <summary>
@@ -63,17 +61,19 @@ namespace GebatModel
         protected virtual void Delete<TEntity>(TEntity entity)
             where TEntity : class
         {
-            var setter = context.Set<TEntity>();
+            var setter = entities.Set<TEntity>();
             setter.Remove(entity);
-            context.SaveChanges();
+            entities.SaveChanges();
         }
+
+        #endregion
 
         /// <summary>
         /// Constructor of the repository.
         /// </summary>
         public BaseRepository()
         {
-            context.Configuration.LazyLoadingEnabled = true;
+            entities.Configuration.LazyLoadingEnabled = true;
         }
     }
 }

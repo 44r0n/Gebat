@@ -7,6 +7,8 @@ namespace GebatModel
         //TODO: asegura que es así.
         private static DateTime today = DateTime.MinValue;
 
+        #region//Private Methods
+
         private void addQuantity(int quantity, DateTime date)
         {
             this.Quantity += quantity;
@@ -26,6 +28,10 @@ namespace GebatModel
             outgoing.FoodIdFood = this.IdFood;
             this.OutgoingFood.Add(outgoing);
         }
+
+        #endregion
+
+        #region//Public Methods
 
         public static void SetToday(DateTime date)
         {
@@ -84,5 +90,7 @@ namespace GebatModel
         {
             this.removeQuantity(quantity, date);
         }
+
+        #endregion
     }
 }

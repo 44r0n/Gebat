@@ -39,7 +39,7 @@ namespace GebatModel
         /// <returns>Familiar with the given DNI or null.</returns>
         public List<Familiar> GetFamiliar(string DNI)
         {
-            return this.GetAll<Familiar>().Where(t => t.DNI.Contains(DNI)).ToList();
+            return this.GetAll<Familiar>().Where(familiar => familiar.DNI.Contains(DNI)).ToList();
         }
     }
 }
