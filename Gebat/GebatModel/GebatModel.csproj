@@ -78,10 +78,8 @@
     <Compile Include="Classes\Interfaces\IFamiliarRespository.cs" />
     <Compile Include="Classes\Interfaces\IFoodRepository.cs" />
     <Compile Include="Classes\Interfaces\IPersonalDossierRepository.cs" />
-    <Compile Include="Classes\Interfaces\IRestriction.cs" />
     <Compile Include="Classes\Interfaces\ITypeRepository.cs" />
-    <Compile Include="Classes\Partials\ConcessionType.cs" />
-    <Compile Include="Classes\Partials\DateRestriction.cs" />
+    <Compile Include="Classes\Partials\Concession.cs" />
     <Compile Include="Classes\Partials\Food.cs" />
     <Compile Include="Classes\Partials\PersonalDossier.cs" />
     <Compile Include="Classes\PersonalDossierRepository.cs" />
