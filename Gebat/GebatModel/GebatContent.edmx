@@ -99,7 +99,7 @@
     <Property Name="IdConcession" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="BeginDate" Type="datetime" Nullable="false" />
     <Property Name="FinishDate" Type="datetime" Nullable="false" />
-    <Property Name="Observations" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Observations" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PersonalDossierId" Type="int" Nullable="false" />
     <Property Name="Type_IdConcessionType" Type="int" Nullable="false" />
   </EntityType>
@@ -116,7 +116,6 @@
       <PropertyRef Name="IdDateRestriction" />
     </Key>
     <Property Name="IdDateRestriction" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Concatenable" Type="bit" Nullable="false" />
     <Property Name="Interval" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="PersonalDossier">
@@ -124,7 +123,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Observations" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Observations" Type="nvarchar(max)" Nullable="true" />
   </EntityType>
   <EntityType Name="Person">
     <Key>
@@ -386,7 +385,7 @@
           <Property Name="IdConcession" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="BeginDate" Type="DateTime" Nullable="false" />
           <Property Name="FinishDate" Type="DateTime" Nullable="false" />
-          <Property Name="Observations" Type="String" Nullable="false" />
+          <Property Name="Observations" Type="String" Nullable="true" />
           <NavigationProperty Name="Type" Relationship="GebatDataBaseModel.ConcessionConcessionType" FromRole="Concession" ToRole="ConcessionType" />
           <Property Name="PersonalDossierId" Type="Int32" Nullable="false" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" />
         </EntityType>
@@ -409,7 +408,6 @@
             <PropertyRef Name="IdDateRestriction" />
           </Key>
           <Property Name="IdDateRestriction" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-          <Property Name="Concatenable" Type="Boolean" Nullable="false" />
           <Property Name="Interval" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="ConcessionTypeDateRestriction">
@@ -434,7 +432,7 @@
         <EntityType Name="Familiar" BaseType="GebatDataBaseModel.Person" Abstract="false">
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="Income" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="PersonalDossier" Relationship="GebatDataBaseModel.PersonalDossierFamiliar" FromRole="Familiar" ToRole="PersonalDossier" />
+          <NavigationProperty Name="PersonalDossier" Relationship="GebatDataBaseModel.PersonalDossierFamiliar" FromRole="Familiar" ToRole="PersonalDossier" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="PersonalDossierId" Type="Int32" Nullable="false" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" />
         </EntityType>
         <EntityType Name="PersonalDossier">
@@ -442,9 +440,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Observations" Type="String" Nullable="false" />
-          <NavigationProperty Name="Familiar" Relationship="GebatDataBaseModel.PersonalDossierFamiliar" FromRole="PersonalDossier" ToRole="Familiar" />
-          <NavigationProperty Name="Concessions" Relationship="GebatDataBaseModel.PersonalDossierConcession" FromRole="PersonalDossier" ToRole="Concession" />
+          <Property Name="Observations" Type="String" Nullable="true" />
+          <NavigationProperty Name="Familiar" Relationship="GebatDataBaseModel.PersonalDossierFamiliar" FromRole="PersonalDossier" ToRole="Familiar" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <NavigationProperty Name="Concessions" Relationship="GebatDataBaseModel.PersonalDossierConcession" FromRole="PersonalDossier" ToRole="Concession" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
         </EntityType>
         <Association Name="PersonalDossierFamiliar">
           <End Type="GebatDataBaseModel.PersonalDossier" Role="PersonalDossier" Multiplicity="1" >
@@ -548,7 +546,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.DateRestriction)">
         <MappingFragment StoreEntitySet="DateRestriction">
           <ScalarProperty Name="IdDateRestriction" ColumnName="IdDateRestriction" />
-          <ScalarProperty Name="Concatenable" ColumnName="Concatenable" />
           <ScalarProperty Name="Interval" ColumnName="Interval" />
         </MappingFragment>
       </EntityTypeMapping>

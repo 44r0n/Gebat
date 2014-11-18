@@ -9,24 +9,35 @@ namespace GebatModel
 
         #region//Private Methods
 
-        private void addQuantity(int quantity, DateTime date)
+        private void addEntry(int quantity, DateTime date)
         {
-            this.Quantity += quantity;
             EntryFood entry = new EntryFood();
             entry.Quantity = quantity;
             entry.Date = date;
             entry.FoodIdFood = this.IdFood;
             this.EntryFood.Add(entry);
+
         }
 
-        private void removeQuantity(int quantity, DateTime date)
+        private void addQuantity(int quantity, DateTime date)
         {
-            this.Quantity -= quantity;
+            this.Quantity += quantity;
+            addEntry(quantity, date);
+        }
+
+        private void addOutgoing(int quantity, DateTime date)
+        {
             OutgoingFood outgoing = new OutgoingFood();
             outgoing.Quantity = quantity;
             outgoing.Date = date;
             outgoing.FoodIdFood = this.IdFood;
             this.OutgoingFood.Add(outgoing);
+        }
+
+        private void removeQuantity(int quantity, DateTime date)
+        {
+            this.Quantity -= quantity;
+            addOutgoing(quantity, date);
         }
 
         #endregion

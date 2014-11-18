@@ -8,6 +8,7 @@ namespace GebatModelTest
         {
             GebatDataBaseEntities context = new GebatDataBaseEntities();
             context.Database.ExecuteSqlCommand("DELETE FROM ConcessionType");
+            context.Database.ExecuteSqlCommand("DELETE FROM DateRestriction");
             context.Database.ExecuteSqlCommand("DELETE FROM Concession");
         }
     }

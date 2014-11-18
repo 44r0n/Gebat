@@ -76,7 +76,6 @@
     <Compile Include="TestType.cs" />
     <Compile Include="TestFood.cs" />
     <Compile Include="TestPersonalDossier.cs" />
-    <Compile Include="TestConcession.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GebatModel\GebatModel.csproj">

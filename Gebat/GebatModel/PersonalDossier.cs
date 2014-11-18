@@ -23,7 +23,7 @@ namespace GebatModel
         public int Id { get; set; }
         public string Observations { get; set; }
     
-        public virtual ICollection<Familiar> Familiar { get; set; }
-        public virtual ICollection<Concession> Concessions { get; set; }
+        public virtual ICollection<Familiar> Familiar { get; private set; }
+        public virtual ICollection<Concession> Concessions { get; private set; }
     }
 }

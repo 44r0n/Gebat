@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/16/2014 22:45:01
+-- Date Created: 11/17/2014 13:02:30
 -- Generated from EDMX file: D:\Proyectos\Gebat\Gebat\GebatModel\GebatContent.edmx
 -- --------------------------------------------------
 
@@ -131,7 +131,7 @@ CREATE TABLE [dbo].[Concession] (
     [IdConcession] int IDENTITY(1,1) NOT NULL,
     [BeginDate] datetime  NOT NULL,
     [FinishDate] datetime  NOT NULL,
-    [Observations] nvarchar(max)  NOT NULL,
+    [Observations] nvarchar(max)  NULL,
     [PersonalDossierId] int  NOT NULL,
     [Type_IdConcessionType] int  NOT NULL
 );
@@ -148,7 +148,6 @@ GO
 -- Creating table 'DateRestriction'
 CREATE TABLE [dbo].[DateRestriction] (
     [IdDateRestriction] int IDENTITY(1,1) NOT NULL,
-    [Concatenable] bit  NOT NULL,
     [Interval] int  NOT NULL
 );
 GO
@@ -156,7 +155,7 @@ GO
 -- Creating table 'PersonalDossier'
 CREATE TABLE [dbo].[PersonalDossier] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Observations] nvarchar(max)  NOT NULL
+    [Observations] nvarchar(max)  NULL
 );
 GO
 

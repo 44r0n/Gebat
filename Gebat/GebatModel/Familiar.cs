@@ -18,6 +18,6 @@ namespace GebatModel
         public int Income { get; set; }
         private int PersonalDossierId { get; set; }
     
-        public virtual PersonalDossier PersonalDossier { get; set; }
+        public virtual PersonalDossier PersonalDossier { get; private set; }
     }
 }

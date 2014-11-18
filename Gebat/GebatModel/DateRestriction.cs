@@ -15,7 +15,6 @@ namespace GebatModel
     public partial class DateRestriction
     {
         public int IdDateRestriction { get; private set; }
-        public bool Concatenable { get; set; }
         public int Interval { get; set; }
     }
 }

@@ -79,7 +79,6 @@
     <Compile Include="Classes\Interfaces\IFoodRepository.cs" />
     <Compile Include="Classes\Interfaces\IPersonalDossierRepository.cs" />
     <Compile Include="Classes\Interfaces\ITypeRepository.cs" />
-    <Compile Include="Classes\Partials\Concession.cs" />
     <Compile Include="Classes\Partials\Food.cs" />
     <Compile Include="Classes\Partials\PersonalDossier.cs" />
     <Compile Include="Classes\PersonalDossierRepository.cs" />
@@ -97,6 +96,7 @@
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\AdminException.cs" />
+    <Compile Include="Exceptions\ConcessionDateException.cs" />
     <Compile Include="Exceptions\MinimumConcessionsException.cs" />
     <Compile Include="Exceptions\MinimumFamiliarConcession.cs" />
     <Compile Include="Familiar.cs">
