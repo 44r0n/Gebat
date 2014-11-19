@@ -22,8 +22,8 @@ namespace GebatModel
 
         private Familiar[] getFamiliars()
         {
-            Familiar[] familiars = new Familiar[this.Familiar.Count];
-            this.Familiar.CopyTo(familiars, 0);
+            Familiar[] familiars = new Familiar[this.Familiars.Count];
+            this.Familiars.CopyTo(familiars, 0);
             return familiars;
         }
 
@@ -54,10 +54,9 @@ namespace GebatModel
                 return false;
             }
             else
-            {
-                int maxConcessions = Concessions.Count;
+            {               
                 Concession[] concessions = getConcessions();
-                return (concessions[maxConcessions - 1].Type == concessions[maxConcessions - 2].Type);
+                return (concessions[Concessions.Count - 1].Type == concessions[Concessions.Count - 2].Type);
             }
         }
 
@@ -122,9 +121,7 @@ namespace GebatModel
 
         #region//Public methods
 
-        /// <summary>
-        /// Gets the income for the PersonalDossier
-        /// </summary>
+        
         public int TotalIncome
         {
             get
@@ -137,10 +134,7 @@ namespace GebatModel
             }
         }
 
-        /// <summary>
-        /// Adds a concession to the dossier.
-        /// </summary>
-        /// <param name="concession">Concession to add.</param>
+        
         public void AddConcession(Concession concession)
         {
             if (isValid(concession))
@@ -151,6 +145,11 @@ namespace GebatModel
             {
                 throw new ConcessionDateException("Check your dates");
             }
+        }
+
+        public void AddFamiliar(Familiar familiar)
+        {
+            Familiars.Add(familiar);
         }
 
         #endregion

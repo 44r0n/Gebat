@@ -35,5 +35,6 @@ namespace GebatModel
         public virtual DbSet<DateRestriction> DateRestriction { get; set; }
         public virtual DbSet<PersonalDossier> PersonalDossier { get; set; }
         public virtual DbSet<Person> Person { get; set; }
+        public virtual DbSet<Crime> Crime { get; set; }
     }
 }

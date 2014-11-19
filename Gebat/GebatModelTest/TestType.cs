@@ -13,7 +13,7 @@ namespace GebatModelTest
         {
             Type type = new Type();
             type.Name = "Kilos";
-            repotype.AddType(type);
+            repotype.SaveType(type);
             return type;
         }
 

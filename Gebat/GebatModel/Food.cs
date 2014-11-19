@@ -24,9 +24,11 @@ namespace GebatModel
         public string Name { get; set; }
         public int Quantity { get; private set; }
         private int TypeIdType { get; set; }
+        private int ConcessionTypeIdConcessionType { get; set; }
     
         public virtual Type Type { get; set; }
         public virtual ICollection<EntryFood> EntryFood { get; private set; }
         public virtual ICollection<OutgoingFood> OutgoingFood { get; set; }
+        public virtual ConcessionType ConcessionType { get; set; }
     }
 }

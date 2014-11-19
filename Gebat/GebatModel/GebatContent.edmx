@@ -16,7 +16,9 @@
     <EntitySet Name="DateRestriction" EntityType="GebatDataBaseModel.Store.DateRestriction" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonalDossier" EntityType="GebatDataBaseModel.Store.PersonalDossier" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Person" EntityType="GebatDataBaseModel.Store.Person" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Crime" EntityType="GebatDataBaseModel.Store.Crime" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Person_Familiar" EntityType="GebatDataBaseModel.Store.Person_Familiar" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Person_TBC" EntityType="GebatDataBaseModel.Store.Person_TBC" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="TypeFood" Association="GebatDataBaseModel.Store.TypeFood">
       <End Role="Type" EntitySet="Type" />
       <End Role="Food" EntitySet="Food" />
@@ -45,9 +47,21 @@
       <End Role="PersonalDossier" EntitySet="PersonalDossier" />
       <End Role="Concession" EntitySet="Concession" />
     </AssociationSet>
+    <AssociationSet Name="ConcessionTypeFood" Association="GebatDataBaseModel.Store.ConcessionTypeFood">
+      <End Role="ConcessionType" EntitySet="ConcessionType" />
+      <End Role="Food" EntitySet="Food" />
+    </AssociationSet>
+    <AssociationSet Name="CrimeTBC" Association="GebatDataBaseModel.Store.CrimeTBC">
+      <End Role="Crime" EntitySet="Crime" />
+      <End Role="TBC" EntitySet="Person_TBC" />
+    </AssociationSet>
     <AssociationSet Name="FK_Familiar_inherits_Person" Association="GebatDataBaseModel.Store.FK_Familiar_inherits_Person">
       <End Role="Person" EntitySet="Person" />
       <End Role="Familiar" EntitySet="Person_Familiar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBC_inherits_Person" Association="GebatDataBaseModel.Store.FK_TBC_inherits_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="TBC" EntitySet="Person_TBC" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Admin">
@@ -73,6 +87,7 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Quantity" Type="int" Nullable="false" />
     <Property Name="TypeIdType" Type="int" Nullable="false" />
+    <Property Name="ConcessionTypeIdConcessionType" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="EntryFood">
     <Key>
@@ -136,6 +151,13 @@
     <Property Name="BirthDate" Type="datetime" Nullable="false" />
     <Property Name="Gender" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Crime">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="Person_Familiar">
     <Key>
       <PropertyRef Name="IdPerson" />
@@ -143,6 +165,26 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Income" Type="int" Nullable="false" />
     <Property Name="PersonalDossierId" Type="int" Nullable="false" />
+    <Property Name="IdPerson" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Person_TBC">
+    <Key>
+      <PropertyRef Name="IdPerson" />
+    </Key>
+    <Property Name="Court" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Judgement" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BeginDate" Type="datetime" Nullable="false" />
+    <Property Name="Monday" Type="bit" Nullable="false" />
+    <Property Name="Tuesday" Type="bit" Nullable="false" />
+    <Property Name="Wednesday" Type="bit" Nullable="false" />
+    <Property Name="Thursday" Type="bit" Nullable="false" />
+    <Property Name="Friday" Type="bit" Nullable="false" />
+    <Property Name="Saturday" Type="bit" Nullable="false" />
+    <Property Name="Sunday" Type="bit" Nullable="false" />
+    <Property Name="BeginHour" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FinishHour" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FinishDate" Type="datetime" Nullable="false" />
+    <Property Name="CrimeId" Type="int" Nullable="false" />
     <Property Name="IdPerson" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="TypeFood">
@@ -235,6 +277,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ConcessionTypeFood">
+    <End Role="ConcessionType" Type="GebatDataBaseModel.Store.ConcessionType" Multiplicity="1" />
+    <End Role="Food" Type="GebatDataBaseModel.Store.Food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ConcessionType">
+        <PropertyRef Name="IdConcessionType" />
+      </Principal>
+      <Dependent Role="Food">
+        <PropertyRef Name="ConcessionTypeIdConcessionType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CrimeTBC">
+    <End Role="Crime" Type="GebatDataBaseModel.Store.Crime" Multiplicity="1" />
+    <End Role="TBC" Type="GebatDataBaseModel.Store.Person_TBC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Crime">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TBC">
+        <PropertyRef Name="CrimeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Familiar_inherits_Person">
     <End Role="Person" Type="GebatDataBaseModel.Store.Person" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -245,6 +311,20 @@
         <PropertyRef Name="IdPerson" />
       </Principal>
       <Dependent Role="Familiar">
+        <PropertyRef Name="IdPerson" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBC_inherits_Person">
+    <End Role="Person" Type="GebatDataBaseModel.Store.Person" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TBC" Type="GebatDataBaseModel.Store.Person_TBC" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="IdPerson" />
+      </Principal>
+      <Dependent Role="TBC">
         <PropertyRef Name="IdPerson" />
       </Dependent>
     </ReferentialConstraint>
@@ -300,6 +380,15 @@
             <End Role="PersonalDossier" EntitySet="PersonalDossier" />
             <End Role="Concession" EntitySet="Concession" />
           </AssociationSet>
+          <AssociationSet Name="ConcessionTypeFood" Association="GebatDataBaseModel.ConcessionTypeFood">
+            <End Role="ConcessionType" EntitySet="ConcessionType" />
+            <End Role="Food" EntitySet="Food" />
+          </AssociationSet>
+          <EntitySet Name="Crime" EntityType="GebatDataBaseModel.Crime" />
+          <AssociationSet Name="CrimeTBC" Association="GebatDataBaseModel.CrimeTBC">
+            <End Role="Crime" EntitySet="Crime" />
+            <End Role="TBC" EntitySet="Person" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Type">
           <Key>
@@ -319,6 +408,8 @@
           <Property Name="TypeIdType" Type="Int32" Nullable="false" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" a:SetterAccess="Private" />
           <NavigationProperty Name="EntryFood" Relationship="GebatDataBaseModel.FoodEntryFood" FromRole="Food" ToRole="EntryFood" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <NavigationProperty Name="OutgoingFood" Relationship="GebatDataBaseModel.FoodOutgoingFood" FromRole="Food" ToRole="OutgoingFood" />
+          <NavigationProperty Name="ConcessionType" Relationship="GebatDataBaseModel.ConcessionTypeFood" FromRole="Food" ToRole="ConcessionType" />
+          <Property Name="ConcessionTypeIdConcessionType" Type="Int32" Nullable="false" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" a:SetterAccess="Private" />
         </EntityType>
         <Association Name="TypeFood">
           <End Type="GebatDataBaseModel.Type" Role="Type" Multiplicity="1" >
@@ -441,7 +532,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Observations" Type="String" Nullable="true" />
-          <NavigationProperty Name="Familiar" Relationship="GebatDataBaseModel.PersonalDossierFamiliar" FromRole="PersonalDossier" ToRole="Familiar" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <NavigationProperty Name="Familiars" Relationship="GebatDataBaseModel.PersonalDossierFamiliar" FromRole="PersonalDossier" ToRole="Familiar" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <NavigationProperty Name="Concessions" Relationship="GebatDataBaseModel.PersonalDossierConcession" FromRole="PersonalDossier" ToRole="Concession" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
         </EntityType>
         <Association Name="PersonalDossierFamiliar">
@@ -467,6 +558,55 @@
             </Principal>
             <Dependent Role="Concession">
               <PropertyRef Name="PersonalDossierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ConcessionTypeFood">
+          <End Type="GebatDataBaseModel.ConcessionType" Role="ConcessionType" Multiplicity="1" />
+          <End Type="GebatDataBaseModel.Food" Role="Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConcessionType">
+              <PropertyRef Name="IdConcessionType" />
+            </Principal>
+            <Dependent Role="Food">
+              <PropertyRef Name="ConcessionTypeIdConcessionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TBC" BaseType="GebatDataBaseModel.Person" >
+          <Property Name="Court" Type="String" Nullable="false" />
+          <Property Name="Judgement" Type="String" Nullable="false" />
+          <Property Name="BeginDate" Type="DateTime" Nullable="false" />
+          <Property Name="Monday" Type="Boolean" Nullable="false" />
+          <Property Name="Tuesday" Type="Boolean" Nullable="false" />
+          <Property Name="Wednesday" Type="Boolean" Nullable="false" />
+          <Property Name="Thursday" Type="Boolean" Nullable="false" />
+          <Property Name="Friday" Type="Boolean" Nullable="false" />
+          <Property Name="Saturday" Type="Boolean" Nullable="false" />
+          <Property Name="Sunday" Type="Boolean" Nullable="false" />
+          <Property Name="BeginHour" Type="String" Nullable="false" />
+          <Property Name="FinishHour" Type="String" Nullable="false" />
+          <Property Name="FinishDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Crime" Relationship="GebatDataBaseModel.CrimeTBC" FromRole="TBC" ToRole="Crime" />
+          <Property Name="CrimeId" Type="Int32" Nullable="false" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Private" />
+        </EntityType>
+        <EntityType Name="Crime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="TBC" Relationship="GebatDataBaseModel.CrimeTBC" FromRole="Crime" ToRole="TBC" />
+        </EntityType>
+        <Association Name="CrimeTBC">
+          <End Type="GebatDataBaseModel.Crime" Role="Crime" Multiplicity="1" />
+          <End Type="GebatDataBaseModel.TBC" Role="TBC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Crime">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBC">
+              <PropertyRef Name="CrimeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -500,6 +640,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="TypeIdType" ColumnName="TypeIdType" />
+          <ScalarProperty Name="ConcessionTypeIdConcessionType" ColumnName="ConcessionTypeIdConcessionType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -575,6 +716,33 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Income" ColumnName="Income" />
           <ScalarProperty Name="PersonalDossierId" ColumnName="PersonalDossierId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.TBC)">
+        <MappingFragment StoreEntitySet="Person_TBC">
+          <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+          <ScalarProperty Name="Court" ColumnName="Court" />
+          <ScalarProperty Name="Judgement" ColumnName="Judgement" />
+          <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+          <ScalarProperty Name="Monday" ColumnName="Monday" />
+          <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+          <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+          <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+          <ScalarProperty Name="Friday" ColumnName="Friday" />
+          <ScalarProperty Name="Saturday" ColumnName="Saturday" />
+          <ScalarProperty Name="Sunday" ColumnName="Sunday" />
+          <ScalarProperty Name="BeginHour" ColumnName="BeginHour" />
+          <ScalarProperty Name="FinishHour" ColumnName="FinishHour" />
+          <ScalarProperty Name="FinishDate" ColumnName="FinishDate" />
+          <ScalarProperty Name="CrimeId" ColumnName="CrimeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Crime">
+      <EntityTypeMapping TypeName="IsTypeOf(GebatDataBaseModel.Crime)">
+        <MappingFragment StoreEntitySet="Crime">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

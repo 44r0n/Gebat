@@ -14,7 +14,7 @@ namespace GebatModelTest
             Admin administrador = new Admin();
             administrador.Username = name;
             administrador.Password = password;
-            adminrepo.AddAdmin(administrador);
+            adminrepo.SaveAdmin(administrador);
             return administrador;
         }
 

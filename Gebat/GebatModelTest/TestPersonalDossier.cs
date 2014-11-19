@@ -59,7 +59,7 @@ namespace GebatModelTest
             DateRestriction restriction = new DateRestriction();
             restriction.Interval = 3;
             type.DateRestriction = restriction;
-            repotype.AddConcessionType(type);
+            repotype.SaveConcessionType(type);
         }
 
         [TestCleanup]
@@ -79,12 +79,12 @@ namespace GebatModelTest
         {
             PersonalDossier dossier = new PersonalDossier();
             dossier.Observations = "Unas observaciones";
-            dossier.Familiar.Add(this.StandardFamiliar);
-            repodossier.AddDossier(dossier);
+            dossier.AddFamiliar(this.StandardFamiliar);
+            repodossier.SaveDossier(dossier);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MinimumFamiliarConcession))]
+        [ExpectedException(typeof(MinimumFamiliarConcessionException))]
         public void NewPersonalDossierOnlyConcession()
         {
             Concession concession = new Concession();
@@ -94,7 +94,7 @@ namespace GebatModelTest
             PersonalDossier dossier = new PersonalDossier();
             dossier.Observations = "Mas observaciones";
             dossier.Concessions.Add(concession);
-            repodossier.AddDossier(dossier);
+            repodossier.SaveDossier(dossier);
         }
 
         [TestMethod]
@@ -104,12 +104,12 @@ namespace GebatModelTest
             PersonalDossier dossier = new PersonalDossier();
             dossier.Observations = "Más observaciones";
             dossier.Concessions.Add(this.StandardConcession);
-            dossier.Familiar.Add(StandardFamiliar);
-            repodossier.AddDossier(dossier);
+            dossier.AddFamiliar(StandardFamiliar);
+            repodossier.SaveDossier(dossier);
             PersonalDossier totest = repodossier.GetAllDossiers()[0];
             Assert.AreEqual("Más observaciones", totest.Observations);
-            Familiar[] familiars = new Familiar[totest.Familiar.Count];
-            totest.Familiar.CopyTo(familiars, 0);
+            Familiar[] familiars = new Familiar[totest.Familiars.Count];
+            totest.Familiars.CopyTo(familiars, 0);
             Assert.AreEqual("Manolo", familiars[0].Name);
             Concession[] concesions = new Concession[totest.Concessions.Count];
             totest.Concessions.CopyTo(concesions, 0);
@@ -129,10 +129,10 @@ namespace GebatModelTest
             familiar.Income = 200;
             familiar.Name = "Pepe";
             familiar.Surname = "Ussar";
-            dossier.Familiar.Add(familiar);
-            dossier.Familiar.Add(StandardFamiliar);
+            dossier.AddFamiliar(familiar);
+            dossier.AddFamiliar(StandardFamiliar);
             dossier.Concessions.Add(StandardConcession);
-            repodossier.AddDossier(dossier);
+            repodossier.SaveDossier(dossier);
             Assert.AreEqual(500, dossier.TotalIncome);
         }
 
@@ -140,13 +140,13 @@ namespace GebatModelTest
         public void AddOnlyOne()
         {
             PersonalDossier dossier = new PersonalDossier();
-            dossier.Familiar.Add(StandardFamiliar);
+            dossier.AddFamiliar(StandardFamiliar);
             Concession newConcession = new Concession();
             newConcession.Type = getFega();
             newConcession.BeginDate = new DateTime(2014, 5, 5);
             newConcession.FinishDate = new DateTime(2014, 8, 5);
             dossier.AddConcession(newConcession);
-            repodossier.AddDossier(dossier);
+            repodossier.SaveDossier(dossier);
             List<PersonalDossier> dossiers = repodossier.GetAllDossiers();
             Concession[] concessions = new Concession[dossiers[0].Concessions.Count];
             dossiers[0].Concessions.CopyTo(concessions, 0);
@@ -157,13 +157,13 @@ namespace GebatModelTest
         public void AddTwoFega()
         {
             PersonalDossier dossier = new PersonalDossier();
-            dossier.Familiar.Add(StandardFamiliar);
+            dossier.AddFamiliar(StandardFamiliar);
             Concession first = new Concession();
             first.Type = getFega();
             first.BeginDate = new DateTime(2014, 2, 5);
             first.FinishDate = new DateTime(2014, 5, 5);
             dossier.AddConcession(first);
-            repodossier.AddDossier(dossier);
+            repodossier.SaveDossier(dossier);
             PersonalDossier loaded = repodossier.GetAllDossiers()[0];
             Concession second = new Concession();
             second.Type = getFega();
@@ -179,13 +179,13 @@ namespace GebatModelTest
         public void AddThreeFegaFail()
         {
             PersonalDossier dossier = new PersonalDossier();
-            dossier.Familiar.Add(StandardFamiliar);
+            dossier.AddFamiliar(StandardFamiliar);
             Concession first = new Concession();
             first.Type = getFega();
             first.BeginDate = new DateTime(2013, 11, 5);
             first.FinishDate = new DateTime(2014, 2, 5);
             dossier.AddConcession(first);
-            repodossier.AddDossier(dossier);
+            repodossier.SaveDossier(dossier);
             PersonalDossier loaded = repodossier.GetAllDossiers()[0];
             Concession second = new Concession();
             second.Type = getFega();
@@ -203,13 +203,13 @@ namespace GebatModelTest
         public void AddThreeFegaSuccess()
         {
             PersonalDossier dossier = new PersonalDossier();
-            dossier.Familiar.Add(StandardFamiliar);
+            dossier.AddFamiliar(StandardFamiliar);
             Concession first = new Concession();
             first.Type = getFega();
             first.BeginDate = new DateTime(2013, 11, 5);
             first.FinishDate = new DateTime(2014, 2, 5);
             dossier.AddConcession(first);
-            repodossier.AddDossier(dossier);
+            repodossier.SaveDossier(dossier);
             PersonalDossier loaded = repodossier.GetAllDossiers()[0];
             Concession second = new Concession();
             second.Type = getFega();
@@ -227,13 +227,13 @@ namespace GebatModelTest
         public void AddTwoFegaAndOther()
         {
             PersonalDossier dossier = new PersonalDossier();
-            dossier.Familiar.Add(StandardFamiliar);
+            dossier.AddFamiliar(StandardFamiliar);
             Concession first = new Concession();
             first.Type = getFega();
             first.BeginDate = new DateTime(2014, 2, 5);
             first.FinishDate = new DateTime(2014, 5, 5);
             dossier.AddConcession(first);
-            repodossier.AddDossier(dossier);
+            repodossier.SaveDossier(dossier);
             PersonalDossier loaded = repodossier.GetAllDossiers()[0];
             Concession second = new Concession();
             second.Type = getFega();

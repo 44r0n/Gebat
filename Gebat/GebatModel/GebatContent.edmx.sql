@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/17/2014 13:02:30
+-- Date Created: 11/18/2014 20:53:01
 -- Generated from EDMX file: D:\Proyectos\Gebat\Gebat\GebatModel\GebatContent.edmx
 -- --------------------------------------------------
 
@@ -37,6 +37,9 @@ IF OBJECT_ID(N'[dbo].[FK_PersonalDossierFamiliar]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_PersonalDossierConcession]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Concession] DROP CONSTRAINT [FK_PersonalDossierConcession];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ConcessionTypeFood]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Food] DROP CONSTRAINT [FK_ConcessionTypeFood];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Familiar_inherits_Person]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Person_Familiar] DROP CONSTRAINT [FK_Familiar_inherits_Person];
@@ -104,7 +107,8 @@ CREATE TABLE [dbo].[Food] (
     [IdFood] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Quantity] int  NOT NULL,
-    [TypeIdType] int  NOT NULL
+    [TypeIdType] int  NOT NULL,
+    [ConcessionTypeIdConcessionType] int  NOT NULL
 );
 GO
 
@@ -170,11 +174,38 @@ CREATE TABLE [dbo].[Person] (
 );
 GO
 
+-- Creating table 'Crime'
+CREATE TABLE [dbo].[Crime] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
+);
+GO
+
 -- Creating table 'Person_Familiar'
 CREATE TABLE [dbo].[Person_Familiar] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Income] int  NOT NULL,
     [PersonalDossierId] int  NOT NULL,
+    [IdPerson] int  NOT NULL
+);
+GO
+
+-- Creating table 'Person_TBC'
+CREATE TABLE [dbo].[Person_TBC] (
+    [Court] nvarchar(max)  NOT NULL,
+    [Judgement] nvarchar(max)  NOT NULL,
+    [BeginDate] datetime  NOT NULL,
+    [Monday] bit  NOT NULL,
+    [Tuesday] bit  NOT NULL,
+    [Wednesday] bit  NOT NULL,
+    [Thursday] bit  NOT NULL,
+    [Friday] bit  NOT NULL,
+    [Saturday] bit  NOT NULL,
+    [Sunday] bit  NOT NULL,
+    [BeginHour] nvarchar(max)  NOT NULL,
+    [FinishHour] nvarchar(max)  NOT NULL,
+    [FinishDate] datetime  NOT NULL,
+    [CrimeId] int  NOT NULL,
     [IdPerson] int  NOT NULL
 );
 GO
@@ -243,9 +274,21 @@ ADD CONSTRAINT [PK_Person]
     PRIMARY KEY CLUSTERED ([IdPerson] ASC);
 GO
 
+-- Creating primary key on [Id] in table 'Crime'
+ALTER TABLE [dbo].[Crime]
+ADD CONSTRAINT [PK_Crime]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
 -- Creating primary key on [IdPerson] in table 'Person_Familiar'
 ALTER TABLE [dbo].[Person_Familiar]
 ADD CONSTRAINT [PK_Person_Familiar]
+    PRIMARY KEY CLUSTERED ([IdPerson] ASC);
+GO
+
+-- Creating primary key on [IdPerson] in table 'Person_TBC'
+ALTER TABLE [dbo].[Person_TBC]
+ADD CONSTRAINT [PK_Person_TBC]
     PRIMARY KEY CLUSTERED ([IdPerson] ASC);
 GO
 
@@ -358,9 +401,48 @@ ON [dbo].[Concession]
     ([PersonalDossierId]);
 GO
 
+-- Creating foreign key on [ConcessionTypeIdConcessionType] in table 'Food'
+ALTER TABLE [dbo].[Food]
+ADD CONSTRAINT [FK_ConcessionTypeFood]
+    FOREIGN KEY ([ConcessionTypeIdConcessionType])
+    REFERENCES [dbo].[ConcessionType]
+        ([IdConcessionType])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ConcessionTypeFood'
+CREATE INDEX [IX_FK_ConcessionTypeFood]
+ON [dbo].[Food]
+    ([ConcessionTypeIdConcessionType]);
+GO
+
+-- Creating foreign key on [CrimeId] in table 'Person_TBC'
+ALTER TABLE [dbo].[Person_TBC]
+ADD CONSTRAINT [FK_CrimeTBC]
+    FOREIGN KEY ([CrimeId])
+    REFERENCES [dbo].[Crime]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CrimeTBC'
+CREATE INDEX [IX_FK_CrimeTBC]
+ON [dbo].[Person_TBC]
+    ([CrimeId]);
+GO
+
 -- Creating foreign key on [IdPerson] in table 'Person_Familiar'
 ALTER TABLE [dbo].[Person_Familiar]
 ADD CONSTRAINT [FK_Familiar_inherits_Person]
+    FOREIGN KEY ([IdPerson])
+    REFERENCES [dbo].[Person]
+        ([IdPerson])
+    ON DELETE CASCADE ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [IdPerson] in table 'Person_TBC'
+ALTER TABLE [dbo].[Person_TBC]
+ADD CONSTRAINT [FK_TBC_inherits_Person]
     FOREIGN KEY ([IdPerson])
     REFERENCES [dbo].[Person]
         ([IdPerson])

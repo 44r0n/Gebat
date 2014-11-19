@@ -69,15 +69,18 @@
     <Compile Include="Classes\AdminRepository.cs" />
     <Compile Include="Classes\ConcessionRepository.cs" />
     <Compile Include="Classes\ConcessionTypeRepository.cs" />
+    <Compile Include="Classes\CrimeRepository.cs" />
     <Compile Include="Classes\FamiliarRespository.cs" />
     <Compile Include="Classes\FoodRepository.cs" />
     <Compile Include="Classes\Interfaces\BaseRepository.cs" />
     <Compile Include="Classes\Interfaces\IAdminRepository.cs" />
     <Compile Include="Classes\Interfaces\IConcessionRepository.cs" />
     <Compile Include="Classes\Interfaces\IConcessionTypeRepository.cs" />
+    <Compile Include="Classes\Interfaces\ICrimeRepository.cs" />
     <Compile Include="Classes\Interfaces\IFamiliarRespository.cs" />
     <Compile Include="Classes\Interfaces\IFoodRepository.cs" />
     <Compile Include="Classes\Interfaces\IPersonalDossierRepository.cs" />
+    <Compile Include="Classes\Interfaces\ITBCRepository.cs" />
     <Compile Include="Classes\Interfaces\ITypeRepository.cs" />
     <Compile Include="Classes\Partials\Food.cs" />
     <Compile Include="Classes\Partials\PersonalDossier.cs" />
@@ -89,6 +92,9 @@
     <Compile Include="ConcessionType.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
+    <Compile Include="Crime.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
+    </Compile>
     <Compile Include="DateRestriction.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
@@ -98,7 +104,7 @@
     <Compile Include="Exceptions\AdminException.cs" />
     <Compile Include="Exceptions\ConcessionDateException.cs" />
     <Compile Include="Exceptions\MinimumConcessionsException.cs" />
-    <Compile Include="Exceptions\MinimumFamiliarConcession.cs" />
+    <Compile Include="Exceptions\MinimumFamiliarConcessionException.cs" />
     <Compile Include="Familiar.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
@@ -133,6 +139,9 @@
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TBC.cs">
+      <DependentUpon>GebatContent.tt</DependentUpon>
+    </Compile>
     <Compile Include="Type.cs">
       <DependentUpon>GebatContent.tt</DependentUpon>
     </Compile>

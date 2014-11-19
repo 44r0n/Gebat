@@ -30,7 +30,7 @@ namespace GebatModel
         /// </summary>
         /// <typeparam name="TEntity">Type of the collection.</typeparam>
         /// <param name="entity">Entity to add to add in the database.</param>
-        protected virtual void Add<TEntity>(TEntity entity)
+        protected virtual void Save<TEntity>(TEntity entity)
             where TEntity : class
         {
             var setter = entities.Set<TEntity>();

@@ -12,13 +12,27 @@ namespace GebatModelTest
         private IFoodRepository foodrepo;
 
         private ITypeRepository typerepo;
-        
+
+        private ConcessionType standardConcessionType
+        {
+            get
+            {
+                ConcessionType type = new ConcessionType();
+                type.Name = "Prueba";
+                DateRestriction restriction = new DateRestriction();
+                restriction.Interval = 0;
+                type.DateRestriction = restriction;
+                return type;
+            }
+        }
+
         private void AddFood(string name, string typename)
         {
             Food food = new Food();
             food.Name = name;
             food.Type = typerepo.SearchType(typename)[0];
-            foodrepo.AddFood(food);
+            food.ConcessionType = standardConcessionType;
+            foodrepo.SaveFood(food);
         }
 
         [TestCleanup]
@@ -41,10 +55,10 @@ namespace GebatModelTest
             typerepo = new TypeRepository();
             GebatModel.Type type = new GebatModel.Type();
             type.Name = "Kilos";
-            typerepo.AddType(type);
+            typerepo.SaveType(type);
             GebatModel.Type type2 = new GebatModel.Type();
             type2.Name = "Paquetes";
-            typerepo.AddType(type2);
+            typerepo.SaveType(type2);
             AddFood("Arroz", "Kilos");
         }
 
@@ -86,6 +100,7 @@ namespace GebatModelTest
             foodrepo.UpdateFood(food);
             food = foodrepo.SearchFood("Arro")[0];
             Assert.AreEqual(2, food.Quantity);
+            Assert.AreEqual("Prueba", food.ConcessionType.Name);
         }
 
         [TestMethod]

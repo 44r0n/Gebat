@@ -12,18 +12,16 @@ namespace GebatModel
     using System;
     using System.Collections.Generic;
     
-    public partial class PersonalDossier
+    public partial class Crime
     {
-        public PersonalDossier()
+        public Crime()
         {
-            this.Familiars = new HashSet<Familiar>();
-            this.Concessions = new HashSet<Concession>();
+            this.TBC = new HashSet<TBC>();
         }
     
         public int Id { get; set; }
-        public string Observations { get; set; }
+        public string Name { get; set; }
     
-        public virtual ICollection<Familiar> Familiars { get; private set; }
-        public virtual ICollection<Concession> Concessions { get; private set; }
+        public virtual ICollection<TBC> TBC { get; set; }
     }
 }
